@@ -921,7 +921,9 @@
 
   function lessonCard(l) {
     var st = state.lessons[l.id];
+    var img = l.image || ('assets/img/lessons/' + l.id + '.svg');
     return '<a class="lesson-card" href="#/leksjon/' + l.id + '">' +
+      '<div class="thumb"><img src="' + esc(img) + '" alt="" width="800" height="500" loading="lazy" decoding="async"></div>' +
       '<div class="top"><span class="emoji">' + l.emoji + '</span>' +
       '<span class="num">Lección ' + l.num + ' · ' + l.level + '</span></div>' +
       '<h3>' + esc(l.title) + '</h3>' +
@@ -1326,17 +1328,22 @@
   function renderLesson(lesson) {
     var st = state.lessons[lesson.id];
     var fold = /^B/.test(lesson.level);
+    var img = lesson.image || ('assets/img/lessons/' + lesson.id + '.svg');
+    var imgAlt = lesson.imageAlt || lesson.title;
 
     app.innerHTML =
       '<div class="crumbs"><a href="#/">Lecciones</a> <span>›</span> <span>Lección ' + lesson.num + '</span></div>' +
 
       '<header class="lesson-head">' +
+      '  <div class="lesson-copy">' +
       '  <div class="kicker"><span class="emoji">' + lesson.emoji + '</span>' +
       '    <span class="chip">' + lesson.level + '</span>' +
       '    <span class="chip plain">' + lesson.exercises.length + ' ejercicios</span></div>' +
       '  <h1>' + esc(lesson.title) + '</h1>' +
       '  <p class="lead">' + esc(lesson.subtitle) + '</p>' +
       '  <div class="goals">' + lesson.goals.map(function (g) { return '<span class="goal">' + esc(g) + '</span>'; }).join('') + '</div>' +
+      '  </div>' +
+      '  <figure class="lesson-hero"><img src="' + esc(img) + '" alt="' + esc(imgAlt) + '" width="800" height="500" decoding="async"></figure>' +
       '</header>' +
 
       '<section class="card"><h2>Texto' + (fold ? ' <span class="h2-note">traducción plegada</span>' : '') +

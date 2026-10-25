@@ -44,10 +44,12 @@ norsk/
 ├── DEPLOY.md            ← cómo publicarlo (Netlify / GitHub Pages)
 ├── .github/workflows/pages.yml
 ├── tools/
-│   └── generate-audio.mjs   ← sintetiza los MP3 y el manifiesto
+│   ├── generate-audio.mjs       ← sintetiza los MP3 y el manifiesto
+│   └── generate-lesson-art.mjs  ← dibuja las 11 ilustraciones SVG de las lecciones
 └── assets/
     ├── css/style.css
     ├── img/og.png       ← imagen para compartir en redes
+    ├── img/lessons/*.svg ← una ilustración original por lección
     ├── audio/*.mp3      ← 534 audios (≈5,9 MB), generados
     └── js/
         ├── data.js          ← TODO el contenido del curso
@@ -58,6 +60,20 @@ norsk/
 
 Publicación: ver **[DEPLOY.md](DEPLOY.md)**. Hay un zip listo para Netlify Drop
 y un workflow de GitHub Pages que se dispara con cada push a `main`.
+
+## Ilustraciones de las lecciones
+
+Cada lección tiene una escena SVG propia, dibujada a mano en el generador y
+servida en local (sin imágenes externas ni build): aparece como miniatura en
+la portada y como cabecera en la página de la lección. Para regenerarlas tras
+editar `tools/generate-lesson-art.mjs`:
+
+```bash
+node tools/generate-lesson-art.mjs
+```
+
+Los SVG se escriben en `assets/img/lessons/<id>.svg`. En `data.js`, cada
+lección declara `image` y `imageAlt`; si faltan, la app deriva la ruta del `id`.
 
 ## Añadir una lección
 

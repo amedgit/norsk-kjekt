@@ -7,6 +7,8 @@ window.COURSE = {
     /* ------------------------------------------------------------------ 1 */
     {
       id: 'hei',
+      image: 'assets/img/lessons/hei.svg',
+      imageAlt: 'Dos personas saludándose delante de casas noruegas',
       num: 1,
       emoji: '👋',
       level: 'A1',
@@ -106,6 +108,8 @@ window.COURSE = {
     /* ------------------------------------------------------------------ 2 */
     {
       id: 'kafe',
+      image: 'assets/img/lessons/kafe.svg',
+      imageAlt: 'Cafetería noruega con café y rollo de canela',
       num: 2,
       emoji: '☕',
       level: 'A1',
@@ -220,6 +224,8 @@ window.COURSE = {
     /* ------------------------------------------------------------------ 3 */
     {
       id: 'butikk',
+      image: 'assets/img/lessons/butikk.svg',
+      imageAlt: 'Tienda noruega con estanterías, cesta y caja',
       num: 3,
       emoji: '🛒',
       level: 'A2',
@@ -328,6 +334,8 @@ window.COURSE = {
     /* ------------------------------------------------------------------ 4 */
     {
       id: 'buss',
+      image: 'assets/img/lessons/buss.svg',
+      imageAlt: 'Autobús urbano en una parada bajo la lluvia',
       num: 4,
       emoji: '🚌',
       level: 'A2',
@@ -436,6 +444,8 @@ window.COURSE = {
     /* ------------------------------------------------------------------ 5 */
     {
       id: 'vaer',
+      image: 'assets/img/lessons/vaer.svg',
+      imageAlt: 'Paisaje noruego con sol, lluvia, nieve y una persona con impermeable',
       num: 5,
       emoji: '🌧️',
       level: 'A2',
@@ -543,6 +553,8 @@ window.COURSE = {
     /* ------------------------------------------------------------------ 6 */
     {
       id: 'jobbintervju',
+      image: 'assets/img/lessons/jobbintervju.svg',
+      imageAlt: 'Entrevista de trabajo en una oficina luminosa',
       num: 6,
       emoji: '💼',
       level: 'B1',
@@ -685,6 +697,8 @@ window.COURSE = {
     /* ------------------------------------------------------------------ 7 */
     {
       id: 'hoslegen',
+      image: 'assets/img/lessons/hoslegen.svg',
+      imageAlt: 'Consulta médica con médica, paciente y medicinas',
       num: 7,
       emoji: '🩺',
       level: 'B1',
@@ -836,6 +850,8 @@ window.COURSE = {
     /* ------------------------------------------------------------------ 8 */
     {
       id: 'bolig',
+      image: 'assets/img/lessons/bolig.svg',
+      imageAlt: 'Casa noruega con llaves y cajas de mudanza',
       num: 8,
       emoji: '🏠',
       level: 'B1',
@@ -978,6 +994,8 @@ window.COURSE = {
     /* ------------------------------------------------------------------ 9 */
     {
       id: 'nyheter',
+      image: 'assets/img/lessons/nyheter.svg',
+      imageAlt: 'Periódico, móvil con alerta y café sobre una mesa',
       num: 9,
       emoji: '📰',
       level: 'B2',
@@ -1137,6 +1155,8 @@ window.COURSE = {
     /* ------------------------------------------------------------------ 10 */
     {
       id: 'miljo',
+      image: 'assets/img/lessons/miljo.svg',
+      imageAlt: 'Fiordo noruego con turbinas eólicas, reciclaje y coche eléctrico',
       num: 10,
       emoji: '🌍',
       level: 'B2',
@@ -1291,6 +1311,8 @@ window.COURSE = {
     /* ------------------------------------------------------------------ 11 */
     {
       id: 'arbeidsliv',
+      image: 'assets/img/lessons/arbeidsliv.svg',
+      imageAlt: 'Equipo trabajando en una oficina híbrida',
       num: 11,
       emoji: '⚖️',
       level: 'B2',

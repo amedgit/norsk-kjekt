@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-labelledby="title">
+  <title id="title">Fiordo noruego con turbinas eólicas, reciclaje y coche eléctrico</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#dff0f4"/>
+      <stop offset="1" stop-color="#eef6e8"/>
+    </linearGradient>
+    <clipPath id="round"><rect width="800" height="500" rx="36"/></clipPath>
+  </defs>
+  <g clip-path="url(#round)">
+    <rect width="800" height="500" fill="url(#bg)"/>
+
+  <circle cx="662" cy="94" r="42" fill="#e0a43a" opacity=".9"/>
+  <path d="M0 318 L126 164 L242 300 L360 182 L510 318 Z" fill="#1f4e79" opacity=".82"/>
+  <path d="M470 318 L590 206 L700 318 Z" fill="#2f7d5b" opacity=".62"/>
+  <path d="M126 164 l28 52 l-18 -4 l-14 24 l-15 -24 l-19 4 Z" fill="#ffffff" opacity=".9"/>
+  <path d="M360 182 l22 44 l-15 -4 l-12 20 l-13 -20 l-15 4 Z" fill="#ffffff" opacity=".9"/>
+  <path d="M0 326 q200 -36 400 0 q200 36 400 0 v174 H0 Z" fill="#cfe6d8"/>
+  <path d="M0 388 q220 -36 430 0 q190 30 370 -8 v120 H0 Z" fill="#b9d9ef" opacity=".65"/>
+  <g stroke="#0e2a47" stroke-width="5" stroke-linecap="round" fill="none" opacity=".75">
+    <path d="M118 252 v104"/><path d="M118 252 l-42 -28"/><path d="M118 252 l48 -26"/><path d="M118 252 l3 54"/>
+    <path d="M228 276 v82"/><path d="M228 276 l-34 -22"/><path d="M228 276 l38 -20"/><path d="M228 276 l2 44"/>
+  </g>
+  <g transform="translate(334 356)">
+    <rect x="0" y="0" width="124" height="44" rx="14" fill="#c8102e"/>
+    <path d="M22 0 q8 -24 40 -24 q32 0 40 24" fill="#c8102e"/>
+    <rect x="28" y="-16" width="28" height="18" rx="4" fill="#dceefb"/>
+    <rect x="66" y="-16" width="28" height="18" rx="4" fill="#dceefb"/>
+    <circle cx="30" cy="46" r="14" fill="#12233f"/><circle cx="30" cy="46" r="5" fill="#8aa0b5"/>
+    <circle cx="94" cy="46" r="14" fill="#12233f"/><circle cx="94" cy="46" r="5" fill="#8aa0b5"/>
+    <path d="M114 18 h18" stroke="#e0a43a" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(520 368)">
+    <rect x="0" y="0" width="54" height="66" rx="8" fill="#2f7d5b"/>
+    <rect x="58" y="0" width="54" height="66" rx="8" fill="#1f4e79"/>
+    <rect x="116" y="0" width="54" height="66" rx="8" fill="#e0a43a"/>
+    <path d="M18 18 q9 -14 18 0 q-9 20 -18 0" fill="none" stroke="#ffffff" stroke-width="3"/>
+    <path d="M76 18 h18 M76 30 h18 M76 42 h12" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="143" cy="26" r="10" fill="none" stroke="#ffffff" stroke-width="3"/>
+  </g>
+  <g transform="translate(700 442) scale(0.8)">
+    <path d="M0 0 q-34 -26 -22 -70 q30 12 22 70" fill="#2f7d5b" opacity=".9"/>
+    <path d="M0 0 q34 -30 18 -78 q-34 18 -18 78" fill="#2f7d5b"/>
+    <path d="M0 0 q-8 -40 2 -82" fill="none" stroke="#0e2a47" stroke-width="3" opacity=".5"/>
+    <path d="M-23 0 h46 l-7 45 h-32 z" fill="#e0a43a"/>
+  </g>
+  <g fill="#2f7d5b" opacity=".8">
+    <path d="M640 300 q-18 -18 -34 -8 q8 22 34 8"/>
+    <path d="M650 306 q6 -24 24 -26 q0 26 -24 26"/>
+  </g>
+  <text x="78" y="78" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="800" fill="#2f7d5b" opacity=".6">MILJØ</text>
+
+  </g>
+</svg>
