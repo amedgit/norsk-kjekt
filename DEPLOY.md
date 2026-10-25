@@ -107,5 +107,5 @@ zip -r ~/Descargas/norsk-kjekt.zip index.html assets robots.txt .nojekyll
 - No hay cuentas ni ranking. Si algún día los quieres, toca añadir backend
   (Supabase, PocketBase o un pequeño API).
 - El audio depende de las voces instaladas en el dispositivo del visitante
-  (`speechSynthesis`). En Android/iOS suele haber voz noruega; en algunos
-  Linux de escritorio no, y sonará con acento del idioma por defecto.
+  (`speechSynthesis`) **solo como respaldo**: las 180 frases del curso son MP3
+  pregrabados con Piper y se sirven como ficheros estáticos.

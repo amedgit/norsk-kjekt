@@ -65,6 +65,7 @@ window.COURSE = {
           prompt: '¿Cómo dices «Me llamo Alex»?',
           options: ['Jeg er Alex', 'Jeg heter Alex', 'Jeg har Alex', 'Jeg bor Alex'],
           answer: 1,
+          audio: 'Jeg heter Alex',
           explain: '«Å hete» = llamarse. «Jeg er Alex» se entiende, pero suena a que estás describiendo quién eres, no tu nombre.'
         },
         {
@@ -180,6 +181,7 @@ window.COURSE = {
             'Kaffen er kald.'
           ],
           answer: 0,
+          audio: 'Kan jeg få en kaffe, takk?',
           explain: 'La fórmula mágica: «Kan jeg få» + cosa + «takk». Sirve en cafeterías, bares y tiendas.'
         },
         {
@@ -310,6 +312,7 @@ window.COURSE = {
           prompt: 'Quieres disculparte por molestar a alguien en la tienda. Dices:',
           options: ['Unnskyld', 'Takk', 'Vær så god', 'Ha det'],
           answer: 0,
+          audio: 'Unnskyld',
           explain: '«Unnskyld» = perdón/disculpe. «Ha det» es adiós y «vær så god» es aquí tiene.'
         },
         {

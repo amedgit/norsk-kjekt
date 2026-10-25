@@ -161,11 +161,12 @@
       var fb = mount.querySelector('#fb');
       var next = mount.querySelector('#next');
       if (!fb) return;
+      var audioText = item.type === 'mcq' ? (item.audio || '') : solution;
       fb.className = 'feedback show ' + (ok ? 'ok' : 'bad');
       fb.innerHTML =
         '<div class="head">' + (ok ? '✅ ¡Riktig! (correcto)' : '❌ Casi — mira la respuesta') + '</div>' +
         (item.explain ? '<div>' + esc(item.explain) + '</div>' : '') +
-        '<div class="answer-line">' + say(solution) + ' ' + esc(solution) + '</div>' +
+        '<div class="answer-line">' + (audioText ? say(audioText) + ' ' : '') + esc(solution) + '</div>' +
         (item.es ? '<div class="trad">' + esc(item.es) + '</div>' : '');
       if (next) {
         next.hidden = false;
