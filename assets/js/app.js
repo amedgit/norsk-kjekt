@@ -127,7 +127,17 @@
   function preview(item) {
     if (item.type === 'gap') return item.sentence.replace('___', '____');
     if (item.type === 'order') return 'Ordena: ' + item.words.join(' ');
+    if (item.type === 'cloze') return item.prompt || 'Completa el texto';
+    if (item.type === 'listen') return 'Dictado: ' + (item.audio || '');
+    if (item.type === 'transform') return 'Transforma: ' + item.source;
+    if (item.type === 'match') return 'Empareja: ' + item.pairs.length + ' pares';
     return item.prompt;
+  }
+
+  function fillBlanks(text, answers) {
+    var out = text;
+    for (var i = 0; i < answers.length; i++) out = out.replace('___', answers[i]);
+    return out;
   }
 
   /* =======================================================
@@ -155,13 +165,15 @@
         '<div class="dots">' + dots + '</div>';
     }
 
-    function showFeedback(ok, item, solution) {
+    function showFeedback(ok, item, solution, audioOverride) {
       results[idx] = ok;
       if (ok) correct++;
       var fb = mount.querySelector('#fb');
       var next = mount.querySelector('#next');
       if (!fb) return;
-      var audioText = item.type === 'mcq' ? (item.audio || '') : solution;
+      var audioText = audioOverride !== undefined
+        ? audioOverride
+        : (item.type === 'mcq' ? (item.audio || '') : solution);
       fb.className = 'feedback show ' + (ok ? 'ok' : 'bad');
       fb.innerHTML =
         '<div class="head">' + (ok ? '✅ ¡Riktig! (correcto)' : '❌ Casi — mira la respuesta') + '</div>' +
@@ -175,8 +187,108 @@
       locked = true;
     }
 
+    function answersOf(item) {
+      if (Array.isArray(item.answers)) return item.answers;
+      if (item.answer != null) return [item.answer];
+      if (item.type === 'listen' && item.audio) return [item.audio];
+      return [];
+    }
+
+    function matches(item, value) {
+      return answersOf(item).some(function (a) { return norm(a) === norm(value); });
+    }
+
+    function canonical(item) {
+      var list = answersOf(item);
+      var first = list[0];
+      return Array.isArray(first) ? (first[0] || '') : (first || '');
+    }
+
+    function blankWidth(item, i) {
+      var list = Array.isArray(item.answers) ? item.answers : [item.answer];
+      var a = list[i];
+      var s = Array.isArray(a) ? (a[0] || '') : (a || '');
+      return Math.max(5, Math.min(18, String(s).length + 2));
+    }
+
+    function clozeSolution(item) {
+      return fillBlanks(String(item.text || ''), item.answers.map(function (a) {
+        return Array.isArray(a) ? (a[0] || '') : (a || '');
+      }));
+    }
+
+    /* ---- cloze: varios huecos en un texto ---- */
+    function buildCloze(item) {
+      var parts = String(item.text || '').split('___');
+      var gaps = parts.length - 1;
+      var html = '<p class="ex-prompt">' + esc(item.prompt || 'Completa el texto:') + '</p>' +
+        '<p class="cloze-text">';
+      for (var i = 0; i < parts.length; i++) {
+        html += esc(parts[i]);
+        if (i < gaps) {
+          html += '<input class="blank-input cloze-input" data-gap="' + i + '" type="text" ' +
+            'autocomplete="off" autocapitalize="off" spellcheck="false" ' +
+            'style="width:' + blankWidth(item, i) + 'ch" placeholder="…" ' +
+            'aria-label="Hueco ' + (i + 1) + '">';
+        }
+      }
+      html += '</p>';
+      if (item.bank) {
+        html += '<div class="bank" id="bank">' + item.bank.map(function (w) {
+          return '<button class="word" data-w="' + esc(w) + '">' + esc(w) + '</button>';
+        }).join('') + '</div>';
+      }
+      return html + '<div class="actions"><button class="btn primary" id="check">Comprobar</button></div>';
+    }
+
+    /* ---- listen: dictado ---- */
+    function buildListen(item) {
+      var w = Math.max(14, Math.min(46, (item.audio || '').length + 2));
+      return '<p class="ex-prompt">' + esc(item.prompt || 'Escucha y escribe lo que oyes:') + '</p>' +
+        '<div class="listen-box">' +
+        '<button class="btn primary" id="play" data-say="' + esc(item.audio) + '">▶ Escuchar</button>' +
+        '<span class="ex-hint">' + esc(item.hint || 'Puedes repetirlo las veces que quieras.') + '</span>' +
+        '</div>' +
+        '<input class="listen-input" id="gap" type="text" autocomplete="off" autocapitalize="off" ' +
+        'spellcheck="false" placeholder="Escribe lo que oyes…" aria-label="Dictado" ' +
+        'style="max-width:' + w + 'ch">' +
+        '<div class="actions"><button class="btn primary" id="check">Comprobar</button></div>';
+    }
+
+    /* ---- transform: reescribir una frase ---- */
+    function buildTransform(item) {
+      return '<p class="ex-prompt">' + esc(item.prompt || 'Reescribe la frase:') + '</p>' +
+        '<div class="source">' + say(item.source) + '<span>' + esc(item.source) + '</span></div>' +
+        (item.hint ? '<p class="ex-hint">' + esc(item.hint) + '</p>' : '') +
+        '<input class="transform-input" id="gap" type="text" autocomplete="off" autocapitalize="off" ' +
+        'spellcheck="false" placeholder="Tu frase…" aria-label="Respuesta">' +
+        '<div class="actions"><button class="btn primary" id="check">Comprobar</button></div>';
+    }
+
+    /* ---- match: emparejar dos columnas ---- */
+    function matchColumn(item, side) {
+      var list = shuffle(item.pairs.map(function (pair, i) {
+        return { text: side === 'a' ? pair.a : pair.b, key: i };
+      }));
+      return '<div class="m-col">' + list.map(function (x) {
+        var withAudio = side === 'a' || item.sayB;
+        return '<div class="m-cell">' +
+          '<button class="m-item" data-side="' + side + '" data-key="' + x.key + '">' +
+          esc(x.text) + '</button>' +
+          (withAudio ? say(x.text) : '') +
+          '</div>';
+      }).join('') + '</div>';
+    }
+
+    function buildMatch(item) {
+      return '<p class="ex-prompt">' + esc(item.prompt || 'Empareja cada palabra con su pareja:') + '</p>' +
+        '<div class="match" id="match">' + matchColumn(item, 'a') + matchColumn(item, 'b') + '</div>' +
+        '<p class="ex-hint" id="match-hint">Toca una palabra de la primera columna y luego su pareja.</p>';
+    }
+
     function draw() {
       locked = false;
+      if (window.TTS) window.TTS.stop();
       var item = list[idx];
       var body = '';
 
@@ -200,6 +312,14 @@
             return '<button class="word" data-w="' + esc(w) + '">' + esc(w) + '</button>';
           }).join('') + '</div>' : '') +
           '<div class="actions"><button class="btn primary" id="check">Comprobar</button></div>';
+      } else if (item.type === 'cloze') {
+        body = buildCloze(item);
+      } else if (item.type === 'listen') {
+        body = buildListen(item);
+      } else if (item.type === 'transform') {
+        body = buildTransform(item);
+      } else if (item.type === 'match') {
+        body = buildMatch(item);
       } else {
         body =
           '<p class="ex-prompt">' + esc(item.prompt || 'Ordena la frase:') + '</p>' +
@@ -213,7 +333,7 @@
 
       mount.innerHTML =
         '<div class="exercise">' + header() + body +
-        '<div class="feedback" id="fb"></div>' +
+        '<div class="feedback" id="fb" aria-live="polite"></div>' +
         '<div class="actions"><button class="btn primary" id="next" hidden>Siguiente →</button></div>' +
         '</div>';
 
@@ -226,6 +346,10 @@
 
       if (item.type === 'mcq') bindMcq(item);
       else if (item.type === 'gap') bindGap(item);
+      else if (item.type === 'cloze') bindCloze(item);
+      else if (item.type === 'listen') bindListen(item);
+      else if (item.type === 'transform') bindTransform(item);
+      else if (item.type === 'match') bindMatch(item);
       else bindOrder(item);
     }
 
@@ -340,6 +464,204 @@
       paint();
     }
 
+    /* ---- cloze: varios huecos ---- */
+    function bindCloze(item) {
+      var inputs = Array.prototype.slice.call(mount.querySelectorAll('.cloze-input'));
+      var check = mount.querySelector('#check');
+      var bank = mount.querySelector('#bank');
+      var active = 0;
+
+      inputs.forEach(function (inp, i) {
+        inp.addEventListener('focus', function () { active = i; });
+        inp.addEventListener('click', function () { active = i; });
+      });
+
+      if (bank) {
+        bank.addEventListener('click', function (e) {
+          var w = e.target.closest('[data-w]');
+          if (!w || locked) return;
+          var target = active;
+          if (!inputs[target] || inputs[target].value.trim()) {
+            target = -1;
+            inputs.forEach(function (inp, i) {
+              if (target < 0 && !inp.value.trim() && !inp.readOnly) target = i;
+            });
+          }
+          if (target < 0) return;
+          inputs[target].value = w.dataset.w;
+          active = target;
+          inputs[target].focus();
+        });
+      }
+
+      function go() {
+        if (locked) return;
+        var empty = -1;
+        inputs.forEach(function (inp, i) {
+          if (!inp.value.trim() && empty < 0) empty = i;
+        });
+        if (empty > -1) {
+          inputs[empty].focus();
+          inputs[empty].classList.add('bad');
+          setTimeout(function () { inputs[empty].classList.remove('bad'); }, 900);
+          return;
+        }
+
+        var ok = true;
+        inputs.forEach(function (inp, i) {
+          var expected = item.answers[i];
+          var good = Array.isArray(expected)
+            ? expected.some(function (a) { return norm(a) === norm(inp.value); })
+            : norm(expected) === norm(inp.value);
+          inp.classList.add(good ? 'ok' : 'bad');
+          inp.readOnly = true;
+          if (!good) ok = false;
+        });
+
+        if (check) check.disabled = true;
+        if (bank) {
+          Array.prototype.forEach.call(bank.querySelectorAll('.word'), function (b) { b.disabled = true; });
+        }
+        showFeedback(ok, item, clozeSolution(item));
+      }
+
+      if (check) check.addEventListener('click', go);
+      inputs.forEach(function (inp) {
+        inp.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter') { e.preventDefault(); go(); }
+        });
+      });
+      if (inputs[0]) inputs[0].focus();
+    }
+
+    /* ---- listen: dictado ---- */
+    function bindListen(item) {
+      var input = mount.querySelector('#gap');
+      var check = mount.querySelector('#check');
+
+      function replay() {
+        if (window.TTS) window.TTS.speak(item.audio);
+      }
+
+      /* El botón #play lleva data-say, así que el manejador global lo
+         reproduce y le pone la clase .playing. */
+
+      /* Intento de reproducción automática; si el navegador la bloquea,
+         el botón «Escuchar» sigue ahí. */
+      setTimeout(function () {
+        if (!locked && mount.querySelector('#play')) replay();
+      }, 280);
+
+      function go() {
+        if (locked || !input) return;
+        var val = input.value.trim();
+        if (!val) { input.focus(); return; }
+        var ok = matches(item, val);
+        input.classList.add(ok ? 'ok' : 'bad');
+        input.readOnly = true;
+        if (check) check.disabled = true;
+        showFeedback(ok, item, item.audio || canonical(item));
+      }
+
+      if (check) check.addEventListener('click', go);
+      if (input) {
+        input.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter') { e.preventDefault(); go(); }
+        });
+        input.focus();
+      }
+    }
+
+    /* ---- transform: reescribir ---- */
+    function bindTransform(item) {
+      var input = mount.querySelector('#gap');
+      var check = mount.querySelector('#check');
+
+      function go() {
+        if (locked || !input) return;
+        var val = input.value.trim();
+        if (!val) { input.focus(); return; }
+        var ok = matches(item, val);
+        input.classList.add(ok ? 'ok' : 'bad');
+        input.readOnly = true;
+        if (check) check.disabled = true;
+        showFeedback(ok, item, canonical(item));
+      }
+
+      if (check) check.addEventListener('click', go);
+      if (input) {
+        input.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter') { e.preventDefault(); go(); }
+        });
+        input.focus();
+      }
+    }
+
+    /* ---- match: emparejar columnas ---- */
+    function bindMatch(item) {
+      var hint = mount.querySelector('#match-hint');
+      var sel = null;
+      var mistakes = 0;
+      var matched = 0;
+      var left = Array.prototype.slice.call(mount.querySelectorAll('[data-side="a"]'));
+      var right = Array.prototype.slice.call(mount.querySelectorAll('[data-side="b"]'));
+
+      function clearSel() {
+        if (sel) sel.classList.remove('sel');
+        sel = null;
+      }
+
+      function finish() {
+        var ok = mistakes === 0;
+        var solution = item.pairs.map(function (p) { return p.a + ' = ' + p.b; }).join(' · ');
+        if (hint) hint.textContent = '¡Completado!';
+        showFeedback(ok, item, solution, '');
+      }
+
+      left.forEach(function (el) {
+        el.addEventListener('click', function () {
+          if (locked || el.classList.contains('done')) return;
+          clearSel();
+          sel = el;
+          el.classList.add('sel');
+          if (hint) hint.textContent = 'Ahora elige su pareja.';
+        });
+      });
+
+      right.forEach(function (el) {
+        el.addEventListener('click', function () {
+          if (locked || el.classList.contains('done')) return;
+          if (!sel) {
+            if (hint) hint.textContent = 'Primero elige una palabra de la primera columna.';
+            return;
+          }
+          var a = sel;
+          if (a.dataset.key === el.dataset.key) {
+            a.classList.add('done');
+            a.disabled = true;
+            el.classList.add('done');
+            el.disabled = true;
+            matched++;
+            clearSel();
+            if (matched === item.pairs.length) {
+              finish();
+            } else if (hint) {
+              hint.textContent = '¡Bien! Quedan ' + (item.pairs.length - matched) + '.';
+            }
+            return;
+          }
+
+          mistakes++;
+          [a, el].forEach(function (x) {
+            x.classList.add('wrong');
+            setTimeout(function () { x.classList.remove('wrong'); }, 550);
+          });
+          clearSel();
+          if (hint) hint.textContent = 'Casi. Prueba otra vez.';
+        });
+      });
+    }
+
     /* ---- resultado ---- */
     function showResult() {
       var total = list.length;
@@ -427,6 +749,26 @@
     return arr[day % arr.length];
   }
 
+  function lessonCard(l) {
+    var st = state.lessons[l.id];
+    return '<a class="lesson-card" href="#/leksjon/' + l.id + '">' +
+      '<div class="top"><span class="emoji">' + l.emoji + '</span>' +
+      '<span class="num">Lección ' + l.num + ' · ' + l.level + '</span></div>' +
+      '<h3>' + esc(l.title) + '</h3>' +
+      '<p class="sub">' + esc(l.subtitle) + '</p>' +
+      '<div class="foot">' +
+      (st ? '<span class="chip done">✓ ' + st.best + '/' + st.total + '</span>' : '<span class="chip">nueva</span>') +
+      '<span class="chip plain">' + l.exercises.length + ' ejercicios</span>' +
+      '</div></a>';
+  }
+
+  function levelSection(title, sub, levels) {
+    var list = LESSONS.filter(function (l) { return levels.indexOf(l.level) > -1; });
+    if (!list.length) return '';
+    return '<h2 class="section-title">' + title + ' <span>' + sub + '</span></h2>' +
+      '<div class="grid">' + list.map(lessonCard).join('') + '</div>';
+  }
+
   function renderHome() {
     var done = completedCount();
     var total = LESSONS.length;
@@ -437,9 +779,9 @@
     app.innerHTML =
       '<section class="hero">' +
       '  <div class="hero-text">' +
-      '    <span class="eyebrow">Bokmål · A1–A2 · sin prisa</span>' +
+      '    <span class="eyebrow">Bokmål · A1–B2 · sin prisa</span>' +
       '    <h1>Noruego que se usa <em>de verdad</em>.</h1>' +
-      '    <p>Cinco lecciones con textos cortos, ejercicios que corrigen al instante y el noruego de calle que no sale en los libros.</p>' +
+      '    <p>' + LESSONS.length + ' lecciones con textos cortos, ejercicios que corrigen al instante y el noruego de calle que no sale en los libros.</p>' +
       '    <div class="hero-actions">' +
       '      <a class="btn primary" href="#/leksjon/' + nl.id + '">' + (done ? 'Seguir' : 'Empezar') + ' · ' + esc(nl.title) + '</a>' +
       '      <a class="btn ghost" href="#/coloquial">Ver coloquial</a>' +
@@ -457,19 +799,9 @@
       '  </aside>' +
       '</section>' +
 
-      '<h2 class="section-title">Lecciones <span>empieza por donde quieras</span></h2>' +
-      '<div class="grid">' + LESSONS.map(function (l) {
-        var st = state.lessons[l.id];
-        return '<a class="lesson-card" href="#/leksjon/' + l.id + '">' +
-          '<div class="top"><span class="emoji">' + l.emoji + '</span>' +
-          '<span class="num">Lección ' + l.num + ' · ' + l.level + '</span></div>' +
-          '<h3>' + esc(l.title) + '</h3>' +
-          '<p class="sub">' + esc(l.subtitle) + '</p>' +
-          '<div class="foot">' +
-          (st ? '<span class="chip done">✓ ' + st.best + '/' + st.total + '</span>' : '<span class="chip">nueva</span>') +
-          '<span class="chip plain">' + l.exercises.length + ' ejercicios</span>' +
-          '</div></a>';
-      }).join('') + '</div>' +
+      levelSection('Paso a paso', 'A1–A2 · la base', ['A1', 'A2']) +
+      levelSection('B1 · soltarte', 'ya te defiendes en el día a día', ['B1']) +
+      levelSection('B2 · opinar y discutir', 'textos reales, más matices', ['B2']) +
 
       '<h2 class="section-title">De la calle <span>sin diccionario</span></h2>' +
       '<div class="colo-grid">' + COURSE.colloquial.slice(0, 3).map(function (c) {
@@ -484,6 +816,7 @@
 
   function renderLesson(lesson) {
     var st = state.lessons[lesson.id];
+    var fold = /^B/.test(lesson.level);
 
     app.innerHTML =
       '<div class="crumbs"><a href="#/">Lecciones</a> <span>›</span> <span>Lección ' + lesson.num + '</span></div>' +
@@ -497,13 +830,30 @@
       '  <div class="goals">' + lesson.goals.map(function (g) { return '<span class="goal">' + esc(g) + '</span>'; }).join('') + '</div>' +
       '</header>' +
 
-      '<section class="card"><h2>Texto</h2><div class="text-body">' +
-      lesson.text.map(function (p) {
+      '<section class="card"><h2>Texto' + (fold ? ' <span class="h2-note">traducción plegada</span>' : '') +
+      '</h2><div class="text-body">' +
+      lesson.text.map(function (p, i) {
         return '<div class="para">' + say(p.no) +
           '<div class="lines"><span class="no">' + esc(p.no) + '</span>' +
-          '<span class="es">' + esc(p.es) + '</span></div></div>';
+          (fold
+            ? '<button class="t-toggle" data-t="' + i + '" aria-expanded="false" aria-controls="tr-' + i + '">Ver traducción</button>' +
+              '<span class="es trans" id="tr-' + i + '" hidden>' + esc(p.es) + '</span>'
+            : '<span class="es">' + esc(p.es) + '</span>') +
+          '</div></div>';
       }).join('') +
       '</div></section>' +
+
+      (lesson.grammar
+        ? '<section class="card grammar"><h2>Gramática · ' + esc(lesson.grammar.title) + '</h2>' +
+          '<ul class="grammar-points">' + lesson.grammar.points.map(function (pt) {
+            return '<li>' + esc(pt) + '</li>';
+          }).join('') + '</ul>' +
+          '<div class="grammar-ex">' + lesson.grammar.examples.map(function (ex) {
+            return '<div class="gx">' + say(ex.no) +
+              '<span class="txt"><span class="no">' + esc(ex.no) + '</span>' +
+              '<span class="es">' + esc(ex.es) + '</span></span></div>';
+          }).join('') + '</div></section>'
+        : '') +
 
       '<section class="card"><h2>Vocabulario</h2><div class="vocab">' +
       lesson.vocab.map(function (v) {
@@ -524,6 +874,17 @@
       '<section class="card"><div class="tip">💡 <b>Truco:</b> ' + esc(lesson.tip) + '</div></section>' +
 
       '<section class="card" id="practice"><h2>Práctica</h2><div id="ex-mount"></div></section>';
+
+    app.querySelectorAll('.t-toggle').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var el = document.getElementById('tr-' + btn.dataset.t);
+        if (!el) return;
+        var show = el.hidden;
+        el.hidden = !show;
+        btn.textContent = show ? 'Ocultar traducción' : 'Ver traducción';
+        btn.setAttribute('aria-expanded', show ? 'true' : 'false');
+      });
+    });
 
     var mount = document.getElementById('ex-mount');
     mount.innerHTML =

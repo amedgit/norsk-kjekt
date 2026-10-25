@@ -12,7 +12,7 @@
  * https://huggingface.co/rhasspy/piper-voices/tree/main/no/no_NO/talesyntese/medium
  */
 
-import { readFileSync, writeFileSync, mkdirSync, existsSync, statSync, rmSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync, statSync, rmSync, readdirSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
@@ -53,10 +53,31 @@ for (const l of COURSE.lessons) {
   l.text.forEach((p) => texts.add(p.no));
   l.vocab.forEach((v) => texts.add(v.no));
   l.phrases.forEach((p) => texts.add(p.no));
+  if (l.grammar && l.grammar.examples) l.grammar.examples.forEach((g) => texts.add(g.no));
   l.exercises.forEach((e) => {
     if (e.type === 'gap') texts.add(e.sentence.replace('___', e.answers[0]));
     if (e.type === 'order') texts.add(e.words.join(' '));
     if (e.type === 'mcq' && e.audio) texts.add(e.audio);
+    if (e.type === 'listen') texts.add(e.audio);
+    if (e.type === 'transform') {
+      texts.add(e.source);
+      const list = e.answers || (e.answer ? [e.answer] : []);
+      list.forEach((a) => texts.add(a));
+    }
+    if (e.type === 'cloze') {
+      let i = 0;
+      const filled = String(e.text).replace(/___/g, () => {
+        const a = e.answers[i++];
+        return Array.isArray(a) ? a[0] : a;
+      });
+      texts.add(filled);
+    }
+    if (e.type === 'match') {
+      e.pairs.forEach((p) => {
+        texts.add(p.a);
+        if (e.sayB) texts.add(p.b);
+      });
+    }
   });
 }
 for (const c of COURSE.colloquial) {
@@ -123,6 +144,16 @@ const body =
   'window.AUDIO_MANIFEST = ' + JSON.stringify(manifest, null, 0) + ';\n';
 writeFileSync(MANIFEST, body);
 
+/* ---------- limpiar MP3 que ya no usa el manifiesto ---------- */
+const keep = new Set(Object.values(manifest));
+let removed = 0;
+for (const f of readdirSync(OUT)) {
+  if (f.endsWith('.mp3') && !keep.has(f)) {
+    rmSync(path.join(OUT, f), { force: true });
+    removed++;
+  }
+}
+
 /* ---------- resumen ---------- */
 let bytes = 0;
 for (const f of Object.values(manifest)) {
@@ -133,4 +164,5 @@ try { rmSync(TMP, { recursive: true, force: true }); } catch {}
 
 console.log(`Manifiesto: ${Object.keys(manifest).length} entradas`);
 console.log(`Audio total: ${(bytes / 1024 / 1024).toFixed(2)} MB en assets/audio/`);
+if (removed) console.log(`Eliminados ${removed} MP3 que ya no se usan`);
 console.log(`Escrito: ${path.relative(ROOT, MANIFEST)}`);

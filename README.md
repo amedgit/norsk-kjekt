@@ -2,7 +2,7 @@
 
 **Publicado:** <https://amedgit.github.io/norsk-kjekt/>
 
-Portal para practicar noruego **bokmål** (A1–A2): textos cortos, ejercicios
+Portal para practicar noruego **bokmål** (A1–B2): textos cortos, ejercicios
 interactivos y una sección de noruego coloquial. HTML + CSS + JS puro, sin build,
 sin dependencias y sin backend.
 
@@ -25,12 +25,12 @@ cd ~/norsk
 
 | Parte | Contenido |
 |---|---|
-| Lecciones | 5 lecciones A1–A2: presentarse, cafetería, tienda, bus, tiempo/small talk |
-| Práctica | 30 ejercicios en 3 formatos: opción múltiple, rellenar huecos, ordenar palabras |
+| Lecciones | 11 lecciones A1–B2: base A1–A2, vida diaria B1 y noticias, medio ambiente y derechos laborales en B2 |
+| Práctica | 81 ejercicios en 7 formatos: opción múltiple, huecos, ordenar, dictado, cloze, transformar y emparejar |
 | Coloquial | 18 expresiones con registro (neutro → vulgar), diálogo de ejemplo y truco |
 | Progreso | racha de días, XP, mejor resultado por lección y cola de repaso de fallos |
 | Velocidad | selector 0,7×–1,3× en la cabecera; se aplica al audio y se recuerda |
-| Audio | 180 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
+| Audio | 372 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
 
 ## Estructura
 
@@ -46,7 +46,7 @@ norsk/
 └── assets/
     ├── css/style.css
     ├── img/og.png       ← imagen para compartir en redes
-    ├── audio/*.mp3      ← 180 audios (≈2 MB), generados
+    ├── audio/*.mp3      ← 372 audios (≈4,4 MB), generados
     └── js/
         ├── data.js          ← TODO el contenido del curso
         ├── audio-manifest.js ← texto → MP3 (generado, no editar)
@@ -65,19 +65,27 @@ Todo el contenido vive en `assets/js/data.js`. Copia un objeto del array
 ```js
 {
   id: 'ny',              // único, sin espacios
-  num: 6,
+  num: 12,
   emoji: '🍕',
-  level: 'A2',
+  level: 'A2',           // A1 | A2 | B1 | B2
   title: 'På pizzeria',
   subtitle: 'Pedir, compartir y pagar',
   goals: ['...'],
   text: [{ no: 'Frase en noruego.', es: 'Traducción.' }],
   vocab: [{ no: 'pizza', es: 'pizza', note: 'opcional' }],
   phrases: [{ no: 'Kan jeg få ...?', es: '¿Me das...?' }],
+  grammar: {
+    title: 'Una regla, en una línea',
+    points: ['Explicación breve.', 'Otra pista útil.'],
+    examples: [{ no: 'Eksempel på norsk.', es: 'Ejemplo traducido.' }]
+  },
   tip: 'Un consejo cultural.',
   exercises: [/* ver abajo */]
 }
 ```
+
+En B1 y B2 las traducciones del texto salen plegadas por defecto; los ejemplos
+de gramática y el vocabulario siguen visibles.
 
 Tipos de ejercicio:
 
@@ -86,13 +94,29 @@ Tipos de ejercicio:
 { type: 'mcq', prompt: '¿Qué significa «koselig»?',
   options: ['feo', 'acogedor', 'caro', 'rápido'], answer: 1, explain: '...' }
 
-// hueco (answers admite varias variantes correctas)
+// un hueco (answers admite varias variantes correctas)
 { type: 'gap', prompt: 'Completa:', sentence: 'Jeg ___ fra Spania.',
   answers: ['er'], bank: ['er', 'bor', 'heter'], es: 'Soy de España.', explain: '...' }
 
 // ordenar palabras (la puntuación va pegada a la última palabra)
 { type: 'order', prompt: 'Ordena:', words: ['Hva', 'heter', 'du?'],
   es: '¿Cómo te llamas?', explain: '...' }
+
+// varios huecos en un texto; answers va en orden
+{ type: 'cloze', prompt: 'Completa:', text: 'Jeg ___ og hun ___ i Oslo.',
+  answers: ['bor', 'bor'], bank: ['bor', 'er', 'heter'], es: '...', explain: '...' }
+
+// dictado: el audio es también la respuesta canónica
+{ type: 'listen', prompt: 'Escucha y escribe:', audio: 'Jeg har to års erfaring.',
+  hint: '6 palabras', es: '...', explain: '...' }
+
+// reescribir una frase (answer o answers[])
+{ type: 'transform', prompt: 'Reescribe en perfecto:', source: 'Jeg jobber.',
+  answer: 'Jeg har jobbet.', hint: 'har + participio', es: '...', explain: '...' }
+
+// emparejar dos columnas; sayB solo si la columna B es noruego
+{ type: 'match', prompt: 'Empareja:', pairs: [{ a: 'lønn', b: 'salario' }],
+  sayB: false, explain: '...' }
 ```
 
 Para añadir expresiones coloquiales, edita el array `colloquial` con

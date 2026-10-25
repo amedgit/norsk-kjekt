@@ -538,6 +538,912 @@ window.COURSE = {
           explain: '«Hele tiden» = todo el tiempo. También «hele dagen» (todo el día) y «hele uka» (toda la semana).'
         }
       ]
+    },
+
+    /* ------------------------------------------------------------------ 6 */
+    {
+      id: 'jobbintervju',
+      num: 6,
+      emoji: '💼',
+      level: 'B1',
+      title: 'På jobbintervju',
+      subtitle: 'Presentarte, contar tu experiencia y hacer preguntas',
+      goals: ['Hablar de experiencia con «har jobbet»', 'Describir fortalezas y retos', 'Cerrar la entrevista con buenas preguntas'],
+      text: [
+        {
+          no: 'Alex har søkt på jobb som servitør i en ny restaurant i Oslo. I dag er intervjuet.',
+          es: 'Alex ha solicitado un puesto de camarero en un restaurante nuevo de Oslo. Hoy es la entrevista.'
+        },
+        {
+          no: '«Fortell litt om deg selv,» sier sjefen. Alex forteller at han har jobbet på kafé i to år, og at han liker å møte nye mennesker.',
+          es: '«Cuéntame un poco sobre ti», dice el jefe. Alex cuenta que ha trabajado en una cafetería durante dos años y que le gusta conocer gente nueva.'
+        },
+        {
+          no: '«Hva er du spesielt god til?» «Jeg er rolig når det er mye å gjøre, og jeg lærer fort.»',
+          es: '«¿En qué eres especialmente bueno?» «Soy tranquilo cuando hay mucho que hacer y aprendo rápido.»'
+        },
+        {
+          no: '«Hva er den største utfordringen din?» «Jeg vil gjerne bli flinkere til å si nei. Noen ganger tar jeg på meg for mye.»',
+          es: '«¿Cuál es tu mayor reto?» «Me gustaría mejorar en saber decir no. A veces asumo demasiado.»'
+        },
+        {
+          no: 'Til slutt spør Alex om arbeidstidene og om de tilbyr opplæring. Sjefen sier at de ringer i morgen.',
+          es: 'Al final, Alex pregunta por el horario y si ofrecen formación. El jefe dice que llamarán mañana.'
+        }
+      ],
+      vocab: [
+        { no: 'å søke', es: 'solicitar', note: 'søke på en jobb = solicitar un trabajo' },
+        { no: 'intervju', es: 'entrevista' },
+        { no: 'erfaring', es: 'experiencia' },
+        { no: 'å fortelle', es: 'contar' },
+        { no: 'sjef', es: 'jefe, jefa' },
+        { no: 'å møte', es: 'conocer, encontrarse con' },
+        { no: 'ansvar', es: 'responsabilidad' },
+        { no: 'utfordring', es: 'reto, desafío' },
+        { no: 'å ta på seg', es: 'asumir (una tarea)' },
+        { no: 'arbeidstid', es: 'horario laboral' },
+        { no: 'opplæring', es: 'formación' },
+        { no: 'å ringe', es: 'llamar por teléfono' },
+        { no: 'fast stilling', es: 'puesto fijo' }
+      ],
+      phrases: [
+        { no: 'Kan du fortelle litt om deg selv?', es: '¿Puedes contarme un poco sobre ti?' },
+        { no: 'Jeg har to års erfaring fra service.', es: 'Tengo dos años de experiencia en atención al cliente.' },
+        { no: 'Hvordan ser en vanlig arbeidsdag ut?', es: '¿Cómo es un día normal de trabajo?' },
+        { no: 'Når kan jeg forvente å høre fra dere?', es: '¿Cuándo puedo esperar noticias suyas?' }
+      ],
+      tip: 'En Noruega la entrevista suele ser bastante informal y se tutea desde el principio. Llega puntual, mira a los ojos y prepara una pregunta para el final. Distingue «fast stilling» (puesto fijo) de «vikariat» (contrato temporal): cambia todo lo que puedes planificar.',
+      grammar: {
+        title: 'Pretérito perfecto: har + participio',
+        points: [
+          'Se forma con «har» + participio: jeg har jobbet, han har søkt.',
+          'Los verbos regulares añaden -et o -te: jobbe → jobbet, snakke → snakket. Otros son irregulares: søke → søkt.',
+          'Se usa para experiencias sin momento concreto. Con «i går» va el pretérito: jeg jobbet i går.',
+          'El participio no cambia con el sujeto: vi har jobbet.'
+        ],
+        examples: [
+          { no: 'Jeg har jobbet som servitør i to år.', es: 'He trabajado de camarero durante dos años.' },
+          { no: 'Har du søkt på jobben?', es: '¿Has solicitado el trabajo?' },
+          { no: 'Vi har ikke fått svar ennå.', es: 'Todavía no hemos recibido respuesta.' }
+        ]
+      },
+      exercises: [
+        {
+          type: 'mcq',
+          prompt: 'Hvor lenge har Alex jobbet på kafé?',
+          options: ['To år', 'To måneder', 'Fem år', 'Ett år'],
+          answer: 0,
+          explain: 'Alex dice «jeg har jobbet på kafé i to år»: dos años.'
+        },
+        {
+          type: 'gap',
+          prompt: 'Completa con el verbo correcto:',
+          sentence: 'Jeg ___ jobbet som servitør i to år.',
+          answers: ['har'],
+          bank: ['har', 'er', 'hadde'],
+          es: 'He trabajado de camarero durante dos años.',
+          explain: 'El pretérito perfecto es «har» + participio: har jobbet.'
+        },
+        {
+          type: 'cloze',
+          prompt: 'Completa con la forma correcta del verbo:',
+          text: 'Alex ___ på jobben. Han ___ i service i to år. Nå ___ han prøve noe nytt.',
+          answers: ['har søkt', 'har jobbet', 'vil'],
+          bank: ['har søkt', 'har jobbet', 'vil', 'søker', 'jobbet', 'ville'],
+          es: 'Alex ha solicitado el trabajo. Ha trabajado en atención al cliente durante dos años. Ahora quiere probar algo nuevo.',
+          explain: '«Har søkt» y «har jobbet» son pretérito perfecto. «Nå» pide presente: vil.'
+        },
+        {
+          type: 'transform',
+          prompt: 'Reescribe en pretérito perfecto:',
+          source: 'Jeg jobber på en kafé.',
+          answer: 'Jeg har jobbet på en kafé.',
+          hint: 'har + participio',
+          es: 'He trabajado en una cafetería.',
+          explain: '«Jobber» → «har jobbet». Los verbos en -e suelen hacer el participio en -et.'
+        },
+        {
+          type: 'transform',
+          prompt: 'Reescribe en pretérito perfecto:',
+          source: 'Han søker på en ny jobb.',
+          answer: 'Han har søkt på en ny jobb.',
+          hint: 'søke tiene un participio irregular',
+          es: 'Ha solicitado un trabajo nuevo.',
+          explain: 'El participio de «å søke» es «søkt», no «søket». Es una de las formas que hay que memorizar.'
+        },
+        {
+          type: 'listen',
+          prompt: 'Dictado: escribe exactamente lo que oyes.',
+          audio: 'Jeg har to års erfaring fra service.',
+          hint: '7 palabras · habla de experiencia',
+          es: 'Tengo dos años de experiencia en atención al cliente.',
+          explain: '«To års erfaring» va en genitivo: dos años de experiencia.'
+        },
+        {
+          type: 'match',
+          prompt: 'Empareja el vocabulario de la entrevista:',
+          pairs: [
+            { a: 'erfaring', b: 'experiencia' },
+            { a: 'utfordring', b: 'reto' },
+            { a: 'arbeidstid', b: 'horario laboral' },
+            { a: 'opplæring', b: 'formación' },
+            { a: 'søknad', b: 'solicitud' },
+            { a: 'lønn', b: 'salario' }
+          ],
+          explain: '«Søknad» es la solicitud escrita; «intervju» es la entrevista. «Lønn» es el salario, no el sueldo mensual concreto (det er «månedslønn»).'
+        },
+        {
+          type: 'mcq',
+          prompt: '¿Qué pregunta encaja mejor al final de una entrevista?',
+          options: ['Hvor mye kan jeg ta fri?', 'Hvordan ser en vanlig arbeidsdag ut?', 'Hvorfor har dere så dårlig rykte?', 'Kan jeg få jobben nå?'],
+          answer: 1,
+          explain: 'Preguntar por un día normal demuestra interés real y suena profesional. Las otras opciones suenan a exigencia o a desconfianza.'
+        }
+      ]
+    },
+
+    /* ------------------------------------------------------------------ 7 */
+    {
+      id: 'hoslegen',
+      num: 7,
+      emoji: '🩺',
+      level: 'B1',
+      title: 'Hos legen',
+      subtitle: 'Explicar síntomas, entender al médico y pedir hora',
+      goals: ['Describir síntomas y su duración', 'Entender instrucciones médicas', 'Pedir cita y hablar de medicinas'],
+      text: [
+        {
+          no: 'Alex har vært forkjølet i en uke, men nå er det verre. Han har vondt i halsen og hoster om natten.',
+          es: 'Alex lleva una semana resfriado, pero ahora está peor. Le duele la garganta y tose por la noche.'
+        },
+        {
+          no: 'Han ringer legekontoret og får en time samme dag. «Hva er problemet?» spør resepsjonisten.',
+          es: 'Llama a la consulta médica y consigue cita para el mismo día. «¿Cuál es el problema?», pregunta la recepcionista.'
+        },
+        {
+          no: 'Legen måler temperaturen og lytter på lungene. «Du har en halsbetennelse,» sier hun. «Du trenger penicillin.»',
+          es: 'La médica le mide la temperatura y le ausculta los pulmones. «Tienes una infección de garganta», dice. «Necesitas penicilina.»'
+        },
+        {
+          no: '«Hvor ofte skal jeg ta medisinen?» spør Alex. «Tre ganger om dagen i ti dager. Og bli hjemme i to dager.»',
+          es: '«¿Con qué frecuencia tomo la medicina?», pregunta Alex. «Tres veces al día durante diez días. Y quédate en casa dos días.»'
+        },
+        {
+          no: 'Alex får en sykmelding og går rett på apoteket. Han føler seg lettet, men også litt sliten.',
+          es: 'Alex recibe una baja médica y va directo a la farmacia. Se siente aliviado, pero también algo cansado.'
+        }
+      ],
+      vocab: [
+        { no: 'forkjølet', es: 'resfriado' },
+        { no: 'vondt i halsen', es: 'dolor de garganta' },
+        { no: 'å hoste', es: 'toser' },
+        { no: 'legekontor', es: 'consulta médica' },
+        { no: 'å få en time', es: 'conseguir cita' },
+        { no: 'resepsjonist', es: 'recepcionista' },
+        { no: 'å måle', es: 'medir' },
+        { no: 'halsbetennelse', es: 'infección de garganta, amigdalitis' },
+        { no: 'å ta medisin', es: 'tomar medicina' },
+        { no: 'sykmelding', es: 'baja médica' },
+        { no: 'apotek', es: 'farmacia' },
+        { no: 'lettet', es: 'aliviado' },
+        { no: 'sliten', es: 'cansado' }
+      ],
+      phrases: [
+        { no: 'Jeg vil gjerne bestille en time.', es: 'Quisiera pedir cita.' },
+        { no: 'Jeg har hatt vondt i halsen i en uke.', es: 'Llevo una semana con dolor de garganta.' },
+        { no: 'Hvor ofte skal jeg ta medisinen?', es: '¿Con qué frecuencia debo tomar la medicina?' },
+        { no: 'Trenger jeg en sykmelding?', es: '¿Necesito una baja médica?' }
+      ],
+      tip: 'En Noruega tienes un «fastlege» asignado: para algo urgente, llama a primera hora y suelen darte hora el mismo día. La receta va electrónica al apotek, así que solo necesitas el ID. «Jeg er syk» es estoy enfermo; «jeg er sjuk» suena a nynorsk o dialecto.',
+      grammar: {
+        title: 'Duración: perfecto con «i» y «siden»',
+        points: [
+          '«Jeg har vært syk i tre dager» = llevo tres días enfermo (y sigo).',
+          '«Jeg var syk i tre dager» = estuve tres días enfermo (ya terminó).',
+          '«i» + duración: i en uke, i to dager. «siden» + momento: siden mandag.',
+          'El perfecto conecta pasado y presente; el pretérito cuenta algo cerrado.'
+        ],
+        examples: [
+          { no: 'Jeg har hatt vondt i halsen i en uke.', es: 'Llevo una semana con dolor de garganta.' },
+          { no: 'Jeg var hos legen i går.', es: 'Ayer fui al médico.' },
+          { no: 'Hun har vært sykmeldt siden mandag.', es: 'Está de baja desde el lunes.' }
+        ]
+      },
+      exercises: [
+        {
+          type: 'mcq',
+          prompt: 'Hva feiler Alex?',
+          options: ['Han har vondt i magen', 'Han har halsbetennelse', 'Han har brukket beinet', 'Han har hodepine'],
+          answer: 1,
+          explain: 'El médico dice «du har en halsbetennelse»: infección de garganta.'
+        },
+        {
+          type: 'gap',
+          prompt: 'Completa con la preposición correcta:',
+          sentence: 'Jeg har hatt vondt i halsen ___ en uke.',
+          answers: ['i'],
+          bank: ['i', 'på', 'for', 'siden'],
+          es: 'Llevo una semana con dolor de garganta.',
+          explain: 'Duración con «i»: i en uke, i to dager. «Siden» iría con un momento: siden mandag.'
+        },
+        {
+          type: 'cloze',
+          prompt: 'Completa el texto con el presente correcto:',
+          text: 'Legen sier at Alex ___ en halsbetennelse. Han ___ medisinen tre ganger om dagen. Alex ___ hjemme i to dager.',
+          answers: ['har', 'tar', 'blir'],
+          bank: ['har', 'tar', 'blir', 'hadde', 'tok', 'ble'],
+          es: 'La médica dice que Alex tiene una infección de garganta. Toma la medicina tres veces al día. Alex se queda en casa dos días.',
+          explain: 'Todo el texto describe la situación actual, así que va en presente: har, tar, blir.'
+        },
+        {
+          type: 'transform',
+          prompt: 'Reescribe en pretérito perfecto:',
+          source: 'Jeg er forkjølet.',
+          answer: 'Jeg har vært forkjølet.',
+          hint: 'el participio de «å være» es irregular',
+          es: 'He estado resfriado.',
+          explain: '«Være» → «har vært». Es una de las formas más frecuentes del noruego.'
+        },
+        {
+          type: 'transform',
+          prompt: 'Reescribe en pretérito perfecto:',
+          source: 'Hun tar medisinen.',
+          answer: 'Hun har tatt medisinen.',
+          hint: 'tar → tatt',
+          es: 'Ha tomado la medicina.',
+          explain: '«Å ta» hace «har tatt». El participio no cambia aunque el sujeto sea «hun».'
+        },
+        {
+          type: 'listen',
+          prompt: 'Dictado: escribe exactamente lo que oyes.',
+          audio: 'Jeg vil gjerne bestille en time.',
+          hint: '6 palabras · pedir cita',
+          es: 'Quisiera pedir cita.',
+          explain: '«Jeg vil gjerne» suaviza la petición: es el «quisiera» noruego.'
+        },
+        {
+          type: 'match',
+          prompt: 'Empareja los términos de salud:',
+          pairs: [
+            { a: 'hoste', b: 'toser' },
+            { a: 'vondt i halsen', b: 'dolor de garganta' },
+            { a: 'sykmelding', b: 'baja médica' },
+            { a: 'apotek', b: 'farmacia' },
+            { a: 'å måle', b: 'medir' },
+            { a: 'sliten', b: 'cansado' }
+          ],
+          explain: '«Sykmelding» es el documento de baja; «sykepenger» es el dinero que cobras durante la baja.'
+        },
+        {
+          type: 'mcq',
+          prompt: '¿Qué significa «tre ganger om dagen»?',
+          options: ['Tres días a la semana', 'Tres veces al día', 'Cada tres horas', 'Durante tres días'],
+          answer: 1,
+          explain: '«Ganger» = veces; «om dagen» = al día. «Tre ganger om dagen» es tres veces al día.'
+        },
+        {
+          type: 'gap',
+          prompt: 'Completa la pregunta:',
+          sentence: 'Hvor ___ skal jeg ta medisinen?',
+          answers: ['ofte'],
+          bank: ['ofte', 'mye', 'lenge', 'mange'],
+          es: '¿Con qué frecuencia debo tomar la medicina?',
+          explain: '«Hvor ofte» = con qué frecuencia. «Hvor lenge» = cuánto tiempo; «hvor mye» = cuánto.'
+        }
+      ]
+    },
+
+    /* ------------------------------------------------------------------ 8 */
+    {
+      id: 'bolig',
+      num: 8,
+      emoji: '🏠',
+      level: 'B1',
+      title: 'Å leie bolig',
+      subtitle: 'Buscar piso, entender el contrato y hablar con el casero',
+      goals: ['Describir un piso y sus condiciones', 'Entender un anuncio de alquiler', 'Negociar y revisar un contrato'],
+      text: [
+        {
+          no: 'Alex leter etter en ny leilighet i Oslo. Den han bor i nå, er for liten og for dyr.',
+          es: 'Alex busca un piso nuevo en Oslo. El que tiene ahora es demasiado pequeño y demasiado caro.'
+        },
+        {
+          no: 'På Finn.no finner han en lys toroms på Grünerløkka. Leien er 14 000 kroner i måneden, uten strøm.',
+          es: 'En Finn.no encuentra un piso luminoso de dos habitaciones en Grünerløkka. El alquiler son 14 000 coronas al mes, sin electricidad.'
+        },
+        {
+          no: 'Han sender en melding til utleieren og får komme på visning dagen etter. Leiligheten er fin, men det er langt til nærmeste butikk.',
+          es: 'Envía un mensaje al casero y puede ir a verlo al día siguiente. El piso está bien, pero hay lejos a la tienda más cercana.'
+        },
+        {
+          no: '«Er det mulig å ha en katt her?» spør Alex. «Ja, men da må du betale et depositum,» sier utleieren.',
+          es: '«¿Es posible tener un gato aquí?», pregunta Alex. «Sí, pero entonces tienes que pagar una fianza», dice el casero.'
+        },
+        {
+          no: 'Alex leser kontrakten nøye. Oppsigelsestiden er tre måneder, og han må betale husleie den første i hver måned.',
+          es: 'Alex lee el contrato con atención. El plazo de preaviso es de tres meses y debe pagar el alquiler el día primero de cada mes.'
+        }
+      ],
+      vocab: [
+        { no: 'å leie', es: 'alquilar' },
+        { no: 'leilighet', es: 'piso, apartamento' },
+        { no: 'toroms', es: 'de dos habitaciones (salón + dormitorio)' },
+        { no: 'leie', es: 'alquiler' },
+        { no: 'strøm', es: 'electricidad' },
+        { no: 'utleier', es: 'casero, casera' },
+        { no: 'visning', es: 'visita del piso' },
+        { no: 'depositum', es: 'fianza' },
+        { no: 'kontrakt', es: 'contrato' },
+        { no: 'oppsigelsestid', es: 'plazo de preaviso' },
+        { no: 'husleie', es: 'alquiler mensual' },
+        { no: 'nabolag', es: 'barrio' },
+        { no: 'å flytte', es: 'mudarse' }
+      ],
+      phrases: [
+        { no: 'Jeg er interessert i leiligheten.', es: 'Me interesa el piso.' },
+        { no: 'Er strøm inkludert i leien?', es: '¿Está la electricidad incluida en el alquiler?' },
+        { no: 'Når kan jeg flytte inn?', es: '¿Cuándo puedo mudarme?' },
+        { no: 'Kan vi skrive en kontrakt?', es: '¿Podemos firmar un contrato?' }
+      ],
+      tip: 'En Noruega lo normal es un depósito de tres meses y un preaviso de tres meses. La «husleie» se paga el día 1. Ojo con el vocabulario: «bolig» es vivienda en general y «leilighet» es piso; un «toroms» tiene salón y una habitación, no dos dormitorios.',
+      grammar: {
+        title: 'Comparativos y «for ... til»',
+        points: [
+          'Comparativo: stor → større, dyr → dyrere, liten → mindre. Superlativo: størst, dyrest, minst.',
+          '«for liten» = demasiado pequeño; «for dyr» = demasiado caro.',
+          '«like ... som» = tan ... como; «ikke like ... som» = no tan ... como.',
+          'El comparativo se une con «enn»: større enn, dyrere enn.'
+        ],
+        examples: [
+          { no: 'Leiligheten er for liten og for dyr.', es: 'El piso es demasiado pequeño y demasiado caro.' },
+          { no: 'Denne leiligheten er lysere enn den andre.', es: 'Este piso es más luminoso que el otro.' },
+          { no: 'Leien er ikke like høy som i sentrum.', es: 'El alquiler no es tan alto como en el centro.' }
+        ]
+      },
+      exercises: [
+        {
+          type: 'mcq',
+          prompt: 'Hvor mye koster leiligheten i måneden?',
+          options: ['14 000 kroner', '4 000 kroner', '40 000 kroner', '1 400 kroner'],
+          answer: 0,
+          explain: 'El texto dice «leien er 14 000 kroner i måneden, uten strøm».'
+        },
+        {
+          type: 'gap',
+          prompt: 'Completa con la palabra correcta:',
+          sentence: 'Leiligheten er ___ liten for Alex.',
+          answers: ['for'],
+          bank: ['for', 'til', 'enn', 'som'],
+          es: 'El piso es demasiado pequeño para Alex.',
+          explain: '«For» + adjetivo = demasiado. «Til» indica destino o finalidad, no exceso.'
+        },
+        {
+          type: 'gap',
+          prompt: 'Completa la comparación:',
+          sentence: 'Leien er høyere ___ i sentrum.',
+          answers: ['enn'],
+          bank: ['enn', 'som', 'til', 'for'],
+          es: 'El alquiler es más alto que en el centro.',
+          explain: 'Comparativo + «enn» = que. «Som» se usa con «like ... som» (tan ... como).'
+        },
+        {
+          type: 'cloze',
+          prompt: 'Completa el anuncio con la forma correcta:',
+          text: 'Leiligheten er ___ enn den han har nå, men den er også ___. Leien er 14 000 kroner, og strøm er ikke ___. Alex må betale et ___ før han flytter inn.',
+          answers: ['lysere', 'dyrere', 'inkludert', 'depositum'],
+          bank: ['lysere', 'dyrere', 'inkludert', 'depositum', 'lys', 'dyr', 'inkluderer', 'kontrakt'],
+          es: 'El piso es más luminoso que el que tiene ahora, pero también es más caro. El alquiler son 14 000 coronas y la electricidad no está incluida. Alex debe pagar una fianza antes de mudarse.',
+          explain: 'Comparativos: lys → lysere, dyr → dyrere. «Inkludert» = incluido; «depositum» = fianza.'
+        },
+        {
+          type: 'transform',
+          prompt: 'Reescribe con «for» (= demasiado):',
+          source: 'Leiligheten er veldig dyr.',
+          answer: 'Leiligheten er for dyr.',
+          hint: 'for + adjetivo',
+          es: 'El piso es demasiado caro.',
+          explain: '«Veldig dyr» es muy caro; «for dyr» es demasiado caro. No son lo mismo.'
+        },
+        {
+          type: 'listen',
+          prompt: 'Dictado: escribe exactamente lo que oyes.',
+          audio: 'Er strøm inkludert i leien?',
+          hint: '5 palabras · una pregunta clave',
+          es: '¿Está la electricidad incluida en el alquiler?',
+          explain: '«Inkludert i» = incluido en. La pregunta empieza por el verbo, como en casi todas las preguntas noruegas.'
+        },
+        {
+          type: 'match',
+          prompt: 'Empareja el vocabulario de la vivienda:',
+          pairs: [
+            { a: 'utleier', b: 'casero' },
+            { a: 'depositum', b: 'fianza' },
+            { a: 'husleie', b: 'alquiler mensual' },
+            { a: 'oppsigelsestid', b: 'plazo de preaviso' },
+            { a: 'visning', b: 'visita del piso' },
+            { a: 'å flytte', b: 'mudarse' }
+          ],
+          explain: '«Å flytte» es mudarse; «å flytte inn» es mudarse a un sitio concreto. El «depositum» se devuelve al final si no hay daños.'
+        },
+        {
+          type: 'mcq',
+          prompt: '¿Qué significa «oppsigelsestiden er tre måneder»?',
+          options: ['Puedes mudarte en tres meses', 'Debes avisar con tres meses de antelación', 'El contrato dura tres meses', 'La fianza es de tres meses'],
+          answer: 1,
+          explain: '«Oppsigelsestid» es el plazo que tienes que respetar para dejar el contrato, no la duración total.'
+        }
+      ]
+    },
+
+    /* ------------------------------------------------------------------ 9 */
+    {
+      id: 'nyheter',
+      num: 9,
+      emoji: '📰',
+      level: 'B2',
+      title: 'Nyheter og meninger',
+      subtitle: 'Resumir una noticia y dar tu opinión con matices',
+      goals: ['Resumir una noticia con conectores', 'Expresar acuerdo y desacuerdo', 'Matizar sin sonar brusco'],
+      text: [
+        {
+          no: 'I går publiserte NRK en sak om at flere unge i Norge sliter med å komme inn på boligmarkedet. Prisene har steget kraftig de siste ti årene, spesielt i Oslo og Bergen.',
+          es: 'Ayer NRK publicó un reportaje sobre que cada vez más jóvenes en Noruega tienen dificultades para entrar en el mercado inmobiliario. Los precios han subido mucho en los últimos diez años, sobre todo en Oslo y Bergen.'
+        },
+        {
+          no: 'Ifølge artikkelen tjener en gjennomsnittlig førstegangskjøper ikke nok til å få lån til en vanlig leilighet. Mange velger derfor å leie lenger enn før.',
+          es: 'Según el artículo, un comprador primerizo medio no gana lo suficiente para conseguir un préstamo para un piso normal. Por eso muchos eligen alquilar durante más tiempo que antes.'
+        },
+        {
+          no: 'Noen økonomer mener at markedet vil roe seg ned. Andre peker på at byggetakten er for lav, og at problemet bare vil bli større.',
+          es: 'Algunos economistas opinan que el mercado se calmará. Otros señalan que el ritmo de construcción es demasiado bajo y que el problema solo irá a más.'
+        },
+        {
+          no: 'Kommentarfeltet er delt. «Dette er en politisk oppgave, ikke noe markedet kan løse alene,» skriver en leser. En annen svarer: «Men vi kan ikke bygge ned hele byen heller.»',
+          es: 'La sección de comentarios está dividida. «Esta es una tarea política, algo que el mercado no puede resolver solo», escribe un lector. Otro responde: «Pero tampoco podemos construir hasta derribar toda la ciudad.»'
+        },
+        {
+          no: 'Saken viser hvor vanskelig det er å være ung i en storby i dag – og hvor ulike løsningene kan se ut.',
+          es: 'El reportaje muestra lo difícil que es ser joven en una gran ciudad hoy, y lo distintas que pueden ser las soluciones.'
+        }
+      ],
+      vocab: [
+        { no: 'å publisere', es: 'publicar' },
+        { no: 'sak', es: 'noticia, caso, reportaje' },
+        { no: 'boligmarked', es: 'mercado inmobiliario' },
+        { no: 'å stige', es: 'subir (un precio)' },
+        { no: 'kraftig', es: 'fuertemente, considerablemente' },
+        { no: 'ifølge', es: 'según' },
+        { no: 'gjennomsnittlig', es: 'medio, promedio' },
+        { no: 'førstegangskjøper', es: 'comprador primerizo' },
+        { no: 'å få lån', es: 'conseguir un préstamo' },
+        { no: 'økonom', es: 'economista' },
+        { no: 'å roe seg ned', es: 'calmarse' },
+        { no: 'byggetakt', es: 'ritmo de construcción' },
+        { no: 'kommentarfelt', es: 'sección de comentarios' },
+        { no: 'delt', es: 'dividido' },
+        { no: 'løsning', es: 'solución' }
+      ],
+      phrases: [
+        { no: 'Ifølge artikkelen har prisene steget kraftig.', es: 'Según el artículo, los precios han subido mucho.' },
+        { no: 'Jeg er enig i at byggetakten er for lav.', es: 'Estoy de acuerdo en que el ritmo de construcción es demasiado bajo.' },
+        { no: 'Jeg er ikke helt enig.', es: 'No estoy del todo de acuerdo.' },
+        { no: 'På den ene siden er det dyrt, på den andre siden er det sentralt.', es: 'Por un lado es caro; por otro, está céntrico.' }
+      ],
+      tip: 'En Noruega se discute sin subir el tono: «jeg er uenig» es normal y no es descortés. Suaviza con «jeg tror», «kanskje» o «på en måte». Evita «du tar feil» (estás equivocado) y di «jeg ser det annerledes» (lo veo de otra forma).',
+      grammar: {
+        title: 'Conectores y opinión',
+        points: [
+          'Para añadir: dessuten, i tillegg, også.',
+          'Para contrastar: men, likevel, på den andre siden, derimot.',
+          'Para causa: fordi, siden, på grunn av + sustantivo.',
+          'Para consecuencia: derfor, dermed, som følge av.',
+          'Para opinión: jeg mener at, jeg synes at, etter min mening.'
+        ],
+        examples: [
+          { no: 'Prisene har steget kraftig, derfor er det vanskelig å kjøpe.', es: 'Los precios han subido mucho; por eso es difícil comprar.' },
+          { no: 'På den ene siden er det dyrt, på den andre siden er det sentralt.', es: 'Por un lado es caro; por otro, está céntrico.' },
+          { no: 'Jeg er enig i at byggetakten er for lav.', es: 'Estoy de acuerdo en que el ritmo de construcción es demasiado bajo.' }
+        ]
+      },
+      exercises: [
+        {
+          type: 'mcq',
+          prompt: 'Hva er hovedsaken i artikkelen?',
+          options: [
+            'Prisene på boliger har steget, og unge har vanskelig for å kjøpe.',
+            'NRK skal bygge nye leiligheter.',
+            'Alle unge vil flytte fra Oslo.',
+            'Bankene vil senke renten.'
+          ],
+          answer: 0,
+          explain: 'El texto habla del acceso de los jóvenes al mercado inmobiliario y de la subida de precios.'
+        },
+        {
+          type: 'gap',
+          prompt: 'Completa con el adverbio correcto:',
+          sentence: 'Prisene har steget ___ de siste ti årene.',
+          answers: ['kraftig'],
+          bank: ['kraftig', 'kort', 'gjerne', 'sjelden'],
+          es: 'Los precios han subido mucho en los últimos diez años.',
+          explain: '«Kraftig» describe un aumento fuerte. «Gjerne» significa con gusto; «sjelden», rara vez.'
+        },
+        {
+          type: 'gap',
+          prompt: 'Completa con el conector correcto:',
+          sentence: '___ artikkelen tjener ikke unge nok til å få lån.',
+          answers: ['Ifølge'],
+          bank: ['Ifølge', 'Fordi', 'Likevel', 'Derfor'],
+          es: 'Según el artículo, los jóvenes no ganan lo suficiente para conseguir un préstamo.',
+          explain: '«Ifølge» = según y va delante de la fuente, sin preposición. «Fordi» introduce causa.'
+        },
+        {
+          type: 'cloze',
+          prompt: 'Completa el resumen de la noticia:',
+          text: 'Prisene har steget ___, og mange unge får ikke ___. Noen mener at markedet vil ___ seg ned, mens andre tror at problemet blir ___. Løsningen avhenger av hvilken ___ man velger.',
+          answers: ['kraftig', 'lån', 'roe', 'større', 'politikk'],
+          bank: ['kraftig', 'lån', 'roe', 'større', 'politikk', 'kort', 'låner', 'roer', 'stor', 'politisk'],
+          es: 'Los precios han subido mucho y muchos jóvenes no consiguen préstamo. Algunos creen que el mercado se calmará, mientras que otros piensan que el problema irá a más. La solución depende de la política que se elija.',
+          explain: '«Få lån», «roe seg ned», «bli større» y «velge politikk» son colocaciones fijas.'
+        },
+        {
+          type: 'transform',
+          prompt: 'Une las dos frases con «derfor»:',
+          source: 'Prisene stiger. Det er vanskelig å kjøpe.',
+          answer: 'Prisene stiger, derfor er det vanskelig å kjøpe.',
+          hint: 'derfor = por eso',
+          es: 'Los precios suben; por eso es difícil comprar.',
+          explain: '«Derfor» introduce la consecuencia y va seguido del verbo: derfor er det ...'
+        },
+        {
+          type: 'transform',
+          prompt: 'Fusiona las dos frases con «enig i at»:',
+          source: 'Jeg er enig. Byggetakten er for lav.',
+          answer: 'Jeg er enig i at byggetakten er for lav.',
+          hint: 'enig i at + sujeto + verbo',
+          es: 'Estoy de acuerdo en que el ritmo de construcción es demasiado bajo.',
+          explain: '«Å være enig i at» introduce una opinión compartida. «Enig med» se usa con personas: jeg er enig med deg.'
+        },
+        {
+          type: 'listen',
+          prompt: 'Dictado: escribe exactamente lo que oyes.',
+          audio: 'Ifølge artikkelen har prisene steget kraftig.',
+          hint: '6 palabras · una fuente y una tendencia',
+          es: 'Según el artículo, los precios han subido mucho.',
+          explain: 'Fíjate en el orden: ifølge + fuente, luego verbo + sujeto.'
+        },
+        {
+          type: 'match',
+          prompt: 'Empareja los conectores con su significado:',
+          pairs: [
+            { a: 'derfor', b: 'por eso' },
+            { a: 'likevel', b: 'sin embargo' },
+            { a: 'dessuten', b: 'además' },
+            { a: 'ifølge', b: 'según' },
+            { a: 'på den andre siden', b: 'por otro lado' },
+            { a: 'siden', b: 'ya que' }
+          ],
+          explain: '«Siden» y «fordi» son parecidos, pero «siden» suele dar información ya conocida. «Likevel» marca contraste.'
+        },
+        {
+          type: 'mcq',
+          prompt: '¿Cuál suena más matizado al discrepar?',
+          options: ['Du tar feil.', 'Jeg ser det annerledes.', 'Det er helt dumt.', 'Nei, aldri.'],
+          answer: 1,
+          explain: '«Jeg ser det annerledes» discrepa sin atacar a la persona. Es la opción más útil en una discusión noruega.'
+        }
+      ]
+    },
+
+    /* ------------------------------------------------------------------ 10 */
+    {
+      id: 'miljo',
+      num: 10,
+      emoji: '🌍',
+      level: 'B2',
+      title: 'Miljø og samfunn',
+      subtitle: 'Sostenibilidad, consumo y cambios que empiezan en pequeño',
+      goals: ['Argumentar sobre medio ambiente', 'Hablar de hábitos y consumo', 'Usar la pasiva y «man»'],
+      text: [
+        {
+          no: 'Nordmenn kaster i gjennomsnitt 450 kilo søppel hvert år. Samtidig sier ni av ti at de er opptatt av miljøet.',
+          es: 'Los noruegos tiran de media 450 kilos de basura al año. Al mismo tiempo, nueve de cada diez dicen que les importa el medio ambiente.'
+        },
+        {
+          no: 'Forskjellen mellom det vi sier og det vi gjør, kalles gjerne «grønnvasking» når den brukes bevisst av selskaper.',
+          es: 'La diferencia entre lo que decimos y lo que hacemos suele llamarse «greenwashing» cuando las empresas la usan a propósito.'
+        },
+        {
+          no: 'Mange kommuner har innført sortering av matavfall, plast og papir. Målet er at mindre skal ende opp på deponi.',
+          es: 'Muchos municipios han introducido la clasificación de residuos orgánicos, plástico y papel. El objetivo es que menos acabe en el vertedero.'
+        },
+        {
+          no: 'Kritikerne mener at ansvaret flyttes fra produsentene til forbrukerne. «Det hjelper lite å sortere hvis produktene ikke varer,» sier en miljøforsker.',
+          es: 'Los críticos opinan que la responsabilidad se traslada de los productores a los consumidores. «De poco sirve clasificar si los productos no duran», dice una investigadora ambiental.'
+        },
+        {
+          no: 'Likevel skjer det noe: stadig flere velger tog fremfor fly, og bruktmarkedet vokser. Endring tar tid, men den begynner ofte i det små.',
+          es: 'Aun así, algo está pasando: cada vez más gente elige el tren en vez del avión y el mercado de segunda mano crece. El cambio lleva tiempo, pero a menudo empieza en pequeño.'
+        }
+      ],
+      vocab: [
+        { no: 'søppel', es: 'basura' },
+        { no: 'avfall', es: 'residuos' },
+        { no: 'å kaste', es: 'tirar' },
+        { no: 'gjenvinning', es: 'reciclaje' },
+        { no: 'å sortere', es: 'clasificar' },
+        { no: 'forbruker', es: 'consumidor' },
+        { no: 'produsent', es: 'productor' },
+        { no: 'ansvar', es: 'responsabilidad' },
+        { no: 'bærekraftig', es: 'sostenible' },
+        { no: 'utslipp', es: 'emisiones' },
+        { no: 'å redusere', es: 'reducir' },
+        { no: 'deponi', es: 'vertedero' },
+        { no: 'bruktmarked', es: 'mercado de segunda mano' },
+        { no: 'å vokse', es: 'crecer' },
+        { no: 'endring', es: 'cambio' }
+      ],
+      phrases: [
+        { no: 'Jeg prøver å redusere flyreiser.', es: 'Intento reducir los viajes en avión.' },
+        { no: 'Det er viktig at vi tenker langsiktig.', es: 'Es importante que pensemos a largo plazo.' },
+        { no: 'Ansvaret må fordeles bedre.', es: 'La responsabilidad debe repartirse mejor.' },
+        { no: 'Små endringer kan ha stor effekt.', es: 'Los pequeños cambios pueden tener un gran efecto.' }
+      ],
+      tip: 'El «dugnad» (trabajo comunitario voluntario) y el «friluftsliv» explican mucha de la cultura noruega. Y el «pant»: cada botella tiene un depósito que recuperas al devolverla en la máquina del supermercado. Reciclar ahí no es solo ecología, es dinero.',
+      grammar: {
+        title: 'Voz pasiva y «man»',
+        points: [
+          'Pasiva con «bli» + participio: Søppel blir sortert. (La basura se clasifica.)',
+          'Pasiva con «-s»: Det selges mye brukt. (Se vende mucho de segunda mano.)',
+          '«man» = uno, se, la gente: Man må sortere avfallet.',
+          '«det» impersonal: Det er viktig å redusere utslippene.'
+        ],
+        examples: [
+          { no: 'Matavfall blir sortert i mange kommuner.', es: 'Los residuos orgánicos se clasifican en muchos municipios.' },
+          { no: 'Det selges stadig mer brukt.', es: 'Cada vez se vende más de segunda mano.' },
+          { no: 'Man bør tenke på hva man kjøper.', es: 'Uno debería pensar en lo que compra.' }
+        ]
+      },
+      exercises: [
+        {
+          type: 'mcq',
+          prompt: 'Hva mener kritikerne?',
+          options: [
+            'At forbrukerne bør sortere mer.',
+            'At ansvaret flyttes fra produsentene til forbrukerne.',
+            'At deponiene er for dyre.',
+            'At gjenvinning ikke fungerer.'
+          ],
+          answer: 1,
+          explain: 'El texto lo dice: «ansvaret flyttes fra produsentene til forbrukerne».'
+        },
+        {
+          type: 'gap',
+          prompt: 'Completa la pasiva:',
+          sentence: 'Søppel ___ sortert i mange kommuner.',
+          answers: ['blir'],
+          bank: ['blir', 'er', 'har', 'skal'],
+          es: 'La basura se clasifica en muchos municipios.',
+          explain: 'La pasiva con «bli» + participio describe una acción: blir sortert.'
+        },
+        {
+          type: 'gap',
+          prompt: 'Completa con el pronombre impersonal («uno»):',
+          sentence: '___ må redusere utslippene.',
+          answers: ['Man'],
+          bank: ['Man', 'De', 'Vi', 'Det'],
+          es: 'Uno debe reducir las emisiones.',
+          explain: '«Man» es el sujeto impersonal. «Vi» también sería correcto gramaticalmente, pero no es impersonal.'
+        },
+        {
+          type: 'cloze',
+          prompt: 'Completa el texto sobre consumo y reciclaje:',
+          text: 'Hver nordmann kaster mye ___. Derfor er ___ viktig. I mange kommuner ___ matavfall og plast sortert. Men kritikerne mener at ansvaret ikke bare ligger hos ___. Produsentene må også lage produkter som ___ lenge.',
+          answers: ['søppel', 'gjenvinning', 'blir', 'forbrukerne', 'varer'],
+          bank: ['søppel', 'gjenvinning', 'blir', 'forbrukerne', 'varer', 'avfall', 'sorterer', 'produsentene', 'kaster'],
+          es: 'Cada noruego tira mucha basura. Por eso el reciclaje es importante. En muchos municipios se clasifican los residuos orgánicos y el plástico. Pero los críticos opinan que la responsabilidad no recae solo en los consumidores. Los productores también deben fabricar productos que duren.',
+          explain: '«Blir sortert» es pasiva; «varer» es el presente de «å vare» (durar).'
+        },
+        {
+          type: 'transform',
+          prompt: 'Reescribe en pasiva con «bli»:',
+          source: 'Kommunen sorterer matavfallet.',
+          answers: ['Matavfallet blir sortert av kommunen.', 'Matavfallet blir sortert.'],
+          hint: 'objeto → sujeto + blir + participio',
+          es: 'Los residuos orgánicos son clasificados por el municipio.',
+          explain: 'El objeto «matavfallet» pasa a sujeto. «Av kommunen» es opcional; si lo pones, va al final.'
+        },
+        {
+          type: 'listen',
+          prompt: 'Dictado: escribe exactamente lo que oyes.',
+          audio: 'Ansvaret må fordeles bedre.',
+          hint: '4 palabras · una exigencia',
+          es: 'La responsabilidad debe repartirse mejor.',
+          explain: '«Å fordeles» es pasiva con -s: repartirse. «Bedre» es el comparativo de «bra».'
+        },
+        {
+          type: 'match',
+          prompt: 'Empareja el vocabulario del medio ambiente:',
+          pairs: [
+            { a: 'utslipp', b: 'emisiones' },
+            { a: 'avfall', b: 'residuos' },
+            { a: 'bærekraftig', b: 'sostenible' },
+            { a: 'forbruker', b: 'consumidor' },
+            { a: 'gjenvinning', b: 'reciclaje' },
+            { a: 'bruktmarked', b: 'mercado de segunda mano' }
+          ],
+          explain: '«Bærekraftig» se usa mucho en política y empresa; «gjenvinning» es reciclar como proceso, mientras «å resirkulere» también se oye.'
+        },
+        {
+          type: 'mcq',
+          prompt: '¿Qué es «grønnvasking»?',
+          options: [
+            'Reciclar en casa',
+            'Cuando una empresa dice ser ecológica sin serlo',
+            'Lavar la ropa con poca agua',
+            'Comprar solo productos locales'
+          ],
+          answer: 1,
+          explain: '«Grønn» (verde) + «vasking» (lavado): lavado de imagen verde, el greenwashing.'
+        }
+      ]
+    },
+
+    /* ------------------------------------------------------------------ 11 */
+    {
+      id: 'arbeidsliv',
+      num: 11,
+      emoji: '⚖️',
+      level: 'B2',
+      title: 'Rettigheter i arbeidslivet',
+      subtitle: 'Contratos, derechos y cómo defenderte en el trabajo',
+      goals: ['Entender un contrato de trabajo', 'Conocer vacaciones, baja y horas extra', 'Saber a quién acudir si algo va mal'],
+      text: [
+        {
+          no: 'Da Alex begynte i den nye jobben, fikk han en skriftlig arbeidskontrakt. Der stod det hvor mye han skulle tjene, hvor mange timer han skulle jobbe, og hvor lang prøvetiden var.',
+          es: 'Cuando Alex empezó en el nuevo trabajo, recibió un contrato de trabajo por escrito. Ahí constaba cuánto iba a ganar, cuántas horas iba a trabajar y cuánto duraba el periodo de prueba.'
+        },
+        {
+          no: 'I Norge har alle rett til ferie, sykepenger og et trygt arbeidsmiljø. Reglene står i arbeidsmiljøloven, og de gjelder også deltidsansatte.',
+          es: 'En Noruega todos tienen derecho a vacaciones, pago por baja médica y un entorno laboral seguro. Las normas están en la ley del entorno laboral y también se aplican a los empleados a tiempo parcial.'
+        },
+        {
+          no: 'Likevel er det ikke alltid slik i praksis. Noen arbeidsgivere ringer ansatte på fritiden eller ber dem jobbe uten å betale for overtid.',
+          es: 'Aun así, no siempre es así en la práctica. Algunos empleadores llaman a los empleados en su tiempo libre o les piden trabajar sin pagar las horas extra.'
+        },
+        {
+          no: '«Du har rett til å si nei,» sier den tillitsvalgte. «Men det er lurt å samle dokumentasjon og snakke med oss først.»',
+          es: '«Tienes derecho a decir no», dice el representante de los trabajadores. «Pero es recomendable reunir documentación y hablar con nosotros primero.»'
+        },
+        {
+          no: 'Alex er glad for at han spurte. Nå vet han hvor han skal henvende seg hvis noe er uklart – og at en kontrakt ikke er et papir man bare signerer.',
+          es: 'Alex se alegra de haber preguntado. Ahora sabe a dónde dirigirse si algo no está claro, y que un contrato no es un papel que uno firma sin más.'
+        }
+      ],
+      vocab: [
+        { no: 'arbeidskontrakt', es: 'contrato de trabajo' },
+        { no: 'arbeidsgiver', es: 'empleador, empleadora' },
+        { no: 'arbeidstaker', es: 'trabajador, trabajadora' },
+        { no: 'prøvetid', es: 'periodo de prueba' },
+        { no: 'lønn', es: 'salario' },
+        { no: 'ferie', es: 'vacaciones' },
+        { no: 'sykepenger', es: 'pago por baja médica' },
+        { no: 'arbeidsmiljø', es: 'entorno laboral' },
+        { no: 'arbeidsmiljøloven', es: 'ley del entorno laboral' },
+        { no: 'deltidsansatt', es: 'empleado a tiempo parcial' },
+        { no: 'overtid', es: 'horas extra' },
+        { no: 'tillitsvalgt', es: 'representante de los trabajadores' },
+        { no: 'å henvende seg', es: 'dirigirse (a alguien)' },
+        { no: 'dokumentasjon', es: 'documentación' },
+        { no: 'oppsigelse', es: 'despido, rescisión' }
+      ],
+      phrases: [
+        { no: 'Hva står i kontrakten min?', es: '¿Qué dice mi contrato?' },
+        { no: 'Har jeg rett til å si nei?', es: '¿Tengo derecho a decir no?' },
+        { no: 'Kan du betale for overtiden?', es: '¿Puedes pagar las horas extra?' },
+        { no: 'Jeg vil gjerne snakke med den tillitsvalgte.', es: 'Quisiera hablar con el representante de los trabajadores.' }
+      ],
+      tip: 'El «tillitsvalgt» es la persona de confianza del sindicato en la empresa; afiliarse a un «fagforening» es habitual y te da apoyo legal. Guarda contratos, horarios y mensajes: en una disputa, la documentación manda. Y sí, el periodo de prueba no elimina tus derechos.',
+      grammar: {
+        title: 'Modales: må, skal, bør, kan',
+        points: [
+          '«må» = obligación fuerte (tiene que); «skal» = plan, norma o mandato; «bør» = recomendación (debería); «kan» = posibilidad o permiso.',
+          '«ikke må» = prohibición (no debe); «ikke trenger» = no hace falta.',
+          '«å ha rett til» + infinitivo = tener derecho a.',
+          '«å være nødt til» = verse obligado a.'
+        ],
+        examples: [
+          { no: 'Du må ikke jobbe uten betalt overtid.', es: 'No debes trabajar horas extra sin cobrar.' },
+          { no: 'Du bør samle dokumentasjon.', es: 'Deberías reunir documentación.' },
+          { no: 'Har jeg rett til å si nei?', es: '¿Tengo derecho a decir no?' }
+        ]
+      },
+      exercises: [
+        {
+          type: 'mcq',
+          prompt: 'Hva fikk Alex da han begynte i jobben?',
+          options: ['En muntlig avtale', 'En skriftlig arbeidskontrakt', 'Et telefonnummer', 'En ferie'],
+          answer: 1,
+          explain: 'El texto dice «fikk han en skriftlig arbeidskontrakt»: contrato por escrito.'
+        },
+        {
+          type: 'gap',
+          prompt: 'Completa con el modal de prohibición:',
+          sentence: 'Du ___ ikke jobbe uten betalt overtid.',
+          answers: ['må'],
+          bank: ['må', 'kan', 'bør', 'skal'],
+          es: 'No debes trabajar horas extra sin cobrar.',
+          explain: '«Må ikke» expresa prohibición. «Bør ikke» sería solo un consejo.'
+        },
+        {
+          type: 'gap',
+          prompt: 'Completa con el verbo que expresa recomendación («deberías»):',
+          sentence: 'Du ___ samle dokumentasjon før du klager.',
+          answers: ['bør'],
+          bank: ['bør', 'må', 'kan', 'skal'],
+          es: 'Deberías reunir documentación antes de quejarte.',
+          explain: '«Bør» es el modal de recomendación; «må» sería una obligación más fuerte.'
+        },
+        {
+          type: 'cloze',
+          prompt: 'Completa con el modal o la palabra adecuada:',
+          text: 'Arbeidsgiveren ___ betale for overtid. Hvis noe er uklart, ___ du snakke med den tillitsvalgte. Du ___ ikke signere en kontrakt uten å lese den. Alle har rett til ___ og sykepenger.',
+          answers: ['skal', 'bør', 'må', 'ferie'],
+          bank: ['skal', 'bør', 'må', 'ferie', 'kan', 'vil', 'lønn', 'overtid'],
+          es: 'El empleador debe pagar las horas extra. Si algo no está claro, deberías hablar con el representante. No debes firmar un contrato sin leerlo. Todos tienen derecho a vacaciones y pago por baja.',
+          explain: '«Skal» marca norma, «bør» recomendación, «må ikke» prohibición. «Ferie» es vacaciones.'
+        },
+        {
+          type: 'transform',
+          prompt: 'Reescribe como recomendación («deberías»):',
+          source: 'Du må snakke med sjefen.',
+          answer: 'Du bør snakke med sjefen.',
+          hint: 'må → bør',
+          es: 'Deberías hablar con el jefe.',
+          explain: '«Må» obliga; «bør» aconseja. En una situación delicada, «bør» suena mucho más suave.'
+        },
+        {
+          type: 'transform',
+          prompt: 'Reescribe en pasiva:',
+          source: 'Arbeidsgiveren betaler ikke overtid.',
+          answer: 'Overtiden blir ikke betalt.',
+          hint: 'bli + participio',
+          es: 'Las horas extra no se pagan.',
+          explain: '«Overtid» pasa a sujeto definido: overtiden. El agente no hace falta mencionarlo.'
+        },
+        {
+          type: 'listen',
+          prompt: 'Dictado: escribe exactamente lo que oyes.',
+          audio: 'Du har rett til å si nei.',
+          hint: '7 palabras · un derecho básico',
+          es: 'Tienes derecho a decir no.',
+          explain: '«Å ha rett til å» + infinitivo es la estructura fija para expresar un derecho.'
+        },
+        {
+          type: 'match',
+          prompt: 'Empareja los términos laborales:',
+          pairs: [
+            { a: 'arbeidsgiver', b: 'empleador' },
+            { a: 'arbeidstaker', b: 'trabajador' },
+            { a: 'prøvetid', b: 'periodo de prueba' },
+            { a: 'overtid', b: 'horas extra' },
+            { a: 'tillitsvalgt', b: 'representante de los trabajadores' },
+            { a: 'oppsigelse', b: 'despido' }
+          ],
+          explain: '«Arbeidsgiver» da el trabajo; «arbeidstaker» lo recibe. «Oppsigelse» puede ser despido o renuncia según el contexto.'
+        },
+        {
+          type: 'mcq',
+          prompt: '¿Qué es el «tillitsvalgt»?',
+          options: [
+            'El jefe de recursos humanos',
+            'La persona que representa a los trabajadores',
+            'El inspector de trabajo',
+            'El abogado de la empresa'
+          ],
+          answer: 1,
+          explain: 'Es el representante de los trabajadores, normalmente vinculado al sindicato. No forma parte de la dirección.'
+        }
+      ]
     }
   ],
 

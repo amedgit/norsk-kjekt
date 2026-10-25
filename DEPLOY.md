@@ -44,7 +44,7 @@ git config user.email "tu@correo.com"
 # 2. Repo local y primer commit
 git init -b main
 git add .
-git commit -m "Norsk Kjekt: portal de noruego A1-A2"
+git commit -m "Norsk Kjekt: portal de noruego A1-B2"
 
 # 3a. Con GitHub CLI
 gh repo create norsk-kjekt --public --source=. --push
@@ -107,5 +107,5 @@ zip -r ~/Descargas/norsk-kjekt.zip index.html assets robots.txt .nojekyll
 - No hay cuentas ni ranking. Si algún día los quieres, toca añadir backend
   (Supabase, PocketBase o un pequeño API).
 - El audio depende de las voces instaladas en el dispositivo del visitante
-  (`speechSynthesis`) **solo como respaldo**: las 180 frases del curso son MP3
+  (`speechSynthesis`) **solo como respaldo**: las 372 frases del curso son MP3
   pregrabados con Piper y se sirven como ficheros estáticos.
