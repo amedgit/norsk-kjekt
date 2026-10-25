@@ -1,5 +1,7 @@
 # Norsk Kjekt 🇳🇴
 
+**Publicado:** <https://amedgit.github.io/norsk-kjekt/>
+
 Portal para practicar noruego **bokmål** (A1–A2): textos cortos, ejercicios
 interactivos y una sección de noruego coloquial. HTML + CSS + JS puro, sin build,
 sin dependencias y sin backend.
