@@ -22,7 +22,7 @@
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-  <button class="skip" type="button" data-skip>Saltar al contenido</button>
+  <button class="skip" type="button" data-skip data-i18n="skip">Saltar al contenido</button>
 
   <header class="topbar">
     <a class="brand" href="#/">
@@ -32,17 +32,21 @@
       <span class="brand-text">Norsk <b>Kjekt</b></span>
     </a>
 
-    <nav class="nav" aria-label="Principal">
-      <a href="#/" data-route="home">Lecciones</a>
-      <a href="#/tull" data-route="fun">Tull &amp; tøys</a>
-      <a href="#/coloquial" data-route="coloquial">Coloquial</a>
-      <a href="#/repaso" data-route="review">Repaso</a>
+    <nav class="nav" aria-label="Principal" data-i18n-aria="nav.primary">
+      <a href="#/" data-route="home" data-i18n="nav.lessons">Lecciones</a>
+      <a href="#/tull" data-route="fun" data-i18n="nav.fun">Tull &amp; tøys</a>
+      <a href="#/coloquial" data-route="coloquial" data-i18n="nav.colloquial">Coloquial</a>
+      <a href="#/repaso" data-route="review" data-i18n="nav.review">Repaso</a>
     </nav>
 
     <div class="hud">
-      <label class="pill speed" title="Velocidad del audio">
-        <span class="speed-label">Audio</span>
-        <select id="speed" aria-label="Velocidad del audio">
+      <div class="lang-switch" role="group" aria-label="Idioma" data-i18n-aria="lang.label" title="Cambiar idioma" data-i18n-title="lang.switch">
+        <button type="button" data-lang="es" aria-pressed="true">ES</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+      <label class="pill speed" title="Velocidad del audio" data-i18n-title="audio.speed">
+        <span class="speed-label" data-i18n="audio.label">Audio</span>
+        <select id="speed" aria-label="Velocidad del audio" data-i18n-aria="audio.speed">
           <option value="0.7">0.7×</option>
           <option value="0.85">0.85×</option>
           <option value="1">1×</option>
@@ -50,19 +54,21 @@
           <option value="1.3">1.3×</option>
         </select>
       </label>
-      <span class="pill" title="Días seguidos practicando">🔥 <b id="hud-streak">0</b></span>
-      <span class="pill" title="Puntos de experiencia">⭐ <b id="hud-xp">0</b></span>
+      <span class="pill" title="Días seguidos practicando" data-i18n-title="hud.streak">🔥 <b id="hud-streak">0</b></span>
+      <span class="pill" title="Puntos de experiencia" data-i18n-title="hud.xp">⭐ <b id="hud-xp">0</b></span>
     </div>
   </header>
 
   <main id="app" tabindex="-1"></main>
 
   <footer class="site-foot">
-    <p><b>Norsk Kjekt</b> · bokmål A1–B2 · hecho para practicar un poco cada día.</p>
-    <p class="muted">Audio neuronal pregrabado en bokmål (nb_NO). Sin cuentas: tu progreso se guarda en este dispositivo.</p>
+    <p><b>Norsk Kjekt</b> · <span data-i18n="footer.tagline">bokmål A1–B2 · hecho para practicar un poco cada día.</span></p>
+    <p class="muted" data-i18n="footer.audio">Audio neuronal pregrabado en bokmål (nb_NO). Sin cuentas: tu progreso se guarda en este dispositivo.</p>
   </footer>
 
   <script src="assets/js/data.js"></script>
+  <script src="assets/js/content-en.js"></script>
+  <script src="assets/js/lang.js"></script>
   <script src="assets/js/audio-manifest.js"></script>
   <script src="assets/js/tts.js"></script>
   <script src="assets/js/app.js"></script>

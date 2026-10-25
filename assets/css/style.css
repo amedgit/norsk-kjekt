@@ -77,7 +77,21 @@ button { font: inherit; }
 .nav a:hover { background: #eceff4; color: var(--ink); }
 .nav a.active { background: var(--ink); color: #fff; }
 
-.hud { display: flex; gap: .4rem; }
+.hud { display: flex; gap: .4rem; align-items: center; }
+.lang-switch {
+  display: inline-flex; align-items: center; gap: 1px;
+  padding: 2px; background: var(--card); border: 1px solid var(--line);
+  border-radius: 999px;
+}
+.lang-switch button {
+  border: 0; background: transparent; font: inherit; line-height: 1;
+  font-size: .72rem; font-weight: 750; letter-spacing: .03em;
+  color: var(--muted); padding: .3rem .45rem; border-radius: 999px; cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.lang-switch button:hover:not(.active) { background: var(--bg); color: var(--ink); }
+.lang-switch button.active { background: var(--ink); color: #fff; }
+.lang-switch button:focus-visible { outline: 2px solid var(--blue); outline-offset: 1px; }
 .pill {
   display: inline-flex; align-items: center; gap: .3rem;
   font-size: .82rem; font-variant-numeric: tabular-nums;

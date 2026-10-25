@@ -5,6 +5,8 @@
 Portal para practicar noruego **bokmål** (A1–B2): textos cortos, ejercicios
 interactivos, seis packs de humor, tablas de palabras y verbos, y una sección de
 noruego coloquial. HTML + CSS + JS puro, sin build, sin dependencias y sin backend.
+La interfaz y las explicaciones se pueden leer en **español o inglés**; el noruego
+del curso no se traduce.
 
 ## Cómo abrirlo
 
@@ -30,9 +32,46 @@ cd ~/norsk
 | Tull & tøys | 6 packs con 84 ejercicios de humor (absurdo, supervivencia, oficina, dictados, modismos y verbos) y una mezcla aleatoria de 10 |
 | Tablas | 86 palabras con audio, búsqueda, filtros por nivel/tema, ordenación y modo examen; 14 verbos en presente, pasado y perfecto |
 | Coloquial | 18 expresiones con registro (neutro → vulgar), diálogo de ejemplo y truco |
+| Idioma | selector **ES / EN** en la cabecera: traduce interfaz, explicaciones, traducciones y tablas; el bokmål se queda intacto y el progreso se conserva |
 | Progreso | racha de días, XP, mejor resultado por lección/pack y cola de repaso de fallos |
 | Velocidad | selector 0,7×–1,3× en la cabecera; se aplica al audio y se recuerda |
 | Audio | 534 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
+
+## Interfaz en español o inglés
+
+El botón **ES / EN** de la cabecera cambia todo lo que no es noruego:
+
+- textos de la interfaz, botones, filtros, avisos y resultados;
+- explicaciones, objetivos, trucos y notas culturales;
+- traducciones de textos, vocabulario, frases y diálogos;
+- prompts, opciones, pistas y explicaciones de los 165 ejercicios;
+- las tablas de palabras y verbos (la columna de significados).
+
+Lo que se aprende —títulos de lección, bokmål, opciones noruegas de los
+ejercicios, audio— **no se traduce nunca**. La elección se guarda en
+`localStorage` (`norsk-kjekt-lang`) y el progreso (`norsk-kjekt-v1`) se mantiene
+al cambiar de idioma, porque el cambio solo recarga la página.
+
+El español es el idioma base y vive en `data.js`; el inglés está en
+`content-en.js` como un mapa `"texto en español": "English text"`. Al cargar en
+modo EN, `lang.js` sustituye los campos españoles por su traducción y deja
+intactas las cadenas que detecta como noruego.
+
+### Añadir o cambiar traducciones
+
+1. Edita el contenido en español en `assets/js/data.js`.
+2. Añade la traducción en `assets/js/content-en.js` usando **exactamente** el
+   mismo texto español como clave (incluidos acentos, «» y puntuación).
+3. Comprueba la cobertura:
+
+```bash
+node tools/check-i18n.mjs
+```
+
+El script detecta cadenas nuevas sin traducir, traducciones vacías y entradas
+que ya no se usan. Si falta algo, sale con error y muestra la lista. Las
+opciones que son noruego (p. ej. `kaffe`, `flink`, `Jeg heter Alex`) no necesitan
+traducción: la app las protege automáticamente.
 
 ## Estructura
 
@@ -45,14 +84,17 @@ norsk/
 ├── .github/workflows/pages.yml
 ├── tools/
 │   ├── generate-audio.mjs       ← sintetiza los MP3 y el manifiesto
-│   └── generate-lesson-art.mjs  ← dibuja las 11 ilustraciones SVG de las lecciones
+│   ├── generate-lesson-art.mjs  ← dibuja las 11 ilustraciones SVG de las lecciones
+│   └── check-i18n.mjs           ← comprueba que todo el contenido tiene traducción EN
 └── assets/
     ├── css/style.css
     ├── img/og.png       ← imagen para compartir en redes
     ├── img/lessons/*.svg ← una ilustración original por lección
     ├── audio/*.mp3      ← 534 audios (≈5,9 MB), generados
     └── js/
-        ├── data.js          ← TODO el contenido del curso
+        ├── data.js          ← TODO el contenido del curso (base en español + noruego)
+        ├── content-en.js    ← traducciones ES → EN del contenido
+        ├── lang.js          ← idioma, textos de interfaz y localización del curso
         ├── audio-manifest.js ← texto → MP3 (generado, no editar)
         ├── tts.js           ← reproduce MP3; fallback a speechSynthesis
         └── app.js           ← router, progreso, motor de ejercicios
@@ -103,7 +145,9 @@ Todo el contenido vive en `assets/js/data.js`. Copia un objeto del array
 ```
 
 En B1 y B2 las traducciones del texto salen plegadas por defecto; los ejemplos
-de gramática y el vocabulario siguen visibles.
+de gramática y el vocabulario siguen visibles. Añade también las traducciones
+inglesas en `content-en.js` y ejecuta `node tools/check-i18n.mjs` antes de
+publicar.
 
 Tipos de ejercicio:
 
@@ -197,6 +241,8 @@ navegador como respaldo.
   que todo funciona también abriendo el archivo en local (`file://`).
 - El progreso es local al navegador. Para sincronizar entre dispositivos haría
   falta backend o exportar/importar JSON.
+- El idioma también es local (`norsk-kjekt-lang`). No hay detección automática:
+  por defecto se abre en español y cada visitante elige ES o EN.
 - El audio no depende del sistema del visitante: son MP3 pregrabados. Solo si
   añades una frase sin regenerar se usará `speechSynthesis`, y ahí la calidad
   depende de las voces instaladas.

@@ -91,6 +91,8 @@ zip -r ~/Descargas/norsk-kjekt.zip index.html assets robots.txt .nojekyll
 ## Checklist después de publicar
 
 - [ ] Abrir la URL en el móvil y probar una lección completa (audio incluido).
+- [ ] Probar el selector **ES / EN**: cambiar a inglés, recorrer una lección y
+      volver a español comprobando que el progreso (XP/racha) no se pierde.
 - [ ] Cambiar `og:image` y `twitter:image` a **URL absoluta** cuando tengas
       dominio: `https://tu-dominio/assets/img/og.png`. Las redes sociales no
       resuelven rutas relativas y la vista previa saldrá sin imagen.

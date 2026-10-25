@@ -4,6 +4,9 @@
 
   var COURSE = window.COURSE;
   var LESSONS = COURSE.lessons;
+  var I18N = window.I18N;
+  var t = I18N.t;
+  var tp = I18N.tp;
   var app = document.getElementById('app');
   var hudStreak = document.getElementById('hud-streak');
   var hudXp = document.getElementById('hud-xp');
@@ -108,7 +111,7 @@
 
   function say(text, cls) {
     return '<button class="say ' + (cls || '') + '" data-say="' + esc(text) + '" ' +
-      'aria-label="Escuchar en noruego" title="Escuchar">🔊</button>';
+      'aria-label="' + esc(t('say.listenNo')) + '" title="' + esc(t('say.title')) + '">🔊</button>';
   }
 
   function shuffle(arr) {
@@ -134,14 +137,14 @@
 
   function preview(item) {
     if (item.type === 'gap') return item.sentence.replace('___', '____');
-    if (item.type === 'order') return 'Ordena: ' + item.words.join(' ');
-    if (item.type === 'cloze') return item.prompt || 'Completa el texto';
-    if (item.type === 'listen') return 'Dictado: ' + (item.audio || '');
-    if (item.type === 'transform') return 'Transforma: ' + item.source;
-    if (item.type === 'match') return 'Empareja: ' + item.pairs.length + ' pares';
-    if (item.type === 'odd') return '¿Qué sobra? ' + item.prompt;
-    if (item.type === 'fix') return 'Encuentra el error: ' + item.sentence;
-    if (item.type === 'memory') return 'Memoria: ' + item.pairs.length + ' pares';
+    if (item.type === 'order') return t('preview.order') + item.words.join(' ');
+    if (item.type === 'cloze') return item.prompt || t('preview.cloze');
+    if (item.type === 'listen') return t('preview.listen') + (item.audio || '');
+    if (item.type === 'transform') return t('preview.transform') + item.source;
+    if (item.type === 'match') return tp('preview.match', item.pairs.length);
+    if (item.type === 'odd') return t('preview.odd') + item.prompt;
+    if (item.type === 'fix') return t('preview.fix') + item.sentence;
+    if (item.type === 'memory') return tp('preview.memory', item.pairs.length);
     return item.prompt;
   }
 
@@ -171,7 +174,7 @@
         else if (k === idx) cls += ' now';
         return '<span class="' + cls + '"></span>';
       }).join('');
-      return '<div class="ex-top"><span class="ex-label">' + esc(opts.label || 'Práctica') + '</span>' +
+      return '<div class="ex-top"><span class="ex-label">' + esc(opts.label || t('ex.practice')) + '</span>' +
         '<span class="ex-count">' + Math.min(idx + 1, list.length) + ' / ' + list.length + '</span></div>' +
         '<div class="dots">' + dots + '</div>';
     }
@@ -187,13 +190,13 @@
         : (item.type === 'mcq' ? (item.audio || '') : solution);
       fb.className = 'feedback show ' + (ok ? 'ok' : 'bad');
       fb.innerHTML =
-        '<div class="head">' + (ok ? '✅ ¡Riktig! (correcto)' : '❌ Casi — mira la respuesta') + '</div>' +
+        '<div class="head">' + (ok ? t('ex.correct') : t('ex.almost')) + '</div>' +
         (item.explain ? '<div>' + esc(item.explain) + '</div>' : '') +
         '<div class="answer-line">' + (audioText ? say(audioText) + ' ' : '') + esc(solution) + '</div>' +
         (item.es ? '<div class="trad">' + esc(item.es) + '</div>' : '');
       if (next) {
         next.hidden = false;
-        next.textContent = idx + 1 === list.length ? 'Ver resultado →' : 'Siguiente →';
+        next.textContent = idx + 1 === list.length ? t('ex.seeResult') : t('ex.next');
       }
       locked = true;
     }
@@ -232,7 +235,7 @@
     function buildCloze(item) {
       var parts = String(item.text || '').split('___');
       var gaps = parts.length - 1;
-      var html = '<p class="ex-prompt">' + esc(item.prompt || 'Completa el texto:') + '</p>' +
+      var html = '<p class="ex-prompt">' + esc(item.prompt || t('ex.defaultCloze')) + '</p>' +
         '<p class="cloze-text">';
       for (var i = 0; i < parts.length; i++) {
         html += esc(parts[i]);
@@ -240,7 +243,7 @@
           html += '<input class="blank-input cloze-input" data-gap="' + i + '" type="text" ' +
             'autocomplete="off" autocapitalize="off" spellcheck="false" ' +
             'style="width:' + blankWidth(item, i) + 'ch" placeholder="…" ' +
-            'aria-label="Hueco ' + (i + 1) + '">';
+            'aria-label="' + esc(t('ex.gap', { n: i + 1 })) + '">';
         }
       }
       html += '</p>';
@@ -249,31 +252,31 @@
           return '<button class="word" data-w="' + esc(w) + '">' + esc(w) + '</button>';
         }).join('') + '</div>';
       }
-      return html + '<div class="actions"><button class="btn primary" id="check">Comprobar</button></div>';
+      return html + '<div class="actions"><button class="btn primary" id="check">' + esc(t('ex.check')) + '</button></div>';
     }
 
     /* ---- listen: dictado ---- */
     function buildListen(item) {
       var w = Math.max(14, Math.min(46, (item.audio || '').length + 2));
-      return '<p class="ex-prompt">' + esc(item.prompt || 'Escucha y escribe lo que oyes:') + '</p>' +
+      return '<p class="ex-prompt">' + esc(item.prompt || t('ex.defaultListen')) + '</p>' +
         '<div class="listen-box">' +
-        '<button class="btn primary" id="play" data-say="' + esc(item.audio) + '">▶ Escuchar</button>' +
-        '<span class="ex-hint">' + esc(item.hint || 'Puedes repetirlo las veces que quieras.') + '</span>' +
+        '<button class="btn primary" id="play" data-say="' + esc(item.audio) + '">' + esc(t('ex.listen')) + '</button>' +
+        '<span class="ex-hint">' + esc(item.hint || t('ex.defaultListenHint')) + '</span>' +
         '</div>' +
         '<input class="listen-input" id="gap" type="text" autocomplete="off" autocapitalize="off" ' +
-        'spellcheck="false" placeholder="Escribe lo que oyes…" aria-label="Dictado" ' +
+        'spellcheck="false" placeholder="' + esc(t('ex.writeWhatYouHear')) + '" aria-label="' + esc(t('ex.dictation')) + '" ' +
         'style="max-width:' + w + 'ch">' +
-        '<div class="actions"><button class="btn primary" id="check">Comprobar</button></div>';
+        '<div class="actions"><button class="btn primary" id="check">' + esc(t('ex.check')) + '</button></div>';
     }
 
     /* ---- transform: reescribir una frase ---- */
     function buildTransform(item) {
-      return '<p class="ex-prompt">' + esc(item.prompt || 'Reescribe la frase:') + '</p>' +
+      return '<p class="ex-prompt">' + esc(item.prompt || t('ex.defaultTransform')) + '</p>' +
         '<div class="source">' + say(item.source) + '<span>' + esc(item.source) + '</span></div>' +
         (item.hint ? '<p class="ex-hint">' + esc(item.hint) + '</p>' : '') +
         '<input class="transform-input" id="gap" type="text" autocomplete="off" autocapitalize="off" ' +
-        'spellcheck="false" placeholder="Tu frase…" aria-label="Respuesta">' +
-        '<div class="actions"><button class="btn primary" id="check">Comprobar</button></div>';
+        'spellcheck="false" placeholder="' + esc(t('ex.writeYourSentence')) + '" aria-label="' + esc(t('ex.answer')) + '">' +
+        '<div class="actions"><button class="btn primary" id="check">' + esc(t('ex.check')) + '</button></div>';
     }
 
     /* ---- match: emparejar dos columnas ---- */
@@ -292,29 +295,29 @@
     }
 
     function buildMatch(item) {
-      return '<p class="ex-prompt">' + esc(item.prompt || 'Empareja cada palabra con su pareja:') + '</p>' +
+      return '<p class="ex-prompt">' + esc(item.prompt || t('ex.defaultMatch')) + '</p>' +
         '<div class="match" id="match">' + matchColumn(item, 'a') + matchColumn(item, 'b') + '</div>' +
-        '<p class="ex-hint" id="match-hint">Toca una palabra de la primera columna y luego su pareja.</p>';
+        '<p class="ex-hint" id="match-hint">' + esc(t('ex.matchHint')) + '</p>';
     }
 
     /* ---- odd: la palabra que no encaja ---- */
     function buildOdd(item) {
-      return '<p class="ex-prompt">' + esc(item.prompt || '¿Qué palabra no encaja?') + '</p>' +
+      return '<p class="ex-prompt">' + esc(item.prompt || t('ex.defaultOdd')) + '</p>' +
         '<div class="options">' + item.options.map(function (o, i) {
           return '<button class="opt" data-odd="' + i + '"><span class="key">' +
             'ABCD'[i] + '</span><span>' + esc(o) + '</span></button>';
         }).join('') + '</div>' +
-        '<p class="ex-hint">Una de estas palabras ha venido a la fiesta sin invitación.</p>';
+        '<p class="ex-hint">' + esc(t('ex.oddHint')) + '</p>';
     }
 
     /* ---- fix: encontrar la palabra equivocada ---- */
     function buildFix(item) {
       var tokens = String(item.sentence).split(' ');
-      return '<p class="ex-prompt">' + esc(item.prompt || 'Encuentra el error y toca la palabra equivocada:') + '</p>' +
+      return '<p class="ex-prompt">' + esc(item.prompt || t('ex.defaultFix')) + '</p>' +
         '<p class="fix-sentence">' + tokens.map(function (t, i) {
           return '<button class="fix-word" data-token="' + i + '">' + esc(t) + '</button>';
         }).join(' ') + '</p>' +
-        '<p class="ex-hint" id="fix-hint">Toca la palabra que sobra o que está mal. Solo hay una.</p>';
+        '<p class="ex-hint" id="fix-hint">' + esc(t('ex.fixHint')) + '</p>';
     }
 
     /* ---- memory: parejas ocultas ---- */
@@ -324,11 +327,11 @@
         acc.push({ key: i, side: 'b', text: pair.b });
         return acc;
       }, []));
-      return '<p class="ex-prompt">' + esc(item.prompt || 'Memoria: encuentra las parejas.') + '</p>' +
-        '<p class="ex-hint" id="memory-hint">Toca dos cartas. Si son pareja, se quedan boca arriba.</p>' +
+      return '<p class="ex-prompt">' + esc(item.prompt || t('ex.defaultMemory')) + '</p>' +
+        '<p class="ex-hint" id="memory-hint">' + esc(t('ex.memoryHint')) + '</p>' +
         '<div class="memory-grid" id="memory">' + cards.map(function (c, i) {
           return '<button class="mem-card" data-key="' + c.key + '" data-i="' + i + '" ' +
-            'aria-label="Carta ' + (i + 1) + ' boca abajo">' +
+            'aria-label="' + esc(t('ex.cardN', { n: i + 1 })) + '">' +
             '<span class="mem-face mem-back">🇳🇴</span>' +
             '<span class="mem-face mem-front">' + esc(c.text) + '</span></button>';
         }).join('') + '</div>';
@@ -351,15 +354,15 @@
         var parts = item.sentence.split('___');
         var width = Math.max(6, Math.min(18, (item.answers[0] || '').length + 3));
         body =
-          '<p class="ex-prompt">' + esc(item.prompt || 'Completa la frase:') + '</p>' +
+          '<p class="ex-prompt">' + esc(item.prompt || t('ex.defaultGap')) + '</p>' +
           '<p class="sentence">' + esc(parts[0]) +
           '<input class="blank-input" id="gap" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" ' +
-          'style="width:' + width + 'ch" placeholder="…" aria-label="Palabra que falta">' +
+          'style="width:' + width + 'ch" placeholder="…" aria-label="' + esc(t('ex.missingWord')) + '">' +
           esc(parts[1] || '') + '</p>' +
           (item.bank ? '<div class="bank" id="bank">' + item.bank.map(function (w) {
             return '<button class="word" data-w="' + esc(w) + '">' + esc(w) + '</button>';
           }).join('') + '</div>' : '') +
-          '<div class="actions"><button class="btn primary" id="check">Comprobar</button></div>';
+          '<div class="actions"><button class="btn primary" id="check">' + esc(t('ex.check')) + '</button></div>';
       } else if (item.type === 'cloze') {
         body = buildCloze(item);
       } else if (item.type === 'listen') {
@@ -376,19 +379,19 @@
         body = buildMemory(item);
       } else {
         body =
-          '<p class="ex-prompt">' + esc(item.prompt || 'Ordena la frase:') + '</p>' +
-          '<p class="ex-hint">Toca las palabras en el orden correcto.</p>' +
-          '<div class="order-answer" id="ans"><span class="placeholder">Tu frase…</span></div>' +
+          '<p class="ex-prompt">' + esc(item.prompt || t('ex.defaultOrder')) + '</p>' +
+          '<p class="ex-hint">' + esc(t('ex.orderHint')) + '</p>' +
+          '<div class="order-answer" id="ans"><span class="placeholder">' + esc(t('ex.yourSentence')) + '</span></div>' +
           '<div class="bank" id="bank"></div>' +
           '<div class="actions">' +
-          '<button class="btn ghost small" id="reset">Borrar</button>' +
-          '<button class="btn primary" id="check">Comprobar</button></div>';
+          '<button class="btn ghost small" id="reset">' + esc(t('ex.clear')) + '</button>' +
+          '<button class="btn primary" id="check">' + esc(t('ex.check')) + '</button></div>';
       }
 
       mount.innerHTML =
         '<div class="exercise">' + header() + body +
         '<div class="feedback" id="fb" aria-live="polite"></div>' +
-        '<div class="actions"><button class="btn primary" id="next" hidden>Siguiente →</button></div>' +
+        '<div class="actions"><button class="btn primary" id="next" hidden>' + esc(t('ex.next')) + '</button></div>' +
         '</div>';
 
       var nextBtn = mount.querySelector('#next');
@@ -479,7 +482,7 @@
           ? chosen.map(function (t) {
             return '<button class="word" data-rm="' + t.id + '">' + esc(t.w) + '</button>';
           }).join('')
-          : '<span class="placeholder">Tu frase…</span>';
+          : '<span class="placeholder">' + esc(t('ex.yourSentence')) + '</span>';
         ansEl.classList.toggle('filled', chosen.length > 0);
 
         bankEl.innerHTML = pool.map(function (t) {
@@ -671,7 +674,7 @@
       function finish() {
         var ok = mistakes === 0;
         var solution = item.pairs.map(function (p) { return p.a + ' = ' + p.b; }).join(' · ');
-        if (hint) hint.textContent = '¡Completado!';
+        if (hint) hint.textContent = t('ex.complete');
         showFeedback(ok, item, solution, '');
       }
 
@@ -681,7 +684,7 @@
           clearSel();
           sel = el;
           el.classList.add('sel');
-          if (hint) hint.textContent = 'Ahora elige su pareja.';
+          if (hint) hint.textContent = t('ex.choosePair');
         });
       });
 
@@ -689,7 +692,7 @@
         el.addEventListener('click', function () {
           if (locked || el.classList.contains('done')) return;
           if (!sel) {
-            if (hint) hint.textContent = 'Primero elige una palabra de la primera columna.';
+            if (hint) hint.textContent = t('ex.chooseFirst');
             return;
           }
           var a = sel;
@@ -703,7 +706,7 @@
             if (matched === item.pairs.length) {
               finish();
             } else if (hint) {
-              hint.textContent = '¡Bien! Quedan ' + (item.pairs.length - matched) + '.';
+              hint.textContent = tp('ex.remaining', item.pairs.length - matched);
             }
             return;
           }
@@ -714,7 +717,7 @@
             setTimeout(function () { x.classList.remove('wrong'); }, 550);
           });
           clearSel();
-          if (hint) hint.textContent = 'Casi. Prueba otra vez.';
+          if (hint) hint.textContent = t('ex.tryAgain');
         });
       });
     }
@@ -750,12 +753,12 @@
           tokens.forEach(function (b) { b.disabled = true; });
           if (ok) {
             btn.classList.add('correct');
-            if (hint) hint.textContent = '¡Ahí estaba! La frase correcta aparece abajo.';
+            if (hint) hint.textContent = t('ex.fixFound');
           } else {
             btn.classList.add('wrong');
             var real = tokens[item.wrong];
             if (real) real.classList.add('correct');
-            if (hint) hint.textContent = 'Esa palabra está bien. La que falla es la marcada en verde.';
+            if (hint) hint.textContent = t('ex.fixOther');
           }
           showFeedback(ok, item, item.correct);
         });
@@ -774,7 +777,7 @@
       function finish() {
         var ok = mistakes === 0;
         var solution = item.pairs.map(function (p) { return p.a + ' = ' + p.b; }).join(' · ');
-        if (hint) hint.textContent = mistakes === 0 ? '¡Memoria de elefante!' : 'Completado con ' + mistakes + ' fallo(s).';
+        if (hint) hint.textContent = mistakes === 0 ? t('ex.memoryPerfect') : tp('ex.memoryDone', mistakes);
         showFeedback(ok, item, solution, '');
       }
 
@@ -783,11 +786,11 @@
           if (busy || card.classList.contains('done') || card.classList.contains('flip')) return;
           card.classList.add('flip');
           card.disabled = true;
-          card.setAttribute('aria-label', 'Carta boca arriba: ' + card.querySelector('.mem-front').textContent);
+          card.setAttribute('aria-label', t('ex.cardUp', { text: card.querySelector('.mem-front').textContent }));
 
           if (!first) {
             first = card;
-            if (hint) hint.textContent = 'Ahora busca su pareja.';
+            if (hint) hint.textContent = t('ex.findPair');
             return;
           }
 
@@ -807,7 +810,7 @@
             if (matched === item.pairs.length) {
               finish();
             } else if (hint) {
-              hint.textContent = '¡Bien! Quedan ' + (item.pairs.length - matched) + ' parejas.';
+              hint.textContent = tp('ex.remainingPairs', item.pairs.length - matched);
             }
             return;
           }
@@ -817,13 +820,13 @@
             x.classList.add('wrong');
             setTimeout(function () { x.classList.remove('wrong'); }, 500);
           });
-          if (hint) hint.textContent = 'Casi. Se vuelven a tapar…';
+          if (hint) hint.textContent = t('ex.tryAgain');
           setTimeout(function () {
             [a, b].forEach(function (x) {
               x.classList.remove('flip');
               x.classList.remove('wrong');
               x.disabled = false;
-              x.setAttribute('aria-label', 'Carta boca abajo');
+              x.setAttribute('aria-label', t('ex.cardDown'));
             });
             first = null;
             busy = false;
@@ -837,12 +840,12 @@
       var total = list.length;
       var pct = total ? Math.round((correct / total) * 100) : 0;
       var msg = pct === 100
-        ? '¡Perfekt! Te has salido. 🎉'
+        ? t('result.perfect')
         : pct >= 80
-          ? '¡Bra jobba! Muy bien, ya casi lo tienes.'
+          ? t('result.great')
           : pct >= 50
-            ? 'No está mal. Repite los fallos y se queda.'
-            : 'Tranquilo: nadie aprende noruego en una tarde. Repite y verás.';
+            ? t('result.ok')
+            : t('result.low');
 
       var failed = [];
       list.forEach(function (_, k) { if (results[k] !== true) failed.push(k); });
@@ -857,9 +860,9 @@
           }).join('') + '</div>'
           : '') +
         '<div class="actions">' +
-        '<button class="btn primary" data-act="again">Repetir</button>' +
-        (failed.length ? '<button class="btn ghost" data-act="failed">Repasar ' + failed.length + '</button>' : '') +
-        (opts.onExit ? '<button class="btn ghost" data-act="exit">' + esc(opts.exitLabel || 'Seguir') + '</button>' : '') +
+        '<button class="btn primary" data-act="again">' + esc(t('result.again')) + '</button>' +
+        (failed.length ? '<button class="btn ghost" data-act="failed">' + esc(t('result.reviewN', { n: failed.length })) + '</button>' : '') +
+        (opts.onExit ? '<button class="btn ghost" data-act="exit">' + esc(opts.exitLabel || t('result.continue')) + '</button>' : '') +
         '</div></div>';
 
       mount.querySelector('[data-act="again"]').addEventListener('click', function () { start(list); });
@@ -925,12 +928,12 @@
     return '<a class="lesson-card" href="#/leksjon/' + l.id + '">' +
       '<div class="thumb"><img src="' + esc(img) + '" alt="" width="800" height="500" loading="lazy" decoding="async"></div>' +
       '<div class="top"><span class="emoji">' + l.emoji + '</span>' +
-      '<span class="num">Lección ' + l.num + ' · ' + l.level + '</span></div>' +
+      '<span class="num">' + esc(t('lesson.cardNum', { n: l.num })) + ' · ' + l.level + '</span></div>' +
       '<h3>' + esc(l.title) + '</h3>' +
       '<p class="sub">' + esc(l.subtitle) + '</p>' +
       '<div class="foot">' +
-      (st ? '<span class="chip done">✓ ' + st.best + '/' + st.total + '</span>' : '<span class="chip">nueva</span>') +
-      '<span class="chip plain">' + l.exercises.length + ' ejercicios</span>' +
+      (st ? '<span class="chip done">✓ ' + st.best + '/' + st.total + '</span>' : '<span class="chip">' + esc(t('lesson.new')) + '</span>') +
+      '<span class="chip plain">' + esc(tp('lesson.exercises', l.exercises.length)) + '</span>' +
       '</div></a>';
   }
 
@@ -1016,38 +1019,37 @@
           '<td><div class="wb-no">' + say(w.no) + '<span>' + esc(w.no) + '</span></div></td>' +
           '<td class="wb-es">' + es + (w.note ? '<span class="wb-note">' + esc(w.note) + '</span>' : '') + '</td>' +
           '<td><span class="wb-level lvl-' + w.level.toLowerCase() + '">' + w.level + '</span></td>' +
-          '<td><span class="wb-tag">' + esc(w.tag) + '</span></td></tr>';
+          '<td><span class="wb-tag">' + esc(I18N.tagLabel(w.tag)) + '</span></td></tr>';
       }).join('')
-      : '<tr><td colspan="4" class="wb-empty">Nada por aquí. Prueba otra búsqueda o quita el filtro.</td></tr>';
+      : '<tr><td colspan="4" class="wb-empty">' + esc(t('fun.noResults')) + '</td></tr>';
 
     var count = document.getElementById('wb-count');
     if (count) {
-      count.textContent = list.length + ' palabra' + (list.length === 1 ? '' : 's') +
-        ' de ' + COURSE.wordbank.length + ' · toca el altavoz para oírla' +
-        (funUi.hide ? ' · toca una fila para destapar el español' : '');
+      count.textContent = tp('fun.wordCount', list.length, { total: COURSE.wordbank.length }) +
+        (funUi.hide ? t('fun.wordCountHide') : '');
     }
   }
 
   function wordTableHTML() {
     return '<div class="word-tools">' +
-      '<input id="wb-q" type="search" placeholder="Buscar en noruego o en español…" value="' + esc(funUi.q) + '" aria-label="Buscar palabra">' +
-      '<select id="wb-tag" aria-label="Filtrar por tema">' +
-      '<option value="all">Todos los temas</option>' +
-      funTags().map(function (t) {
-        return '<option value="' + esc(t) + '"' + (funUi.tag === t ? ' selected' : '') + '>' + esc(t) + '</option>';
+      '<input id="wb-q" type="search" placeholder="' + esc(t('fun.searchWords')) + '" value="' + esc(funUi.q) + '" aria-label="' + esc(t('fun.searchLabel')) + '">' +
+      '<select id="wb-tag" aria-label="' + esc(t('fun.filterLabel')) + '">' +
+      '<option value="all">' + esc(t('fun.allTopics')) + '</option>' +
+      funTags().map(function (tag) {
+        return '<option value="' + esc(tag) + '"' + (funUi.tag === tag ? ' selected' : '') + '>' + esc(I18N.tagLabel(tag)) + '</option>';
       }).join('') + '</select>' +
-      '<label class="wb-switch"><input type="checkbox" id="wb-hide"' + (funUi.hide ? ' checked' : '') + '> Modo examen</label>' +
+      '<label class="wb-switch"><input type="checkbox" id="wb-hide"' + (funUi.hide ? ' checked' : '') + '> ' + esc(t('fun.examMode')) + '</label>' +
       '</div>' +
       '<div class="wb-levels">' +
       ['all', 'A1', 'A2', 'B1', 'B2'].map(function (l) {
-        return '<button class="fchip" data-wb-level="' + l + '">' + (l === 'all' ? 'Todos' : l) + '</button>';
+        return '<button class="fchip" data-wb-level="' + l + '">' + (l === 'all' ? esc(t('fun.all')) : l) + '</button>';
       }).join('') + '</div>' +
       '<div class="wtable-wrap"><table class="wtable' + (funUi.hide ? ' hide-es' : '') + '" id="word-table">' +
       '<thead><tr>' +
-      '<th><button class="wb-sort" data-sort="no">Norsk <span class="sort-mark">↕</span></button></th>' +
-      '<th><button class="wb-sort" data-sort="es">Español <span class="sort-mark">↕</span></button></th>' +
-      '<th><button class="wb-sort" data-sort="level">Nivel <span class="sort-mark">↕</span></button></th>' +
-      '<th><button class="wb-sort" data-sort="tag">Tema <span class="sort-mark">↕</span></button></th>' +
+      '<th><button class="wb-sort" data-sort="no">' + esc(t('fun.colNo')) + ' <span class="sort-mark">↕</span></button></th>' +
+      '<th><button class="wb-sort" data-sort="es">' + esc(t('fun.colEs')) + ' <span class="sort-mark">↕</span></button></th>' +
+      '<th><button class="wb-sort" data-sort="level">' + esc(t('fun.colLevel')) + ' <span class="sort-mark">↕</span></button></th>' +
+      '<th><button class="wb-sort" data-sort="tag">' + esc(t('fun.colTag')) + ' <span class="sort-mark">↕</span></button></th>' +
       '</tr></thead><tbody id="wb-body"></tbody></table></div>' +
       '<p class="ex-hint" id="wb-count"></p>';
   }
@@ -1103,7 +1105,7 @@
 
   function verbTableHTML() {
     return '<div class="wtable-wrap"><table class="wtable verb-table' + (funUi.hideForms ? ' hide-forms' : '') + '" id="verb-table">' +
-      '<thead><tr><th>Infinitivo</th><th>Presente</th><th>Pasado</th><th>Perfecto</th></tr></thead><tbody>' +
+      '<thead><tr><th>' + esc(t('fun.infinitive')) + '</th><th>' + esc(t('fun.present')) + '</th><th>' + esc(t('fun.past')) + '</th><th>' + esc(t('fun.perfect')) + '</th></tr></thead><tbody>' +
       COURSE.verbs.map(function (v) {
         return '<tr>' +
           '<td><div class="wb-no">' + say(v.inf) + '<span>' + esc(v.inf) + '</span></div>' +
@@ -1113,10 +1115,10 @@
           '<td><span class="vb-form">' + esc(v.perfect) + '</span></td></tr>';
       }).join('') + '</tbody></table></div>' +
       '<div class="actions" style="margin-top:.8rem">' +
-      '<button class="btn ghost small" id="vb-hide">' + (funUi.hideForms ? 'Mostrar formas' : 'Ocultar formas') + '</button>' +
-      '<a class="btn ghost small" href="#/tull/verbos">Practicar →</a>' +
+      '<button class="btn ghost small" id="vb-hide">' + esc(funUi.hideForms ? t('fun.showForms') : t('fun.hideForms')) + '</button>' +
+      '<a class="btn ghost small" href="#/tull/verbos">' + esc(t('fun.practice')) + '</a>' +
       '</div>' +
-      '<p class="ex-hint" style="margin-top:.6rem">Truco: en noruego el presente y el pasado son iguales para todas las personas. Solo cambia el pronombre. El perfecto es «har» + participio.</p>';
+      '<p class="ex-hint" style="margin-top:.6rem">' + esc(t('fun.verbTip')) + '</p>';
   }
 
   function bindVerbTable() {
@@ -1126,7 +1128,7 @@
     btn.addEventListener('click', function () {
       funUi.hideForms = !funUi.hideForms;
       table.classList.toggle('hide-forms', funUi.hideForms);
-      btn.textContent = funUi.hideForms ? 'Mostrar formas' : 'Ocultar formas';
+      btn.textContent = funUi.hideForms ? t('fun.showForms') : t('fun.hideForms');
     });
   }
 
@@ -1137,9 +1139,9 @@
       '<span class="chip">' + esc(p.level) + '</span></div>' +
       '<h3>' + esc(p.title) + '</h3>' +
       '<p>' + esc(p.subtitle) + '</p>' +
-      '<div class="foot"><span class="chip plain">' + p.exercises.length + ' ejercicios</span>' +
-      (st ? '<span class="chip done">✓ ' + st.best + '/' + st.total + '</span>' : '<span class="chip">nuevo</span>') +
-      '<span class="go">Jugar →</span></div></a>';
+      '<div class="foot"><span class="chip plain">' + esc(tp('lesson.exercises', p.exercises.length)) + '</span>' +
+      (st ? '<span class="chip done">✓ ' + st.best + '/' + st.total + '</span>' : '<span class="chip">' + esc(t('fun.newPack')) + '</span>') +
+      '<span class="go">' + esc(t('fun.play')) + '</span></div></a>';
   }
 
   function renderFun(packId) {
@@ -1148,34 +1150,34 @@
     app.innerHTML =
       '<section class="fun-hero">' +
       '  <div class="fun-hero-text">' +
-      '    <span class="eyebrow">A1–B2 · sin vergüenza</span>' +
+      '    <span class="eyebrow">' + esc(t('fun.eyebrow')) + '</span>' +
       '    <h1>Tull &amp; tøys</h1>' +
       '    <p>' + esc(COURSE.fun.intro) + '</p>' +
       '    <div class="hero-actions">' +
-      '      <button class="btn primary" id="mix-start">🎲 Mezcla aleatoria · 10</button>' +
-      '      <button class="btn ghost" id="go-table">📚 Tabla de palabras</button>' +
-      '      <button class="btn ghost" id="go-verbs">🧩 Verbos</button>' +
+      '      <button class="btn primary" id="mix-start">' + esc(t('fun.mix')) + '</button>' +
+      '      <button class="btn ghost" id="go-table">' + esc(t('fun.wordTable')) + '</button>' +
+      '      <button class="btn ghost" id="go-verbs">' + esc(t('fun.verbs')) + '</button>' +
       '    </div>' +
       '  </div>' +
       '  <aside class="fun-hero-card">' +
-      '    <div><h3>Ejercicios nuevos</h3><div class="big-num">' + funExerciseCount() + ' <small>para reír</small></div></div>' +
-      '    <div><h3>Palabras en la tabla</h3><div class="big-num">' + COURSE.wordbank.length + ' <small>con audio</small></div></div>' +
-      '    <p class="fun-quote">«Det finnes ikke dårlig vær, bare dårlige klær.»<span>— Todo noruego, siempre</span></p>' +
+      '    <div><h3>' + esc(t('fun.newExercises')) + '</h3><div class="big-num">' + funExerciseCount() + ' <small>' + esc(t('fun.toLaugh')) + '</small></div></div>' +
+      '    <div><h3>' + esc(t('fun.wordsInTable')) + '</h3><div class="big-num">' + COURSE.wordbank.length + ' <small>' + esc(t('fun.withAudio')) + '</small></div></div>' +
+      '    <p class="fun-quote">«Det finnes ikke dårlig vær, bare dårlige klær.»<span>' + esc(t('fun.quoteBy')) + '</span></p>' +
       '  </aside>' +
       '</section>' +
 
-      '<h2 class="section-title">Elige tu caos <span>6 packs, cero solemnidad</span></h2>' +
+      '<h2 class="section-title">' + esc(t('fun.chooseChaos')) + ' <span>' + esc(t('fun.chooseChaosSub')) + '</span></h2>' +
       '<div class="fun-grid">' + COURSE.fun.packs.map(funCard).join('') + '</div>' +
 
       '<section class="card" id="tabla" style="margin-top:1.6rem">' +
-      '  <h2>Tabla de palabras <span class="h2-note">' + COURSE.wordbank.length + ' palabras · audio incluido</span></h2>' +
-      '  <p class="ex-hint" style="margin-bottom:.8rem">Filtra por nivel o tema, ordena las columnas y escucha cada palabra. Activa el modo examen para tapar el español y probarte.</p>' +
+      '  <h2>' + esc(t('fun.tableTitle')) + ' <span class="h2-note">' + esc(t('fun.tableNote', { n: COURSE.wordbank.length })) + '</span></h2>' +
+      '  <p class="ex-hint" style="margin-bottom:.8rem">' + esc(t('fun.tableIntro')) + '</p>' +
       wordTableHTML() +
       '</section>' +
 
       '<section class="card" id="verbos">' +
-      '  <h2>Tabla de verbos <span class="h2-note">presente · pasado · perfecto</span></h2>' +
-      '  <p class="ex-hint" style="margin-bottom:.8rem">Los 14 verbos que más se repiten en el curso. Oculta las formas y recítalas como si fuera un examen sorpresa.</p>' +
+      '  <h2>' + esc(t('fun.verbTitle')) + ' <span class="h2-note">' + esc(t('fun.verbNote')) + '</span></h2>' +
+      '  <p class="ex-hint" style="margin-bottom:.8rem">' + esc(t('fun.verbIntro')) + '</p>' +
       verbTableHTML() +
       '</section>';
 
@@ -1200,9 +1202,9 @@
         id: 'mix',
         emoji: '🎲',
         level: 'A1–B2',
-        title: 'Mezcla aleatoria',
-        subtitle: 'Diez ejercicios de todos los packs, en orden sorpresa',
-        intro: 'Una muestra aleatoria de todo el caos. Cada vez que entres, cambia. Ideal para calentar antes de una lección seria.'
+        title: t('fun.mixTitle'),
+        subtitle: t('fun.mixSub'),
+        intro: t('fun.mixIntro')
       };
       items = shuffle(allFunExercises()).slice(0, 10);
     } else {
@@ -1217,15 +1219,15 @@
       '<header class="lesson-head">' +
       '  <div class="kicker"><span class="emoji">' + pack.emoji + '</span>' +
       '    <span class="chip">' + esc(pack.level) + '</span>' +
-      '    <span class="chip plain">' + items.length + ' ejercicios</span></div>' +
+      '    <span class="chip plain">' + esc(tp('lesson.exercises', items.length)) + '</span></div>' +
       '  <h1>' + esc(pack.title) + '</h1>' +
       '  <p class="lead">' + esc(pack.subtitle) + '</p>' +
       '  <p class="ex-hint" style="margin-top:.7rem;max-width:70ch">' + esc(pack.intro) + '</p>' +
       '</header>' +
       '<section class="card"><div id="fun-mount">' +
       '  <div class="actions">' +
-      '    <button class="btn primary" id="start-fun">Empezar · ' + items.length + ' ejercicios</button>' +
-      (st ? '<span class="ex-hint">Tu mejor resultado: ' + st.best + '/' + st.total + '</span>' : '') +
+      '    <button class="btn primary" id="start-fun">' + esc(t('fun.start', { n: items.length })) + '</button>' +
+      (st ? '<span class="ex-hint">' + esc(t('fun.best', { best: st.best, total: st.total })) + '</span>' : '') +
       '  </div>' +
       '</div></section>';
 
@@ -1234,7 +1236,7 @@
       mount.scrollIntoView({ behavior: 'smooth', block: 'start' });
       runExercises(mount, items, {
         label: pack.title,
-        exitLabel: 'Volver a Tull',
+        exitLabel: t('fun.back'),
         onExit: function () { location.hash = '#/tull'; },
         onDone: function (res) {
           var prev = state.fun[pack.id];
@@ -1259,7 +1261,7 @@
           var box = mount.querySelector('.result');
           if (box) {
             box.insertAdjacentHTML('beforeend',
-              '<p class="ex-hint">Progreso guardado · +' + (res.correct * 10) + ' XP</p>');
+              '<p class="ex-hint">' + esc(t('result.progress', { n: res.correct * 10 })) + '</p>');
           }
         }
       });
@@ -1276,53 +1278,57 @@
     app.innerHTML =
       '<section class="hero">' +
       '  <div class="hero-text">' +
-      '    <span class="eyebrow">Bokmål · A1–B2 · sin prisa</span>' +
-      '    <h1>Noruego que se usa <em>de verdad</em>.</h1>' +
-      '    <p>' + LESSONS.length + ' lecciones, ' + totalExerciseCount() + ' ejercicios que corrigen al instante, ' +
-      COURSE.fun.packs.length + ' packs de humor y una tabla de ' + COURSE.wordbank.length + ' palabras con audio. El noruego de calle que no sale en los libros.</p>' +
+      '    <span class="eyebrow">' + esc(t('home.eyebrow')) + '</span>' +
+      '    <h1>' + t('home.title') + '</h1>' +
+      '    <p>' + esc(t('home.intro', {
+        lessons: LESSONS.length,
+        exercises: totalExerciseCount(),
+        packs: COURSE.fun.packs.length,
+        words: COURSE.wordbank.length
+      })) + '</p>' +
       '    <div class="hero-actions">' +
-      '      <a class="btn primary" href="#/leksjon/' + nl.id + '">' + (done ? 'Seguir' : 'Empezar') + ' · ' + esc(nl.title) + '</a>' +
+      '      <a class="btn primary" href="#/leksjon/' + nl.id + '">' + esc(done ? t('home.continue') : t('home.start')) + ' · ' + esc(nl.title) + '</a>' +
       '      <a class="btn ghost" href="#/tull">Tull &amp; tøys</a>' +
-      '      <a class="btn ghost" href="#/coloquial">Ver coloquial</a>' +
+      '      <a class="btn ghost" href="#/coloquial">' + esc(t('home.street')) + '</a>' +
       '    </div>' +
       '  </div>' +
       '  <aside class="hero-card">' +
-      '    <div><h3>Racha</h3><div class="big-num">' + currentStreak() + ' <small>días</small></div></div>' +
-      '    <div><h3>Lecciones</h3><div class="big-num">' + done + ' <small>de ' + total + '</small></div>' +
+      '    <div><h3>' + esc(t('home.streak')) + '</h3><div class="big-num">' + currentStreak() + ' <small>' + esc(tp('home.days', currentStreak())) + '</small></div></div>' +
+      '    <div><h3>' + esc(t('home.lessons')) + '</h3><div class="big-num">' + done + ' <small>' + esc(t('home.of', { n: total })) + '</small></div>' +
       '      <div class="meter" style="margin-top:.5rem"><i style="width:' + pct + '%"></i></div></div>' +
       '    <div class="wotd">' +
-      '      <div class="w-label">Palabra del día</div>' +
+      '      <div class="w-label">' + esc(t('home.wordOfDay')) + '</div>' +
       '      <div class="w-no">' + esc(w.no) + ' ' + say(w.no) + '</div>' +
       '      <div class="w-es">' + esc(w.es) + '</div>' +
       '    </div>' +
       '  </aside>' +
       '</section>' +
 
-      levelSection('Paso a paso', 'A1–A2 · la base', ['A1', 'A2']) +
-      levelSection('B1 · soltarte', 'ya te defiendes en el día a día', ['B1']) +
-      levelSection('B2 · opinar y discutir', 'textos reales, más matices', ['B2']) +
+      levelSection(t('home.basicTitle'), t('home.basicSub'), ['A1', 'A2']) +
+      levelSection(t('home.b1Title'), t('home.b1Sub'), ['B1']) +
+      levelSection(t('home.b2Title'), t('home.b2Sub'), ['B2']) +
 
       '<section class="fun-banner">' +
       '  <div>' +
-      '    <span class="eyebrow">Nuevo · A1–B2</span>' +
-      '    <h2>¿Cansado de ser un alumno serio?</h2>' +
-      '    <p>Alces en la lavadora, jefes que dicen «reto interesante» y una tabla de palabras que puedes ordenar, filtrar y escuchar. ' + funExerciseCount() + ' ejercicios nuevos para aprender riéndote.</p>' +
+      '    <span class="eyebrow">' + esc(t('home.funEyebrow')) + '</span>' +
+      '    <h2>' + esc(t('home.funTitle')) + '</h2>' +
+      '    <p>' + esc(t('home.funText', { n: funExerciseCount() })) + '</p>' +
       '  </div>' +
       '  <div class="fun-banner-actions">' +
-      '    <a class="btn primary" href="#/tull">Entrar en Tull &amp; tøys</a>' +
-      '    <a class="btn ghost" href="#/tull/mix">🎲 Mezcla aleatoria</a>' +
+      '    <a class="btn primary" href="#/tull">' + esc(t('home.funEnter')) + '</a>' +
+      '    <a class="btn ghost" href="#/tull/mix">' + esc(t('home.mix')) + '</a>' +
       '  </div>' +
       '</section>' +
 
-      '<h2 class="section-title">De la calle <span>sin diccionario</span></h2>' +
+      '<h2 class="section-title">' + esc(t('home.streetTitle')) + ' <span>' + esc(t('home.streetSub')) + '</span></h2>' +
       '<div class="colo-grid">' + COURSE.colloquial.slice(0, 3).map(function (c) {
         return '<div class="colo-card">' +
           '<div class="head"><span class="term">' + esc(c.term) + '</span>' + say(c.term) +
-          '<span class="reg ' + regBucket(c.register) + '">' + esc(c.register) + '</span></div>' +
+          '<span class="reg ' + regBucket(c.register) + '">' + esc(I18N.regLabel(c.register)) + '</span></div>' +
           '<p class="meaning">' + esc(c.meaning) + '</p></div>';
       }).join('') + '</div>' +
-      '<div class="actions" style="margin-top:1rem"><a class="btn ghost" href="#/coloquial">Ver las ' +
-      COURSE.colloquial.length + ' expresiones →</a></div>';
+      '<div class="actions" style="margin-top:1rem"><a class="btn ghost" href="#/coloquial">' +
+      esc(tp('home.seeExpressions', COURSE.colloquial.length)) + '</a></div>';
   }
 
   function renderLesson(lesson) {
@@ -1332,13 +1338,13 @@
     var imgAlt = lesson.imageAlt || lesson.title;
 
     app.innerHTML =
-      '<div class="crumbs"><a href="#/">Lecciones</a> <span>›</span> <span>Lección ' + lesson.num + '</span></div>' +
+      '<div class="crumbs"><a href="#/">' + esc(t('lesson.crumb')) + '</a> <span>›</span> <span>' + esc(t('lesson.breadcrumb', { n: lesson.num })) + '</span></div>' +
 
       '<header class="lesson-head">' +
       '  <div class="lesson-copy">' +
       '  <div class="kicker"><span class="emoji">' + lesson.emoji + '</span>' +
       '    <span class="chip">' + lesson.level + '</span>' +
-      '    <span class="chip plain">' + lesson.exercises.length + ' ejercicios</span></div>' +
+      '    <span class="chip plain">' + esc(tp('lesson.exercises', lesson.exercises.length)) + '</span></div>' +
       '  <h1>' + esc(lesson.title) + '</h1>' +
       '  <p class="lead">' + esc(lesson.subtitle) + '</p>' +
       '  <div class="goals">' + lesson.goals.map(function (g) { return '<span class="goal">' + esc(g) + '</span>'; }).join('') + '</div>' +
@@ -1346,13 +1352,13 @@
       '  <figure class="lesson-hero"><img src="' + esc(img) + '" alt="' + esc(imgAlt) + '" width="800" height="500" decoding="async"></figure>' +
       '</header>' +
 
-      '<section class="card"><h2>Texto' + (fold ? ' <span class="h2-note">traducción plegada</span>' : '') +
+      '<section class="card"><h2>' + esc(t('lesson.text')) + (fold ? ' <span class="h2-note">' + esc(t('lesson.folded')) + '</span>' : '') +
       '</h2><div class="text-body">' +
       lesson.text.map(function (p, i) {
         return '<div class="para">' + say(p.no) +
           '<div class="lines"><span class="no">' + esc(p.no) + '</span>' +
           (fold
-            ? '<button class="t-toggle" data-t="' + i + '" aria-expanded="false" aria-controls="tr-' + i + '">Ver traducción</button>' +
+            ? '<button class="t-toggle" data-t="' + i + '" aria-expanded="false" aria-controls="tr-' + i + '">' + esc(t('lesson.showTranslation')) + '</button>' +
               '<span class="es trans" id="tr-' + i + '" hidden>' + esc(p.es) + '</span>'
             : '<span class="es">' + esc(p.es) + '</span>') +
           '</div></div>';
@@ -1360,7 +1366,7 @@
       '</div></section>' +
 
       (lesson.grammar
-        ? '<section class="card grammar"><h2>Gramática · ' + esc(lesson.grammar.title) + '</h2>' +
+        ? '<section class="card grammar"><h2>' + esc(t('lesson.grammar')) + ' · ' + esc(lesson.grammar.title) + '</h2>' +
           '<ul class="grammar-points">' + lesson.grammar.points.map(function (pt) {
             return '<li>' + esc(pt) + '</li>';
           }).join('') + '</ul>' +
@@ -1371,7 +1377,7 @@
           }).join('') + '</div></section>'
         : '') +
 
-      '<section class="card"><h2>Vocabulario</h2><div class="vocab">' +
+      '<section class="card"><h2>' + esc(t('lesson.vocab')) + '</h2><div class="vocab">' +
       lesson.vocab.map(function (v) {
         return '<div class="row">' + say(v.no) +
           '<span class="txt"><span class="w">' + esc(v.no) + '</span>' +
@@ -1379,7 +1385,7 @@
       }).join('') +
       '</div></section>' +
 
-      '<section class="card"><h2>Frases clave</h2><div class="phrases">' +
+      '<section class="card"><h2>' + esc(t('lesson.phrases')) + '</h2><div class="phrases">' +
       lesson.phrases.map(function (p) {
         return '<div class="phrase">' + say(p.no) +
           '<span class="txt"><span class="no">' + esc(p.no) + '</span>' +
@@ -1387,9 +1393,9 @@
       }).join('') +
       '</div></section>' +
 
-      '<section class="card"><div class="tip">💡 <b>Truco:</b> ' + esc(lesson.tip) + '</div></section>' +
+      '<section class="card"><div class="tip">💡 <b>' + esc(t('lesson.tip')) + '</b> ' + esc(lesson.tip) + '</div></section>' +
 
-      '<section class="card" id="practice"><h2>Práctica</h2><div id="ex-mount"></div></section>';
+      '<section class="card" id="practice"><h2>' + esc(t('lesson.practice')) + '</h2><div id="ex-mount"></div></section>';
 
     app.querySelectorAll('.t-toggle').forEach(function (btn) {
       btn.addEventListener('click', function () {
@@ -1397,7 +1403,7 @@
         if (!el) return;
         var show = el.hidden;
         el.hidden = !show;
-        btn.textContent = show ? 'Ocultar traducción' : 'Ver traducción';
+        btn.textContent = show ? t('lesson.hideTranslation') : t('lesson.showTranslation');
         btn.setAttribute('aria-expanded', show ? 'true' : 'false');
       });
     });
@@ -1405,14 +1411,14 @@
     var mount = document.getElementById('ex-mount');
     mount.innerHTML =
       '<div class="actions">' +
-      '<button class="btn primary" id="start-ex">Empezar práctica · ' + lesson.exercises.length + ' ejercicios</button>' +
-      (st ? '<span class="ex-hint">Tu mejor resultado: ' + st.best + '/' + st.total + '</span>' : '') +
+      '<button class="btn primary" id="start-ex">' + esc(t('lesson.start', { n: lesson.exercises.length })) + '</button>' +
+      (st ? '<span class="ex-hint">' + esc(t('lesson.best', { best: st.best, total: st.total })) + '</span>' : '') +
       '</div>';
 
     document.getElementById('start-ex').addEventListener('click', function () {
       document.getElementById('practice').scrollIntoView({ behavior: 'smooth', block: 'start' });
       runExercises(mount, lesson.exercises, {
-        label: 'Lección ' + lesson.num,
+        label: t('lesson.label', { n: lesson.num }),
         onDone: function (res) {
           var prev = state.lessons[lesson.id];
           state.lessons[lesson.id] = {
@@ -1436,7 +1442,7 @@
           var box = mount.querySelector('.result');
           if (box) {
             box.insertAdjacentHTML('beforeend',
-              '<p class="ex-hint">Progreso guardado · +' + (res.correct * 10) + ' XP</p>');
+              '<p class="ex-hint">' + esc(t('result.progress', { n: res.correct * 10 })) + '</p>');
           }
         }
       });
@@ -1444,8 +1450,6 @@
   }
 
   /* ---------------- coloquial ---------------- */
-
-  var REG_LABEL = { neutro: 'Neutro', informal: 'Informal', 'muy informal': 'Muy informal', fuerte: 'Informal fuerte', vulgar: 'Vulgar', oral: 'Oral' };
 
   function regBucket(r) {
     return r === 'muy informal' ? 'informal' : r;
@@ -1468,13 +1472,13 @@
   function coloListHTML() {
     var items = coloFiltered();
     if (!items.length) {
-      return '<div class="empty"><span class="big">🔍</span>Nada por aquí. Prueba otra palabra.</div>';
+      return '<div class="empty"><span class="big">🔍</span>' + esc(t('colo.none')) + '</div>';
     }
     return '<div class="colo-grid">' + items.map(function (c) {
       return '<article class="colo-card">' +
         '<div class="head"><span class="term">' + esc(c.term) + '</span>' + say(c.term) +
-        '<span class="reg ' + regBucket(c.register) + '">' + esc(c.register) + '</span></div>' +
-        '<span class="literal">lit.: ' + esc(c.literal) + '</span>' +
+        '<span class="reg ' + regBucket(c.register) + '">' + esc(I18N.regLabel(c.register)) + '</span></div>' +
+        '<span class="literal">' + esc(t('colo.literal')) + esc(c.literal) + '</span>' +
         '<p class="meaning">' + esc(c.meaning) + '</p>' +
         '<div class="dialogue">' + c.example.map(function (e) {
           return '<div class="line"><span class="who">' + esc(e.who) + '</span>' + say(e.no) +
@@ -1488,22 +1492,21 @@
 
   function renderColoquial() {
     var regs = [
-      { key: 'all', label: 'Todo' },
-      { key: 'neutro', label: 'Neutro' },
-      { key: 'informal', label: 'Informal' },
-      { key: 'fuerte', label: 'Fuerte' },
-      { key: 'vulgar', label: 'Vulgar' },
-      { key: 'oral', label: 'Oral' }
+      { key: 'all', label: t('colo.all') },
+      { key: 'neutro', label: t('reg.neutro') },
+      { key: 'informal', label: t('reg.informal') },
+      { key: 'fuerte', label: t('reg.fuerte') },
+      { key: 'vulgar', label: t('reg.vulgar') },
+      { key: 'oral', label: t('reg.oral') }
     ];
 
     app.innerHTML =
       '<section class="colo-intro">' +
-      '  <h1>Noruego de la calle, sin filtro</h1>' +
-      '  <p>Esto es bokmål real, el que aparece en mensajes, cafeterías y grupos de WhatsApp. ' +
-      'Ojo con el registro: lo que suena perfecto entre amigos puede quedar fatal en una entrevista.</p>' +
+      '  <h1>' + esc(t('colo.title')) + '</h1>' +
+      '  <p>' + esc(t('colo.intro')) + '</p>' +
       '</section>' +
       '<div class="filters">' +
-      '  <input id="q" type="search" placeholder="Buscar expresión, significado…" value="' + esc(colo.q) + '" aria-label="Buscar">' +
+      '  <input id="q" type="search" placeholder="' + esc(t('colo.search')) + '" value="' + esc(colo.q) + '" aria-label="' + esc(t('fun.searchLabel')) + '">' +
       regs.map(function (r) {
         return '<button class="fchip ' + (colo.reg === r.key ? 'active' : '') + '" data-reg="' + r.key + '">' + r.label + '</button>';
       }).join('') +
@@ -1537,14 +1540,14 @@
         var pack = COURSE.fun.packs.find(function (p) { return p.id === parts[1]; });
         var funItem = pack && pack.exercises[Number(parts[2])];
         if (pack && funItem) {
-          out.push({ sig: sig, item: funItem, title: pack.title, emoji: pack.emoji, label: 'Tull' });
+          out.push({ sig: sig, item: funItem, title: pack.title, emoji: pack.emoji, label: t('fun.mixLabel') });
         }
         return;
       }
       var lesson = LESSONS.find(function (l) { return l.id === parts[0]; });
       var item = lesson && lesson.exercises[Number(parts[1])];
       if (lesson && item) {
-        out.push({ sig: sig, item: item, title: lesson.title, emoji: lesson.emoji, label: 'L' + lesson.num });
+        out.push({ sig: sig, item: item, title: lesson.title, emoji: lesson.emoji, label: t('review.lessonLabel', { n: lesson.num }) });
       }
     });
     return out;
@@ -1555,17 +1558,17 @@
 
     if (!entries.length) {
       app.innerHTML =
-        '<div class="review-head"><div><h1>Repaso</h1>' +
-        '<p>Aquí caen los ejercicios que fallas, para que no se te escapen.</p></div></div>' +
+        '<div class="review-head"><div><h1>' + esc(t('review.title')) + '</h1>' +
+        '<p>' + esc(t('review.intro')) + '</p></div></div>' +
         '<div class="empty"><span class="big">🌱</span>' +
-        'Todavía no hay nada que repasar.<br>Haz una lección y lo que falles aparecerá aquí.</div>';
+        t('review.empty') + '</div>';
       return;
     }
 
     app.innerHTML =
-      '<div class="review-head"><div><h1>Repaso</h1>' +
-      '<p>' + entries.length + ' ejercicio' + (entries.length === 1 ? '' : 's') + ' pendiente' + (entries.length === 1 ? '' : 's') + '. Los que aciertes desaparecen.</p></div>' +
-      '<button class="btn primary" id="start-review">Repasar todo</button></div>' +
+      '<div class="review-head"><div><h1>' + esc(t('review.title')) + '</h1>' +
+      '<p>' + esc(tp('review.pending', entries.length)) + '</p></div>' +
+      '<button class="btn primary" id="start-review">' + esc(t('review.all')) + '</button></div>' +
       '<div class="review-list">' + entries.map(function (e) {
         return '<div class="review-item">' +
           '<span class="chip plain">' + esc(e.emoji) + ' ' + esc(e.label) + '</span>' +
@@ -1579,8 +1582,8 @@
       box.style.display = 'block';
       box.scrollIntoView({ behavior: 'smooth', block: 'start' });
       runExercises(box, entries.map(function (e) { return e.item; }), {
-        label: 'Repaso',
-        exitLabel: 'Terminar',
+        label: t('review.label'),
+        exitLabel: t('result.finish'),
         onExit: renderReview,
         onDone: function (res) {
           var failedSet = res.failed;
@@ -1592,7 +1595,7 @@
           save();
           refreshHud();
           var b = box.querySelector('.result');
-          if (b) b.insertAdjacentHTML('beforeend', '<p class="ex-hint">Repaso guardado · +' + (res.correct * 5) + ' XP</p>');
+          if (b) b.insertAdjacentHTML('beforeend', '<p class="ex-hint">' + esc(t('result.reviewSaved', { n: res.correct * 5 })) + '</p>');
         }
       });
     });
