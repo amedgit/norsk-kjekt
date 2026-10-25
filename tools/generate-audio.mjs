@@ -85,6 +85,41 @@ for (const c of COURSE.colloquial) {
   c.example.forEach((x) => texts.add(x.no));
 }
 
+/* Tull & tøys: packs, tabla de palabras y tabla de verbos */
+if (COURSE.fun) {
+  for (const pack of COURSE.fun.packs) {
+    for (const e of pack.exercises) {
+      if (e.type === 'gap') texts.add(e.sentence.replace('___', e.answers[0]));
+      if (e.type === 'order') texts.add(e.words.join(' '));
+      if (e.type === 'mcq' && e.audio) texts.add(e.audio);
+      if (e.type === 'listen') texts.add(e.audio);
+      if (e.type === 'odd') texts.add(e.options[e.answer]);
+      if (e.type === 'fix') texts.add(e.correct);
+      if (e.type === 'transform') {
+        texts.add(e.source);
+        const list = e.answers || (e.answer ? [e.answer] : []);
+        list.forEach((a) => texts.add(a));
+      }
+      if (e.type === 'cloze') {
+        let i = 0;
+        const filled = String(e.text).replace(/___/g, () => {
+          const a = e.answers[i++];
+          return Array.isArray(a) ? a[0] : a;
+        });
+        texts.add(filled);
+      }
+      if (e.type === 'match' || e.type === 'memory') {
+        e.pairs.forEach((p) => {
+          texts.add(p.a);
+          if (e.sayB) texts.add(p.b);
+        });
+      }
+    }
+  }
+}
+if (COURSE.wordbank) COURSE.wordbank.forEach((w) => texts.add(w.no));
+if (COURSE.verbs) COURSE.verbs.forEach((v) => texts.add(v.inf));
+
 const all = [...texts].map((t) => norm(t)).filter(Boolean);
 const unique = [...new Set(all)];
 mkdirSync(OUT, { recursive: true });

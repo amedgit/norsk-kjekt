@@ -3,8 +3,8 @@
 **Publicado:** <https://amedgit.github.io/norsk-kjekt/>
 
 Portal para practicar noruego **bokmål** (A1–B2): textos cortos, ejercicios
-interactivos y una sección de noruego coloquial. HTML + CSS + JS puro, sin build,
-sin dependencias y sin backend.
+interactivos, seis packs de humor, tablas de palabras y verbos, y una sección de
+noruego coloquial. HTML + CSS + JS puro, sin build, sin dependencias y sin backend.
 
 ## Cómo abrirlo
 
@@ -26,11 +26,13 @@ cd ~/norsk
 | Parte | Contenido |
 |---|---|
 | Lecciones | 11 lecciones A1–B2: base A1–A2, vida diaria B1 y noticias, medio ambiente y derechos laborales en B2 |
-| Práctica | 81 ejercicios en 7 formatos: opción múltiple, huecos, ordenar, dictado, cloze, transformar y emparejar |
+| Práctica | 165 ejercicios en 10 formatos: opción múltiple, huecos, ordenar, dictado, cloze, transformar, emparejar, ¿qué sobra?, encontrar el error y memoria |
+| Tull & tøys | 6 packs con 84 ejercicios de humor (absurdo, supervivencia, oficina, dictados, modismos y verbos) y una mezcla aleatoria de 10 |
+| Tablas | 86 palabras con audio, búsqueda, filtros por nivel/tema, ordenación y modo examen; 14 verbos en presente, pasado y perfecto |
 | Coloquial | 18 expresiones con registro (neutro → vulgar), diálogo de ejemplo y truco |
-| Progreso | racha de días, XP, mejor resultado por lección y cola de repaso de fallos |
+| Progreso | racha de días, XP, mejor resultado por lección/pack y cola de repaso de fallos |
 | Velocidad | selector 0,7×–1,3× en la cabecera; se aplica al audio y se recuerda |
-| Audio | 372 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
+| Audio | 534 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
 
 ## Estructura
 
@@ -46,7 +48,7 @@ norsk/
 └── assets/
     ├── css/style.css
     ├── img/og.png       ← imagen para compartir en redes
-    ├── audio/*.mp3      ← 372 audios (≈4,4 MB), generados
+    ├── audio/*.mp3      ← 534 audios (≈5,9 MB), generados
     └── js/
         ├── data.js          ← TODO el contenido del curso
         ├── audio-manifest.js ← texto → MP3 (generado, no editar)
@@ -117,10 +119,36 @@ Tipos de ejercicio:
 // emparejar dos columnas; sayB solo si la columna B es noruego
 { type: 'match', prompt: 'Empareja:', pairs: [{ a: 'lønn', b: 'salario' }],
   sayB: false, explain: '...' }
+
+// ¿qué palabra no encaja? (answer = índice)
+{ type: 'odd', prompt: '¿Qué no es una comida?',
+  options: ['frokost', 'lunsj', 'middag', 'møte'], answer: 3, explain: '...' }
+
+// encontrar el error: wrong = índice del token; correct = frase arreglada
+{ type: 'fix', prompt: 'Toca la palabra equivocada:',
+  sentence: 'Hun bor på Norge.', wrong: 2, correct: 'Hun bor i Norge.',
+  es: 'Ella vive en Noruega.', explain: '...' }
+
+// memoria: parejas ocultas (a suele ser noruego y b español)
+{ type: 'memory', prompt: 'Memoria:', pairs: [{ a: 'å være', b: 'ser, estar' }],
+  explain: '...' }
 ```
 
 Para añadir expresiones coloquiales, edita el array `colloquial` con
 `register` ∈ `neutro | informal | muy informal | fuerte | vulgar | oral`.
+
+### Tull & tøys
+
+La sección `#/tull` se alimenta de tres bloques de `data.js`:
+
+- `fun.packs`: packs con `id`, `emoji`, `level`, `title`, `subtitle`, `intro` y
+  `exercises`. Acepta los mismos tipos que las lecciones, incluidos `odd`,
+  `fix` y `memory`.
+- `wordbank`: palabras de la tabla (`no`, `es`, `level`, `tag` y `note` opcional).
+- `verbs`: verbos de la tabla (`inf`, `es`, `present`, `past`, `perfect`).
+
+El generador de audio recorre automáticamente los packs, `wordbank` y `verbs`:
+si añades texto nuevo, vuelve a ejecutarlo antes de publicar.
 
 ## Regenerar los audios
 

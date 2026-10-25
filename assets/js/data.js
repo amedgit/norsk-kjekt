@@ -1647,5 +1647,884 @@ window.COURSE = {
       ],
       tip: 'Se dice al irte, nunca al llegar. Es la fórmula estrella al terminar una visita.'
     }
+  ],
+
+  /* ==================================================================
+     TULL & TØYS — ejercicios absurdos, tablas y juegos
+     ================================================================== */
+  fun: {
+    intro: 'Noruego para reírte un poco. Aquí no hay exámenes: hay alces en la lavadora, jefes que hablan como robots y palabras que significan lo contrario de lo que parece. Si te equivocas, mejor: de eso se ríe uno en Noruega.',
+    packs: [
+      {
+        id: 'absurd',
+        emoji: '🤪',
+        level: 'A1–A2',
+        title: 'Absurdistan',
+        subtitle: 'Alces, cactus y gatos que hablan noruego',
+        intro: 'Frases que no necesitas en la vida real, pero que te obligan a mirar la gramática sin dormirte. El nivel es A1–A2; el absurdo es internacional.',
+        exercises: [
+          {
+            type: 'mcq',
+            prompt: '¿Qué significa «Jeg spiser en kaktus»?',
+            options: ['Como un cactus', 'Abrazo un cactus', 'Riego un cactus', 'Me duele un cactus'],
+            answer: 0,
+            audio: 'Jeg spiser en kaktus',
+            explain: '«Å spise» = comer. En Noruega nadie come cactus, pero el verbo ya no se te olvida.'
+          },
+          {
+            type: 'odd',
+            prompt: '¿Qué palabra no encaja en una cafetería?',
+            options: ['kaffe', 'te', 'kanelsnurr', 'sko'],
+            answer: 3,
+            explain: '«Sko» son zapatos. Puedes entrar con ellos, pero no pedirlos con leche.'
+          },
+          {
+            type: 'gap',
+            prompt: 'Completa el chiste:',
+            sentence: 'Katten min ___ norsk, men bare på mandager.',
+            answers: ['snakker'],
+            bank: ['snakker', 'spiser', 'bor'],
+            es: 'Mi gato habla noruego, pero solo los lunes.',
+            explain: '«Snakker» es la forma de presente de «å snakke». El gato es raro, no la conjugación.'
+          },
+          {
+            type: 'fix',
+            prompt: 'Toca la palabra que sobra:',
+            sentence: 'Jeg heter for Alex.',
+            wrong: 2,
+            correct: 'Jeg heter Alex.',
+            es: 'Me llamo Alex.',
+            explain: '«Å hete» no lleva «for». «Jeg heter Alex» ya está completo; «for» sobra como un invitado en una boda vegana.'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la escena doméstica:',
+            words: ['Elgen', 'sover', 'i', 'vaskemaskinen.'],
+            es: 'El alce duerme en la lavadora.',
+            explain: 'Sujeto + verbo + lugar. El orden es lo único normal de esta frase.'
+          },
+          {
+            type: 'mcq',
+            prompt: 'Estás en el bus y aparece un alce. ¿Qué dices?',
+            options: ['Unnskyld, er dette setet ditt?', 'Elgen er sjefen min.', 'Jeg heter alke.', 'Hvor er kaktusen?'],
+            answer: 0,
+            explain: 'La cortesía noruega no se pierde ni delante de un alce. «Er dette setet ditt?» = ¿es este tu asiento?'
+          },
+          {
+            type: 'gap',
+            prompt: 'Completa con la prenda correcta:',
+            sentence: 'Om vinteren bruker jeg tre gensere og en ___ på hodet.',
+            answers: ['lue'],
+            bank: ['lue', 'sko', 'hanske'],
+            es: 'En invierno uso tres jerséis y un gorro en la cabeza.',
+            explain: '«Lue» es el gorro de lana. «Hanske» es el guante, que va en la mano y no en la cabeza.'
+          },
+          {
+            type: 'cloze',
+            prompt: 'Completa el relato del vecino:',
+            text: 'Jeg våknet klokka fire fordi naboen ___ opera i dusjen. Jeg banket på døren, men han ___ bare «Carmen!»',
+            answers: ['sang', 'ropte'],
+            bank: ['sang', 'ropte', 'sov', 'hvisket'],
+            es: 'Me desperté a las cuatro porque el vecino cantaba ópera en la ducha. Llamé a la puerta, pero él solo gritó «¡Carmen!».',
+            explain: '«Sang» es el pasado de «å synge» (cantar) y «ropte» el de «å rope» (gritar). El vecino no se disculpó.'
+          },
+          {
+            type: 'listen',
+            prompt: 'Dictado: escribe exactamente lo que oyes.',
+            audio: 'Unnskyld, er det din pingvin?',
+            hint: '5 palabras · un animal inesperado',
+            es: 'Perdona, ¿es tu pingüino?',
+            explain: '«Pingvin» se pronuncia más o menos «ping-vin». La pregunta educada no arregla el pingüino, pero ayuda.'
+          },
+          {
+            type: 'mcq',
+            prompt: '¿Cuál es la frase correcta?',
+            options: ['Jeg liker ikke fisk.', 'Jeg liker ikke av fisk.', 'Jeg ikke liker fisk.', 'Jeg liker fisk ikke.'],
+            answer: 0,
+            explain: 'La negación «ikke» va detrás del verbo. «Jeg liker ikke fisk» = no me gusta el pescado.'
+          },
+          {
+            type: 'odd',
+            prompt: '¿Qué no es un día de la semana?',
+            options: ['mandag', 'tirsdag', 'torsdag', 'kjøleskap'],
+            answer: 3,
+            explain: '«Kjøleskap» es nevera. Un día de la semana muy frío, pero no aparece en el calendario.'
+          },
+          {
+            type: 'fix',
+            prompt: 'Toca la palabra equivocada:',
+            sentence: 'Hun bor på Norge.',
+            wrong: 2,
+            correct: 'Hun bor i Norge.',
+            es: 'Ella vive en Noruega.',
+            explain: 'Con países se usa «i»: i Norge, i Spania. «På» se queda para islas y para «på jobb».'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la compra más noruega:',
+            words: ['Elgen', 'bestilte', 'en', 'kaffe', 'og', 'betalte', 'med', 'kort.'],
+            es: 'El alce pidió un café y pagó con tarjeta.',
+            explain: '«Bestilte» y «betalte» son pasados regulares. El alce, en cambio, es un cliente difícil.'
+          },
+          {
+            type: 'gap',
+            prompt: 'Completa la presentación de Olga:',
+            sentence: 'Jeg har en ___ som heter Olga. Hun er sjefen i huset.',
+            answers: ['katt'],
+            bank: ['katt', 'kaktus', 'elg'],
+            es: 'Tengo una gata que se llama Olga. Ella es la jefa de la casa.',
+            explain: '«Katt» es gato o gata; «en katt» es común, «ei katt» también se oye. Olga manda igual.'
+          },
+          {
+            type: 'mcq',
+            prompt: '¿Qué significa «tull»?',
+            options: ['Tonterías', 'Tulipán', 'Turbina', 'Túnel'],
+            answer: 0,
+            explain: '«Tull» son tonterías. «Tull og tøys» es la expresión que da nombre a esta sección: puro disparate.'
+          }
+        ]
+      },
+      {
+        id: 'overlevelse',
+        emoji: '🧯',
+        level: 'A2–B1',
+        title: 'Norsk for overlevelse',
+        subtitle: 'Quedar, disculparte y entender lo que no se dice',
+        intro: 'El noruego que necesitas para no quedarte mirando al suelo en una quedada, una cena o una clase de spinning. Incluye mentiras piadosas y excusas oficiales.',
+        exercises: [
+          {
+            type: 'mcq',
+            prompt: 'Alguien te dice «Kos deg!». ¿Qué te está deseando?',
+            options: ['Que disfrutes', 'Que te calles', 'Que pagues', 'Que corras'],
+            answer: 0,
+            audio: 'Kos deg!',
+            explain: '«Kos deg» = disfruta. Se dice con café, con cena y hasta con una tarde de sofá y manta.'
+          },
+          {
+            type: 'fix',
+            prompt: 'Toca la palabra equivocada:',
+            sentence: 'Jeg gleder meg for å se deg i morgen.',
+            wrong: 3,
+            correct: 'Jeg gleder meg til å se deg i morgen.',
+            es: 'Tengo ganas de verte mañana.',
+            explain: 'La expresión fija es «glede seg til». «For» aquí no pega ni con cola.'
+          },
+          {
+            type: 'gap',
+            prompt: 'Completa el tópico noruego:',
+            sentence: 'Det er typisk norsk å ta med egen ___ på tur.',
+            answers: ['matpakke'],
+            bank: ['matpakke', 'pizza', 'kaktus'],
+            es: 'Es típicamente noruego llevar tu propia fiambrera de excursión.',
+            explain: 'La «matpakke» es sagrada: pan con queso envuelto en papel. No se discute.'
+          },
+          {
+            type: 'odd',
+            prompt: '¿Qué no es una comida?',
+            options: ['frokost', 'lunsj', 'middag', 'møte'],
+            answer: 3,
+            explain: '«Møte» es reunión. En algunas empresas ocupa el horario de la comida, pero no cuenta como alimento.'
+          },
+          {
+            type: 'match',
+            prompt: 'Empareja estos falsos amigos (o casi):',
+            pairs: [
+              { a: 'flink', b: 'hábil, bueno' },
+              { a: 'gøy', b: 'divertido' },
+              { a: 'snill', b: 'amable' },
+              { a: 'kjekk', b: 'guapo' },
+              { a: 'aktuell', b: 'relevante' },
+              { a: 'real', b: 'de fiar, legal' }
+            ],
+            explain: '«Flink» no es flink, «snill» no es silly y «real» no es real. Son falsos amigos con muy buena reputación.'
+          },
+          {
+            type: 'cloze',
+            prompt: 'Completa el dicho noruego:',
+            text: 'Det finnes ikke dårlig vær, bare dårlige ___.',
+            answers: ['klær'],
+            bank: ['klær', 'sko', 'ord'],
+            es: 'No existe el mal tiempo, solo ropa mala.',
+            explain: 'El dicho es «Det finnes ikke dårlig vær, bare dårlige klær». En Bergen lo repiten cada mañana.'
+          },
+          {
+            type: 'listen',
+            prompt: 'Dictado: escribe exactamente lo que oyes.',
+            audio: 'Jeg kommer litt senere, jeg må finne sokker.',
+            hint: '8 palabras · una excusa muy noruega',
+            es: 'Llego un poco más tarde, tengo que encontrar calcetines.',
+            explain: '«Litt senere» = un poco más tarde. Los calcetines son una causa nacional de retraso.'
+          },
+          {
+            type: 'transform',
+            prompt: 'Reescribe en pasado:',
+            source: 'Jeg kjøper melk.',
+            answer: 'Jeg kjøpte melk.',
+            hint: 'kjøpe → kjøpte',
+            es: 'Compré leche.',
+            explain: 'Los verbos en -e suelen hacer el pasado en -te: kjøpe → kjøpte. La leche sigue siendo leche.'
+          },
+          {
+            type: 'mcq',
+            prompt: '¿Qué significa «å kjede seg»?',
+            options: ['Aburrirse', 'Encadenarse', 'Quedarse en casa', 'Tener frío'],
+            answer: 0,
+            explain: 'Es aburrirse. No tiene nada que ver con «kid» ni con cadenas, aunque un lunes por la mañana se parezca.'
+          },
+          {
+            type: 'fix',
+            prompt: 'Toca la palabra equivocada:',
+            sentence: 'Jeg har bodd i Norge siden to år.',
+            wrong: 5,
+            correct: 'Jeg har bodd i Norge i to år.',
+            es: 'He vivido en Noruega durante dos años.',
+            explain: '«Siden» va con un momento concreto (siden 2020); para una duración se usa «i» (i to år).'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la petición desesperada:',
+            words: ['Kan', 'du', 'sende', 'meg', 'koden', 'til', 'wifi-en?'],
+            es: '¿Puedes enviarme la contraseña del wifi?',
+            explain: 'Pregunta con verbo primero: Kan du...? El wifi es un derecho humano en las cabañas noruegas.'
+          },
+          {
+            type: 'mcq',
+            prompt: 'Llegas tarde a una cita. ¿Qué suena más noruego?',
+            options: ['Beklager, jeg er litt sen.', 'Jeg er ikke sen, du er tidlig.', 'Beklager, jeg er en elg.', 'Jeg kommer aldri.'],
+            answer: 0,
+            explain: 'Disculpa breve, sin drama. «Litt sen» suaviza el retraso; lo de ser un alce se reserva para emergencias.'
+          },
+          {
+            type: 'gap',
+            prompt: 'Completa el concepto nacional:',
+            sentence: 'Nordmenn elsker ___ og bål.',
+            answers: ['friluftsliv'],
+            bank: ['friluftsliv', 'kino', 'shopping'],
+            es: 'A los noruegos les encanta la vida al aire libre y las hogueras.',
+            explain: '«Friluftsliv» = vida al aire libre. Es una palabra, un deporte y una religión con botas de montaña.'
+          },
+          {
+            type: 'cloze',
+            prompt: 'Completa la compra del viernes:',
+            text: 'På fredag skulle jeg bare kjøpe melk, men jeg kom hjem med ___ og ___.',
+            answers: ['godteri', 'potetgull'],
+            bank: ['godteri', 'potetgull', 'melk', 'brød'],
+            es: 'El viernes solo iba a comprar leche, pero volví a casa con chuches y patatas fritas.',
+            explain: '«Godteri» son chuches y «potetgull» patatas fritas. La leche se quedó en la tienda, como siempre.'
+          },
+          {
+            type: 'odd',
+            prompt: '¿Qué palabra no es una estación?',
+            options: ['vinter', 'vår', 'sommer', 'helg'],
+            answer: 3,
+            explain: '«Helg» es fin de semana. No es una estación, pero a veces dura menos que el invierno.'
+          },
+          {
+            type: 'mcq',
+            prompt: '¿Qué significa «å ta seg en tur»?',
+            options: ['Salir a dar una vuelta', 'Tomar una ducha', 'Coger el autobús', 'Hacer la compra'],
+            answer: 0,
+            explain: 'Es salir a pasear o hacer una excursión corta. Puede ser al bosque, a la playa o a la nevera.'
+          }
+        ]
+      },
+      {
+        id: 'kontor',
+        emoji: '💼',
+        level: 'B1',
+        title: 'Kontoret kaller',
+        subtitle: 'Reuniones, correos y frases que significan otra cosa',
+        intro: 'El español de oficina tiene «te lo reenvío»; el noruego tiene «bare en liten påminnelse». Aprende a sobrevivir a la semana laboral sin perder la sonrisa.',
+        exercises: [
+          {
+            type: 'mcq',
+            prompt: '«Hei, bare en liten påminnelse ...». ¿Qué tono tiene?',
+            options: ['Recordatorio educado (pero puede ser pasivo-agresivo)', 'Una declaración de amor', 'Una amenaza legal', 'Una invitación a cenar'],
+            answer: 0,
+            explain: 'Es un recordatorio suave. «Bare en liten» es la sonrisa antes de decirte que ya van tres correos.'
+          },
+          {
+            type: 'fix',
+            prompt: 'Toca la palabra que sobra:',
+            sentence: 'Vi må diskutere om saken på møtet.',
+            wrong: 3,
+            correct: 'Vi må diskutere saken på møtet.',
+            es: 'Tenemos que discutir el asunto en la reunión.',
+            explain: '«Å diskutere» ya lleva objeto directo: diskutere saken. «Om» sobra y suena a traducción automática.'
+          },
+          {
+            type: 'gap',
+            prompt: 'Completa el correo:',
+            sentence: 'Kan du sende meg ___ innen fredag?',
+            answers: ['referatet'],
+            bank: ['referatet', 'kaffen', 'kaktusen'],
+            es: '¿Puedes enviarme el acta antes del viernes?',
+            explain: '«Referatet» es el acta o resumen de la reunión. «Innen fredag» = antes del viernes.'
+          },
+          {
+            type: 'cloze',
+            prompt: 'Completa el correo de baja:',
+            text: 'Kjære kolleger, jeg er dessverre ___ i dag. Jeg har fått en ___ som gjør at jeg snakker som en ___.',
+            answers: ['syk', 'forkjølelse', 'frosk'],
+            bank: ['syk', 'forkjølelse', 'frosk', 'frisk', 'ferie', 'elg'],
+            es: 'Estimados colegas: hoy estoy enfermo, por desgracia. He pillado un resfriado que hace que hable como una rana.',
+            explain: '«Syk» = enfermo, «forkjølelse» = resfriado y «frosk» = rana. La rana es lo más honesto del correo.'
+          },
+          {
+            type: 'match',
+            prompt: 'Empareja el vocabulario de oficina:',
+            pairs: [
+              { a: 'å følge opp', b: 'hacer seguimiento' },
+              { a: 'å ta en avgjørelse', b: 'tomar una decisión' },
+              { a: 'å utsette', b: 'posponer' },
+              { a: 'å delegere', b: 'delegar' },
+              { a: 'frist', b: 'plazo' },
+              { a: 'innspill', b: 'aportación, sugerencia' }
+            ],
+            explain: '«Frist» es el plazo, no el fin de semana (helg). Y «å utsette» es lo que pasa con todos los plazos.'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase de reunión:',
+            words: ['Møtet', 'varer', 'til', 'klokka', 'tre.'],
+            es: 'La reunión dura hasta las tres.',
+            explain: '«Å vare» = durar. Si dura hasta las tres, la agenda era optimista.'
+          },
+          {
+            type: 'listen',
+            prompt: 'Dictado: escribe exactamente lo que oyes.',
+            audio: 'Jeg har sendt deg en e-post, men du har ikke svart.',
+            hint: '10 palabras · el seguimiento clásico',
+            es: 'Te he enviado un correo, pero no has respondido.',
+            explain: '«Å svare» = responder. El correo existe; la respuesta, todavía no.'
+          },
+          {
+            type: 'transform',
+            prompt: 'Reescribe en pasiva:',
+            source: 'Vi tar beslutningen i morgen.',
+            answer: 'Beslutningen tas i morgen.',
+            hint: 'El objeto pasa al principio: beslutningen + tas',
+            es: 'La decisión se toma mañana.',
+            explain: 'En pasiva, «tar» se convierte en «tas»: beslutningen tas. Suena más formal y más de acta.'
+          },
+          {
+            type: 'mcq',
+            prompt: '¿Qué significa «å være sykmeldt»?',
+            options: ['Estar de baja médica', 'Estar de vacaciones', 'Trabajar desde casa', 'Estar en prácticas'],
+            answer: 0,
+            explain: 'Es estar de baja con justificante médico. No es lo mismo que «ferie» (vacaciones), aunque las dos se disfruten.'
+          },
+          {
+            type: 'odd',
+            prompt: '¿Qué no es un trabajo?',
+            options: ['lærer', 'sykepleier', 'møte', 'baker'],
+            answer: 2,
+            explain: '«Møte» es reunión. Hay quien vive de ellas, pero no cuenta como profesión oficial.'
+          },
+          {
+            type: 'fix',
+            prompt: 'Toca la palabra equivocada:',
+            sentence: 'Jeg ser frem for å høre fra deg.',
+            wrong: 3,
+            correct: 'Jeg ser frem til å høre fra deg.',
+            es: 'Espero tener noticias tuyas.',
+            explain: 'La expresión es «se frem til». «For» aquí es el error que todos cometemos el primer día.'
+          },
+          {
+            type: 'mcq',
+            prompt: 'El jefe dice «Det er en spennende utfordring». ¿Qué significa en la práctica?',
+            options: ['Es un marrón interesante', 'Es un ascenso seguro', 'Es un día libre', 'Es una felicitación'],
+            answer: 0,
+            explain: '«Spennende utfordring» suele ser un problema disfrazado de oportunidad. Sonríe y pide el plazo por escrito.'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la petición educada:',
+            words: ['Kan', 'du', 'sende', 'referatet', 'før', 'lunsj?'],
+            es: '¿Puedes enviar el acta antes de comer?',
+            explain: '«Før lunsj» = antes de comer. Es una fecha límite que todo el mundo entiende.'
+          },
+          {
+            type: 'gap',
+            prompt: 'Completa con la forma correcta:',
+            sentence: 'Jeg jobber ___ hver tirsdag.',
+            answers: ['hjemmefra'],
+            bank: ['hjemmefra', 'hjemme', 'hjem'],
+            es: 'Trabajo desde casa todos los martes.',
+            explain: '«Hjemmefra» = desde casa. «Hjemme» = en casa, sin movimento. «Hjem» = hacia casa.'
+          },
+          {
+            type: 'cloze',
+            prompt: 'Completa el drama de la reunión:',
+            text: 'Sjefen sa at vi skulle ___ en ny ___ , men vi endte med å ___ møtet igjen.',
+            answers: ['ta', 'avgjørelse', 'utsette'],
+            bank: ['ta', 'avgjørelse', 'utsette', 'spise', 'ferie', 'kake'],
+            es: 'El jefe dijo que tomaríamos una nueva decisión, pero acabamos posponiendo la reunión otra vez.',
+            explain: '«Ta en avgjørelse» = tomar una decisión. «Endte med å utsette» = acabamos posponiendo. El círculo se cierra.'
+          },
+          {
+            type: 'mcq',
+            prompt: '¿Cuál es la forma más natural de pedir algo en el trabajo?',
+            options: ['Kan du ...?', 'Du skal ...', 'Kanskje du burde ...', 'Jeg befaler ...'],
+            answer: 0,
+            explain: '«Kan du ...?» es directo y educado. Las otras opciones van del pasivo-agresivo al emperador romano.'
+          }
+        ]
+      },
+      {
+        id: 'lytt',
+        emoji: '🎧',
+        level: 'A2–B1',
+        title: 'Lytt og le',
+        subtitle: 'Dictados cortos con sorpresa final',
+        intro: 'Ocho frases para entrenar el oído. No hay trampa: hay acentos, risas y algún animal. Escucha, escribe y comprueba. Puedes repetir tantas veces como quieras.',
+        exercises: [
+          {
+            type: 'listen',
+            prompt: 'Dictado: escribe exactamente lo que oyes.',
+            audio: 'Katten min heter Olga og hun hater mandager.',
+            hint: '7 palabras · una gata con opiniones',
+            es: 'Mi gata se llama Olga y odia los lunes.',
+            explain: '«Hater» es odiar. Olga tiene razón: los lunes son un invento.'
+          },
+          {
+            type: 'listen',
+            prompt: 'Dictado: escribe exactamente lo que oyes.',
+            audio: 'Unnskyld, kan du gjenta det? Jeg tenkte på middag.',
+            hint: '9 palabras · la atención va y viene',
+            es: 'Perdona, ¿puedes repetirlo? Estaba pensando en la cena.',
+            explain: '«Å gjenta» = repetir; «middag» = cena. La honestidad es la mejor excusa.'
+          },
+          {
+            type: 'listen',
+            prompt: 'Dictado: escribe exactamente lo que oyes.',
+            audio: 'Det regner i Bergen, som vanlig.',
+            hint: '6 palabras · el parte meteorológico nacional',
+            es: 'Llueve en Bergen, como de costumbre.',
+            explain: '«Som vanlig» = como de costumbre. En Bergen no es pesimismo: es clima.'
+          },
+          {
+            type: 'listen',
+            prompt: 'Dictado: escribe exactamente lo que oyes.',
+            audio: 'Jeg har kjøpt en ny sykkel, men jeg kan ikke sykle.',
+            hint: '10 palabras · una compra cuestionable',
+            es: 'He comprado una bici nueva, pero no sé montar en bici.',
+            explain: '«Å sykle» = montar en bici. Comprarla es el primer paso; aprender, el segundo.'
+          },
+          {
+            type: 'listen',
+            prompt: 'Dictado: escribe exactamente lo que oyes.',
+            audio: 'Elgen står utenfor døren og vil ha kaffe.',
+            hint: '8 palabras · visita inesperada',
+            es: 'El alce está fuera de la puerta y quiere café.',
+            explain: '«Utenfor» = fuera de. El alce no llama al timbre porque es un animal directo.'
+          },
+          {
+            type: 'listen',
+            prompt: 'Dictado: escribe exactamente lo que oyes.',
+            audio: 'Nordmenn sier «det går bra» når det egentlig ikke går bra.',
+            hint: '10 palabras · la mentira nacional',
+            es: 'Los noruegos dicen «no pasa nada» cuando en realidad no va nada bien.',
+            explain: '«Det går bra» puede ser «no pasa nada» o «esto es un desastre, pero sonrío». El contexto lo decide.'
+          },
+          {
+            type: 'listen',
+            prompt: 'Dictado: escribe exactamente lo que oyes.',
+            audio: 'Jeg lover å slutte å utsette ting. I morgen.',
+            hint: '9 palabras · promesa de año nuevo',
+            es: 'Prometo dejar de posponer las cosas. Mañana.',
+            explain: '«Å utsette» = posponer. La segunda frase desmonta la primera, y así funciona el año nuevo.'
+          },
+          {
+            type: 'listen',
+            prompt: 'Dictado: escribe exactamente lo que oyes.',
+            audio: 'Kan du snakke litt saktere? Jeg er fortsatt på «hei».',
+            hint: '9 palabras · nivel principiante honesto',
+            es: '¿Puedes hablar un poco más despacio? Todavía estoy en «hola».',
+            explain: '«Saktere» = más despacio. «Fortstatt» = todavía. Todos hemos estado en «hei».'
+          },
+          {
+            type: 'listen',
+            prompt: 'Dictado: escribe exactamente lo que oyes.',
+            audio: 'Jeg har bare spist frokost tre ganger i dag.',
+            hint: '9 palabras · un día muy noruego',
+            es: 'Solo he desayunado tres veces hoy.',
+            explain: '«Bare» = solo; «tre ganger» = tres veces. El desayuno es un deporte de resistencia.'
+          }
+        ]
+      },
+      {
+        id: 'hjernetrim',
+        emoji: '🧠',
+        level: 'B1–B2',
+        title: 'Hjernetrim',
+        subtitle: 'Modismos, memoria y trampas de nivel',
+        intro: 'Para cuando ya entiendes las palabras pero los noruegos siguen diciendo cosas rarísimas. Modismos, condicionales y un memory para demostrar que tu cerebro funciona antes del café.',
+        exercises: [
+          {
+            type: 'odd',
+            prompt: '¿Cuál no es un falso amigo?',
+            options: ['flink', 'gøy', 'snill', 'katt'],
+            answer: 3,
+            explain: '«Katt» es gato, sin doble sentido. Los otros tres te miran con cara de «¿seguro que sabes español?».'
+          },
+          {
+            type: 'fix',
+            prompt: 'Toca la palabra equivocada:',
+            sentence: 'Han er veldig flink i å lage mat.',
+            wrong: 4,
+            correct: 'Han er veldig flink til å lage mat.',
+            es: 'Es muy bueno cocinando.',
+            explain: '«Flink til å» + infinitivo. «Flink i» suena a que es bueno en una asignatura, no en una actividad.'
+          },
+          {
+            type: 'mcq',
+            prompt: '¿Qué significa «å ta det med en klype salt»?',
+            options: ['Tomarlo con pinzas', 'Echar sal a la comida', 'Tener sed', 'Ser muy salado'],
+            answer: 0,
+            explain: 'Es exactamente «tomarlo con una pizca de sal»: no te lo creas del todo. La expresión existe casi igual en español.'
+          },
+          {
+            type: 'memory',
+            prompt: 'Memoria: encuentra las parejas de modismos.',
+            pairs: [
+              { a: 'å ha bein i nesa', b: 'tener carácter' },
+              { a: 'å være på bærtur', b: 'estar muy perdido' },
+              { a: 'å ta en spansk en', b: 'hacer una trampa' },
+              { a: 'å være blåøyd', b: 'ser ingenuo' },
+              { a: 'å ha en klump i magen', b: 'tener un nudo en el estómago' },
+              { a: 'å kaste inn håndkleet', b: 'rendirse' }
+            ],
+            explain: '«Å være på bærtur» es literalmente «estar en el camino de las bayas», o sea, perdidísimo. Muy útil en el bosque y en la vida.'
+          },
+          {
+            type: 'cloze',
+            prompt: 'Completa la frase hipotética:',
+            text: 'Hvis jeg ___ rik, ville jeg kjøpt en ___ til hunden min.',
+            answers: ['var', 'hytte'],
+            bank: ['var', 'er', 'hytte', 'kaktus'],
+            es: 'Si fuera rico, compraría una cabaña para mi perro.',
+            explain: 'Condicional irreal: «hvis» + pasado, «ville» + infinitivo. El perro ya tiene planes para la cabaña.'
+          },
+          {
+            type: 'transform',
+            prompt: 'Reescribe con «Det er lenge siden»:',
+            source: 'Jeg har ikke sett ham på lenge.',
+            answers: ['Det er lenge siden jeg har sett ham.', 'Det er lenge siden jeg så ham.'],
+            hint: 'Det er lenge siden + sujeto + verbo',
+            es: 'Hace mucho que no lo veo.',
+            explain: 'Las dos versiones son válidas: con perfecto («har sett») o con pasado («så»). La segunda suena más narrativa.'
+          },
+          {
+            type: 'odd',
+            prompt: '¿Qué expresión no existe?',
+            options: ['ta det med ro', 'ta det med salt', 'ta det med storm', 'ta det med et smil'],
+            answer: 1,
+            explain: 'Existen «ta det med ro» (tranquilo), «ta noe med storm» (tomar algo por asalto) y «ta det med et smil» (tomárselo con una sonrisa). «Ta det med salt» no.'
+          },
+          {
+            type: 'mcq',
+            prompt: '¿Qué significa «å kaste inn håndkleet»?',
+            options: ['Rendirse', 'Lavar la ropa', 'Secarse las manos', 'Entrar en el ring'],
+            answer: 0,
+            explain: 'Literalmente «lanzar la toalla». Es rendirse, igual que en el boxeo. A veces lo más sano.'
+          },
+          {
+            type: 'gap',
+            prompt: 'Completa la comparación:',
+            sentence: 'Han snakker norsk som en ___.',
+            answers: ['innfødt'],
+            bank: ['innfødt', 'turist', 'kaktus'],
+            es: 'Habla noruego como un nativo.',
+            explain: '«Innfødt» = nativo. «Som en innfødt» es el cumplido que todo estudiante quiere oír.'
+          },
+          {
+            type: 'match',
+            prompt: 'Empareja más modismos noruegos:',
+            pairs: [
+              { a: 'å gå på limpinnen', b: 'caer en la trampa' },
+              { a: 'å ha noe på hjertet', b: 'tener algo que decir' },
+              { a: 'å være i fyr og flamme', b: 'estar entusiasmado' },
+              { a: 'å tråkke i salaten', b: 'meter la pata' },
+              { a: 'å ta kaka', b: 'ser el colmo' },
+              { a: 'å være på gli', b: 'estar casi convencido' }
+            ],
+            explain: '«Å tråkke i salaten» es pisar la ensalada, o sea, meter la pata. Todos lo hemos hecho, algunos sin ensalada.'
+          },
+          {
+            type: 'fix',
+            prompt: 'Toca la palabra equivocada:',
+            sentence: 'Jeg er enig med at det er vanskelig.',
+            wrong: 3,
+            correct: 'Jeg er enig i at det er vanskelig.',
+            es: 'Estoy de acuerdo en que es difícil.',
+            explain: '«Enig i» + opinión; «enig med» + persona. Aquí la opinión es «at det er vanskelig».'
+          },
+          {
+            type: 'mcq',
+            prompt: '¿Qué significa «å tråkke i salaten»?',
+            options: ['Meter la pata', 'Pisar la ensalada', 'Hacer una ensalada', 'Caerse en el barro'],
+            answer: 0,
+            explain: 'Es meter la pata. La ensalada es solo la víctima metafórica.'
+          },
+          {
+            type: 'transform',
+            prompt: 'Reescribe en condicional:',
+            source: 'Hvis jeg har tid, går jeg på kino.',
+            answer: 'Hvis jeg hadde tid, ville jeg gå på kino.',
+            hint: 'hadde + ville + infinitivo',
+            es: 'Si tuviera tiempo, iría al cine.',
+            explain: '«Har» → «hadde» y «går» → «ville gå». El cine sigue siendo una buena excusa.'
+          },
+          {
+            type: 'mcq',
+            prompt: '¿Cuál suena más natural para discrepar con educación?',
+            options: ['Jeg ser det litt annerledes.', 'Du tar helt feil.', 'Det er tull.', 'Nei, aldri.'],
+            answer: 0,
+            explain: '«Jeg ser det litt annerledes» = lo veo un poco distinto. Las otras opciones son un debate de televisión.'
+          }
+        ]
+      },
+      {
+        id: 'verbos',
+        emoji: '🧩',
+        level: 'A1–B1',
+        title: 'Verbo loco',
+        subtitle: 'Presente, pasado y perfecto sin drama',
+        intro: 'La tabla de verbos, pero en movimiento. Presente, pasado y perfecto con frases cortas. Si aciertas todas, puedes presumir en la cola del supermercado.',
+        exercises: [
+          {
+            type: 'gap',
+            prompt: 'Completa con el presente:',
+            sentence: 'Jeg ___ norsk hver dag.',
+            answers: ['snakker'],
+            bank: ['snakker', 'snakket', 'har snakket'],
+            es: 'Hablo noruego cada día.',
+            explain: 'Presente de «å snakke»: snakker. La misma forma vale para jeg, du, han, hun, vi, dere y de.'
+          },
+          {
+            type: 'gap',
+            prompt: 'Completa con el pasado:',
+            sentence: 'I går ___ jeg på kino.',
+            answers: ['gikk'],
+            bank: ['går', 'gikk', 'har gått'],
+            es: 'Ayer fui al cine.',
+            explain: '«Gikk» es el pasado de «å gå». «I går» pide pasado, no perfecto.'
+          },
+          {
+            type: 'gap',
+            prompt: 'Completa con el presente:',
+            sentence: 'Hun ___ i Oslo.',
+            answers: ['bor'],
+            bank: ['bor', 'bodde', 'har bodd'],
+            es: 'Ella vive en Oslo.',
+            explain: '«Bor» es presente de «å bo». «Bodde» es pasado y «har bodd» perfecto.'
+          },
+          {
+            type: 'gap',
+            prompt: 'Completa con el pasado:',
+            sentence: 'Vi ___ hjemme i går.',
+            answers: ['var'],
+            bank: ['er', 'var', 'har vært'],
+            es: 'Ayer estábamos en casa.',
+            explain: '«Var» es el pasado de «å være». «Har vært» sería perfecto: hemos estado.'
+          },
+          {
+            type: 'gap',
+            prompt: 'Completa con el presente:',
+            sentence: 'De ___ kaffe nå.',
+            answers: ['drikker'],
+            bank: ['drikker', 'drakk', 'har drukket'],
+            es: 'Ellos beben café ahora.',
+            explain: '«Nå» pide presente: drikker. «Drakk» es pasado y «har drukket» perfecto.'
+          },
+          {
+            type: 'transform',
+            prompt: 'Reescribe en pasado:',
+            source: 'Jeg spiser frokost.',
+            answer: 'Jeg spiste frokost.',
+            hint: 'spise → spiste',
+            es: 'Desayuné.',
+            explain: '«Spiste» es el pasado de «å spise». El desayuno no cambia, solo el tiempo verbal.'
+          },
+          {
+            type: 'transform',
+            prompt: 'Reescribe en perfecto:',
+            source: 'Han jobber hjemme.',
+            answer: 'Han har jobbet hjemme.',
+            hint: 'har + participio',
+            es: 'Ha trabajado desde casa.',
+            explain: 'Perfecto: «har» + «jobbet». El participio no cambia con la persona.'
+          },
+          {
+            type: 'mcq',
+            prompt: '¿Cuál es el pasado de «å kjøpe»?',
+            options: ['kjøpte', 'kjøper', 'har kjøpt', 'kjøpt'],
+            answer: 0,
+            explain: '«Kjøpte» es pasado; «kjøper» presente; «har kjøpt» perfecto; «kjøpt» participio.'
+          },
+          {
+            type: 'mcq',
+            prompt: '¿Cuál es el perfecto de «å se»?',
+            options: ['har sett', 'så', 'ser', 'har se'],
+            answer: 0,
+            explain: '«Har sett» = he visto. «Så» es pasado y «ser» presente. «Har se» no existe, aunque suene lógico.'
+          },
+          {
+            type: 'gap',
+            prompt: 'Completa con el participio:',
+            sentence: 'Jeg har ___ i Norge i tre år.',
+            answers: ['bodd'],
+            bank: ['bodde', 'bodd', 'bo'],
+            es: 'He vivido en Noruega durante tres años.',
+            explain: 'Perfecto: har + participio. El participio de «å bo» es «bodd», con dos d.'
+          },
+          {
+            type: 'gap',
+            prompt: 'Completa con el participio:',
+            sentence: 'Hun har ___ en ny bil.',
+            answers: ['kjøpt'],
+            bank: ['kjøpte', 'kjøpt', 'kjøpe'],
+            es: 'Ella ha comprado un coche nuevo.',
+            explain: '«Har kjøpt» = ha comprado. «Kjøpte» es el pasado simple.'
+          },
+          {
+            type: 'odd',
+            prompt: '¿Cuál no es pretérito?',
+            options: ['gikk', 'spiste', 'kjøpte', 'kjøper'],
+            answer: 3,
+            explain: '«Kjøper» es presente. Los otros tres son pasado. La trampa es clásica.'
+          },
+          {
+            type: 'cloze',
+            prompt: 'Completa la crónica del café:',
+            text: 'I går ___ jeg kaffe, og nå har jeg ___ to kopper.',
+            answers: ['drakk', 'drukket'],
+            bank: ['drakk', 'drukket', 'drikker', 'drikke'],
+            es: 'Ayer bebí café y ahora he bebido dos tazas.',
+            explain: 'Pasado «drakk», perfecto «har drukket». El café es irregular incluso en noruego.'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la confesión:',
+            words: ['Jeg', 'har', 'aldri', 'vært', 'i', 'Bergen.'],
+            es: 'Nunca he estado en Bergen.',
+            explain: '«Har aldri vært» = nunca he estado. «Aldri» va entre el auxiliar y el participio.'
+          }
+        ]
+      }
+    ]
+  },
+
+  /* ==================================================================
+     TABLA DE PALABRAS
+     ================================================================== */
+  wordbank: [
+    { no: 'hei', es: 'hola', level: 'A1', tag: 'social' },
+    { no: 'takk', es: 'gracias', level: 'A1', tag: 'social' },
+    { no: 'unnskyld', es: 'perdón', level: 'A1', tag: 'social' },
+    { no: 'kaffe', es: 'café', level: 'A1', tag: 'café' },
+    { no: 'vann', es: 'agua', level: 'A1', tag: 'comida' },
+    { no: 'brød', es: 'pan', level: 'A1', tag: 'comida' },
+    { no: 'ost', es: 'queso', level: 'A1', tag: 'comida' },
+    { no: 'melk', es: 'leche', level: 'A1', tag: 'comida' },
+    { no: 'hus', es: 'casa', level: 'A1', tag: 'casa' },
+    { no: 'bil', es: 'coche', level: 'A1', tag: 'transporte' },
+    { no: 'buss', es: 'autobús', level: 'A1', tag: 'transporte' },
+    { no: 'hund', es: 'perro', level: 'A1', tag: 'animales' },
+    { no: 'katt', es: 'gato, gata', level: 'A1', tag: 'animales', note: 'En Noruega el gato manda. Tú solo pagas el pienso.' },
+    { no: 'sol', es: 'sol', level: 'A1', tag: 'clima' },
+    { no: 'regn', es: 'lluvia', level: 'A1', tag: 'clima', note: 'Bergen tiene dos estaciones: lluvia y lluvia con viento.' },
+    { no: 'snø', es: 'nieve', level: 'A1', tag: 'clima' },
+    { no: 'frokost', es: 'desayuno', level: 'A1', tag: 'comida' },
+    { no: 'matpakke', es: 'fiambrera', level: 'A1', tag: 'comida', note: 'El objeto más sagrado de Noruega después del móvil.' },
+    { no: 'lue', es: 'gorro', level: 'A1', tag: 'ropa' },
+    { no: 'sykkel', es: 'bicicleta', level: 'A1', tag: 'transporte' },
+    { no: 'koselig', es: 'acogedor', level: 'A2', tag: 'social' },
+    { no: 'hyggelig', es: 'agradable', level: 'A2', tag: 'social' },
+    { no: 'gøy', es: 'divertido', level: 'A2', tag: 'social' },
+    { no: 'sliten', es: 'cansado', level: 'A2', tag: 'sentimientos' },
+    { no: 'sulten', es: 'hambriento', level: 'A2', tag: 'sentimientos' },
+    { no: 'tørst', es: 'sediento', level: 'A2', tag: 'sentimientos' },
+    { no: 'billig', es: 'barato', level: 'A2', tag: 'dinero' },
+    { no: 'dyr', es: 'caro', level: 'A2', tag: 'dinero', note: 'También significa «animal». El contexto decide si te quejas del precio o vas al zoo.' },
+    { no: 'nær', es: 'cerca', level: 'A2', tag: 'lugar' },
+    { no: 'langt', es: 'lejos', level: 'A2', tag: 'lugar' },
+    { no: 'å handle', es: 'comprar, hacer la compra', level: 'A2', tag: 'dinero' },
+    { no: 'å betale', es: 'pagar', level: 'A2', tag: 'dinero' },
+    { no: 'å kjøpe', es: 'comprar', level: 'A2', tag: 'dinero' },
+    { no: 'å selge', es: 'vender', level: 'A2', tag: 'dinero' },
+    { no: 'å leie', es: 'alquilar', level: 'A2', tag: 'casa' },
+    { no: 'å eie', es: 'poseer', level: 'A2', tag: 'casa' },
+    { no: 'å låne', es: 'prestar, pedir prestado', level: 'A2', tag: 'social' },
+    { no: 'å gi', es: 'dar', level: 'A2', tag: 'social' },
+    { no: 'å huske', es: 'recordar', level: 'A2', tag: 'mente' },
+    { no: 'å glemme', es: 'olvidar', level: 'A2', tag: 'mente' },
+    { no: 'ansvar', es: 'responsabilidad', level: 'B1', tag: 'trabajo' },
+    { no: 'avgjørelse', es: 'decisión', level: 'B1', tag: 'trabajo' },
+    { no: 'erfaring', es: 'experiencia', level: 'B1', tag: 'trabajo' },
+    { no: 'fordel', es: 'ventaja', level: 'B1', tag: 'trabajo' },
+    { no: 'ulempe', es: 'desventaja', level: 'B1', tag: 'trabajo' },
+    { no: 'mulighet', es: 'oportunidad', level: 'B1', tag: 'trabajo' },
+    { no: 'utfordring', es: 'reto', level: 'B1', tag: 'trabajo' },
+    { no: 'løsning', es: 'solución', level: 'B1', tag: 'trabajo' },
+    { no: 'påminnelse', es: 'recordatorio', level: 'B1', tag: 'trabajo' },
+    { no: 'frist', es: 'plazo', level: 'B1', tag: 'trabajo' },
+    { no: 'møte', es: 'reunión', level: 'B1', tag: 'trabajo' },
+    { no: 'referat', es: 'acta, resumen', level: 'B1', tag: 'trabajo' },
+    { no: 'oppgave', es: 'tarea', level: 'B1', tag: 'trabajo' },
+    { no: 'kollega', es: 'colega', level: 'B1', tag: 'trabajo' },
+    { no: 'arbeidsgiver', es: 'empleador', level: 'B1', tag: 'trabajo' },
+    { no: 'lønn', es: 'salario', level: 'B1', tag: 'trabajo' },
+    { no: 'ferie', es: 'vacaciones', level: 'B1', tag: 'trabajo' },
+    { no: 'sykmeldt', es: 'de baja médica', level: 'B1', tag: 'trabajo' },
+    { no: 'oppsigelse', es: 'despido', level: 'B1', tag: 'trabajo' },
+    { no: 'ansettelse', es: 'contratación', level: 'B1', tag: 'trabajo' },
+    { no: 'samfunn', es: 'sociedad', level: 'B2', tag: 'sociedad' },
+    { no: 'påvirkning', es: 'influencia', level: 'B2', tag: 'sociedad' },
+    { no: 'bærekraftig', es: 'sostenible', level: 'B2', tag: 'sociedad' },
+    { no: 'forbruk', es: 'consumo', level: 'B2', tag: 'sociedad' },
+    { no: 'holdning', es: 'actitud', level: 'B2', tag: 'sociedad' },
+    { no: 'forskjell', es: 'diferencia', level: 'B2', tag: 'sociedad' },
+    { no: 'sammenheng', es: 'conexión, contexto', level: 'B2', tag: 'sociedad' },
+    { no: 'utvikling', es: 'desarrollo', level: 'B2', tag: 'sociedad' },
+    { no: 'tilbud', es: 'oferta', level: 'B2', tag: 'sociedad' },
+    { no: 'etterspørsel', es: 'demanda', level: 'B2', tag: 'sociedad' },
+    { no: 'regelverk', es: 'normativa', level: 'B2', tag: 'sociedad' },
+    { no: 'ansvarlig', es: 'responsable', level: 'B2', tag: 'sociedad' },
+    { no: 'gjensidig', es: 'mutuo', level: 'B2', tag: 'sociedad' },
+    { no: 'omfattende', es: 'amplio', level: 'B2', tag: 'sociedad' },
+    { no: 'nødvendigvis', es: 'necesariamente', level: 'B2', tag: 'sociedad' },
+    { no: 'likevel', es: 'sin embargo', level: 'B2', tag: 'sociedad' },
+    { no: 'derimot', es: 'en cambio', level: 'B2', tag: 'sociedad' },
+    { no: 'ifølge', es: 'según', level: 'B2', tag: 'sociedad' },
+    { no: 'forutsetning', es: 'condición previa', level: 'B2', tag: 'sociedad' },
+    { no: 'konsekvens', es: 'consecuencia', level: 'B2', tag: 'sociedad' },
+    { no: 'rar', es: 'extraño', level: 'A2', tag: 'falsos amigos', note: 'No es «raro» de malo: es simplemente extraño. Un «rar fyr» es un tipo peculiar.' },
+    { no: 'flink', es: 'hábil, bueno', level: 'A2', tag: 'falsos amigos', note: 'No es «flink»: es el que hace las cosas bien. «Du er flink!» = ¡qué crack!' },
+    { no: 'snill', es: 'amable', level: 'A2', tag: 'falsos amigos', note: 'No es «silly». Un perro snill no hace gracias: es bueno.' },
+    { no: 'kjekk', es: 'guapo, majo', level: 'A2', tag: 'falsos amigos', note: 'No es «cheeky». También puede significar «majo» sin más.' },
+    { no: 'aktuell', es: 'relevante', level: 'B2', tag: 'falsos amigos', note: 'No es «actual»: es lo que está sobre la mesa ahora.' },
+    { no: 'real', es: 'de fiar, legal', level: 'B1', tag: 'falsos amigos', note: '«En real fyr» es un tío de fiar, no alguien real.' }
+  ],
+
+  /* ==================================================================
+     TABLA DE VERBOS
+     ================================================================== */
+  verbs: [
+    { inf: 'å være', es: 'ser, estar', present: 'er', past: 'var', perfect: 'har vært' },
+    { inf: 'å ha', es: 'tener', present: 'har', past: 'hadde', perfect: 'har hatt' },
+    { inf: 'å gjøre', es: 'hacer', present: 'gjør', past: 'gjorde', perfect: 'har gjort' },
+    { inf: 'å gå', es: 'ir, caminar', present: 'går', past: 'gikk', perfect: 'har gått' },
+    { inf: 'å komme', es: 'venir', present: 'kommer', past: 'kom', perfect: 'har kommet' },
+    { inf: 'å spise', es: 'comer', present: 'spiser', past: 'spiste', perfect: 'har spist' },
+    { inf: 'å snakke', es: 'hablar', present: 'snakker', past: 'snakket', perfect: 'har snakket' },
+    { inf: 'å bo', es: 'vivir', present: 'bor', past: 'bodde', perfect: 'har bodd' },
+    { inf: 'å jobbe', es: 'trabajar', present: 'jobber', past: 'jobbet', perfect: 'har jobbet' },
+    { inf: 'å kjøpe', es: 'comprar', present: 'kjøper', past: 'kjøpte', perfect: 'har kjøpt' },
+    { inf: 'å ta', es: 'tomar', present: 'tar', past: 'tok', perfect: 'har tatt' },
+    { inf: 'å se', es: 'ver', present: 'ser', past: 'så', perfect: 'har sett' },
+    { inf: 'å drikke', es: 'beber', present: 'drikker', past: 'drakk', perfect: 'har drukket' },
+    { inf: 'å lære', es: 'aprender', present: 'lærer', past: 'lærte', perfect: 'har lært' }
   ]
 };

@@ -15,7 +15,7 @@
   var KEY = 'norsk-kjekt-v1';
 
   function defaults() {
-    return { lessons: {}, xp: 0, days: {}, review: [], version: 1 };
+    return { lessons: {}, fun: {}, xp: 0, days: {}, review: [], version: 1 };
   }
 
   var state = (function load() {
@@ -24,14 +24,22 @@
       if (!raw || typeof raw !== 'object') return defaults();
       var d = defaults();
       var lessons = {};
+      var fun = {};
       Object.keys(raw.lessons || {}).forEach(function (id) {
         var v = raw.lessons[id];
         if (v && typeof v === 'object') {
           lessons[id] = { best: Number(v.best) || 0, total: Number(v.total) || 0, at: Number(v.at) || 0 };
         }
       });
+      Object.keys(raw.fun || {}).forEach(function (id) {
+        var v = raw.fun[id];
+        if (v && typeof v === 'object') {
+          fun[id] = { best: Number(v.best) || 0, total: Number(v.total) || 0, at: Number(v.at) || 0 };
+        }
+      });
       return {
         lessons: lessons,
+        fun: fun,
         xp: Number(raw.xp) || 0,
         days: raw.days && typeof raw.days === 'object' ? raw.days : d.days,
         review: Array.isArray(raw.review) ? raw.review.filter(function (s) { return typeof s === 'string'; }) : d.review,
@@ -131,6 +139,9 @@
     if (item.type === 'listen') return 'Dictado: ' + (item.audio || '');
     if (item.type === 'transform') return 'Transforma: ' + item.source;
     if (item.type === 'match') return 'Empareja: ' + item.pairs.length + ' pares';
+    if (item.type === 'odd') return '¿Qué sobra? ' + item.prompt;
+    if (item.type === 'fix') return 'Encuentra el error: ' + item.sentence;
+    if (item.type === 'memory') return 'Memoria: ' + item.pairs.length + ' pares';
     return item.prompt;
   }
 
@@ -286,6 +297,43 @@
         '<p class="ex-hint" id="match-hint">Toca una palabra de la primera columna y luego su pareja.</p>';
     }
 
+    /* ---- odd: la palabra que no encaja ---- */
+    function buildOdd(item) {
+      return '<p class="ex-prompt">' + esc(item.prompt || '¿Qué palabra no encaja?') + '</p>' +
+        '<div class="options">' + item.options.map(function (o, i) {
+          return '<button class="opt" data-odd="' + i + '"><span class="key">' +
+            'ABCD'[i] + '</span><span>' + esc(o) + '</span></button>';
+        }).join('') + '</div>' +
+        '<p class="ex-hint">Una de estas palabras ha venido a la fiesta sin invitación.</p>';
+    }
+
+    /* ---- fix: encontrar la palabra equivocada ---- */
+    function buildFix(item) {
+      var tokens = String(item.sentence).split(' ');
+      return '<p class="ex-prompt">' + esc(item.prompt || 'Encuentra el error y toca la palabra equivocada:') + '</p>' +
+        '<p class="fix-sentence">' + tokens.map(function (t, i) {
+          return '<button class="fix-word" data-token="' + i + '">' + esc(t) + '</button>';
+        }).join(' ') + '</p>' +
+        '<p class="ex-hint" id="fix-hint">Toca la palabra que sobra o que está mal. Solo hay una.</p>';
+    }
+
+    /* ---- memory: parejas ocultas ---- */
+    function buildMemory(item) {
+      var cards = shuffle(item.pairs.reduce(function (acc, pair, i) {
+        acc.push({ key: i, side: 'a', text: pair.a });
+        acc.push({ key: i, side: 'b', text: pair.b });
+        return acc;
+      }, []));
+      return '<p class="ex-prompt">' + esc(item.prompt || 'Memoria: encuentra las parejas.') + '</p>' +
+        '<p class="ex-hint" id="memory-hint">Toca dos cartas. Si son pareja, se quedan boca arriba.</p>' +
+        '<div class="memory-grid" id="memory">' + cards.map(function (c, i) {
+          return '<button class="mem-card" data-key="' + c.key + '" data-i="' + i + '" ' +
+            'aria-label="Carta ' + (i + 1) + ' boca abajo">' +
+            '<span class="mem-face mem-back">🇳🇴</span>' +
+            '<span class="mem-face mem-front">' + esc(c.text) + '</span></button>';
+        }).join('') + '</div>';
+    }
+
     function draw() {
       locked = false;
       if (window.TTS) window.TTS.stop();
@@ -320,6 +368,12 @@
         body = buildTransform(item);
       } else if (item.type === 'match') {
         body = buildMatch(item);
+      } else if (item.type === 'odd') {
+        body = buildOdd(item);
+      } else if (item.type === 'fix') {
+        body = buildFix(item);
+      } else if (item.type === 'memory') {
+        body = buildMemory(item);
       } else {
         body =
           '<p class="ex-prompt">' + esc(item.prompt || 'Ordena la frase:') + '</p>' +
@@ -350,6 +404,9 @@
       else if (item.type === 'listen') bindListen(item);
       else if (item.type === 'transform') bindTransform(item);
       else if (item.type === 'match') bindMatch(item);
+      else if (item.type === 'odd') bindOdd(item);
+      else if (item.type === 'fix') bindFix(item);
+      else if (item.type === 'memory') bindMemory(item);
       else bindOrder(item);
     }
 
@@ -662,6 +719,119 @@
       });
     }
 
+    /* ---- odd: la palabra que no encaja ---- */
+    function bindOdd(item) {
+      var buttons = Array.prototype.slice.call(mount.querySelectorAll('[data-odd]'));
+      buttons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (locked) return;
+          var chosen = Number(btn.dataset.odd);
+          var ok = chosen === item.answer;
+          buttons.forEach(function (b) {
+            var i = Number(b.dataset.odd);
+            b.disabled = true;
+            if (i === item.answer) b.classList.add('correct');
+            else if (i === chosen) b.classList.add('wrong');
+          });
+          showFeedback(ok, item, item.options[item.answer]);
+        });
+      });
+    }
+
+    /* ---- fix: encontrar el error ---- */
+    function bindFix(item) {
+      var tokens = Array.prototype.slice.call(mount.querySelectorAll('[data-token]'));
+      var hint = mount.querySelector('#fix-hint');
+      tokens.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (locked) return;
+          var i = Number(btn.dataset.token);
+          var ok = i === item.wrong;
+          tokens.forEach(function (b) { b.disabled = true; });
+          if (ok) {
+            btn.classList.add('correct');
+            if (hint) hint.textContent = '¡Ahí estaba! La frase correcta aparece abajo.';
+          } else {
+            btn.classList.add('wrong');
+            var real = tokens[item.wrong];
+            if (real) real.classList.add('correct');
+            if (hint) hint.textContent = 'Esa palabra está bien. La que falla es la marcada en verde.';
+          }
+          showFeedback(ok, item, item.correct);
+        });
+      });
+    }
+
+    /* ---- memory: parejas ---- */
+    function bindMemory(item) {
+      var cards = Array.prototype.slice.call(mount.querySelectorAll('.mem-card'));
+      var hint = mount.querySelector('#memory-hint');
+      var first = null;
+      var busy = false;
+      var matched = 0;
+      var mistakes = 0;
+
+      function finish() {
+        var ok = mistakes === 0;
+        var solution = item.pairs.map(function (p) { return p.a + ' = ' + p.b; }).join(' · ');
+        if (hint) hint.textContent = mistakes === 0 ? '¡Memoria de elefante!' : 'Completado con ' + mistakes + ' fallo(s).';
+        showFeedback(ok, item, solution, '');
+      }
+
+      cards.forEach(function (card) {
+        card.addEventListener('click', function () {
+          if (busy || card.classList.contains('done') || card.classList.contains('flip')) return;
+          card.classList.add('flip');
+          card.disabled = true;
+          card.setAttribute('aria-label', 'Carta boca arriba: ' + card.querySelector('.mem-front').textContent);
+
+          if (!first) {
+            first = card;
+            if (hint) hint.textContent = 'Ahora busca su pareja.';
+            return;
+          }
+
+          busy = true;
+          var a = first;
+          var b = card;
+          if (a.dataset.key === b.dataset.key) {
+            a.classList.add('done');
+            b.classList.add('done');
+            matched++;
+            if (window.TTS) {
+              var pair = item.pairs[Number(b.dataset.key)];
+              if (pair) window.TTS.speak(pair.a);
+            }
+            first = null;
+            busy = false;
+            if (matched === item.pairs.length) {
+              finish();
+            } else if (hint) {
+              hint.textContent = '¡Bien! Quedan ' + (item.pairs.length - matched) + ' parejas.';
+            }
+            return;
+          }
+
+          mistakes++;
+          [a, b].forEach(function (x) {
+            x.classList.add('wrong');
+            setTimeout(function () { x.classList.remove('wrong'); }, 500);
+          });
+          if (hint) hint.textContent = 'Casi. Se vuelven a tapar…';
+          setTimeout(function () {
+            [a, b].forEach(function (x) {
+              x.classList.remove('flip');
+              x.classList.remove('wrong');
+              x.disabled = false;
+              x.setAttribute('aria-label', 'Carta boca abajo');
+            });
+            first = null;
+            busy = false;
+          }, 720);
+        });
+      });
+    }
+
     /* ---- resultado ---- */
     function showResult() {
       var total = list.length;
@@ -769,6 +939,331 @@
       '<div class="grid">' + list.map(lessonCard).join('') + '</div>';
   }
 
+  /* =======================================================
+     Tull & tøys: packs, tabla de palabras y verbos
+     ======================================================= */
+
+  function funExerciseCount() {
+    return COURSE.fun.packs.reduce(function (n, p) { return n + p.exercises.length; }, 0);
+  }
+
+  function totalExerciseCount() {
+    return LESSONS.reduce(function (n, l) { return n + l.exercises.length; }, 0) + funExerciseCount();
+  }
+
+  function allFunExercises() {
+    var out = [];
+    COURSE.fun.packs.forEach(function (p) { out = out.concat(p.exercises); });
+    return out;
+  }
+
+  var funUi = {
+    q: '',
+    level: 'all',
+    tag: 'all',
+    sort: 'no',
+    asc: true,
+    hide: false,
+    hideForms: false
+  };
+
+  function funTags() {
+    var seen = {};
+    var out = [];
+    COURSE.wordbank.forEach(function (w) {
+      if (!seen[w.tag]) { seen[w.tag] = true; out.push(w.tag); }
+    });
+    return out;
+  }
+
+  function filteredWords() {
+    var q = norm(funUi.q);
+    var list = COURSE.wordbank.filter(function (w) {
+      if (funUi.level !== 'all' && w.level !== funUi.level) return false;
+      if (funUi.tag !== 'all' && w.tag !== funUi.tag) return false;
+      if (!q) return true;
+      return norm(w.no + ' ' + w.es + ' ' + (w.note || '')).indexOf(q) > -1;
+    });
+    list.sort(function (a, b) {
+      var av = String(a[funUi.sort] || '');
+      var bv = String(b[funUi.sort] || '');
+      var cmp = av.localeCompare(bv, 'nb');
+      return funUi.asc ? cmp : -cmp;
+    });
+    return list;
+  }
+
+  function paintWords() {
+    var body = document.getElementById('wb-body');
+    if (!body) return;
+    var list = filteredWords();
+
+    document.querySelectorAll('[data-wb-level]').forEach(function (b) {
+      b.classList.toggle('active', b.dataset.wbLevel === funUi.level);
+    });
+    document.querySelectorAll('[data-sort]').forEach(function (b) {
+      var mark = b.querySelector('.sort-mark');
+      if (!mark) return;
+      mark.textContent = b.dataset.sort === funUi.sort ? (funUi.asc ? '↑' : '↓') : '↕';
+    });
+
+    body.innerHTML = list.length
+      ? list.map(function (w, i) {
+        var es = '<span class="wb-dots">•••</span><span class="wb-real">' + esc(w.es) + '</span>';
+        return '<tr data-word="' + i + '">' +
+          '<td><div class="wb-no">' + say(w.no) + '<span>' + esc(w.no) + '</span></div></td>' +
+          '<td class="wb-es">' + es + (w.note ? '<span class="wb-note">' + esc(w.note) + '</span>' : '') + '</td>' +
+          '<td><span class="wb-level lvl-' + w.level.toLowerCase() + '">' + w.level + '</span></td>' +
+          '<td><span class="wb-tag">' + esc(w.tag) + '</span></td></tr>';
+      }).join('')
+      : '<tr><td colspan="4" class="wb-empty">Nada por aquí. Prueba otra búsqueda o quita el filtro.</td></tr>';
+
+    var count = document.getElementById('wb-count');
+    if (count) {
+      count.textContent = list.length + ' palabra' + (list.length === 1 ? '' : 's') +
+        ' de ' + COURSE.wordbank.length + ' · toca el altavoz para oírla' +
+        (funUi.hide ? ' · toca una fila para destapar el español' : '');
+    }
+  }
+
+  function wordTableHTML() {
+    return '<div class="word-tools">' +
+      '<input id="wb-q" type="search" placeholder="Buscar en noruego o en español…" value="' + esc(funUi.q) + '" aria-label="Buscar palabra">' +
+      '<select id="wb-tag" aria-label="Filtrar por tema">' +
+      '<option value="all">Todos los temas</option>' +
+      funTags().map(function (t) {
+        return '<option value="' + esc(t) + '"' + (funUi.tag === t ? ' selected' : '') + '>' + esc(t) + '</option>';
+      }).join('') + '</select>' +
+      '<label class="wb-switch"><input type="checkbox" id="wb-hide"' + (funUi.hide ? ' checked' : '') + '> Modo examen</label>' +
+      '</div>' +
+      '<div class="wb-levels">' +
+      ['all', 'A1', 'A2', 'B1', 'B2'].map(function (l) {
+        return '<button class="fchip" data-wb-level="' + l + '">' + (l === 'all' ? 'Todos' : l) + '</button>';
+      }).join('') + '</div>' +
+      '<div class="wtable-wrap"><table class="wtable' + (funUi.hide ? ' hide-es' : '') + '" id="word-table">' +
+      '<thead><tr>' +
+      '<th><button class="wb-sort" data-sort="no">Norsk <span class="sort-mark">↕</span></button></th>' +
+      '<th><button class="wb-sort" data-sort="es">Español <span class="sort-mark">↕</span></button></th>' +
+      '<th><button class="wb-sort" data-sort="level">Nivel <span class="sort-mark">↕</span></button></th>' +
+      '<th><button class="wb-sort" data-sort="tag">Tema <span class="sort-mark">↕</span></button></th>' +
+      '</tr></thead><tbody id="wb-body"></tbody></table></div>' +
+      '<p class="ex-hint" id="wb-count"></p>';
+  }
+
+  function bindWordTable() {
+    var q = document.getElementById('wb-q');
+    if (q) {
+      q.addEventListener('input', function () {
+        funUi.q = q.value;
+        paintWords();
+      });
+    }
+    var tag = document.getElementById('wb-tag');
+    if (tag) {
+      tag.addEventListener('change', function () {
+        funUi.tag = tag.value;
+        paintWords();
+      });
+    }
+    document.querySelectorAll('[data-wb-level]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        funUi.level = b.dataset.wbLevel;
+        paintWords();
+      });
+    });
+    document.querySelectorAll('[data-sort]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (funUi.sort === b.dataset.sort) funUi.asc = !funUi.asc;
+        else { funUi.sort = b.dataset.sort; funUi.asc = true; }
+        paintWords();
+      });
+    });
+    var hide = document.getElementById('wb-hide');
+    var table = document.getElementById('word-table');
+    if (hide && table) {
+      hide.addEventListener('change', function () {
+        funUi.hide = hide.checked;
+        table.classList.toggle('hide-es', funUi.hide);
+        document.querySelectorAll('#wb-body tr.revealed').forEach(function (tr) { tr.classList.remove('revealed'); });
+        paintWords();
+      });
+    }
+    var body = document.getElementById('wb-body');
+    if (body) {
+      body.addEventListener('click', function (e) {
+        if (!funUi.hide || e.target.closest('[data-say]')) return;
+        var tr = e.target.closest('[data-word]');
+        if (tr) tr.classList.toggle('revealed');
+      });
+    }
+    paintWords();
+  }
+
+  function verbTableHTML() {
+    return '<div class="wtable-wrap"><table class="wtable verb-table' + (funUi.hideForms ? ' hide-forms' : '') + '" id="verb-table">' +
+      '<thead><tr><th>Infinitivo</th><th>Presente</th><th>Pasado</th><th>Perfecto</th></tr></thead><tbody>' +
+      COURSE.verbs.map(function (v) {
+        return '<tr>' +
+          '<td><div class="wb-no">' + say(v.inf) + '<span>' + esc(v.inf) + '</span></div>' +
+          '<span class="wb-note">' + esc(v.es) + '</span></td>' +
+          '<td><span class="vb-form">' + esc(v.present) + '</span></td>' +
+          '<td><span class="vb-form">' + esc(v.past) + '</span></td>' +
+          '<td><span class="vb-form">' + esc(v.perfect) + '</span></td></tr>';
+      }).join('') + '</tbody></table></div>' +
+      '<div class="actions" style="margin-top:.8rem">' +
+      '<button class="btn ghost small" id="vb-hide">' + (funUi.hideForms ? 'Mostrar formas' : 'Ocultar formas') + '</button>' +
+      '<a class="btn ghost small" href="#/tull/verbos">Practicar →</a>' +
+      '</div>' +
+      '<p class="ex-hint" style="margin-top:.6rem">Truco: en noruego el presente y el pasado son iguales para todas las personas. Solo cambia el pronombre. El perfecto es «har» + participio.</p>';
+  }
+
+  function bindVerbTable() {
+    var btn = document.getElementById('vb-hide');
+    var table = document.getElementById('verb-table');
+    if (!btn || !table) return;
+    btn.addEventListener('click', function () {
+      funUi.hideForms = !funUi.hideForms;
+      table.classList.toggle('hide-forms', funUi.hideForms);
+      btn.textContent = funUi.hideForms ? 'Mostrar formas' : 'Ocultar formas';
+    });
+  }
+
+  function funCard(p) {
+    var st = state.fun[p.id];
+    return '<a class="fun-card" href="#/tull/' + p.id + '">' +
+      '<div class="head"><span class="fun-emoji">' + p.emoji + '</span>' +
+      '<span class="chip">' + esc(p.level) + '</span></div>' +
+      '<h3>' + esc(p.title) + '</h3>' +
+      '<p>' + esc(p.subtitle) + '</p>' +
+      '<div class="foot"><span class="chip plain">' + p.exercises.length + ' ejercicios</span>' +
+      (st ? '<span class="chip done">✓ ' + st.best + '/' + st.total + '</span>' : '<span class="chip">nuevo</span>') +
+      '<span class="go">Jugar →</span></div></a>';
+  }
+
+  function renderFun(packId) {
+    if (packId) { renderFunPack(packId); return; }
+
+    app.innerHTML =
+      '<section class="fun-hero">' +
+      '  <div class="fun-hero-text">' +
+      '    <span class="eyebrow">A1–B2 · sin vergüenza</span>' +
+      '    <h1>Tull &amp; tøys</h1>' +
+      '    <p>' + esc(COURSE.fun.intro) + '</p>' +
+      '    <div class="hero-actions">' +
+      '      <button class="btn primary" id="mix-start">🎲 Mezcla aleatoria · 10</button>' +
+      '      <button class="btn ghost" id="go-table">📚 Tabla de palabras</button>' +
+      '      <button class="btn ghost" id="go-verbs">🧩 Verbos</button>' +
+      '    </div>' +
+      '  </div>' +
+      '  <aside class="fun-hero-card">' +
+      '    <div><h3>Ejercicios nuevos</h3><div class="big-num">' + funExerciseCount() + ' <small>para reír</small></div></div>' +
+      '    <div><h3>Palabras en la tabla</h3><div class="big-num">' + COURSE.wordbank.length + ' <small>con audio</small></div></div>' +
+      '    <p class="fun-quote">«Det finnes ikke dårlig vær, bare dårlige klær.»<span>— Todo noruego, siempre</span></p>' +
+      '  </aside>' +
+      '</section>' +
+
+      '<h2 class="section-title">Elige tu caos <span>6 packs, cero solemnidad</span></h2>' +
+      '<div class="fun-grid">' + COURSE.fun.packs.map(funCard).join('') + '</div>' +
+
+      '<section class="card" id="tabla" style="margin-top:1.6rem">' +
+      '  <h2>Tabla de palabras <span class="h2-note">' + COURSE.wordbank.length + ' palabras · audio incluido</span></h2>' +
+      '  <p class="ex-hint" style="margin-bottom:.8rem">Filtra por nivel o tema, ordena las columnas y escucha cada palabra. Activa el modo examen para tapar el español y probarte.</p>' +
+      wordTableHTML() +
+      '</section>' +
+
+      '<section class="card" id="verbos">' +
+      '  <h2>Tabla de verbos <span class="h2-note">presente · pasado · perfecto</span></h2>' +
+      '  <p class="ex-hint" style="margin-bottom:.8rem">Los 14 verbos que más se repiten en el curso. Oculta las formas y recítalas como si fuera un examen sorpresa.</p>' +
+      verbTableHTML() +
+      '</section>';
+
+    var mix = document.getElementById('mix-start');
+    if (mix) mix.addEventListener('click', function () { location.hash = '#/tull/mix'; });
+    var gt = document.getElementById('go-table');
+    if (gt) gt.addEventListener('click', function () { document.getElementById('tabla').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+    var gv = document.getElementById('go-verbs');
+    if (gv) gv.addEventListener('click', function () { document.getElementById('verbos').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+
+    bindWordTable();
+    bindVerbTable();
+  }
+
+  function renderFunPack(packId) {
+    var pack = COURSE.fun.packs.find(function (p) { return p.id === packId; });
+    var items = null;
+    var isMix = packId === 'mix';
+
+    if (isMix) {
+      pack = {
+        id: 'mix',
+        emoji: '🎲',
+        level: 'A1–B2',
+        title: 'Mezcla aleatoria',
+        subtitle: 'Diez ejercicios de todos los packs, en orden sorpresa',
+        intro: 'Una muestra aleatoria de todo el caos. Cada vez que entres, cambia. Ideal para calentar antes de una lección seria.'
+      };
+      items = shuffle(allFunExercises()).slice(0, 10);
+    } else {
+      items = pack ? pack.exercises : null;
+    }
+
+    if (!pack || !items) { renderFun(); return; }
+
+    var st = state.fun[pack.id];
+    app.innerHTML =
+      '<div class="crumbs"><a href="#/tull">Tull &amp; tøys</a> <span>›</span> <span>' + esc(pack.title) + '</span></div>' +
+      '<header class="lesson-head">' +
+      '  <div class="kicker"><span class="emoji">' + pack.emoji + '</span>' +
+      '    <span class="chip">' + esc(pack.level) + '</span>' +
+      '    <span class="chip plain">' + items.length + ' ejercicios</span></div>' +
+      '  <h1>' + esc(pack.title) + '</h1>' +
+      '  <p class="lead">' + esc(pack.subtitle) + '</p>' +
+      '  <p class="ex-hint" style="margin-top:.7rem;max-width:70ch">' + esc(pack.intro) + '</p>' +
+      '</header>' +
+      '<section class="card"><div id="fun-mount">' +
+      '  <div class="actions">' +
+      '    <button class="btn primary" id="start-fun">Empezar · ' + items.length + ' ejercicios</button>' +
+      (st ? '<span class="ex-hint">Tu mejor resultado: ' + st.best + '/' + st.total + '</span>' : '') +
+      '  </div>' +
+      '</div></section>';
+
+    document.getElementById('start-fun').addEventListener('click', function () {
+      var mount = document.getElementById('fun-mount');
+      mount.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      runExercises(mount, items, {
+        label: pack.title,
+        exitLabel: 'Volver a Tull',
+        onExit: function () { location.hash = '#/tull'; },
+        onDone: function (res) {
+          var prev = state.fun[pack.id];
+          state.fun[pack.id] = {
+            best: Math.max(prev ? prev.best : 0, res.correct),
+            total: res.total,
+            at: Date.now()
+          };
+          state.xp += res.correct * 10;
+          markDay();
+
+          if (!isMix) {
+            items.forEach(function (it, i) {
+              var sig = 'fun#' + pack.id + '#' + i;
+              if (res.failed.indexOf(it) > -1) addReview(sig);
+              else removeReview(sig);
+            });
+          }
+
+          save();
+          refreshHud();
+          var box = mount.querySelector('.result');
+          if (box) {
+            box.insertAdjacentHTML('beforeend',
+              '<p class="ex-hint">Progreso guardado · +' + (res.correct * 10) + ' XP</p>');
+          }
+        }
+      });
+    });
+  }
+
   function renderHome() {
     var done = completedCount();
     var total = LESSONS.length;
@@ -781,9 +1276,11 @@
       '  <div class="hero-text">' +
       '    <span class="eyebrow">Bokmål · A1–B2 · sin prisa</span>' +
       '    <h1>Noruego que se usa <em>de verdad</em>.</h1>' +
-      '    <p>' + LESSONS.length + ' lecciones con textos cortos, ejercicios que corrigen al instante y el noruego de calle que no sale en los libros.</p>' +
+      '    <p>' + LESSONS.length + ' lecciones, ' + totalExerciseCount() + ' ejercicios que corrigen al instante, ' +
+      COURSE.fun.packs.length + ' packs de humor y una tabla de ' + COURSE.wordbank.length + ' palabras con audio. El noruego de calle que no sale en los libros.</p>' +
       '    <div class="hero-actions">' +
       '      <a class="btn primary" href="#/leksjon/' + nl.id + '">' + (done ? 'Seguir' : 'Empezar') + ' · ' + esc(nl.title) + '</a>' +
+      '      <a class="btn ghost" href="#/tull">Tull &amp; tøys</a>' +
       '      <a class="btn ghost" href="#/coloquial">Ver coloquial</a>' +
       '    </div>' +
       '  </div>' +
@@ -802,6 +1299,18 @@
       levelSection('Paso a paso', 'A1–A2 · la base', ['A1', 'A2']) +
       levelSection('B1 · soltarte', 'ya te defiendes en el día a día', ['B1']) +
       levelSection('B2 · opinar y discutir', 'textos reales, más matices', ['B2']) +
+
+      '<section class="fun-banner">' +
+      '  <div>' +
+      '    <span class="eyebrow">Nuevo · A1–B2</span>' +
+      '    <h2>¿Cansado de ser un alumno serio?</h2>' +
+      '    <p>Alces en la lavadora, jefes que dicen «reto interesante» y una tabla de palabras que puedes ordenar, filtrar y escuchar. ' + funExerciseCount() + ' ejercicios nuevos para aprender riéndote.</p>' +
+      '  </div>' +
+      '  <div class="fun-banner-actions">' +
+      '    <a class="btn primary" href="#/tull">Entrar en Tull &amp; tøys</a>' +
+      '    <a class="btn ghost" href="#/tull/mix">🎲 Mezcla aleatoria</a>' +
+      '  </div>' +
+      '</section>' +
 
       '<h2 class="section-title">De la calle <span>sin diccionario</span></h2>' +
       '<div class="colo-grid">' + COURSE.colloquial.slice(0, 3).map(function (c) {
@@ -1017,9 +1526,19 @@
     var out = [];
     state.review.forEach(function (sig) {
       var parts = sig.split('#');
+      if (parts[0] === 'fun') {
+        var pack = COURSE.fun.packs.find(function (p) { return p.id === parts[1]; });
+        var funItem = pack && pack.exercises[Number(parts[2])];
+        if (pack && funItem) {
+          out.push({ sig: sig, item: funItem, title: pack.title, emoji: pack.emoji, label: 'Tull' });
+        }
+        return;
+      }
       var lesson = LESSONS.find(function (l) { return l.id === parts[0]; });
       var item = lesson && lesson.exercises[Number(parts[1])];
-      if (lesson && item) out.push({ sig: sig, lesson: lesson, item: item });
+      if (lesson && item) {
+        out.push({ sig: sig, item: item, title: lesson.title, emoji: lesson.emoji, label: 'L' + lesson.num });
+      }
     });
     return out;
   }
@@ -1042,9 +1561,9 @@
       '<button class="btn primary" id="start-review">Repasar todo</button></div>' +
       '<div class="review-list">' + entries.map(function (e) {
         return '<div class="review-item">' +
-          '<span class="chip plain">' + esc(e.lesson.emoji) + ' L' + e.lesson.num + '</span>' +
+          '<span class="chip plain">' + esc(e.emoji) + ' ' + esc(e.label) + '</span>' +
           '<div class="meta"><b>' + esc(preview(e.item)) + '</b>' +
-          '<span>' + esc(e.lesson.title) + '</span></div></div>';
+          '<span>' + esc(e.title) + '</span></div></div>';
       }).join('') + '</div>' +
       '<section class="card" id="review-mount" style="display:none;margin-top:1rem"></section>';
 
@@ -1087,7 +1606,8 @@
 
     var active = name === 'coloquial' ? 'coloquial'
       : name === 'repaso' ? 'review'
-        : 'home';
+        : name === 'tull' ? 'fun'
+          : 'home';
     document.querySelectorAll('.nav a').forEach(function (a) {
       a.classList.toggle('active', a.dataset.route === active);
     });
@@ -1097,6 +1617,8 @@
       renderLesson(lesson || LESSONS[0]);
     } else if (name === 'coloquial') {
       renderColoquial();
+    } else if (name === 'tull') {
+      renderFun(arg);
     } else if (name === 'repaso') {
       renderReview();
     } else {
