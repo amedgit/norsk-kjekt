@@ -763,6 +763,17 @@
     }
   });
 
+  /* ---------------- velocidad del audio ---------------- */
+
+  var speedSel = document.getElementById('speed');
+  if (speedSel && window.TTS) {
+    speedSel.value = String(window.TTS.getRate());
+    speedSel.addEventListener('change', function () {
+      window.TTS.setRate(parseFloat(speedSel.value));
+      speedSel.blur();
+    });
+  }
+
   window.addEventListener('hashchange', route);
   route();
 })();

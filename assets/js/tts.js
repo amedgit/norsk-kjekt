@@ -4,18 +4,45 @@
       cualquier dispositivo, sin depender de las voces instaladas.
    2) Si no está, cae a speechSynthesis (nb-NO) cuando el navegador tiene voces.
 
-   Expone window.TTS = { speak, stop, supported, hasAudio } */
+   La velocidad (0.7×–1.3×) se aplica a la reproducción y se recuerda en
+   localStorage. Expone window.TTS = { speak, stop, setRate, getRate,
+   supported, hasAudio } */
 
 (function () {
   'use strict';
 
+  var RATE_KEY = 'norsk-kjekt-rate';
+  var MIN_RATE = 0.5;
+  var MAX_RATE = 1.6;
+
   var map = window.AUDIO_MANIFEST || {};
   var hasFiles = Object.keys(map).length > 0;
   var synth = typeof window !== 'undefined' && 'speechSynthesis' in window;
-  var audio = typeof Audio !== 'undefined' ? new Audio() : null;
   var voice = null;
   var current = null;
   var warned = false;
+
+  function clamp(v) { return Math.min(MAX_RATE, Math.max(MIN_RATE, v)); }
+
+  var rate = (function () {
+    try {
+      var v = parseFloat(window.localStorage.getItem(RATE_KEY));
+      return isFinite(v) && v >= MIN_RATE && v <= MAX_RATE ? v : 1;
+    } catch (e) {
+      return 1;
+    }
+  })();
+
+  /* Elemento <audio> en el DOM: más fiable en iOS y fácil de inspeccionar. */
+  var audio = null;
+  if (typeof Audio !== 'undefined') {
+    audio = new Audio();
+    audio.id = 'nk-audio';
+    audio.preload = 'auto';
+    try { document.body.appendChild(audio); } catch (e) { /* sin body */ }
+    audio.defaultPlaybackRate = rate;
+    audio.playbackRate = rate;
+  }
 
   /* Debe coincidir con tools/generate-audio.mjs */
   function norm(s) {
@@ -69,7 +96,7 @@
       var u = new SpeechSynthesisUtterance(text);
       if (voice) u.voice = voice;
       u.lang = (voice && voice.lang) || 'nb-NO';
-      u.rate = 0.92;
+      u.rate = Math.min(2, 0.92 * rate);
       u.onstart = function () { current = text; markPlaying(text); };
       u.onend = clearPlaying;
       u.onerror = clearPlaying;
@@ -85,6 +112,9 @@
       audio.pause();
       audio.currentTime = 0;
       audio.src = 'assets/audio/' + file;
+      /* Cambiar de src resetea playbackRate: se reaplica después. */
+      audio.defaultPlaybackRate = rate;
+      audio.playbackRate = rate;
       audio.onended = clearPlaying;
       audio.onerror = function () {
         clearPlaying();
@@ -105,7 +135,7 @@
     }
   }
 
-  /** Devuelve true si hay MP3 pregrabado para ese texto. */
+  /** true si hay MP3 pregrabado para ese texto. */
   function hasAudio(text) {
     return !!map[norm(text)];
   }
@@ -133,9 +163,23 @@
     clearPlaying();
   }
 
+  function setRate(r) {
+    rate = clamp(Number(r) || 1);
+    try { window.localStorage.setItem(RATE_KEY, String(rate)); } catch (e) { /* modo privado */ }
+    if (audio) {
+      audio.defaultPlaybackRate = rate;
+      audio.playbackRate = rate;
+    }
+    return rate;
+  }
+
+  function getRate() { return rate; }
+
   window.TTS = {
     speak: speak,
     stop: stop,
+    setRate: setRate,
+    getRate: getRate,
     hasAudio: hasAudio,
     supported: hasFiles || synth
   };

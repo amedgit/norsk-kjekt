@@ -29,6 +29,7 @@ cd ~/norsk
 | Práctica | 30 ejercicios en 3 formatos: opción múltiple, rellenar huecos, ordenar palabras |
 | Coloquial | 18 expresiones con registro (neutro → vulgar), diálogo de ejemplo y truco |
 | Progreso | racha de días, XP, mejor resultado por lección y cola de repaso de fallos |
+| Velocidad | selector 0,7×–1,3× en la cabecera; se aplica al audio y se recuerda |
 | Audio | 180 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
 
 ## Estructura
