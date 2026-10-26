@@ -85,6 +85,23 @@ C.wordbank.forEach((w, i) => {
 });
 C.verbs.forEach((v, i) => add(`verb[${i}].es`, v.es));
 
+/* simulacro de examen: solo lo que no es bokmål se traduce */
+if (C.exam) {
+  add('exam.intro', C.exam.intro);
+  add('exam.disclaimer', C.exam.disclaimer);
+  C.exam.howto.forEach((x, i) => add(`exam.howto[${i}]`, x));
+  C.exam.levels.forEach((lv) => {
+    add(`exam.${lv.id}.title`, lv.title);
+    add(`exam.${lv.id}.blurb`, lv.blurb);
+    lv.reading.texts.forEach((tx, ti) => {
+      tx.questions.forEach((q, qi) => add(`exam.${lv.id}.read[${ti}].q[${qi}].explain`, q.explain));
+    });
+    lv.listening.items.forEach((it, ii) => add(`exam.${lv.id}.listen[${ii}].explain`, it.explain));
+    lv.writing.tasks.forEach((tk, ki) => tk.checklist.forEach((c, ci) => add(`exam.${lv.id}.write[${ki}].check[${ci}]`, c)));
+    lv.speaking.tasks.forEach((tk, ki) => tk.checklist.forEach((c, ci) => add(`exam.${lv.id}.speak[${ki}].check[${ci}]`, c)));
+  });
+}
+
 /* Cadenas noruegas: nunca deben traducirse. Si una opción es exactamente una
    de estas, se deja intacta (p. ej. «kaffe», «flink», «Jeg heter Alex»). */
 const NO = new Set();

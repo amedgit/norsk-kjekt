@@ -18,7 +18,7 @@
   var KEY = 'norsk-kjekt-v1';
 
   function defaults() {
-    return { lessons: {}, fun: {}, xp: 0, days: {}, review: [], version: 1 };
+    return { lessons: {}, fun: {}, exams: {}, xp: 0, days: {}, review: [], version: 1 };
   }
 
   var state = (function load() {
@@ -43,6 +43,7 @@
       return {
         lessons: lessons,
         fun: fun,
+        exams: raw.exams && typeof raw.exams === 'object' ? raw.exams : {},
         xp: Number(raw.xp) || 0,
         days: raw.days && typeof raw.days === 'object' ? raw.days : d.days,
         review: Array.isArray(raw.review) ? raw.review.filter(function (s) { return typeof s === 'string'; }) : d.review,
@@ -1308,6 +1309,17 @@
       levelSection(t('home.b1Title'), t('home.b1Sub'), ['B1']) +
       levelSection(t('home.b2Title'), t('home.b2Sub'), ['B2']) +
 
+      '<section class="exam-banner">' +
+      '  <div>' +
+      '    <span class="eyebrow">' + esc(t('exam.eyebrow')) + '</span>' +
+      '    <h2>' + esc(t('exam.title')) + '</h2>' +
+      '    <p>' + esc(t('exam.homeText')) + '</p>' +
+      '  </div>' +
+      '  <div class="fun-banner-actions">' +
+      '    <a class="btn primary" href="#/eksamen">' + esc(t('exam.start')) + '</a>' +
+      '  </div>' +
+      '</section>' +
+
       '<section class="fun-banner">' +
       '  <div>' +
       '    <span class="eyebrow">' + esc(t('home.funEyebrow')) + '</span>' +
@@ -1602,8 +1614,603 @@
   }
 
   /* =======================================================
-     Router
+     Simulacro de examen
      ======================================================= */
+
+  var EXAMS = (COURSE.exam && COURSE.exam.levels) || [];
+  var ORDER = ['A1', 'A2', 'B1', 'B2'];
+  var ex = null;
+  var exTimer = null;
+
+  function examById(id) {
+    return EXAMS.find(function (e) { return e.id === id; });
+  }
+
+  function clearExamTimer() {
+    if (exTimer) { clearInterval(exTimer); exTimer = null; }
+    if (ex && ex.tick) { clearInterval(ex.tick); ex.tick = null; }
+  }
+
+  function fmtClock(sec) {
+    sec = Math.max(0, Math.ceil(sec));
+    var m = Math.floor(sec / 60);
+    var s = sec % 60;
+    return m + ':' + (s < 10 ? '0' : '') + s;
+  }
+
+  function ratioLevel(level, ratio) {
+    var i = ORDER.indexOf(level);
+    if (ratio >= 0.8) return level;
+    if (ratio >= 0.55) return i > 0 ? ORDER[i - 1] : 'under';
+    return 'under';
+  }
+
+  function levelText(level, lv) {
+    return lv === 'under' ? t('exam.underLevel', { level: level }) : lv;
+  }
+
+  function wordCount(s) {
+    return String(s || '').trim().split(/\s+/).filter(Boolean).length;
+  }
+
+  function readingTotal(lv) {
+    return lv.reading.texts.reduce(function (n, tx) { return n + tx.questions.length; }, 0);
+  }
+
+  function examMinutes(lv) {
+    return lv.reading.minutes + lv.listening.minutes + lv.writing.minutes + lv.speaking.minutes;
+  }
+
+  function checkedTotal(lv, skill) {
+    return lv[skill].tasks.reduce(function (n, tk) { return n + tk.checklist.length; }, 0);
+  }
+
+  function checkedCount(skill) {
+    var set = ex.checks[skill] || {};
+    var n = 0;
+    Object.keys(set).forEach(function (k) { if (set[k]) n++; });
+    return n;
+  }
+
+  function examPartKey() {
+    return ex.part === 'wcheck' || ex.part === 'scheck' ? 'check' : ex.part;
+  }
+
+  function startPartTimer(minutes, onEnd) {
+    clearExamTimer();
+    var end = Date.now() + minutes * 60000;
+    ex.remaining = minutes * 60;
+    exTimer = setInterval(function () {
+      ex.remaining = Math.max(0, Math.ceil((end - Date.now()) / 1000));
+      var el = document.getElementById('exam-clock');
+      if (el) {
+        el.textContent = fmtClock(ex.remaining);
+        el.classList.toggle('low', ex.remaining <= 60);
+      }
+      if (ex.remaining <= 0) {
+        clearExamTimer();
+        onEnd();
+      }
+    }, 250);
+  }
+
+  function goPart(part) {
+    ex.part = part;
+    clearExamTimer();
+    if (part === 'reading') {
+      ex.ti = ex.ti || 0;
+      startPartTimer(ex.lv.reading.minutes, function () { ex.note = t('exam.timeUp'); goPart('listening'); });
+    } else if (part === 'listening') {
+      ex.li = ex.li || 0;
+      startPartTimer(ex.lv.listening.minutes, function () { ex.note = t('exam.timeUp'); goPart('writing'); });
+    } else if (part === 'writing') {
+      ex.wi = ex.wi || 0;
+      startPartTimer(ex.lv.writing.minutes, function () { ex.note = t('exam.timeUp'); goPart('wcheck'); });
+    } else if (part === 'speaking') {
+      ex.si = ex.si || 0;
+      startPartTimer(ex.lv.speaking.minutes, function () { ex.note = t('exam.timeUp'); goPart('scheck'); });
+    }
+    renderExamPart();
+  }
+
+  function examShell(inner) {
+    var timed = ['reading', 'listening', 'writing', 'speaking'].indexOf(ex.part) > -1;
+    app.innerHTML =
+      '<div class="crumbs"><a href="#/eksamen">' + esc(t('exam.crumb')) + '</a> <span>›</span> <span>' + esc(ex.lv.title) + '</span></div>' +
+      (timed
+        ? '<div class="exam-bar">' +
+            '<span class="exam-part">' + esc(t('exam.part.' + examPartKey())) + '</span>' +
+            '<span class="exam-timeleft">' + esc(t('exam.timeLeft')) + '</span>' +
+            '<span class="exam-clock' + (ex.remaining <= 60 ? ' low' : '') + '" id="exam-clock">' + fmtClock(ex.remaining) + '</span>' +
+          '</div>'
+        : '') +
+      (ex.note ? '<p class="exam-note">⏰ ' + esc(ex.note) + '</p>' : '') +
+      inner;
+  }
+
+  function examOption(q, key, selected, group) {
+    return '<div class="options">' + q.options.map(function (o, i) {
+      return '<button class="opt' + (selected === i ? ' sel' : '') + '" aria-pressed="' + (selected === i ? 'true' : 'false') + '" data-exam-group="' + group + '" data-exam-key="' + esc(key) + '" data-exam-opt="' + i + '">' +
+        '<span class="key">' + 'ABCD'[i] + '</span><span>' + esc(o) + '</span></button>';
+    }).join('') + '</div>';
+  }
+
+  function bindExamOptions() {
+    app.querySelectorAll('[data-exam-group]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var group = btn.dataset.examGroup;
+        var key = btn.dataset.examKey;
+        var val = Number(btn.dataset.examOpt);
+        var store = group === 'r' ? ex.ans.r : ex.ans.l;
+        store[key] = val;
+        app.querySelectorAll('[data-exam-group="' + group + '"][data-exam-key="' + key + '"]').forEach(function (b) {
+          var on = Number(b.dataset.examOpt) === val;
+          b.classList.toggle('sel', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+      });
+    });
+  }
+
+  function renderExamReading() {
+    var lv = ex.lv;
+    var tx = lv.reading.texts[ex.ti];
+    var nTexts = lv.reading.texts.length;
+    var body =
+      '<header class="lesson-head"><div class="lesson-copy">' +
+        '<div class="kicker"><span class="chip">' + esc(lv.level) + '</span>' +
+        '<span class="chip plain">' + esc(t('exam.textN', { n: ex.ti + 1, total: nTexts })) + '</span></div>' +
+        '<h1>' + esc(t('exam.part.reading')) + '</h1>' +
+        '<p class="lead">' + esc(t('exam.readNote')) + '</p>' +
+      '</div></header>' +
+      '<section class="card exam-text">' +
+        '<h2>' + esc(tx.title) + '</h2>' +
+        '<div class="text-body">' + tx.body.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('') + '</div>' +
+      '</section>' +
+      '<section class="card">' + tx.questions.map(function (q, qi) {
+        var key = ex.ti + ':' + qi;
+        return '<div class="exam-q">' +
+          '<p class="exam-q-text"><b>' + (qi + 1) + '.</b> ' + esc(q.q) + '</p>' +
+          examOption(q, key, ex.ans.r[key], 'r') + '</div>';
+      }).join('') + '</section>' +
+      '<div class="actions exam-nav">' +
+        (ex.ti > 0 ? '<button class="btn ghost" id="ex-prev">' + esc(t('exam.prev')) + '</button>' : '') +
+        (ex.ti + 1 < nTexts
+          ? '<button class="btn primary" id="ex-next">' + esc(t('exam.next')) + '</button>'
+          : '<button class="btn primary" id="ex-finish">' + esc(t('exam.finishReading')) + '</button>') +
+        (ex.ti + 1 < nTexts ? '<button class="btn ghost small" id="ex-finish">' + esc(t('exam.finishReading')) + '</button>' : '') +
+      '</div>';
+    examShell(body);
+    bindExamOptions();
+    var prev = document.getElementById('ex-prev');
+    if (prev) prev.addEventListener('click', function () { ex.note = ''; ex.ti--; renderExamPart(); });
+    var next = document.getElementById('ex-next');
+    if (next) next.addEventListener('click', function () { ex.note = ''; ex.ti++; renderExamPart(); });
+    var fin = document.getElementById('ex-finish');
+    if (fin) fin.addEventListener('click', function () { ex.note = ''; goPart('listening'); });
+  }
+
+  function renderExamListening() {
+    var lv = ex.lv;
+    var it = lv.listening.items[ex.li];
+    var n = lv.listening.items.length;
+    var body =
+      '<header class="lesson-head"><div class="lesson-copy">' +
+        '<div class="kicker"><span class="chip">' + esc(lv.level) + '</span>' +
+        '<span class="chip plain">' + esc(t('exam.questionN', { n: ex.li + 1, total: n })) + '</span></div>' +
+        '<h1>' + esc(t('exam.part.listening')) + '</h1>' +
+        '<p class="lead">' + esc(t('exam.listenNote')) + '</p>' +
+      '</div></header>' +
+      '<section class="card">' +
+        '<div class="listen-box">' +
+          '<button class="btn primary" data-say="' + esc(it.audio) + '">' + esc(t('ex.listen')) + '</button>' +
+        '</div>' +
+        '<div class="exam-q" style="margin-top:1rem">' +
+          '<p class="exam-q-text">' + esc(it.q) + '</p>' +
+          examOption(it, String(ex.li), ex.ans.l[String(ex.li)], 'l') +
+        '</div>' +
+      '</section>' +
+      '<div class="actions exam-nav">' +
+        (ex.li > 0 ? '<button class="btn ghost" id="ex-prev">' + esc(t('exam.prev')) + '</button>' : '') +
+        (ex.li + 1 < n
+          ? '<button class="btn primary" id="ex-next">' + esc(t('exam.next')) + '</button>'
+          : '<button class="btn primary" id="ex-finish">' + esc(t('exam.finishListening')) + '</button>') +
+        (ex.li + 1 < n ? '<button class="btn ghost small" id="ex-finish">' + esc(t('exam.finishListening')) + '</button>' : '') +
+      '</div>';
+    examShell(body);
+    bindExamOptions();
+    var prev = document.getElementById('ex-prev');
+    if (prev) prev.addEventListener('click', function () { ex.note = ''; ex.li--; renderExamPart(); });
+    var next = document.getElementById('ex-next');
+    if (next) next.addEventListener('click', function () { ex.note = ''; ex.li++; renderExamPart(); });
+    var fin = document.getElementById('ex-finish');
+    if (fin) fin.addEventListener('click', function () { ex.note = ''; goPart('writing'); });
+  }
+
+  function renderExamWriting() {
+    var lv = ex.lv;
+    var tk = lv.writing.tasks[ex.wi];
+    var n = lv.writing.tasks.length;
+    var val = ex.txt[ex.wi] || '';
+    var body =
+      '<header class="lesson-head"><div class="lesson-copy">' +
+        '<div class="kicker"><span class="chip">' + esc(lv.level) + '</span>' +
+        '<span class="chip plain">' + esc(t('exam.taskN', { n: ex.wi + 1, total: n })) + '</span></div>' +
+        '<h1>' + esc(t('exam.part.writing')) + '</h1>' +
+        '<p class="lead">' + esc(t('exam.writeNote')) + '</p>' +
+      '</div></header>' +
+      '<section class="card">' +
+        '<h2>' + esc(tk.title) + '</h2>' +
+        '<p class="exam-prompt">' + esc(tk.prompt) + '</p>' +
+        '<p class="ex-hint">' + esc(t('exam.wordsRange', { min: tk.minWords, max: tk.maxWords })) + '</p>' +
+        '<textarea class="exam-ta" id="exam-ta" spellcheck="false" aria-label="' + esc(tk.title) + '">' + esc(val) + '</textarea>' +
+        '<p class="ex-hint" id="exam-wc">' + esc(t('exam.words', { n: wordCount(val) })) + '</p>' +
+      '</section>' +
+      '<div class="actions exam-nav">' +
+        (ex.wi > 0 ? '<button class="btn ghost" id="ex-prev">' + esc(t('exam.prev')) + '</button>' : '') +
+        (ex.wi + 1 < n
+          ? '<button class="btn primary" id="ex-next">' + esc(t('exam.next')) + '</button>'
+          : '<button class="btn primary" id="ex-check">' + esc(t('exam.checkTitle')) + '</button>') +
+        (ex.wi + 1 < n ? '<button class="btn ghost small" id="ex-check">' + esc(t('exam.checkTitle')) + '</button>' : '') +
+      '</div>';
+    examShell(body);
+    var ta = document.getElementById('exam-ta');
+    ta.addEventListener('input', function () {
+      ex.txt[ex.wi] = ta.value;
+      var wc = document.getElementById('exam-wc');
+      if (wc) wc.textContent = t('exam.words', { n: wordCount(ta.value) });
+    });
+    ta.focus();
+    var prev = document.getElementById('ex-prev');
+    if (prev) prev.addEventListener('click', function () { ex.wi--; renderExamPart(); });
+    var next = document.getElementById('ex-next');
+    if (next) next.addEventListener('click', function () { ex.wi++; renderExamPart(); });
+    var chk = document.getElementById('ex-check');
+    if (chk) chk.addEventListener('click', function () { ex.note = ''; goPart('wcheck'); });
+  }
+
+  function renderExamCheck(skill, nextPart, finishKey) {
+    var lv = ex.lv;
+    var tasks = lv[skill].tasks;
+    var store = ex.checks[skill] || (ex.checks[skill] = {});
+    var body =
+      '<header class="lesson-head"><div class="lesson-copy">' +
+        '<div class="kicker"><span class="chip">' + esc(lv.level) + '</span>' +
+        '<span class="chip plain">' + esc(t('exam.part.' + skill)) + '</span></div>' +
+        '<h1>' + esc(t('exam.checkTitle')) + '</h1>' +
+        '<p class="lead">' + esc(t('exam.checkIntro')) + '</p>' +
+      '</div></header>' +
+      tasks.map(function (tk, ti) {
+        return '<section class="card"><h2>' + esc(tk.title) + '</h2>' +
+          '<p class="exam-prompt">' + esc(tk.prompt) + '</p>' +
+          (skill === 'writing'
+            ? (ex.txt[ti]
+              ? '<blockquote class="exam-usertext">' + esc(ex.txt[ti]) + '</blockquote>'
+              : '<p class="ex-hint">' + esc(t('exam.noText')) + '</p>')
+            : '') +
+          '<div class="exam-check">' + tk.checklist.map(function (c, ci) {
+            var key = ti + ':' + ci;
+            return '<label><input type="checkbox" data-check-skill="' + skill + '" data-check-key="' + key + '"' +
+              (store[key] ? ' checked' : '') + '> <span>' + esc(c) + '</span></label>';
+          }).join('') + '</div></section>';
+      }).join('') +
+      '<div class="actions exam-nav"><button class="btn primary" id="ex-check-done">' + esc(t(finishKey)) + '</button></div>';
+    examShell(body);
+    app.querySelectorAll('[data-check-skill]').forEach(function (cb) {
+      cb.addEventListener('change', function () {
+        store[cb.dataset.checkKey] = cb.checked;
+      });
+    });
+    document.getElementById('ex-check-done').addEventListener('click', function () { ex.note = ''; goPart(nextPart); });
+  }
+
+  function renderExamSpeaking() {
+    var lv = ex.lv;
+    var tk = lv.speaking.tasks[ex.si];
+    var n = lv.speaking.tasks.length;
+    var body =
+      '<header class="lesson-head"><div class="lesson-copy">' +
+        '<div class="kicker"><span class="chip">' + esc(lv.level) + '</span>' +
+        '<span class="chip plain">' + esc(t('exam.taskN', { n: ex.si + 1, total: n })) + '</span></div>' +
+        '<h1>' + esc(t('exam.part.speaking')) + '</h1>' +
+        '<p class="lead">' + esc(t('exam.speakNote')) + '</p>' +
+      '</div></header>' +
+      '<section class="card">' +
+        '<h2>' + esc(tk.title) + '</h2>' +
+        '<p class="exam-prompt">' + esc(tk.prompt) + '</p>' +
+        '<div class="exam-speak">' +
+          '<button class="btn ghost" id="ex-prep" data-s="' + tk.prepSeconds + '">' + esc(t('exam.prep', { s: tk.prepSeconds })) + '</button>' +
+          '<button class="btn primary" id="ex-talk" data-s="' + tk.speakSeconds + '" hidden>' + esc(t('exam.speakNow', { s: tk.speakSeconds })) + '</button>' +
+          '<span class="exam-count" id="ex-count"></span>' +
+        '</div>' +
+      '</section>' +
+      '<div class="actions exam-nav">' +
+        (ex.si > 0 ? '<button class="btn ghost" id="ex-prev">' + esc(t('exam.prev')) + '</button>' : '') +
+        (ex.si + 1 < n
+          ? '<button class="btn primary" id="ex-next">' + esc(t('exam.next')) + '</button>'
+          : '<button class="btn primary" id="ex-check">' + esc(t('exam.checkTitle')) + '</button>') +
+        (ex.si + 1 < n ? '<button class="btn ghost small" id="ex-check">' + esc(t('exam.checkTitle')) + '</button>' : '') +
+      '</div>';
+    examShell(body);
+    var prep = document.getElementById('ex-prep');
+    var talk = document.getElementById('ex-talk');
+    var count = document.getElementById('ex-count');
+    var tick = null;
+
+    function countdown(sec, el, done) {
+      if (tick) clearInterval(tick);
+      var left = sec;
+      if (el) el.textContent = fmtClock(left);
+      tick = setInterval(function () {
+        left--;
+        if (el) el.textContent = fmtClock(left);
+        if (left <= 0) {
+          clearInterval(tick);
+          tick = null;
+          ex.tick = null;
+          if (done) done();
+        }
+      }, 1000);
+      ex.tick = tick;
+    }
+
+    prep.addEventListener('click', function () {
+      prep.disabled = true;
+      countdown(Number(prep.dataset.s), count, function () {
+        talk.hidden = false;
+        prep.hidden = true;
+        if (count) count.textContent = t('exam.speakDone');
+      });
+    });
+
+    talk.addEventListener('click', function () {
+      talk.disabled = true;
+      countdown(Number(talk.dataset.s), count, function () {
+        talk.hidden = true;
+        if (count) count.textContent = t('exam.speakDone');
+      });
+    });
+
+    var prev = document.getElementById('ex-prev');
+    if (prev) prev.addEventListener('click', function () { if (tick) clearInterval(tick); ex.si--; renderExamPart(); });
+    var next = document.getElementById('ex-next');
+    if (next) next.addEventListener('click', function () { if (tick) clearInterval(tick); ex.si++; renderExamPart(); });
+    var chk = document.getElementById('ex-check');
+    if (chk) chk.addEventListener('click', function () { if (tick) clearInterval(tick); ex.note = ''; goPart('scheck'); });
+  }
+
+  function examSummary() {
+    var lv = ex.lv;
+    var rTotal = readingTotal(lv);
+    var rCorrect = 0;
+    lv.reading.texts.forEach(function (tx, ti) {
+      tx.questions.forEach(function (q, qi) {
+        if (ex.ans.r[ti + ':' + qi] === q.answer) rCorrect++;
+      });
+    });
+    var lTotal = lv.listening.items.length;
+    var lCorrect = 0;
+    lv.listening.items.forEach(function (it, i) {
+      if (ex.ans.l[String(i)] === it.answer) lCorrect++;
+    });
+    var wTotal = checkedTotal(lv, 'writing');
+    var wChecked = checkedCount('writing');
+    var sTotal = checkedTotal(lv, 'speaking');
+    var sChecked = checkedCount('speaking');
+    return {
+      reading: { correct: rCorrect, total: rTotal, level: ratioLevel(lv.level, rTotal ? rCorrect / rTotal : 0) },
+      listening: { correct: lCorrect, total: lTotal, level: ratioLevel(lv.level, lTotal ? lCorrect / lTotal : 0) },
+      writing: { correct: wChecked, total: wTotal, level: ratioLevel(lv.level, wTotal ? wChecked / wTotal : 0) },
+      speaking: { correct: sChecked, total: sTotal, level: ratioLevel(lv.level, sTotal ? sChecked / sTotal : 0) }
+    };
+  }
+
+  function renderExamResults() {
+    var lv = ex.lv;
+    var sum = examSummary();
+    var skills = ['reading', 'listening', 'writing', 'speaking'];
+    var rows = skills.map(function (k) {
+      var s = sum[k];
+      var pct = s.total ? Math.round((s.correct / s.total) * 100) : 0;
+      return '<tr><td>' + esc(t('exam.skill.' + k)) + (k === 'writing' || k === 'speaking' ? ' <span class="ex-hint">(' + esc(t('exam.selfNote')) + ')</span>' : '') + '</td>' +
+        '<td>' + s.correct + '/' + s.total + '</td>' +
+        '<td><div class="meter"><i style="width:' + pct + '%"></i></div></td>' +
+        '<td><b>' + esc(levelText(lv.level, s.level)) + '</b></td></tr>';
+    }).join('');
+
+    var wrong = [];
+    lv.reading.texts.forEach(function (tx, ti) {
+      tx.questions.forEach(function (q, qi) {
+        var chosen = ex.ans.r[ti + ':' + qi];
+        if (chosen !== q.answer) {
+          wrong.push({ kind: t('exam.skill.reading'), q: q.q, chosen: chosen, right: q.answer, options: q.options, explain: q.explain });
+        }
+      });
+    });
+    lv.listening.items.forEach(function (it, i) {
+      var chosen = ex.ans.l[String(i)];
+      if (chosen !== it.answer) {
+        wrong.push({ kind: t('exam.skill.listening'), q: it.q, chosen: chosen, right: it.answer, options: it.options, explain: it.explain });
+      }
+    });
+
+    var review = wrong.length
+      ? '<section class="card"><h2>' + esc(t('exam.reviewTitle')) + '</h2>' +
+        wrong.map(function (w) {
+          return '<div class="exam-wrong">' +
+            '<p class="exam-q-text"><span class="chip plain">' + esc(w.kind) + '</span> ' + esc(w.q) + '</p>' +
+            '<p class="ex-hint">' + esc(t('exam.yourAnswer')) + ': ' +
+              (w.chosen == null ? esc(t('exam.noAnswer')) : esc(w.options[w.chosen])) + '</p>' +
+            '<p class="exam-right"><b>' + esc(t('exam.correctAnswer')) + ':</b> ' + esc(w.options[w.right]) + '</p>' +
+            (w.explain ? '<p class="ex-hint">' + esc(w.explain) + '</p>' : '') +
+          '</div>';
+        }).join('') + '</section>'
+      : '';
+
+    var models = '<section class="card"><h2>' + esc(t('exam.model')) + '</h2>' +
+      lv.writing.tasks.map(function (tk) {
+        return '<div class="exam-model"><p class="exam-q-text">' + esc(tk.title) + ' · ' + esc(t('exam.skill.writing')) + '</p>' +
+          '<p class="exam-model-text">' + say(tk.model) + ' ' + esc(tk.model) + '</p></div>';
+      }).join('') +
+      lv.speaking.tasks.map(function (tk) {
+        return '<div class="exam-model"><p class="exam-q-text">' + esc(tk.title) + ' · ' + esc(t('exam.skill.speaking')) + '</p>' +
+          '<p class="exam-model-text">' + say(tk.model) + ' ' + esc(tk.model) + '</p></div>';
+      }).join('') + '</section>';
+
+    examShell(
+      '<header class="lesson-head"><div class="lesson-copy">' +
+        '<span class="eyebrow">' + esc(t('exam.resultsTitle')) + '</span>' +
+        '<h1>' + esc(lv.title) + '</h1>' +
+        '<p class="lead">' + esc(t('exam.resultsSub')) + '</p>' +
+      '</div></header>' +
+      '<section class="card"><div class="wtable-wrap"><table class="wtable exam-report"><thead><tr>' +
+        '<th>' + esc(t('exam.skillLabel')) + '</th><th>' + esc(t('exam.scoreLabel')) + '</th><th></th><th>' + esc(t('exam.levelLabel')) + '</th>' +
+      '</tr></thead><tbody>' + rows + '</tbody></table></div>' +
+      '<p class="ex-hint" style="margin-top:.8rem">' + esc(COURSE.exam.disclaimer) + '</p></section>' +
+      review + models +
+      '<div class="actions exam-nav">' +
+        '<button class="btn primary" id="ex-retry">' + esc(t('exam.retry')) + '</button>' +
+        '<a class="btn ghost" href="#/eksamen">' + esc(t('exam.back')) + '</a>' +
+      '</div>'
+    );
+
+    document.getElementById('ex-retry').addEventListener('click', function () {
+      var lv2 = ex.lv;
+      startExamSession(lv2);
+    });
+
+    if (!ex.saved) {
+      ex.saved = true;
+      var xp = (sum.reading.correct + sum.listening.correct) * 10 + (sum.writing.correct + sum.speaking.correct) * 2;
+      state.exams[lv.id] = {
+        at: Date.now(),
+        reading: sum.reading,
+        listening: sum.listening,
+        writing: sum.writing,
+        speaking: sum.speaking
+      };
+      state.xp += xp;
+      markDay();
+      save();
+      refreshHud();
+      var card = app.querySelector('.exam-report');
+      if (card) card.insertAdjacentHTML('afterend',
+        '<p class="ex-hint">' + esc(t('exam.saved', { n: xp })) + '</p>');
+    }
+  }
+
+  function renderExamPart() {
+    if (!ex) { renderExam(); return; }
+    if (ex.part === 'reading') renderExamReading();
+    else if (ex.part === 'listening') renderExamListening();
+    else if (ex.part === 'writing') renderExamWriting();
+    else if (ex.part === 'wcheck') renderExamCheck('writing', 'speaking', 'exam.toSpeaking');
+    else if (ex.part === 'speaking') renderExamSpeaking();
+    else if (ex.part === 'scheck') renderExamCheck('speaking', 'result', 'exam.seeReport');
+    else renderExamResults();
+  }
+
+  function startExamSession(lv) {
+    clearExamTimer();
+    ex = {
+      lv: lv,
+      part: 'reading',
+      ti: 0,
+      li: 0,
+      wi: 0,
+      si: 0,
+      remaining: 0,
+      note: '',
+      ans: { r: {}, l: {} },
+      txt: {},
+      checks: { writing: {}, speaking: {} },
+      saved: false
+    };
+    if (location.hash !== '#/eksamen/' + lv.id) {
+      location.hash = '#/eksamen/' + lv.id;
+      return;
+    }
+    goPart('reading');
+  }
+
+  function examBestChips(id) {
+    var r = state.exams[id];
+    if (!r) return '';
+    var order = [['reading', 'R'], ['listening', 'L'], ['writing', 'W'], ['speaking', 'M']];
+    return '<div class="exam-best">' + order.map(function (p) {
+      var s = r[p[0]];
+      if (!s) return '';
+      return '<span class="chip">' + p[1] + ' ' + esc(levelText(EXAMS.find(function (e) { return e.id === id; }).level, s.level)) + '</span>';
+    }).join('') + '</div>';
+  }
+
+  function renderExam() {
+    clearExamTimer();
+    ex = null;
+    app.innerHTML =
+      '<section class="fun-hero exam-hero">' +
+      '  <div class="fun-hero-text">' +
+      '    <span class="eyebrow">' + esc(t('exam.eyebrow')) + '</span>' +
+      '    <h1>' + esc(t('exam.title')) + '</h1>' +
+      '    <p>' + esc(COURSE.exam.intro) + '</p>' +
+      '    <div class="hero-actions">' +
+      '      <a class="btn primary" href="#/eksamen/a1">' + esc(t('exam.startA1')) + '</a>' +
+      '    </div>' +
+      '  </div>' +
+      '  <aside class="fun-hero-card">' +
+      '    <div><h3>' + esc(t('exam.howtoTitle')) + '</h3>' +
+      '      <ul class="exam-howto">' + COURSE.exam.howto.map(function (h) { return '<li>' + esc(h) + '</li>'; }).join('') + '</ul></div>' +
+      '  </aside>' +
+      '</section>' +
+      '<p class="exam-note">ℹ️ ' + esc(COURSE.exam.disclaimer) + '</p>' +
+      '<h2 class="section-title">' + esc(t('exam.levelsTitle')) + ' <span>' + esc(t('exam.levelsSub')) + '</span></h2>' +
+      '<div class="exam-levels">' + EXAMS.map(function (lv) {
+        return '<a class="exam-card" href="#/eksamen/' + lv.id + '">' +
+          '<div class="exam-card-head"><span class="exam-level">' + esc(lv.level) + '</span>' +
+          '<span class="chip plain">' + esc(t('exam.totalTime', { n: examMinutes(lv) })) + '</span></div>' +
+          '<h3>' + esc(lv.title) + '</h3>' +
+          '<p>' + esc(lv.blurb) + '</p>' +
+          '<div class="exam-card-foot">' +
+            '<span class="chip plain">' + esc(t('exam.questions', { n: readingTotal(lv) })) + '</span>' +
+            '<span class="chip plain">' + esc(t('exam.audio', { n: lv.listening.items.length })) + '</span>' +
+            '<span class="chip plain">' + esc(t('exam.tasks', { n: lv.writing.tasks.length + lv.speaking.tasks.length })) + '</span>' +
+          '</div>' +
+          examBestChips(lv.id) +
+          '<span class="go">' + esc(t('exam.start')) + ' →</span>' +
+        '</a>';
+      }).join('') + '</div>';
+  }
+
+  function renderExamLevel(id) {
+    var lv = examById(id);
+    if (!lv) { renderExam(); return; }
+    if (ex && ex.lv.id === id) { renderExamPart(); return; }
+    clearExamTimer();
+    app.innerHTML =
+      '<div class="crumbs"><a href="#/eksamen">' + esc(t('exam.crumb')) + '</a> <span>›</span> <span>' + esc(lv.title) + '</span></div>' +
+      '<header class="lesson-head"><div class="lesson-copy">' +
+        '<div class="kicker"><span class="chip">' + esc(lv.level) + '</span></div>' +
+        '<h1>' + esc(lv.title) + '</h1>' +
+        '<p class="lead">' + esc(lv.blurb) + '</p>' +
+        '<p class="ex-hint" style="margin-top:.6rem">' + esc(COURSE.exam.intro) + '</p>' +
+      '</div></header>' +
+      '<section class="card"><h2>' + esc(t('exam.briefing')) + '</h2>' +
+        '<div class="exam-plan">' +
+          '<div class="exam-plan-row"><b>' + esc(t('exam.part.reading')) + '</b><span>' + esc(t('exam.readMinutes', { n: lv.reading.minutes })) + '</span></div>' +
+          '<div class="exam-plan-row"><b>' + esc(t('exam.part.listening')) + '</b><span>' + esc(t('exam.listenMinutes', { n: lv.listening.minutes })) + '</span></div>' +
+          '<div class="exam-plan-row"><b>' + esc(t('exam.part.writing')) + '</b><span>' + esc(t('exam.writeMinutes', { n: lv.writing.minutes })) + '</span></div>' +
+          '<div class="exam-plan-row"><b>' + esc(t('exam.part.speaking')) + '</b><span>' + esc(t('exam.speakMinutes', { n: lv.speaking.minutes })) + '</span></div>' +
+        '</div>' +
+        '<p class="ex-hint" style="margin-top:.8rem">' + esc(t('exam.note')) + '</p>' +
+        '<div class="actions" style="margin-top:1rem">' +
+          '<button class="btn primary" id="ex-start">' + esc(t('exam.startNow')) + '</button>' +
+          '<a class="btn ghost" href="#/eksamen">' + esc(t('exam.back')) + '</a>' +
+        '</div>' +
+      '</section>';
+    document.getElementById('ex-start').addEventListener('click', function () { startExamSession(lv); });
+  }
+
+
 
   function route() {
     var raw = (location.hash || '').replace(/^#\/?/, '');
@@ -1612,12 +2219,14 @@
     var arg = parts[1] || '';
 
     if (window.TTS) window.TTS.stop();
+    clearExamTimer();
     window.scrollTo({ top: 0, behavior: 'auto' });
 
     var active = name === 'coloquial' ? 'coloquial'
       : name === 'repaso' ? 'review'
         : name === 'tull' ? 'fun'
-          : 'home';
+          : name === 'eksamen' ? 'exam'
+            : 'home';
     document.querySelectorAll('.nav a').forEach(function (a) {
       a.classList.toggle('active', a.dataset.route === active);
     });
@@ -1629,6 +2238,9 @@
       renderColoquial();
     } else if (name === 'tull') {
       renderFun(arg);
+    } else if (name === 'eksamen') {
+      if (arg) renderExamLevel(arg);
+      else renderExam();
     } else if (name === 'repaso') {
       renderReview();
     } else {

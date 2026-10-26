@@ -3,8 +3,9 @@
 **Publicado:** <https://amedgit.github.io/norsk-kjekt/>
 
 Portal para practicar noruego **bokmål** (A1–B2): textos cortos, ejercicios
-interactivos, seis packs de humor, tablas de palabras y verbos, y una sección de
-noruego coloquial. HTML + CSS + JS puro, sin build, sin dependencias y sin backend.
+interactivos, seis packs de humor, tablas de palabras y verbos, una sección de
+noruego coloquial y **cuatro simulacros de examen** estilo Norskprøven. HTML +
+CSS + JS puro, sin build, sin dependencias y sin backend.
 La interfaz y las explicaciones se pueden leer en **español, inglés o persa**
 (فارسی, de derecha a izquierda); el noruego del curso no se traduce.
 
@@ -32,10 +33,11 @@ cd ~/norsk
 | Tull & tøys | 6 packs con 84 ejercicios de humor (absurdo, supervivencia, oficina, dictados, modismos y verbos) y una mezcla aleatoria de 10 |
 | Tablas | 86 palabras con audio, búsqueda, filtros por nivel/tema, ordenación y modo examen; 14 verbos en presente, pasado y perfecto |
 | Coloquial | 18 expresiones con registro (neutro → vulgar), diálogo de ejemplo y truco |
+| Simulacro | 4 exámenes completos (A1, A2, B1 y B2) estilo Norskprøven: lesing, lytting, skriving y muntlig, con cronómetro, informe por destreza y respuestas modelo |
 | Idioma | selector **ES / EN / فا** en la cabecera: traduce interfaz, explicaciones y tablas; el bokmål se queda intacto y el progreso se conserva. En persa la página cambia a dirección RTL |
-| Progreso | racha de días, XP, mejor resultado por lección/pack y cola de repaso de fallos |
+| Progreso | racha de días, XP, mejor resultado por lección/pack, último informe del simulacro y cola de repaso de fallos |
 | Velocidad | selector 0,7×–1,3× en la cabecera; se aplica al audio y se recuerda |
-| Audio | 534 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
+| Audio | 578 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
 
 ## Interfaz en español, inglés o persa
 
@@ -45,6 +47,7 @@ El selector **ES / EN / فا** de la cabecera cambia todo lo que no es noruego:
 - explicaciones, objetivos, trucos y notas culturales;
 - traducciones de textos, vocabulario, frases y diálogos;
 - prompts, opciones, pistas y explicaciones de los 165 ejercicios;
+- instrucciones, explicaciones y rúbricas de autoevaluación del simulacro;
 - las tablas de palabras y verbos (la columna de significados).
 
 Lo que se aprende —títulos de lección, bokmål, opciones noruegas de los
@@ -97,20 +100,20 @@ norsk/
 ├── tools/
 │   ├── generate-audio.mjs       ← sintetiza los MP3 y el manifiesto
 │   ├── generate-lesson-art.mjs  ← dibuja las 11 ilustraciones SVG de las lecciones
-│   └── check-i18n.mjs           ← comprueba que todo el contenido tiene traducción EN
+│   └── check-i18n.mjs           ← comprueba que todo el contenido tiene traducción EN y FA
 └── assets/
     ├── css/style.css
     ├── img/og.png       ← imagen para compartir en redes
     ├── img/lessons/*.svg ← una ilustración original por lección
-    ├── audio/*.mp3      ← 534 audios (≈5,9 MB), generados
+    ├── audio/*.mp3      ← 578 audios (≈7,8 MB), generados
     └── js/
-        ├── data.js          ← TODO el contenido del curso (base en español + noruego)
+        ├── data.js          ← TODO el contenido del curso y los 4 simulacros
         ├── content-en.js    ← traducciones ES → EN del contenido
         ├── content-fa.js    ← traducciones ES → فارسی del contenido
         ├── lang.js          ← idioma, textos de interfaz y localización del curso
         ├── audio-manifest.js ← texto → MP3 (generado, no editar)
         ├── tts.js           ← reproduce MP3; fallback a speechSynthesis
-        └── app.js           ← router, progreso, motor de ejercicios
+        └── app.js           ← router, progreso, ejercicios y motor del simulacro
 ```
 
 Publicación: ver **[DEPLOY.md](DEPLOY.md)**. Hay un zip listo para Netlify Drop
@@ -223,6 +226,58 @@ La sección `#/tull` se alimenta de tres bloques de `data.js`:
 El generador de audio recorre automáticamente los packs, `wordbank` y `verbs`:
 si añades texto nuevo, vuelve a ejecutarlo antes de publicar.
 
+## Simulacro de examen (estilo Norskprøven)
+
+La sección `#/eksamen` ofrece **un examen completo por nivel** (A1, A2, B1 y B2),
+con las cuatro delprøver de la Norskprøven real. No es un examen oficial ni da
+un aprobado/suspendido: al terminar obtienes un **nivel estimado por destreza**,
+como en el `prøvebevis` de HK-dir.
+
+| Parte | Qué se hace | Corrección |
+|---|---|---|
+| Leseprøve | 2 textos y 8 preguntas de opción múltiple | automática |
+| Lytteprøve | 6 audios y una pregunta por audio | automática |
+| Skriveprøve | 2 tareas con mínimo/máximo de palabras | autoevaluación con rúbrica |
+| Muntlig prøve | 3 tareas con tiempo de preparación y de habla | autoevaluación con rúbrica |
+
+Cada parte tiene su propio cronómetro; si se agota, pasa sola a la siguiente.
+En lesing y lytting no hay feedback hasta el informe final. En escritura y oral
+se muestran **respuestas modelo** (también en audio) y una lista de comprobación;
+hay que marcar con sinceridad lo que se ha conseguido.
+
+El nivel se calcula por destreza: **≥ 80 %** mantiene el nivel del examen,
+**≥ 55 %** da el nivel anterior y por debajo se muestra «Por debajo de X».
+El informe se guarda en `localStorage` (`norsk-kjekt-v1` → `exams[<nivel>]`) y
+suma XP: 10 por acierto en lesing/lytting y 2 por punto marcado en la rúbrica.
+
+### Estructura del contenido
+
+Todo vive en `COURSE.exam` dentro de `assets/js/data.js`:
+
+```js
+exam: {
+  intro, disclaimer, howto: [],
+  levels: [{
+    id: 'a1', level: 'A1', title, blurb,
+    reading: { minutes, texts: [{ title, body: [], questions: [
+      { q, options: [], answer: 0, explain }] }] },
+    listening: { minutes, items: [
+      { audio, q, options: [], answer: 0, explain }] },
+    writing: { minutes, tasks: [
+      { title, prompt, minWords, maxWords, checklist: [], model }] },
+    speaking: { minutes, tasks: [
+      { title, prompt, prepSeconds, speakSeconds, checklist: [], model }] }
+  }]
+}
+```
+
+Los textos, preguntas, opciones, audios y modelos están en bokmål y **no se
+traducen**. Los campos `intro`, `disclaimer`, `howto`, `title`, `blurb`,
+`explain` y `checklist` están en español y se traducen en `content-en.js` /
+`content-fa.js` como el resto del contenido. Para añadir un nivel: copia un
+objeto de `levels`, cámbialo, añade sus traducciones, ejecuta
+`node tools/check-i18n.mjs` y regenera los audios.
+
 ## Regenerar los audios
 
 Los MP3 se generan una sola vez y se sirven como ficheros estáticos, así que
@@ -244,9 +299,10 @@ PIPER_BIN="$PWD/piper/piper" PIPER_MODEL="$PWD/voices/no_NO-talesyntese-medium.o
 ```
 
 El script recorre `data.js`, sintetiza cada frase nueva, la convierte a MP3
-(48 kbps mono) y reescribe `assets/js/audio-manifest.js`. Después: `git add -A`,
-commit y push. Si añades texto y **no** regeneras, esa frase usará la voz del
-navegador como respaldo.
+(48 kbps mono) y reescribe `assets/js/audio-manifest.js`. Incluye los audios de
+comprensión del simulacro y los modelos de escritura y oral (estos son más
+largos, así que tardan algo más). Después: `git add -A`, commit y push. Si añades
+texto y **no** regeneras, esa frase usará la voz del navegador como respaldo.
 
 ## Notas
 
@@ -255,7 +311,7 @@ navegador como respaldo.
 - El progreso es local al navegador. Para sincronizar entre dispositivos haría
   falta backend o exportar/importar JSON.
 - El idioma también es local (`norsk-kjekt-lang`). No hay detección automática:
-  por defecto se abre en español y cada visitante elige ES o EN.
+  por defecto se abre en español y cada visitante elige ES, EN o FA.
 - El audio no depende del sistema del visitante: son MP3 pregrabados. Solo si
   añades una frase sin regenerar se usará `speechSynthesis`, y ahí la calidad
   depende de las voces instaladas.

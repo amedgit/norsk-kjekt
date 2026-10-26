@@ -2548,5 +2548,427 @@ window.COURSE = {
     { inf: 'å se', es: 'ver', present: 'ser', past: 'så', perfect: 'har sett' },
     { inf: 'å drikke', es: 'beber', present: 'drikker', past: 'drakk', perfect: 'har drukket' },
     { inf: 'å lære', es: 'aprender', present: 'lærer', past: 'lærte', perfect: 'har lært' }
-  ]
+  ],
+
+  /* ==================================================================
+     SIMULACRO DE EXAMEN (estilo Norskprøven A1–B2)
+     Estructura oficial: 4 delprøver independientes evaluadas por destreza.
+     El bokmål (textos, preguntas, opciones, audio, modelos) NO se traduce.
+     ================================================================== */
+  exam: {
+    intro: 'Cuatro delprøver independientes, como en la Norskprøven real: comprensión lectora, comprensión auditiva, expresión escrita y expresión oral. Cada destreza se evalúa por separado y obtienes un nivel estimado (A1–B2).',
+    disclaimer: 'Simulacro no oficial, creado para practicar. No sustituye a la Norskprøven de HK-dir ni tiene validez oficial.',
+    howto: [
+      'Elige tu nivel. Las pruebas de escritura y oral siguen el nivel que elijas, como en el examen real.',
+      'Cada parte tiene su propio cronómetro; al acabarse el tiempo pasa sola a la siguiente.',
+      'Lesing y lytting se corrigen al instante. Skriving y muntlig se autoevalúan con una rúbrica breve.',
+      'Al terminar verás un informe por destreza, como el prøvebevis oficial.'
+    ],
+    levels: [
+      /* ------------------------------------------------------------ A1 */
+      {
+        id: 'a1',
+        level: 'A1',
+        title: 'Simulacro A1',
+        blurb: 'Frases cortas, vocabulario cotidiano y situaciones muy predecibles.',
+        reading: {
+          minutes: 20,
+          texts: [
+            {
+              title: 'På kafeen',
+              body: [
+                'Alex jobber på en kafé i Oslo. Hver morgen kommer han klokka sju. Han lager kaffe og serverer brød til kundene.',
+                'Mange kunder sier «hei» til ham. Alex liker jobben sin, men han er alltid trøtt om kvelden. Etter jobben går han hjem og sover en liten stund.'
+              ],
+              questions: [
+                { q: 'Hvor jobber Alex?', options: ['På en skole', 'På en kafé', 'I en butikk'], answer: 1, explain: 'El primer texto dice «Alex jobber på en kafé i Oslo».' },
+                { q: 'Når begynner han om morgenen?', options: ['Klokka ni', 'Klokka fem', 'Klokka sju'], answer: 2, explain: '«Hver morgen kommer han klokka sju»: empieza a las siete.' },
+                { q: 'Hva gjør han på jobben?', options: ['Lager kaffe og serverer brød', 'Vasker biler', 'Kjører buss'], answer: 0, explain: '«Han lager kaffe og serverer brød til kundene».' },
+                { q: 'Hvordan føler han seg om kvelden?', options: ['Sulten', 'Sint', 'Trøtt'], answer: 2, explain: '«han er alltid trøtt om kvelden»: siempre está cansado por la noche.' }
+              ]
+            },
+            {
+              title: 'Familien til Ingrid',
+              body: [
+                'Ingrid bor i Bergen med mannen sin og to barn. De har en liten leilighet nær sjøen.',
+                'Om sommeren går de ofte på tur i fjellet. Ingrid liker å lese, og barna liker å spille fotball. Om vinteren er det mye regn, så de er mye inne. Familien har også en katt som heter Pus.'
+              ],
+              questions: [
+                { q: 'Hvor bor Ingrid?', options: ['I Oslo', 'I Bergen', 'I Tromsø'], answer: 1, explain: '«Ingrid bor i Bergen».' },
+                { q: 'Hvor mange barn har hun?', options: ['To', 'Tre', 'Ett'], answer: 0, explain: '«med mannen sin og to barn»: dos hijos.' },
+                { q: 'Hva liker barna å gjøre?', options: ['Å lese', 'Å spille fotball', 'Å svømme'], answer: 1, explain: '«barna liker å spille fotball».' },
+                { q: 'Hvordan er været om vinteren?', options: ['Mye snø', 'Mye regn', 'Alltid sol'], answer: 1, explain: '«Om vinteren er det mye regn».' }
+              ]
+            }
+          ]
+        },
+        listening: {
+          minutes: 12,
+          items: [
+            { audio: 'Hei! Jeg vil gjerne bestille en kaffe og et brød, takk.', q: 'Hva vil personen ha?', options: ['Kaffe og brød', 'Te og kake', 'Vann og frukt'], answer: 0, explain: 'Pide «en kaffe og et brød»: un café y un pan.' },
+            { audio: 'Unnskyld, hvor er togstasjonen?', q: 'Hva spør personen om?', options: ['Prisen på toget', 'Når toget går', 'Veien til togstasjonen'], answer: 2, explain: '«Hvor er togstasjonen?» pregunta dónde está la estación de tren.' },
+            { audio: 'Jeg heter Marta. Jeg kommer fra Polen, og jeg bor i Trondheim.', q: 'Hvor kommer Marta fra?', options: ['Polen', 'Norge', 'Sverige'], answer: 0, explain: '«Jeg kommer fra Polen»: viene de Polonia.' },
+            { audio: 'Kan du hjelpe meg? Jeg finner ikke nøklene mine.', q: 'Hva mangler personen?', options: ['Telefonen', 'Nøklene', 'Vesken'], answer: 1, explain: '«Jeg finner ikke nøklene mine»: no encuentra las llaves.' },
+            { audio: 'Butikken er åpen fra ni til seks.', q: 'Når stenger butikken?', options: ['Klokka seks', 'Klokka ni', 'Klokka fem'], answer: 0, explain: '«fra ni til seks»: abre de nueve a seis, cierra a las seis.' },
+            { audio: 'Det er kaldt i dag. Ta på deg en jakke!', q: 'Hva bør du ta på deg?', options: ['Solbriller', 'En lue', 'En jakke'], answer: 2, explain: '«Ta på deg en jakke»: ponte una chaqueta.' }
+          ]
+        },
+        writing: {
+          minutes: 35,
+          tasks: [
+            {
+              title: 'Oppgave 1',
+              prompt: 'Skriv en kort melding til en venn. Fortell hvor du er, og hva du gjør.',
+              minWords: 20,
+              maxWords: 40,
+              checklist: ['Saludo y nombre', 'Dónde estás', 'Qué estás haciendo', 'Despedida'],
+              model: 'Hei Kari! Jeg er på kafeen i sentrum. Jeg drikker kaffe og leser en bok. Vi snakkes! Hilsen Alex'
+            },
+            {
+              title: 'Oppgave 2',
+              prompt: 'Skriv fem setninger om deg selv: navn, alder, by, jobb eller skole, og en hobby.',
+              minWords: 25,
+              maxWords: 50,
+              checklist: ['Nombre y edad', 'Ciudad', 'Trabajo o estudios', 'Una afición', 'Frases completas'],
+              model: 'Jeg heter Alex. Jeg er tjuefem år. Jeg bor i Oslo. Jeg jobber på en kafé. På fritiden liker jeg å lese.'
+            }
+          ]
+        },
+        speaking: {
+          minutes: 8,
+          tasks: [
+            {
+              title: 'Oppgave 1',
+              prompt: 'Presenter deg selv: navn, alder, hvor du bor, og hva du liker.',
+              prepSeconds: 45,
+              speakSeconds: 60,
+              checklist: ['Te presentas', 'Dices dónde vives', 'Dices qué te gusta', 'Frases completas'],
+              model: 'Hei! Jeg heter ... og jeg er ... år. Jeg bor i ... Jeg liker å ... og å ...'
+            },
+            {
+              title: 'Oppgave 2',
+              prompt: 'Beskriv rommet ditt. Bruk minst fem ord om møbler og farger.',
+              prepSeconds: 30,
+              speakSeconds: 45,
+              checklist: ['Nombras muebles', 'Usas colores', 'Usas «det er» / «jeg har»', 'Cinco palabras o más'],
+              model: 'I stuen min er det et stort bord og en blå sofa. Jeg har også en hvit bokhylle og et lite vindu.'
+            },
+            {
+              title: 'Oppgave 3',
+              prompt: 'Du er i en butikk. Kjøp en kaffe, og spør hva den koster.',
+              prepSeconds: 20,
+              speakSeconds: 45,
+              checklist: ['Saludas', 'Pides algo con «jeg vil gjerne»', 'Preguntas el precio', 'Das las gracias'],
+              model: 'Hei! Jeg vil gjerne ha en kaffe, takk. Hva koster den? ... Tusen takk! Ha det!'
+            }
+          ]
+        }
+      },
+
+      /* ------------------------------------------------------------ A2 */
+      {
+        id: 'a2',
+        level: 'A2',
+        title: 'Simulacro A2',
+        blurb: 'Textos breves con información concreta y situaciones del día a día.',
+        reading: {
+          minutes: 25,
+          texts: [
+            {
+              title: 'Helgen på hytta',
+              body: [
+                'Hei Jonas! Hvordan går det? Nå sitter jeg på toget til Lillehammer. Familien min har en hytte der, og vi skal være der hele helgen.',
+                'Været er fint, så vi skal gå på ski og lage mat ute. På søndag må jeg reise hjem tidlig, fordi jeg jobber på mandag. Har du lyst til å bli med neste gang? Hilsen Mina'
+              ],
+              questions: [
+                { q: 'Hvor skal Mina?', options: ['Til Lillehammer', 'Til Bergen', 'Til utlandet'], answer: 0, explain: '«Nå sitter jeg på toget til Lillehammer».' },
+                { q: 'Hvordan reiser hun?', options: ['Med buss', 'Med tog', 'Med bil'], answer: 1, explain: '«på toget»: va en tren.' },
+                { q: 'Hva skal de gjøre i helgen?', options: ['Gå på ski og lage mat ute', 'Dra på kino', 'Besøke venner i byen'], answer: 0, explain: '«vi skal gå på ski og lage mat ute».' },
+                { q: 'Hvorfor reiser hun hjem tidlig på søndag?', options: ['Hun er syk', 'Hun jobber på mandag', 'Toget er fullt'], answer: 1, explain: '«fordi jeg jobber på mandag».' }
+              ]
+            },
+            {
+              title: 'Ledig leilighet',
+              body: [
+                'Ledig leilighet i sentrum. 45 kvadratmeter, ett soverom, kjøkken og bad. Møblert.',
+                'Husleie: 12 000 kroner i måneden. Strøm kommer i tillegg. Ledig fra 1. august. Ingen kjæledyr. Kontakt oss på e-post: utleie@sentrum.no.'
+              ],
+              questions: [
+                { q: 'Hvor stor er leiligheten?', options: ['35 kvadratmeter', '45 kvadratmeter', '55 kvadratmeter'], answer: 1, explain: 'El anuncio dice «45 kvadratmeter».' },
+                { q: 'Hva er inkludert i husleien?', options: ['Strøm', 'Internett', 'Møbler'], answer: 2, explain: '«Møblert» significa amueblado; la luz «kommer i tillegg», se paga aparte.' },
+                { q: 'Når er leiligheten ledig?', options: ['Fra 1. august', 'Fra 1. juli', 'Fra 1. september'], answer: 0, explain: '«Ledig fra 1. august».' },
+                { q: 'Hva er ikke lov?', options: ['Å ha møbler', 'Å ha kjæledyr', 'Å bruke strøm'], answer: 1, explain: '«Ingen kjæledyr»: no se admiten mascotas.' }
+              ]
+            }
+          ]
+        },
+        listening: {
+          minutes: 15,
+          items: [
+            { audio: 'Toget til Bergen går ikke klokka 15.30. Det er forsinket med tjue minutter.', q: 'Når går toget?', options: ['Klokka 15.10', 'Klokka 15.30', 'Klokka 15.50'], answer: 2, explain: 'Sale a las 15.30 pero lleva veinte minutos de retraso: 15.50.' },
+            { audio: 'Hei, det er meg. Jeg blir litt sen til middagen fordi jeg må jobbe overtid. Begynn uten meg!', q: 'Hvorfor kommer personen sent?', options: ['Fordi han må jobbe overtid', 'Fordi toget er forsinket', 'Fordi han er syk'], answer: 0, explain: '«jeg må jobbe overtid»: tiene que hacer horas extra.' },
+            { audio: 'På lørdag åpner biblioteket bare fra ti til to.', q: 'Hvor lenge er biblioteket åpent på lørdag?', options: ['Fire timer', 'To timer', 'Hele dagen'], answer: 0, explain: 'De las diez a las dos: cuatro horas.' },
+            { audio: 'Jeg har bodd i Norge i tre år, og jeg lærer fortsatt nye ord hver uke.', q: 'Hvor lenge har personen bodd i Norge?', options: ['Tre måneder', 'Tre år', 'Ti år'], answer: 1, explain: '«i tre år»: tres años.' },
+            { audio: 'Vær forsiktig! Det er glatt på veien i dag.', q: 'Hva er faren?', options: ['Det er mye trafikk', 'Veien er glatt', 'Det er mørkt'], answer: 1, explain: '«Det er glatt på veien»: la carretera está resbaladiza.' },
+            { audio: 'Du må huske å ta med legitimasjon når du henter pakken.', q: 'Hva må du ha med?', options: ['En kvittering', 'Legitimasjon', 'En hjelm'], answer: 1, explain: '«ta med legitimasjon»: llevar el documento de identidad.' }
+          ]
+        },
+        writing: {
+          minutes: 45,
+          tasks: [
+            {
+              title: 'Oppgave 1',
+              prompt: 'Skriv en e-post til en venn. Inviter ham eller henne til bursdagen din. Skriv når og hvor festen er.',
+              minWords: 40,
+              maxWords: 70,
+              checklist: ['Saludo adecuado', 'Invitación clara', 'Fecha y lugar', 'Pregunta o cierre amable'],
+              model: 'Hei Kari! Hvordan går det? På lørdag har jeg bursdag, og jeg vil gjerne invitere deg hjem til meg. Festen begynner klokka sju. Jeg bor i Storgata 12. Kan du komme? Hilsen Alex'
+            },
+            {
+              title: 'Oppgave 2',
+              prompt: 'Ovnen på kjøkkenet virker ikke. Skriv en melding til utleieren og be om hjelp.',
+              minWords: 40,
+              maxWords: 70,
+              checklist: ['Saludo', 'Explicas el problema', 'Pides ayuda', 'Ofreces disponibilidad'],
+              model: 'Hei! Jeg skriver fordi ovnen på kjøkkenet ikke virker. Den blir ikke varm når jeg slår den på. Kan du sende noen for å reparere den? Jeg er hjemme etter klokka fire. Hilsen Alex'
+            }
+          ]
+        },
+        speaking: {
+          minutes: 10,
+          tasks: [
+            {
+              title: 'Oppgave 1',
+              prompt: 'Fortell om en vanlig dag: hva du gjør om morgenen, på jobben eller skolen, og om kvelden.',
+              prepSeconds: 60,
+              speakSeconds: 90,
+              checklist: ['Usas verbos en presente', 'Mencionas horas', 'Conectores como «først», «etterpå»', 'Hablas con fluidez'],
+              model: 'Jeg står opp klokka sju. Først spiser jeg frokost, og etterpå går jeg på jobb. Om kvelden lager jeg middag og ser på TV.'
+            },
+            {
+              title: 'Oppgave 2',
+              prompt: 'Sammenlign livet i Norge med livet i hjemlandet ditt. Nevn to forskjeller.',
+              prepSeconds: 60,
+              speakSeconds: 90,
+              checklist: ['Dos diferencias claras', 'Usas «mens» o «i forhold til»', 'Justificas con ejemplos', 'Cierras la idea'],
+              model: 'I Norge spiser mange brød til lunsj, mens vi i hjemlandet mitt spiser varm mat. I tillegg er butikkene åpne lenger i Norge.'
+            },
+            {
+              title: 'Oppgave 3',
+              prompt: 'Du ringer legekontoret. Bestill en time og forklar hva som er galt.',
+              prepSeconds: 30,
+              speakSeconds: 60,
+              checklist: ['Saludas por teléfono', 'Explicas el síntoma', 'Pides una cita', 'Confirmas día y hora'],
+              model: 'Hei, jeg heter Alex. Jeg vil gjerne bestille en time. Jeg har hatt vondt i halsen i tre dager. Kan jeg komme i morgen?'
+            }
+          ]
+        }
+      },
+
+      /* ------------------------------------------------------------ B1 */
+      {
+        id: 'b1',
+        level: 'B1',
+        title: 'Simulacro B1',
+        blurb: 'Textos de opinión y temas cotidianos con algo de abstracción.',
+        reading: {
+          minutes: 30,
+          texts: [
+            {
+              title: 'Jobbe for å leve',
+              body: [
+                'Mange nordmenn sier at de jobber for å leve, ikke lever for å jobbe. Arbeidsdagen slutter vanligvis klokka fire, og de fleste har fri i helgene.',
+                'Likevel er det ikke alle som klarer å koble helt av. Undersøkelser viser at mange svarer på jobb-e-poster om kvelden, og noen føler at de aldri er helt ferdige.',
+                'Fagforeningene mener at arbeidsgiverne må ta ansvar for å begrense kontakten etter arbeidstid. Samtidig sier flere ansatte at de selv velger å være tilgjengelige, fordi de er redde for å bli sett på som lite engasjerte.'
+              ],
+              questions: [
+                { q: 'Hva sier mange nordmenn om arbeid?', options: ['De lever for å jobbe', 'De jobber for å leve', 'De jobber bare om sommeren'], answer: 1, explain: '«de jobber for å leve, ikke lever for å jobbe».' },
+                { q: 'Når slutter arbeidsdagen vanligvis?', options: ['Klokka fire', 'Klokka seks', 'Klokka åtte'], answer: 0, explain: '«Arbeidsdagen slutter vanligvis klokka fire».' },
+                { q: 'Hva viser undersøkelsene?', options: ['At alle har fri i helgene', 'At mange svarer på jobb-e-poster om kvelden', 'At fagforeningene vil jobbe mer'], answer: 1, explain: '«mange svarer på jobb-e-poster om kvelden».' },
+                { q: 'Hva mener fagforeningene?', options: ['At ansatte bør jobbe mer', 'At arbeidsgiverne må begrense kontakten etter arbeidstid', 'At e-post bør forbys helt'], answer: 1, explain: '«arbeidsgiverne må ta ansvar for å begrense kontakten etter arbeidstid».' }
+              ]
+            },
+            {
+              title: 'Debatt: La bussen være billig',
+              body: [
+                'Jeg forstår at kommunen trenger penger, men å øke billettprisene er feil løsning. Når det blir dyrere å ta bussen, velger flere å kjøre bil. Det gir mer kø, mer forurensning og dårligere luft i byen.',
+                'I stedet burde kommunen investere i flere avganger og bedre informasjon. Hvis bussen går ofte og er til å stole på, vil folk bruke den – selv om bilen står i garasjen.',
+                'Prisen er viktig, men pålitelighet er enda viktigere. Jeg håper politikerne lytter til oss som bruker kollektivtransport hver dag.'
+              ],
+              questions: [
+                { q: 'Hva er skribenten imot?', options: ['Å øke billettprisene', 'Å kjøre bil', 'Å bygge flere veier'], answer: 0, explain: '«å øke billettprisene er feil løsning».' },
+                { q: 'Hva skjer når bussen blir dyrere?', options: ['Færre folk reiser', 'Flere kjører bil', 'Bussen går oftere'], answer: 1, explain: '«velger flere å kjøre bil».' },
+                { q: 'Hva mener skribenten at kommunen bør gjøre?', options: ['Senke lønningene', 'Investere i flere avganger og bedre informasjon', 'Stenge sentrum for biler'], answer: 1, explain: '«burde kommunen investere i flere avganger og bedre informasjon».' },
+                { q: 'Hva er viktigst for skribenten?', options: ['Prisen', 'Påliteligheten', 'Farten'], answer: 1, explain: '«Prisen er viktig, men pålitelighet er enda viktigere».' }
+              ]
+            }
+          ]
+        },
+        listening: {
+          minutes: 18,
+          items: [
+            { audio: 'Kommunen har bestemt at den nye skolen skal åpne neste høst, men byggingen er forsinket på grunn av dårlig vær.', q: 'Hvorfor er skolen forsinket?', options: ['På grunn av dårlig vær', 'På grunn av penger', 'På grunn av lærermangel'], answer: 0, explain: '«forsinket på grunn av dårlig vær».' },
+            { audio: 'Hvis du har mistet bankkortet ditt, må du sperre det med en gang og deretter bestille et nytt.', q: 'Hva bør du gjøre først?', options: ['Bestille et nytt kort', 'Sperre kortet', 'Ring banken neste uke'], answer: 1, explain: '«må du sperre det med en gang og deretter bestille et nytt».' },
+            { audio: 'Jeg trodde kurset var på tirsdager, men det er visst på torsdager. Kan du sende meg lenken igjen?', q: 'Hva vil personen ha?', options: ['En ny time', 'Lenken til kurset', 'En ny lærer'], answer: 1, explain: '«Kan du sende meg lenken igjen?».' },
+            { audio: 'Mange unge flytter fra distriktene for å studere, men noen velger å komme tilbake når de får barn.', q: 'Hvorfor flytter noen tilbake?', options: ['Fordi de får barn', 'Fordi de er ferdige med studiene', 'Fordi de ikke liker byen'], answer: 0, explain: '«komme tilbake når de får barn».' },
+            { audio: 'Til tross for at det regnet hele dagen, ble turen en suksess.', q: 'Hvordan gikk turen?', options: ['Dårlig', 'Bra, tross regnet', 'Den ble avlyst'], answer: 1, explain: '«ble turen en suksess» = fue un éxito, aunque llovió.' },
+            { audio: 'Vi må utsette møtet fordi sjefen er syk. Jeg sender ny innkalling i morgen.', q: 'Hva skal skje i morgen?', options: ['Møtet blir avlyst', 'Sjefen kommer tilbake', 'Det sendes en ny innkalling'], answer: 2, explain: '«Jeg sender ny innkalling i morgen».' }
+          ]
+        },
+        writing: {
+          minutes: 55,
+          tasks: [
+            {
+              title: 'Oppgave 1',
+              prompt: 'Skriv en e-post til kommunen om et problem i nabolaget ditt (for eksempel søppel, lys eller trafikk). Forklar problemet og foreslå en løsning.',
+              minWords: 80,
+              maxWords: 120,
+              checklist: ['Saludo formal', 'Describes el problema', 'Propones una solución', 'Cierre formal'],
+              model: 'Hei! Jeg bor i Storgata, og jeg vil gjerne melde om et problem med søppel i gata vår. De siste ukene har containerne vært fulle, og søppel har samlet seg på fortauet. Dette gir dårlig lukt og tiltrekker rotter. Jeg foreslår at kommunen tømmer containerne oftere, eller setter ut en ekstra container. Jeg håper dere kan se på saken. Med vennlig hilsen Alex Hansen'
+            },
+            {
+              title: 'Oppgave 2',
+              prompt: 'Bør studenter jobbe ved siden av studiene? Skriv en kort tekst der du gir din mening og begrunner den.',
+              minWords: 100,
+              maxWords: 150,
+              checklist: ['Postura clara', 'Dos argumentos', 'Ejemplo o experiencia', 'Conclusión'],
+              model: 'Mange studenter jobber ved siden av studiene, og jeg mener det kan være både positivt og negativt. På den ene siden gir en jobb verdifull erfaring og bedre økonomi. På den andre siden kan mange timer på jobb føre til at studentene bruker for lite tid på fagene. Etter min mening bør studenter jobbe litt, men ikke så mye at studiene blir lidende. En liten stilling i helgene kan være en god løsning.'
+            }
+          ]
+        },
+        speaking: {
+          minutes: 12,
+          tasks: [
+            {
+              title: 'Oppgave 1',
+              prompt: 'Beskriv et problem i området der du bor, og foreslå to løsninger.',
+              prepSeconds: 60,
+              speakSeconds: 90,
+              checklist: ['Describes el problema', 'Dos soluciones', 'Justificas', 'Estructura clara'],
+              model: 'I området mitt er det for lite belysning om kvelden, og mange føler seg utrygge. For det første bør kommunen sette opp flere gatelys. For det andre kan naboene samarbeide om å holde oppgangene opplyst.'
+            },
+            {
+              title: 'Oppgave 2',
+              prompt: 'Hva synes du om å jobbe hjemmefra? Gi fordeler og ulemper.',
+              prepSeconds: 60,
+              speakSeconds: 120,
+              checklist: ['Ventajas', 'Inconvenientes', 'Opinión personal', 'Léxico variado'],
+              model: 'Å jobbe hjemmefra har mange fordeler: man sparer tid og kan konsentrere seg. Samtidig kan det være vanskelig å skille mellom jobb og fritid, og man mister det sosiale miljøet. Jeg tror en kombinasjon er best.'
+            },
+            {
+              title: 'Oppgave 3',
+              prompt: 'Du er på jobbintervju. Fortell om erfaringen din og hvorfor du passer til jobben.',
+              prepSeconds: 45,
+              speakSeconds: 120,
+              checklist: ['Experiencia concreta', 'Motivación', 'Preguntas al entrevistador', 'Tono adecuado'],
+              model: 'Jeg har jobbet på kafé i to år, så jeg er vant til å møte kunder og jobbe i et høyt tempo. Jeg liker å lære nye ting, og jeg tror jeg passer godt fordi jeg er pålitelig og samarbeider godt.'
+            }
+          ]
+        }
+      },
+
+      /* ------------------------------------------------------------ B2 */
+      {
+        id: 'b2',
+        level: 'B2',
+        title: 'Simulacro B2',
+        blurb: 'Artículos y columnas con argumentación, matices y vocabulario abstracto.',
+        reading: {
+          minutes: 35,
+          texts: [
+            {
+              title: 'Det grønne skiftet',
+              body: [
+                'Det grønne skiftet skaper nye jobber, men ikke nødvendigvis der folk bor. Mange stillinger innen fornybar energi og teknologi havner i byene, mens distriktene fortsatt er avhengige av tradisjonell industri.',
+                'Regjeringen sier at den vil satse på kompetanseheving, slik at arbeidstakere kan flytte seg mellom bransjer. Kritikerne mener likevel at tiltakene kommer for sent, og at mange mister jobben før de har fått ny utdanning.',
+                'For å lykkes må overgangen være rettferdig: de som rammes, må få reell støtte, ikke bare gode intensjoner.'
+              ],
+              questions: [
+                { q: 'Hvor skapes de nye jobbene?', options: ['I distriktene', 'I byene', 'I utlandet'], answer: 1, explain: '«Mange stillinger ... havner i byene».' },
+                { q: 'Hva vil regjeringen satse på?', options: ['Kompetanseheving', 'Høyere skatter', 'Mer industri i byene'], answer: 0, explain: '«den vil satse på kompetanseheving».' },
+                { q: 'Hva mener kritikerne?', options: ['At tiltakene kommer for sent', 'At skiftet går for fort', 'At byene får for lite penger'], answer: 0, explain: '«Kritikerne mener likevel at tiltakene kommer for sent».' },
+                { q: 'Hva kreves for en vellykket overgang?', options: ['At folk flytter til byene', 'Reell støtte til dem som rammes', 'At all industri legges ned'], answer: 1, explain: '«de som rammes, må få reell støtte».' }
+              ]
+            },
+            {
+              title: 'Overvåkning på jobben: tillit eller kontroll?',
+              body: [
+                'Det er blitt vanlig å måle ansattes produktivitet med digitale verktøy. Noen bedrifter følger med på hvor mange minutter du bruker på hver oppgave, og hvem du snakker med.',
+                'Tilhengerne hevder at dette gir bedre oversikt og rettferdige vurderinger. Men når hver bevegelse registreres, endrer arbeidsmiljøet seg: folk slutter å ta pauser, tør ikke spørre om hjelp og skjuler feil.',
+                'Tillit er ikke bare et spørsmål om trivsel; det er en forutsetning for læring og kvalitet. Bedrifter som vil ha engasjerte ansatte, bør heller investere i tydelige mål og god ledelse enn i detaljert kontroll.'
+              ],
+              questions: [
+                { q: 'Hva handler teksten om?', options: ['Lønninger i Norge', 'Overvåkning på arbeidsplassen', 'Digitale møter'], answer: 1, explain: 'La columna trata de la vigilancia de los empleados.' },
+                { q: 'Hva mener tilhengerne?', options: ['At kontroll gir bedre oversikt og rettferdige vurderinger', 'At ansatte bør bestemme mer', 'At tillit er viktigere enn resultater'], answer: 0, explain: '«dette gir bedre oversikt og rettferdige vurderinger».' },
+                { q: 'Hva skjer når alt registreres?', options: ['Folk jobber mer effektivt', 'Folk slutter å ta pauser og skjuler feil', 'Bedriftene sparer penger'], answer: 1, explain: '«folk slutter å ta pauser, tør ikke spørre om hjelp og skjuler feil».' },
+                { q: 'Hva bør bedrifter gjøre i stedet?', options: ['Investere i tydelige mål og god ledelse', 'Øke kontrollen', 'Ansette flere sjefer'], answer: 0, explain: '«bør heller investere i tydelige mål og god ledelse enn i detaljert kontroll».' }
+              ]
+            }
+          ]
+        },
+        listening: {
+          minutes: 20,
+          items: [
+            { audio: 'Selv om arbeidsledigheten har gått ned, sliter mange unge med å få sin første faste stilling.', q: 'Hva er problemet?', options: ['Arbeidsledigheten øker', 'Unge får ikke sin første faste jobb', 'Det er for få studenter'], answer: 1, explain: '«mange unge sliter med å få sin første faste stilling».' },
+            { audio: 'Forskerne understreker at funnene ikke kan generaliseres, fordi utvalget var for lite.', q: 'Hvorfor kan ikke resultatene generaliseres?', options: ['Fordi utvalget var for lite', 'Fordi forskerne er uenige', 'Fordi studien er gammel'], answer: 0, explain: '«utvalget var for lite»: la muestra era demasiado pequeña.' },
+            { audio: 'Kommunen innfører strengere regler for utleie av boliger for å hindre at beboere blir presset ut av markedet.', q: 'Hva er målet med reglene?', options: ['Å øke husleien', 'Å hindre at beboere blir presset ut', 'Å bygge flere hoteller'], answer: 1, explain: '«hindre at beboere blir presset ut av markedet».' },
+            { audio: 'Ledelsen beklager at beslutningen ble tatt uten tilstrekkelig involvering av de ansatte.', q: 'Hva beklager ledelsen?', options: ['At beslutningen var feil', 'At de ansatte ikke ble involvert nok', 'At møtet varte for lenge'], answer: 1, explain: '«uten tilstrekkelig involvering av de ansatte».' },
+            { audio: 'Til tross for kritikken holder hun fast ved at ordningen er nødvendig for å sikre like muligheter.', q: 'Hvordan reagerer hun på kritikken?', options: ['Hun endrer mening', 'Hun forsvarer ordningen', 'Hun slutter i jobben'], answer: 1, explain: '«holder hun fast ved at ordningen er nødvendig»: defiende el sistema.' },
+            { audio: 'Prosjektet ble forsinket, ikke på grunn av manglende midler, men fordi ingen hadde ansvar for fremdriften.', q: 'Hvorfor ble prosjektet forsinket?', options: ['Mangel på penger', 'Ingen hadde ansvar for fremdriften', 'Dårlig vær'], answer: 1, explain: '«ingen hadde ansvar for fremdriften»: nadie era responsable del avance.' }
+          ]
+        },
+        writing: {
+          minutes: 70,
+          tasks: [
+            {
+              title: 'Oppgave 1',
+              prompt: 'Du har hatt en dårlig opplevelse med et selskap (for eksempel internett eller transport). Skriv en formell klage der du beskriver problemet og hva du forventer.',
+              minWords: 120,
+              maxWords: 180,
+              checklist: ['Estructura formal', 'Hechos concretos', 'Petición clara', 'Tono respetuoso'],
+              model: 'Til kundeservice i Nordnett. Jeg skriver for å klage på internettforbindelsen hjemme hos meg. I de siste tre ukene har forbindelsen vært nede flere ganger om dagen, og jeg har måttet bruke mobilen for å jobbe. Jeg har kontaktet kundeservice to ganger uten at problemet ble løst. Jeg forventer at dere undersøker saken og gir meg en skriftlig tilbakemelding innen en uke. Dersom problemet ikke blir løst, vil jeg vurdere å avslutte abonnementet. Med vennlig hilsen Alex Hansen'
+            },
+            {
+              title: 'Oppgave 2',
+              prompt: 'Er det riktig å overvåke ansatte på jobben? Skriv en argumenterende tekst der du veier for og imot.',
+              minWords: 150,
+              maxWords: 200,
+              checklist: ['Tesis clara', 'Argumentos a favor y en contra', 'Ejemplos', 'Conclusión matizada'],
+              model: 'Spørsmålet om overvåkning på arbeidsplassen er blitt stadig mer aktuelt. På den ene siden kan digitale verktøy gi bedriftene bedre oversikt og gjøre det lettere å vurdere resultater på en rettferdig måte. På den andre siden kan detaljert kontroll skade tilliten mellom ledelse og ansatte. Når folk føler seg overvåket, tar de færre pauser og skjuler feil i stedet for å lære av dem. Etter min mening bør bedrifter bruke overvåkning med måte. Tydelige mål og god ledelse gir bedre resultater enn kontroll av hver minutt. Overvåkning kan være et hjelpemiddel, men aldri en erstatning for tillit.'
+            }
+          ]
+        },
+        speaking: {
+          minutes: 14,
+          tasks: [
+            {
+              title: 'Oppgave 1',
+              prompt: 'Presenter et samfunnsproblem og forsvare ditt syn på hva som bør gjøres.',
+              prepSeconds: 60,
+              speakSeconds: 120,
+              checklist: ['Problema definido', 'Postura clara', 'Dos argumentos', 'Propuesta concreta'],
+              model: 'Et av de største problemene i byen vår er boligprisene. Mange unge har ikke råd til å kjøpe bolig. Jeg mener kommunen bør bygge flere rimelige utleieboliger og regulere korttidsutleie. Det vil gi flere unge mulighet til å bli boende i byen.'
+            },
+            {
+              title: 'Oppgave 2',
+              prompt: 'Drøft fordeler og ulemper med digitalisering i arbeidslivet.',
+              prepSeconds: 60,
+              speakSeconds: 150,
+              checklist: ['Varias perspectivas', 'Conectores', 'Ejemplos', 'Conclusión'],
+              model: 'Digitalisering gjør arbeidet mer effektivt og gir fleksibilitet, men den kan også føre til at noen faller utenfor. De som ikke har digital kompetanse, trenger opplæring. Jeg tror derfor at digitalisering må følges av investering i kompetanse.'
+            },
+            {
+              title: 'Oppgave 3',
+              prompt: 'Rollespill: du og kollegaen din er uenige om fordelingen av arbeidsoppgaver. Forhandle frem en løsning.',
+              prepSeconds: 45,
+              speakSeconds: 150,
+              checklist: ['Escuchas y respondes', 'Propones alternativas', 'Buscas acuerdo', 'Lenguaje adecuado'],
+              model: 'Jeg forstår at du har mye å gjøre, men jeg opplever at jeg tar flere kveldsvakter enn deg. Kan vi se på listen sammen og fordele oppgavene på nytt? Kanskje vi kan bytte annenhver uke, slik at det blir rettferdig for begge.'
+            }
+          ]
+        }
+      }
+    ]
+  }
+
 };

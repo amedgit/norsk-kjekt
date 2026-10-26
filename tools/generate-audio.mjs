@@ -120,6 +120,15 @@ if (COURSE.fun) {
 if (COURSE.wordbank) COURSE.wordbank.forEach((w) => texts.add(w.no));
 if (COURSE.verbs) COURSE.verbs.forEach((v) => texts.add(v.inf));
 
+/* Simulacro: audios de comprensión y modelos de escritura/oral */
+if (COURSE.exam) {
+  for (const lv of COURSE.exam.levels) {
+    lv.listening.items.forEach((it) => texts.add(it.audio));
+    lv.writing.tasks.forEach((tk) => texts.add(tk.model));
+    lv.speaking.tasks.forEach((tk) => texts.add(tk.model));
+  }
+}
+
 const all = [...texts].map((t) => norm(t)).filter(Boolean);
 const unique = [...new Set(all)];
 mkdirSync(OUT, { recursive: true });
