@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-/* Comprueba que todo el contenido en español de data.js tiene traducción inglesa
-   en content-en.js. El noruego no se traduce y se detecta automáticamente.
+/* Comprueba que todo el contenido en español de data.js tiene traducción en
+   los mapas de idiomas (content-en.js, content-fa.js, …). El noruego no se
+   traduce y se detecta automáticamente.
 
    Uso: node tools/check-i18n.mjs
    Sale con código 1 si falta alguna traducción. */
@@ -14,10 +15,14 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const context = { window: {} };
 vm.createContext(context);
 vm.runInContext(readFileSync(join(root, 'assets/js/data.js'), 'utf8'), context);
-vm.runInContext(readFileSync(join(root, 'assets/js/content-en.js'), 'utf8'), context);
+
+/* [nombre legible, fichero, variable global] */
+const LANGS = [
+  ['inglesa', 'content-en.js', 'EN_STRINGS'],
+  ['persa (فارسی)', 'content-fa.js', 'FA_STRINGS'],
+];
 
 const C = context.window.COURSE;
-const EN = context.window.EN_STRINGS || {};
 
 const items = [];
 const add = (path, s) => { if (typeof s === 'string' && s.trim()) items.push({ path, s }); };
@@ -126,31 +131,50 @@ for (const [s, paths] of byString) {
   translatable.push(s);
 }
 
-const missing = translatable.filter((s) => !(s in EN));
-const unused = Object.keys(EN).filter((s) => !byString.has(s));
-const empty = Object.entries(EN).filter(([, v]) => !String(v || '').trim());
-const identical = translatable.filter((s) => EN[s] === s && !NO.has(s));
+console.log('Cadenas únicas traducibles :', translatable.length, '\n');
 
-console.log('Cadenas únicas traducibles :', translatable.length);
-console.log('Traducciones en content-en  :', Object.keys(EN).length);
-console.log('Sin traducir                :', missing.length);
-if (unused.length) console.log('Traducciones sin uso        :', unused.length);
-if (empty.length) console.log('Traducciones vacías         :', empty.length);
-if (identical.length) {
-  console.log('Idénticas (revisar)         :', identical.length);
-  identical.slice(0, 10).forEach((s) => console.log('  ·', JSON.stringify(s)));
+let failed = false;
+
+for (const [label, file, globalName] of LANGS) {
+  let MAP = {};
+  try {
+    const ctx = { window: {} };
+    vm.createContext(ctx);
+    vm.runInContext(readFileSync(join(root, 'assets/js', file), 'utf8'), ctx);
+    MAP = ctx.window[globalName] || {};
+  } catch (e) {
+    console.error(`✗ ${file}: no se puede leer (${e.message})`);
+    failed = true;
+    continue;
+  }
+
+  const missing = translatable.filter((s) => !(s in MAP));
+  const unused = Object.keys(MAP).filter((s) => !byString.has(s));
+  const empty = Object.entries(MAP).filter(([, v]) => !String(v || '').trim());
+  const identical = translatable.filter((s) => MAP[s] === s && !NO.has(s));
+
+  console.log(`── ${label} (${file})`);
+  console.log('  Traducciones en el mapa    :', Object.keys(MAP).length);
+  console.log('  Sin traducir               :', missing.length);
+  if (unused.length) console.log('  Traducciones sin uso       :', unused.length);
+  if (empty.length) console.log('  Traducciones vacías        :', empty.length);
+  if (identical.length) {
+    console.log('  Idénticas al español (revisar) :', identical.length);
+    identical.slice(0, 5).forEach((s) => console.log('    ·', JSON.stringify(s)));
+  }
+
+  if (missing.length) {
+    failed = true;
+    console.error(`\n  Faltan traducciones ${label}. Añádelas a assets/js/${file}:`);
+    missing.slice(0, 30).forEach((s) => console.error('    ' + JSON.stringify(s) + '  // ' + byString.get(s).slice(0, 2).join(' | ')));
+    if (missing.length > 30) console.error(`    … y ${missing.length - 30} más`);
+  }
+  if (empty.length) {
+    failed = true;
+    console.error(`\n  Hay traducciones vacías en assets/js/${file}.`);
+  }
+  console.log('');
 }
 
-if (missing.length) {
-  console.error('\nFaltan traducciones. Añádelas a assets/js/content-en.js:');
-  missing.slice(0, 30).forEach((s) => console.error('  ' + JSON.stringify(s) + '  // ' + byString.get(s).slice(0, 2).join(' | ')));
-  if (missing.length > 30) console.error(`  … y ${missing.length - 30} más`);
-  process.exit(1);
-}
-
-if (empty.length) {
-  console.error('\nHay traducciones vacías en assets/js/content-en.js.');
-  process.exit(1);
-}
-
-console.log('\nOK: todo el contenido tiene traducción inglesa.');
+if (failed) process.exit(1);
+console.log('OK: todo el contenido está traducido en todos los idiomas.');

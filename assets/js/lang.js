@@ -1,12 +1,16 @@
 /* Norsk Kjekt — idioma de la interfaz y localización del contenido.
-   ES es el idioma base; EN se guarda en content-en.js.
-   El noruego (títulos de lección, textos, vocabulario) nunca se traduce. */
+   ES es el idioma base; EN vive en content-en.js y FA (فارسی, de derecha a
+   izquierda) en content-fa.js. El noruego nunca se traduce. */
 (function () {
   'use strict';
 
   var KEY = 'norsk-kjekt-lang';
+  var LANGS = { es: 'ltr', en: 'ltr', fa: 'rtl' };
   var lang = 'es';
-  try { if (localStorage.getItem(KEY) === 'en') lang = 'en'; } catch (e) { /* modo privado */ }
+  try {
+    var saved = localStorage.getItem(KEY);
+    if (saved && LANGS[saved]) lang = saved;
+  } catch (e) { /* modo privado */ }
 
   var UI = {
     es: {
@@ -464,6 +468,225 @@
       'tag.sociedad': 'society',
       'tag.falsos amigos': 'false friends'
     }
+,
+
+    fa: {
+      'meta.title': "Norsk Kjekt — نروژی را واقعی یاد بگیر",
+      'meta.description': "دوره زبان نروژی بوکمول A1–B2: ۱۱ درس، ۱۶۵ تمرین، ۶ بسته طنز، جدول ۸۶ واژه با صدا و نروژی خیابانی که در کتاب‌ها نمی‌آید.",
+      'meta.ogDescription': "۱۱ درس بوکمول (A1–B2)، ۱۶۵ تمرین تعاملی، ۶ بسته طنز و ۱۸ اصطلاح خیابانی. بدون ثبت‌نام و بدون build.",
+      'meta.ogAlt': "Norsk Kjekt: پرتال نروژی با تمرین‌های تعاملی",
+      'skip': "پرش به محتوا",
+      'nav.primary': "اصلی",
+      'nav.lessons': "درس‌ها",
+      'nav.fun': "Tull & tøys",
+      'nav.colloquial': "محاوره",
+      'nav.review': "مرور",
+      'audio.label': "صدا",
+      'audio.speed': "سرعت صدا",
+      'hud.streak': "روزهای پیاپی تمرین",
+      'hud.xp': "امتیاز تجربه",
+      'lang.label': "زبان",
+      'lang.switch': "تغییر زبان",
+      'footer.tagline': "بوکمول A1–B2 · ساخته‌شده برای کمی تمرین هر روز.",
+      'footer.audio': "صدای عصبی از پیش ضبط‌شده به بوکمول (nb_NO). بدون حساب کاربری: پیشرفت شما روی همین دستگاه ذخیره می‌شود.",
+      'say.listenNo': "به نروژی گوش بده",
+      'say.title': "گوش دادن",
+      'preview.order': "مرتب کن: ",
+      'preview.cloze': "متن را کامل کن",
+      'preview.listen': "دیکته: ",
+      'preview.transform': "تبدیل کن: ",
+      'preview.match.one': "جورکردن: {n} جفت",
+      'preview.match.many': "جورکردن: {n} جفت",
+      'preview.odd': "کدام اضافه است؟ ",
+      'preview.fix': "خطا را پیدا کن: ",
+      'preview.memory.one': "حافظه: {n} جفت",
+      'preview.memory.many': "حافظه: {n} جفت",
+      'ex.practice': "تمرین",
+      'ex.correct': "✅ Riktig! (درست)",
+      'ex.almost': "❌ نزدیک بود — پاسخ را ببین",
+      'ex.seeResult': "دیدن نتیجه ←",
+      'ex.next': "بعدی ←",
+      'ex.listen': "▶ گوش بده",
+      'ex.check': "بررسی",
+      'ex.clear': "پاک کردن",
+      'ex.yourSentence': "جمله تو…",
+      'ex.writeWhatYouHear': "آنچه می‌شنوی بنویس…",
+      'ex.writeYourSentence': "جمله تو…",
+      'ex.answer': "پاسخ",
+      'ex.missingWord': "واژه جاافتاده",
+      'ex.gap': "جای خالی {n}",
+      'ex.dictation': "دیکته",
+      'ex.matchHint': "روی یک واژه از ستون اول بزن و بعد روی جفتش.",
+      'ex.oddHint': "یکی از این واژه‌ها بدون دعوت به جشن آمده است.",
+      'ex.fixHint': "روی واژهٔ اضافی یا نادرست بزن. فقط یکی است.",
+      'ex.memoryHint': "روی دو کارت بزن. اگر جفت باشند، رو به بالا می‌مانند.",
+      'ex.complete': "کامل شد!",
+      'ex.choosePair': "حالا جفتش را انتخاب کن.",
+      'ex.findPair': "حالا جفتش را پیدا کن.",
+      'ex.chooseFirst': "اول یک واژه از ستون اول انتخاب کن.",
+      'ex.remaining.one': "آفرین! {n} تا مانده.",
+      'ex.remaining.many': "آفرین! {n} تا مانده.",
+      'ex.remainingPairs.one': "آفرین! {n} جفت مانده.",
+      'ex.remainingPairs.many': "آفرین! {n} جفت مانده.",
+      'ex.tryAgain': "نزدیک بود. دوباره امتحان کن.",
+      'ex.fixFound': "همان‌جا بود! جملهٔ درست پایین ظاهر می‌شود.",
+      'ex.fixOther': "آن واژه درست است. اشتباه، واژه‌ای است که به سبز مشخص شده.",
+      'ex.memoryPerfect': "حافظهٔ فیل!",
+      'ex.memoryDone.one': "با {n} خطا کامل شد.",
+      'ex.memoryDone.many': "با {n} خطا کامل شد.",
+      'ex.cardUp': "کارت رو به بالا: {text}",
+      'ex.cardDown': "کارت رو به پایین",
+      'ex.cardN': "کارت {n} رو به پایین",
+      'ex.defaultCloze': "متن را کامل کن:",
+      'ex.defaultListen': "گوش بده و آنچه می‌شنوی بنویس:",
+      'ex.defaultListenHint': "می‌توانی هر چند بار که می‌خواهی تکرارش کنی.",
+      'ex.defaultTransform': "جمله را بازنویسی کن:",
+      'ex.defaultMatch': "هر واژه را با جفتش جور کن:",
+      'ex.defaultOdd': "کدام واژه جور درنمی‌آید؟",
+      'ex.defaultFix': "خطا را پیدا کن و روی واژهٔ نادرست بزن:",
+      'ex.defaultMemory': "حافظه: جفت‌ها را پیدا کن.",
+      'ex.defaultGap': "جمله را کامل کن:",
+      'ex.defaultOrder': "جمله را مرتب کن:",
+      'ex.orderHint': "واژه‌ها را به ترتیب درست بزن.",
+      'result.perfect': "Perfekt! فوق‌العاده بود. 🎉",
+      'result.great': "Bra jobba! خیلی خوب، تقریباً یاد گرفتی.",
+      'result.ok': "بد نیست. خطاها را تکرار کن تا جا بیفتد.",
+      'result.low': "آرام باش: کسی در یک بعدازظهر نروژی یاد نمی‌گیرد. تکرار کن، خواهی دید.",
+      'result.again': "تکرار",
+      'result.reviewN': "مرور {n} تا",
+      'result.continue': "ادامه",
+      'result.finish': "تمام",
+      'result.progress': "پیشرفت ذخیره شد · +{n} XP",
+      'result.reviewSaved': "مرور ذخیره شد · +{n} XP",
+      'home.eyebrow': "بوکمول · A1–B2 · بدون عجله",
+      'home.title': "نروژی‌ای که <em>واقعاً</em> استفاده می‌شود.",
+      'home.intro': "{lessons} درس، {exercises} تمرین که بیدرنگ اصلاح می‌کند، {packs} بسته طنز و جدولی از {words} واژه با صدا. نروژی خیابانی که در کتاب‌ها نمی‌آید.",
+      'home.start': "شروع",
+      'home.continue': "ادامه",
+      'home.street': "دیدن محاوره",
+      'home.streak': "پیاپی",
+      'home.days.one': "روز",
+      'home.days.many': "روز",
+      'home.lessons': "درس‌ها",
+      'home.of': "از {n}",
+      'home.wordOfDay': "واژهٔ روز",
+      'home.basicTitle': "قدم‌به‌قدم",
+      'home.basicSub': "A1–A2 · پایه",
+      'home.b1Title': "B1 · روان گفتن",
+      'home.b1Sub': "از پس روزمرگی برمی‌آیی",
+      'home.b2Title': "B2 · نظر دادن و بحث",
+      'home.b2Sub': "متن‌های واقعی، ظرافت‌های بیشتر",
+      'home.funEyebrow': "جدید · A1–B2",
+      'home.funTitle': "از شاگرد باوقار بودن خسته شده‌ای؟",
+      'home.funText': "گوزن‌ها در ماشین لباسشویی، رئیس‌هایی که می‌گویند «چالش جالبی است» و جدول واژه‌هایی که می‌توانی مرتب کنی، پالایش کنی و گوش بدهی. {n} تمرین جدید برای یادگیری با خنده.",
+      'home.funEnter': "ورود به Tull & tøys",
+      'home.mix': "🎲 ترکیب تصادفی",
+      'home.streetTitle': "خیابانی",
+      'home.streetSub': "بدون فرهنگ لغت",
+      'home.seeExpressions.one': "دیدن اصطلاح ←",
+      'home.seeExpressions.many': "دیدن {n} اصطلاح ←",
+      'lesson.cardNum': "درس {n}",
+      'lesson.new': "جدید",
+      'lesson.exercises.one': "{n} تمرین",
+      'lesson.exercises.many': "{n} تمرین",
+      'lesson.crumb': "درس‌ها",
+      'lesson.breadcrumb': "درس {n}",
+      'lesson.text': "متن",
+      'lesson.folded': "ترجمه تا‌شده",
+      'lesson.showTranslation': "دیدن ترجمه",
+      'lesson.hideTranslation': "پنهان کردن ترجمه",
+      'lesson.grammar': "دستور زبان",
+      'lesson.vocab': "واژگان",
+      'lesson.phrases': "جمله‌های کلیدی",
+      'lesson.tip': "نکته:",
+      'lesson.practice': "تمرین",
+      'lesson.start': "شروع تمرین · {n} تمرین",
+      'lesson.best': "بهترین نتیجهٔ تو: {best}/{total}",
+      'lesson.label': "درس {n}",
+      'fun.eyebrow': "A1–B2 · بدون خجالت",
+      'fun.mix': "🎲 ترکیب تصادفی · ۱۰",
+      'fun.wordTable': "📚 جدول واژه‌ها",
+      'fun.verbs': "🧩 فعل‌ها",
+      'fun.newExercises': "تمرین‌های جدید",
+      'fun.toLaugh': "برای خنده",
+      'fun.wordsInTable': "واژه‌ها در جدول",
+      'fun.withAudio': "با صدا",
+      'fun.quoteBy': "— همه‌اش نروژی، همیشه",
+      'fun.chooseChaos': "آشوبت را انتخاب کن",
+      'fun.chooseChaosSub': "۶ بسته، هیچ جدیتی",
+      'fun.tableTitle': "جدول واژه‌ها",
+      'fun.tableNote': "{n} واژه · صدا هم دارد",
+      'fun.tableIntro': "بر اساس سطح یا موضوع پالایش کن، ستون‌ها را مرتب کن و هر واژه را گوش بده. حالت آزمون را روشن کن تا ستون فارسی را بپوشانی و خودت را محک بزنی.",
+      'fun.verbTitle': "جدول فعل‌ها",
+      'fun.verbNote': "مضارع · گذشته · کامل",
+      'fun.verbIntro': "آن ۱۴ فعلی که در سراسر دوره بیش از همه تکرار می‌شوند. شکل‌ها را پنهان کن و همانند یک آزمون شگفت‌زده بازگو کن.",
+      'fun.searchWords': "جستجو در نروژی یا فارسی…",
+      'fun.allTopics': "همهٔ موضوع‌ها",
+      'fun.examMode': "حالت آزمون",
+      'fun.all': "همه",
+      'fun.colNo': "Norsk",
+      'fun.colEs': "فارسی",
+      'fun.colLevel': "سطح",
+      'fun.colTag': "موضوع",
+      'fun.noResults': "اینجا چیزی نیست. جستجوی دیگری امتحان کن یا پالایه را بردار.",
+      'fun.wordCount.one': "{n} واژه از {total} · برای شنیدنش روی بلندگو بزن",
+      'fun.wordCount.many': "{n} واژه از {total} · برای شنیدنش روی بلندگو بزن",
+      'fun.wordCountHide': " · برای آشکار شدن فارسی روی یک ردیف بزن",
+      'fun.searchLabel': "جستجوی واژه",
+      'fun.filterLabel': "پالایش بر اساس موضوع",
+      'fun.infinitive': "مصدر",
+      'fun.present': "مضارع",
+      'fun.past': "گذشته",
+      'fun.perfect': "کامل",
+      'fun.showForms': "نشان دادن شکل‌ها",
+      'fun.hideForms': "پنهان کردن شکل‌ها",
+      'fun.practice': "تمرین ←",
+      'fun.verbTip': "نکته: در نروژی مضارع و گذشته برای همهٔ شخص‌ها یکسان است. فقط ضمیر عوض می‌شود. حالت کامل «har» + اسم‌مفعول است.",
+      'fun.play': "بازی ←",
+      'fun.newPack': "جدید",
+      'fun.start': "شروع · {n} تمرین",
+      'fun.best': "بهترین نتیجهٔ تو: {best}/{total}",
+      'fun.back': "بازگشت به Tull",
+      'fun.mixTitle': "ترکیب تصادفی",
+      'fun.mixSub': "ده تمرین از همهٔ بسته‌ها، به ترتیبی غافلگیرکننده",
+      'fun.mixIntro': "نمونه‌ای تصادفی از تمام این آشوب. هر بار که وارد شوی، عوض می‌شود. عالی برای گرم‌شدن پیش از یک درس جدی.",
+      'fun.mixLabel': "Tull",
+      'colo.title': "نروژی خیابانی، بدون فیلتر",
+      'colo.intro': "این بوکمول واقعی است؛ همان که در پیام‌ها، کافه‌ها و گروه‌های واتساپ دیده می‌شود. به سطح رسمیِ زبان دقت کن: آنچه میان دوستان کاملاً طبیعی به نظر می‌رسد، در یک مصاحبه می‌تواند مصیبت باشد.",
+      'colo.search': "جستجوی اصطلاح، معنی…",
+      'colo.all': "همه",
+      'colo.literal': "حرف‌به‌حرف: ",
+      'colo.none': "اینجا چیزی نیست. واژهٔ دیگری امتحان کن.",
+      'reg.neutro': "خنثی",
+      'reg.informal': "غیررسمی",
+      'reg.muy informal': "خیلی غیررسمی",
+      'reg.fuerte': "غیررسمی شدید",
+      'reg.vulgar': "رکیک",
+      'reg.oral': "گفتاری",
+      'review.title': "مرور",
+      'review.intro': "تمرین‌هایی که اشتباه می‌کنی اینجا می‌افتند تا از دستشان ندهی.",
+      'review.empty': "هنوز چیزی برای مرور نیست.<br>یک درس انجام بده؛ آنچه اشتباه کنی اینجا ظاهر می‌شود.",
+      'review.pending.one': "{n} تمرین در انتظار است. آن‌هایی که درست پاسخ بدهی حذف می‌شوند.",
+      'review.pending.many': "{n} تمرین در انتظار است. آن‌ها که درست پاسخ بدهی حذف می‌شوند.",
+      'review.all': "مرور همه",
+      'review.label': "مرور",
+      'review.lessonLabel': "L{n}",
+      'tag.social': "اجتماعی",
+      'tag.café': "کافه",
+      'tag.comida': "غذا",
+      'tag.casa': "خانه",
+      'tag.transporte': "ترابری",
+      'tag.animales': "جانوران",
+      'tag.clima': "آب‌وهوا",
+      'tag.ropa': "پوشاک",
+      'tag.sentimientos': "احساسات",
+      'tag.dinero': "پول",
+      'tag.lugar': "مکان",
+      'tag.mente': "ذهن",
+      'tag.trabajo': "کار",
+      'tag.sociedad': "جامعه",
+      'tag.falsos amigos': "دوستان کاذب"
+    }
   };
 
   function fmt(str, vars) {
@@ -528,9 +751,15 @@
     return no;
   }
 
+  function langStrings() {
+    if (lang === 'en') return window.EN_STRINGS || {};
+    if (lang === 'fa') return window.FA_STRINGS || {};
+    return {};
+  }
+
   function localizeCourse(C) {
-    if (lang !== 'en') return;
-    var EN = window.EN_STRINGS || {};
+    if (lang === 'es') return;
+    var EN = langStrings();
     var NO = collectNorwegian(C);
 
     function tf(s) { return typeof s === 'string' && EN[s] ? EN[s] : s; }
@@ -594,6 +823,7 @@
 
   function applyStatic() {
     document.documentElement.lang = lang;
+    document.documentElement.dir = LANGS[lang] || 'ltr';
     document.title = t('meta.title');
     [['meta[name="description"]', 'meta.description'],
      ['meta[property="og:title"]', 'meta.title'],
@@ -624,7 +854,7 @@
   }
 
   function setLang(next) {
-    if (next !== 'es' && next !== 'en') return;
+    if (!LANGS[next]) return;
     if (next === lang) return;
     try { localStorage.setItem(KEY, next); } catch (e) { /* modo privado */ }
     location.reload();

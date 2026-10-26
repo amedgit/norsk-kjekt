@@ -5,8 +5,8 @@
 Portal para practicar noruego **bokmål** (A1–B2): textos cortos, ejercicios
 interactivos, seis packs de humor, tablas de palabras y verbos, y una sección de
 noruego coloquial. HTML + CSS + JS puro, sin build, sin dependencias y sin backend.
-La interfaz y las explicaciones se pueden leer en **español o inglés**; el noruego
-del curso no se traduce.
+La interfaz y las explicaciones se pueden leer en **español, inglés o persa**
+(فارسی, de derecha a izquierda); el noruego del curso no se traduce.
 
 ## Cómo abrirlo
 
@@ -32,14 +32,14 @@ cd ~/norsk
 | Tull & tøys | 6 packs con 84 ejercicios de humor (absurdo, supervivencia, oficina, dictados, modismos y verbos) y una mezcla aleatoria de 10 |
 | Tablas | 86 palabras con audio, búsqueda, filtros por nivel/tema, ordenación y modo examen; 14 verbos en presente, pasado y perfecto |
 | Coloquial | 18 expresiones con registro (neutro → vulgar), diálogo de ejemplo y truco |
-| Idioma | selector **ES / EN** en la cabecera: traduce interfaz, explicaciones, traducciones y tablas; el bokmål se queda intacto y el progreso se conserva |
+| Idioma | selector **ES / EN / فا** en la cabecera: traduce interfaz, explicaciones y tablas; el bokmål se queda intacto y el progreso se conserva. En persa la página cambia a dirección RTL |
 | Progreso | racha de días, XP, mejor resultado por lección/pack y cola de repaso de fallos |
 | Velocidad | selector 0,7×–1,3× en la cabecera; se aplica al audio y se recuerda |
 | Audio | 534 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
 
-## Interfaz en español o inglés
+## Interfaz en español, inglés o persa
 
-El botón **ES / EN** de la cabecera cambia todo lo que no es noruego:
+El selector **ES / EN / فا** de la cabecera cambia todo lo que no es noruego:
 
 - textos de la interfaz, botones, filtros, avisos y resultados;
 - explicaciones, objetivos, trucos y notas culturales;
@@ -49,19 +49,31 @@ El botón **ES / EN** de la cabecera cambia todo lo que no es noruego:
 
 Lo que se aprende —títulos de lección, bokmål, opciones noruegas de los
 ejercicios, audio— **no se traduce nunca**. La elección se guarda en
-`localStorage` (`norsk-kjekt-lang`) y el progreso (`norsk-kjekt-v1`) se mantiene
-al cambiar de idioma, porque el cambio solo recarga la página.
+`localStorage` (`norsk-kjekt-lang`, valores `es` / `en` / `fa`) y el progreso
+(`norsk-kjekt-v1`) se mantiene al cambiar de idioma, porque el cambio solo
+recarga la página.
 
-El español es el idioma base y vive en `data.js`; el inglés está en
-`content-en.js` como un mapa `"texto en español": "English text"`. Al cargar en
-modo EN, `lang.js` sustituye los campos españoles por su traducción y deja
-intactas las cadenas que detecta como noruego.
+El español es el idioma base y vive en `data.js`; los demás idiomas están en
+mapas `"texto en español": "traducción"`: `content-en.js` (inglés) y
+`content-fa.js` (persa). Al cargar en EN o FA, `lang.js` sustituye los campos
+españoles por su traducción y deja intactas las cadenas que detecta como
+noruego. En FA la página pasa a `dir="rtl"` (derecha→izquierda), con fuente
+persa; el bokmål de las frases se sigue leyendo de izquierda a derecha.
+
+### Añadir otro idioma
+
+1. Crea `assets/js/content-xx.js` con `window.XX_STRINGS` (mapa español → idioma).
+2. Carga el script en `index.html`, añade el idioma a `LANGS` y a la tabla `UI`
+   de `lang.js` (con la dirección `ltr`/`rtl` y el bloque RTL del CSS si
+   aplica), y añade el botón correspondiente.
+3. Registra el mapa en el array `LANGS` de `tools/check-i18n.mjs`.
 
 ### Añadir o cambiar traducciones
 
 1. Edita el contenido en español en `assets/js/data.js`.
-2. Añade la traducción en `assets/js/content-en.js` usando **exactamente** el
-   mismo texto español como clave (incluidos acentos, «» y puntuación).
+2. Añade la traducción en cada mapa (`content-en.js`, `content-fa.js`) usando
+   **exactamente** el mismo texto español como clave (incluidos acentos, «» y
+   puntuación).
 3. Comprueba la cobertura:
 
 ```bash
@@ -94,6 +106,7 @@ norsk/
     └── js/
         ├── data.js          ← TODO el contenido del curso (base en español + noruego)
         ├── content-en.js    ← traducciones ES → EN del contenido
+        ├── content-fa.js    ← traducciones ES → فارسی del contenido
         ├── lang.js          ← idioma, textos de interfaz y localización del curso
         ├── audio-manifest.js ← texto → MP3 (generado, no editar)
         ├── tts.js           ← reproduce MP3; fallback a speechSynthesis
