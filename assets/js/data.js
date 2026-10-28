@@ -2139,6 +2139,488 @@ window.COURSE = {
   ],
 
   /* -------------------------------------------------------------------- */
+  dialogues: [
+    {
+      id: 'oppgangen',
+      image: 'assets/img/dialogues/oppgangen.svg',
+      imageAlt: 'Dos vecinos conversando en el portal de un edificio',
+      emoji: '🏢',
+      level: 'A2',
+      title: 'I oppgangen',
+      subtitle: 'El vecino, el paquete y el reciclaje',
+      intro: 'Llegas a casa con las manos llenas y te encuentras con el vecino en el portal. Una conversación corta, educada y muy noruega: primero el saludo, luego la ayuda práctica.',
+      lines: [
+        { who: 'Nabo', no: 'Hei! Du bor i leiligheten ved siden av meg, ikke sant?', es: '¡Hola! Vives en el piso de al lado, ¿verdad?' },
+        { who: 'Du', no: 'Jo, det stemmer. Jeg flyttet inn for to uker siden.', es: 'Sí, exacto. Me mudé hace dos semanas.' },
+        { who: 'Nabo', no: 'Velkommen! Jeg heter Bjørn. Har du fått nøkkelen til boden?', es: '¡Bienvenido! Me llamo Bjørn. ¿Ya tienes la llave del trastero?' },
+        { who: 'Du', no: 'Nei, ikke ennå. Vet du hvem jeg skal spørre?', es: 'No, todavía no. ¿Sabes a quién tengo que preguntar?' },
+        { who: 'Nabo', no: 'Snakk med vaktmesteren. Han er her på tirsdager.', es: 'Habla con el conserje. Está aquí los martes.' },
+        { who: 'Du', no: 'Takk! Forresten, er det en pakke til meg der?', es: '¡Gracias! Por cierto, ¿hay un paquete para mí ahí?' },
+        { who: 'Nabo', no: 'Ja, den kom i går. Jeg tok den inn så den ikke skulle bli våt.', es: 'Sí, llegó ayer. Lo metí dentro para que no se mojara.' },
+        { who: 'Du', no: 'Så snilt av deg. Vil du ha en kaffe som takk?', es: 'Qué amable de tu parte. ¿Quieres un café en agradecimiento?' },
+        { who: 'Nabo', no: 'Gjerne det! Jeg kommer ned om ti minutter.', es: '¡Con gusto! Bajo en diez minutos.' }
+      ],
+      vocab: [
+        { no: 'oppgang', es: 'portal, escalera' },
+        { no: 'leilighet', es: 'piso, apartamento' },
+        { no: 'ved siden av', es: 'al lado de' },
+        { no: 'flyttet inn', es: 'me mudé (a un sitio)' },
+        { no: 'bod', es: 'trastero' },
+        { no: 'vaktmester', es: 'conserje, manitas' },
+        { no: 'pakke', es: 'paquete' },
+        { no: 'våt', es: 'mojado' },
+        { no: 'snill', es: 'amable, bueno' },
+        { no: 'gjerne', es: 'con gusto, claro' }
+      ],
+      phrases: [
+        { no: 'ikke sant?', es: '¿verdad?' },
+        { no: 'Har du fått ...?', es: '¿Ya has recibido ...?' },
+        { no: 'Så snilt av deg.', es: 'Qué amable de tu parte.' },
+        { no: 'Jeg kommer ned om ti minutter.', es: 'Bajo en diez minutos.' }
+      ],
+      tip: '«Jo» es la respuesta a una pregunta negativa o a una suposición: «Du bor her, ikke sant?» → «Jo». Si contestas «ja» también se entiende, pero «jo» suena más natural. Y fíjate en «bod»: casi nadie te explica qué es, pero todo edificio noruego tiene uno.',
+      exercises: [
+        {
+          type: 'mcq',
+          prompt: '¿Qué ha pasado con el paquete?',
+          options: ['Está mojado', 'Está en el trastero', 'El vecino lo ha metido dentro', 'No es para el protagonista'],
+          answer: 2,
+          explain: 'El vecino lo metió dentro para que no se mojara. Ese es el pequeño favor que abre la conversación.'
+        },
+        {
+          type: 'gap',
+          prompt: 'Completa con la palabra correcta:',
+          sentence: 'Jeg flyttet ___ for to uker siden.',
+          answers: ['inn'],
+          bank: ['inn', 'ut', 'opp'],
+          es: 'Me mudé hace dos semanas.',
+          explain: '«Flytte inn» = mudarse a un sitio. «Flytte ut» = mudarse fuera.'
+        },
+        {
+          type: 'order',
+          prompt: 'Ordena la frase:',
+          words: ['Han', 'er', 'her', 'på', 'tirsdager.'],
+          es: 'Está aquí los martes.',
+          explain: '«På tirsdager» = los martes, en plural. Es una rutina, no un martes concreto.'
+        },
+        {
+          type: 'listen',
+          audio: 'Jeg tok den inn så den ikke skulle bli våt.',
+          es: 'Lo metí dentro para que no se mojara.',
+          explain: '«Så ... ikke skulle» = para que no... El verbo «skulle» marca la intención.'
+        },
+        {
+          type: 'mcq',
+          prompt: '¿Qué significa «Gjerne det»?',
+          options: ['Claro que sí', 'Quizá mañana', 'No, gracias', 'Lo siento'],
+          answer: 0,
+          explain: '«Gjerne» acepta una oferta con gusto. Es una de las palabras más útiles para sonar natural.'
+        }
+      ]
+    },
+    {
+      id: 'kafeen',
+      image: 'assets/img/dialogues/kafeen.svg',
+      imageAlt: 'Dos personas pidiendo café en una cafetería noruega',
+      emoji: '☕',
+      level: 'A2',
+      title: 'På kafeen',
+      subtitle: 'Pedir café sin quedarte en blanco',
+      intro: 'La cola avanza, el camarero te mira y tú solo recuerdas «kaffe». Esta escena te da las frases justas para pedir, pagar y encontrar sitio.',
+      lines: [
+        { who: 'Ansatt', no: 'Hei! Hva skal du ha?', es: '¡Hola! ¿Qué vas a tomar?' },
+        { who: 'Du', no: 'En kaffe, takk. Har dere kanelboller?', es: 'Un café, por favor. ¿Tenéis rollos de canela?' },
+        { who: 'Ansatt', no: 'Ja, de er ferske. Vil du ha stor eller liten kaffe?', es: 'Sí, están recién hechos. ¿Quieres el café grande o pequeño?' },
+        { who: 'Du', no: 'Stor, takk. Kan jeg betale med kort?', es: 'Grande, por favor. ¿Puedo pagar con tarjeta?' },
+        { who: 'Ansatt', no: 'Ja, det går fint. Vil du ha kvittering?', es: 'Sí, claro. ¿Quieres recibo?' },
+        { who: 'Du', no: 'Nei takk. Kan jeg sitte ved vinduet?', es: 'No, gracias. ¿Puedo sentarme junto a la ventana?' },
+        { who: 'Ansatt', no: 'Selvfølgelig. Jeg roper navnet ditt når det er klart.', es: 'Por supuesto. Gritaré tu nombre cuando esté listo.' },
+        { who: 'Du', no: 'Det er meg: Alex. Tusen takk!', es: 'Ese soy yo: Alex. ¡Muchas gracias!' }
+      ],
+      vocab: [
+        { no: 'hva skal du ha', es: 'qué vas a tomar' },
+        { no: 'kanelbolle', es: 'rollo de canela' },
+        { no: 'fersk', es: 'recién hecho, fresco' },
+        { no: 'stor', es: 'grande' },
+        { no: 'liten', es: 'pequeño' },
+        { no: 'betale med kort', es: 'pagar con tarjeta' },
+        { no: 'kvittering', es: 'recibo' },
+        { no: 'ved vinduet', es: 'junto a la ventana' },
+        { no: 'selvfølgelig', es: 'por supuesto' },
+        { no: 'rope', es: 'gritar, llamar' }
+      ],
+      phrases: [
+        { no: 'Hva skal du ha?', es: '¿Qué vas a tomar?' },
+        { no: 'Kan jeg betale med kort?', es: '¿Puedo pagar con tarjeta?' },
+        { no: 'Jeg roper navnet ditt.', es: 'Gritaré tu nombre.' },
+        { no: 'Tusen takk!', es: '¡Muchas gracias!' }
+      ],
+      tip: 'En Noruega se pide en la barra y se paga al momento. «Vil du ha ...?» es la fórmula del camarero; tú puedes responder solo «Ja, takk» o «Nei takk». Ojo: «en kaffe» es un café sin más; si lo quieres con leche, pide «en latte» o «kaffe med melk».',
+      exercises: [
+        {
+          type: 'mcq',
+          prompt: '¿Qué pide el cliente para comer?',
+          options: ['Un rollo de canela', 'Un sándwich', 'Nada', 'Una tarta'],
+          answer: 0,
+          explain: 'Pregunta «Har dere kanelboller?» y el camarero confirma que están recién hechos.'
+        },
+        {
+          type: 'gap',
+          prompt: 'Completa con la palabra correcta:',
+          sentence: 'Kan jeg betale ___ kort?',
+          answers: ['med'],
+          bank: ['med', 'på', 'av'],
+          es: '¿Puedo pagar con tarjeta?',
+          explain: 'La colocación es «betale med kort». «På» y «av» no encajan aquí.'
+        },
+        {
+          type: 'order',
+          prompt: 'Ordena la frase:',
+          words: ['Jeg', 'roper', 'navnet', 'ditt', 'når', 'det', 'er', 'klart.'],
+          es: 'Gritaré tu nombre cuando esté listo.',
+          explain: '«Når det er klart» = cuando esté listo. El orden es el normal de una subordinada.'
+        },
+        {
+          type: 'listen',
+          audio: 'Vil du ha stor eller liten kaffe?',
+          es: '¿Quieres el café grande o pequeño?',
+          explain: '«Stor eller liten» es la elección clásica en la barra. Responde solo «Stor, takk».'
+        },
+        {
+          type: 'cloze',
+          prompt: 'Completa el pedido:',
+          text: 'Jeg vil gjerne ha en ___ og en ___. Kan jeg betale med ___?',
+          answers: ['kaffe', 'kanelbolle', 'kort'],
+          bank: ['kaffe', 'kanelbolle', 'kort', 'pose', 'kvittering', 'vindu'],
+          es: 'Quiero un café y un rollo de canela. ¿Puedo pagar con tarjeta?',
+          explain: '«Jeg vil gjerne ha» es la forma educada de pedir. «Med kort» completa la pregunta de pago.'
+        }
+      ]
+    },
+    {
+      id: 'butikken',
+      image: 'assets/img/dialogues/butikken.svg',
+      imageAlt: 'Cliente y dependienta en un supermercado noruego',
+      emoji: '🛒',
+      level: 'A2',
+      title: 'I butikken',
+      subtitle: 'Encontrar lo que buscas y pagar sin drama',
+      intro: 'Un supermercado noruego tiene pasillos silenciosos y precios que no siempre están donde miras. Aquí practicas cómo preguntar, comparar y pagar.',
+      lines: [
+        { who: 'Du', no: 'Unnskyld, hvor finner jeg melk?', es: 'Perdón, ¿dónde encuentro la leche?' },
+        { who: 'Ansatt', no: 'Melken står i kjøleskapet helt bakerst til venstre.', es: 'La leche está en la nevera, del todo al fondo a la izquierda.' },
+        { who: 'Du', no: 'Takk. Og har dere brød uten gluten?', es: 'Gracias. ¿Y tenéis pan sin gluten?' },
+        { who: 'Ansatt', no: 'Ja, det er i hyllen ved siden av kassa.', es: 'Sí, está en el estante junto a la caja.' },
+        { who: 'Du', no: 'Perfekt. Hvor mye koster denne osten?', es: 'Perfecto. ¿Cuánto cuesta este queso?' },
+        { who: 'Ansatt', no: 'Den koster 89 kroner. Den er på tilbud i dag.', es: 'Cuesta 89 coronas. Hoy está de oferta.' },
+        { who: 'Du', no: 'Da tar jeg den. Kan jeg få en pose?', es: 'Entonces me lo llevo. ¿Me das una bolsa?' },
+        { who: 'Ansatt', no: 'Ja, posen koster tre kroner. Vil du ha kvittering?', es: 'Sí, la bolsa cuesta tres coronas. ¿Quieres recibo?' },
+        { who: 'Du', no: 'Nei takk, jeg tar den på mobilen.', es: 'No, gracias, la llevo en el móvil.' }
+      ],
+      vocab: [
+        { no: 'unnskyld', es: 'perdón, disculpe' },
+        { no: 'hvor finner jeg', es: 'dónde encuentro' },
+        { no: 'kjøleskap', es: 'nevera' },
+        { no: 'bakerst', es: 'al fondo' },
+        { no: 'hylle', es: 'estante' },
+        { no: 'kasse', es: 'caja' },
+        { no: 'koste', es: 'costar' },
+        { no: 'tilbud', es: 'oferta' },
+        { no: 'pose', es: 'bolsa' },
+        { no: 'kvittering', es: 'recibo' }
+      ],
+      phrases: [
+        { no: 'Hvor finner jeg ...?', es: '¿Dónde encuentro ...?' },
+        { no: 'Hvor mye koster ...?', es: '¿Cuánto cuesta ...?' },
+        { no: 'Den er på tilbud.', es: 'Está de oferta.' },
+        { no: 'Da tar jeg den.', es: 'Entonces me lo llevo.' }
+      ],
+      tip: '«Tilbud» es una oferta de precio, no una oferta de trabajo (esa es «jobbtilbud»). En la caja te preguntarán «Vil du ha pose?»; si llevas tu propia bolsa, di «Nei takk, jeg har med egen pose». Y «jeg tar den» sirve para casi cualquier compra.',
+      exercises: [
+        {
+          type: 'mcq',
+          prompt: '¿Dónde está la leche?',
+          options: ['En la caja', 'En la nevera, al fondo a la izquierda', 'Junto al pan', 'Fuera de la tienda'],
+          answer: 1,
+          explain: 'La dependienta dice «i kjøleskapet helt bakerst til venstre»: nevera, al fondo, a la izquierda.'
+        },
+        {
+          type: 'gap',
+          prompt: 'Completa con la palabra correcta:',
+          sentence: 'Hvor mye ___ denne osten?',
+          answers: ['koster'],
+          bank: ['koster', 'kjøper', 'finner'],
+          es: '¿Cuánto cuesta este queso?',
+          explain: '«Å koste» = costar. «Kjøpe» = comprar y «finne» = encontrar.'
+        },
+        {
+          type: 'order',
+          prompt: 'Ordena la frase:',
+          words: ['Kan', 'jeg', 'få', 'en', 'pose?'],
+          es: '¿Me das una bolsa?',
+          explain: '«Kan jeg få ...?» es la forma más natural de pedir algo en una tienda.'
+        },
+        {
+          type: 'listen',
+          audio: 'Den er på tilbud i dag.',
+          es: 'Hoy está de oferta.',
+          explain: '«På tilbud» = de oferta. Es una de las primeras expresiones que oirás en la caja.'
+        },
+        {
+          type: 'match',
+          prompt: 'Empareja el vocabulario de la compra:',
+          pairs: [
+            { a: 'kasse', b: 'caja' },
+            { a: 'pose', b: 'bolsa' },
+            { a: 'tilbud', b: 'oferta' },
+            { a: 'kvittering', b: 'recibo' }
+          ],
+          explain: 'Cuatro palabras que aparecen en cualquier compra. «Kasse» también es la caja del supermercado.'
+        }
+      ]
+    },
+    {
+      id: 'jobben',
+      image: 'assets/img/dialogues/jobben.svg',
+      imageAlt: 'Jefe y empleado hablando en una oficina',
+      emoji: '💼',
+      level: 'B1',
+      title: 'På jobben',
+      subtitle: 'Pedir más tiempo sin parecer que te escaqueas',
+      intro: 'Tu jefe quiere hablar antes de comer. En Noruega eso no siempre es malo: a veces solo quiere decirte que el cliente está contento. Aprende a aceptar el halago y a pedir lo que necesitas.',
+      lines: [
+        { who: 'Sjef', no: 'Har du tid til en kort prat før lunsj?', es: '¿Tienes un momento para hablar antes de comer?' },
+        { who: 'Du', no: 'Ja, selvfølgelig. Er det noe galt med rapporten?', es: 'Sí, claro. ¿Pasa algo con el informe?' },
+        { who: 'Sjef', no: 'Nei, tvert imot. Kunden er veldig fornøyd.', es: 'No, todo lo contrario. El cliente está muy contento.' },
+        { who: 'Du', no: 'Så bra! Men jeg trenger kanskje litt mer tid på neste oppgave.', es: '¡Qué bien! Pero quizá necesito algo más de tiempo para la próxima tarea.' },
+        { who: 'Sjef', no: 'Hvor mye tid trenger du?', es: '¿Cuánto tiempo necesitas?' },
+        { who: 'Du', no: 'To dager ekstra, hvis det er mulig. Jeg vil gjerne gjøre det skikkelig.', es: 'Dos días más, si es posible. Prefiero hacerlo bien.' },
+        { who: 'Sjef', no: 'Det går fint. Send meg en ny frist på e-post, så informerer jeg teamet.', es: 'No hay problema. Mándame un nuevo plazo por correo y aviso al equipo.' },
+        { who: 'Du', no: 'Takk for at du er fleksibel. Jeg skal holde deg oppdatert.', es: 'Gracias por ser flexible. Te mantendré al día.' }
+      ],
+      vocab: [
+        { no: 'prat', es: 'charla' },
+        { no: 'rapport', es: 'informe' },
+        { no: 'tvert imot', es: 'todo lo contrario' },
+        { no: 'fornøyd', es: 'contento, satisfecho' },
+        { no: 'trenger', es: 'necesito' },
+        { no: 'ekstra', es: 'extra' },
+        { no: 'mulig', es: 'posible' },
+        { no: 'skikkelig', es: 'bien, de verdad' },
+        { no: 'frist', es: 'plazo' },
+        { no: 'holde oppdatert', es: 'mantener al día' }
+      ],
+      phrases: [
+        { no: 'Har du tid til en kort prat?', es: '¿Tienes un momento para hablar?' },
+        { no: 'Er det noe galt med ...?', es: '¿Pasa algo con ...?' },
+        { no: 'Tvert imot.', es: 'Todo lo contrario.' },
+        { no: 'Jeg skal holde deg oppdatert.', es: 'Te mantendré al día.' }
+      ],
+      tip: '«Tvert imot» suena fuerte en español, pero en noruego es neutro y muy útil para corregir un malentendido. Pedir «to dager ekstra» no te hace peor trabajador; lo que molesta es no avisar. Y «skikkelig» aquí significa «bien hecho», no «serio».',
+      exercises: [
+        {
+          type: 'mcq',
+          prompt: '¿Cómo reacciona el jefe al informe?',
+          options: ['Está enfadado', 'El cliente está contento', 'Quiere despedir al protagonista', 'No lo ha leído'],
+          answer: 1,
+          explain: 'Dice «tvert imot» y «kunden er veldig fornøyd»: la conversación empieza mejor de lo que el empleado temía.'
+        },
+        {
+          type: 'gap',
+          prompt: 'Completa con la palabra correcta:',
+          sentence: 'Jeg trenger to dager ___.',
+          answers: ['ekstra'],
+          bank: ['ekstra', 'alltid', 'sammen'],
+          es: 'Necesito dos días más.',
+          explain: '«Ekstra» se coloca después del sustantivo: «to dager ekstra».'
+        },
+        {
+          type: 'order',
+          prompt: 'Ordena la frase:',
+          words: ['Send', 'meg', 'en', 'ny', 'frist', 'på', 'e-post.'],
+          es: 'Mándame un nuevo plazo por correo.',
+          explain: '«Send meg ...» es el imperativo de «sende». «På e-post» = por correo electrónico.'
+        },
+        {
+          type: 'listen',
+          audio: 'Jeg vil gjerne gjøre det skikkelig.',
+          es: 'Prefiero hacerlo bien.',
+          explain: '«Vil gjerne» suaviza el deseo. «Skikkelig» aquí significa «bien hecho».'
+        },
+        {
+          type: 'cloze',
+          prompt: 'Completa la conversación:',
+          text: 'Kunden er veldig ___, så jeg trenger ikke å ___ rapporten. Men jeg vil gjerne ha en ny ___.',
+          answers: ['fornøyd', 'endre', 'frist'],
+          bank: ['fornøyd', 'endre', 'frist', 'glemme', 'ferie', 'prat'],
+          es: 'El cliente está muy contento, así que no necesito cambiar el informe. Pero quiero un nuevo plazo.',
+          explain: '«Fornøyd» describe al cliente; «endre» es cambiar; «frist» es el plazo que se negocia.'
+        }
+      ]
+    },
+    {
+      id: 'lege',
+      image: 'assets/img/dialogues/lege.svg',
+      imageAlt: 'Médica examinando a un paciente en una consulta',
+      emoji: '🩺',
+      level: 'B1',
+      title: 'Hos legen',
+      subtitle: 'Explicar síntomas sin traductor',
+      intro: 'Llevas una semana con dolor de garganta y no sabes si es para tanto. En la consulta noruega importa describir bien los síntomas y entender cuándo volver.',
+      lines: [
+        { who: 'Lege', no: 'Hva kan jeg hjelpe deg med i dag?', es: '¿En qué puedo ayudarte hoy?' },
+        { who: 'Du', no: 'Jeg har hatt vondt i halsen og hostet i nesten en uke.', es: 'He tenido dolor de garganta y tos desde hace casi una semana.' },
+        { who: 'Lege', no: 'Har du hatt feber?', es: '¿Has tenido fiebre?' },
+        { who: 'Du', no: 'Ja, litt om kvelden. Men jeg har ikke vært forkjølet.', es: 'Sí, un poco por la noche. Pero no he estado resfriado.' },
+        { who: 'Lege', no: 'Jeg skal lytte på lungene dine. Pust dypt inn.', es: 'Voy a escucharte los pulmones. Respira hondo.' },
+        { who: 'Du', no: 'Gjør det vondt? Jeg er litt nervøs.', es: '¿Duele? Estoy un poco nervioso.' },
+        { who: 'Lege', no: 'Nei, det går helt fint. Det ser ut som en vanlig halsbetennelse.', es: 'No, no pasa nada. Parece una faringitis normal.' },
+        { who: 'Du', no: 'Trenger jeg antibiotika?', es: '¿Necesito antibióticos?' },
+        { who: 'Lege', no: 'Nei, du bør hvile og drikke mye vann. Kom tilbake hvis det ikke blir bedre.', es: 'No, deberías descansar y beber mucha agua. Vuelve si no mejora.' }
+      ],
+      vocab: [
+        { no: 'hjelpe', es: 'ayudar' },
+        { no: 'vondt i halsen', es: 'dolor de garganta' },
+        { no: 'hoste', es: 'toser' },
+        { no: 'feber', es: 'fiebre' },
+        { no: 'forkjølet', es: 'resfriado' },
+        { no: 'lytte på', es: 'escuchar (con el fonendoscopio)' },
+        { no: 'puste dypt inn', es: 'respirar hondo' },
+        { no: 'nervøs', es: 'nervioso' },
+        { no: 'halsbetennelse', es: 'faringitis, infección de garganta' },
+        { no: 'hvile', es: 'descansar' }
+      ],
+      phrases: [
+        { no: 'Hva kan jeg hjelpe deg med?', es: '¿En qué puedo ayudarte?' },
+        { no: 'Jeg har vondt i ...', es: 'Me duele ...' },
+        { no: 'Har du hatt feber?', es: '¿Has tenido fiebre?' },
+        { no: 'Kom tilbake hvis det ikke blir bedre.', es: 'Vuelve si no mejora.' }
+      ],
+      tip: '«Jeg har vondt i halsen» = me duele la garganta; «det gjør vondt» = duele (en general). En Noruega no recetan antibióticos por una faringitis normal, así que no te sorprendas si la respuesta es «hvile og drikke vann». Si necesitas baja médica, pide «en sykmelding».',
+      exercises: [
+        {
+          type: 'mcq',
+          prompt: '¿Cuánto tiempo lleva enfermo?',
+          options: ['Dos días', 'Casi una semana', 'Un mes', 'Desde ayer'],
+          answer: 1,
+          explain: 'Dice «i nesten en uke»: casi una semana con dolor de garganta y tos.'
+        },
+        {
+          type: 'gap',
+          prompt: 'Completa con la preposición correcta:',
+          sentence: 'Jeg har hatt vondt ___ halsen.',
+          answers: ['i'],
+          bank: ['i', 'på', 'av'],
+          es: 'He tenido dolor de garganta.',
+          explain: 'La colocación es «vondt i halsen», «vondt i hodet», «vondt i ryggen».'
+        },
+        {
+          type: 'order',
+          prompt: 'Ordena la frase:',
+          words: ['Du', 'bør', 'hvile', 'og', 'drikke', 'mye', 'vann.'],
+          es: 'Deberías descansar y beber mucha agua.',
+          explain: '«Bør» = deberías. Va seguido del infinitivo sin «å»: «bør hvile».'
+        },
+        {
+          type: 'listen',
+          audio: 'Det ser ut som en vanlig halsbetennelse.',
+          es: 'Parece una faringitis normal.',
+          explain: '«Det ser ut som» = parece. «Vanlig» = normal, corriente.'
+        },
+        {
+          type: 'cloze',
+          prompt: 'Completa la consulta:',
+          text: 'Jeg har ___ og vondt i ___. Legen sier at jeg bør ___ og drikke vann.',
+          answers: ['feber', 'halsen', 'hvile'],
+          bank: ['feber', 'halsen', 'hvile', 'ferie', 'hodet', 'jobbe'],
+          es: 'Tengo fiebre y dolor de garganta. El médico dice que debo descansar y beber agua.',
+          explain: '«Feber», «halsen» y «hvile» son las tres palabras clave de la consulta.'
+        }
+      ]
+    },
+    {
+      id: 'telefonen',
+      image: 'assets/img/dialogues/telefonen.svg',
+      imageAlt: 'Persona cambiando una cita por teléfono',
+      emoji: '📞',
+      level: 'B1',
+      title: 'I telefonen',
+      subtitle: 'Cambiar una cita sin perder los nervios',
+      intro: 'El dentista llama, o tú llamas para mover la cita. Por teléfono no ves la cara del otro, así que las fórmulas importan el doble.',
+      lines: [
+        { who: 'Ansatt', no: 'Hei, du har kommet til tannklinikken. Hva kan jeg hjelpe med?', es: 'Hola, has llamado a la clínica dental. ¿En qué puedo ayudarte?' },
+        { who: 'Du', no: 'Hei, jeg har en time på torsdag, men jeg må flytte den.', es: 'Hola, tengo cita el jueves, pero tengo que cambiarla.' },
+        { who: 'Ansatt', no: 'Hva heter du?', es: '¿Cómo te llamas?' },
+        { who: 'Du', no: 'Alex García. Timen er klokka halv tre.', es: 'Alex García. La cita es a las dos y media.' },
+        { who: 'Ansatt', no: 'Jeg ser den. Når passer det bedre?', es: 'La veo. ¿Cuándo te viene mejor?' },
+        { who: 'Du', no: 'Helst neste uke, på formiddagen. Har dere noe ledig på tirsdag?', es: 'Preferiblemente la semana que viene, por la mañana. ¿Tenéis algo libre el martes?' },
+        { who: 'Ansatt', no: 'Vi har en ledig time tirsdag klokka ti. Passer det?', es: 'Tenemos una hora libre el martes a las diez. ¿Te va bien?' },
+        { who: 'Du', no: 'Ja, det passer perfekt. Må jeg betale noe for å flytte timen?', es: 'Sí, me va perfecto. ¿Tengo que pagar algo por cambiar la cita?' },
+        { who: 'Ansatt', no: 'Nei, det er gratis så lenge du sier fra før dagen.', es: 'No, es gratis siempre que avises antes del día.' }
+      ],
+      vocab: [
+        { no: 'kommet til', es: 'has llamado a, has llegado a' },
+        { no: 'tannklinikk', es: 'clínica dental' },
+        { no: 'time', es: 'cita, hora' },
+        { no: 'flytte', es: 'mover, cambiar' },
+        { no: 'halv tre', es: 'las dos y media' },
+        { no: 'helst', es: 'preferiblemente' },
+        { no: 'formiddag', es: 'mañana (antes de mediodía)' },
+        { no: 'ledig', es: 'libre, disponible' },
+        { no: 'passe', es: 'ir bien, convenir' },
+        { no: 'si fra', es: 'avisar' }
+      ],
+      phrases: [
+        { no: 'Jeg må flytte timen.', es: 'Tengo que cambiar la cita.' },
+        { no: 'Når passer det bedre?', es: '¿Cuándo te viene mejor?' },
+        { no: 'Har dere noe ledig?', es: '¿Tenéis algo libre?' },
+        { no: 'Det passer perfekt.', es: 'Me va perfecto.' }
+      ],
+      tip: '«Halv tre» son las 14:30, no las 3:30: el noruego cuenta hacia la hora siguiente. «Formiddag» va de la mañana hasta el mediodía; «ettermiddag» es la tarde. Y «si fra» es el verbo que usan para todo: avisar, decir, cancelar con tiempo.',
+      exercises: [
+        {
+          type: 'mcq',
+          prompt: '¿A qué hora es la cita original?',
+          options: ['A las 13:30', 'A las 14:30', 'A las 15:30', 'A las 10:00'],
+          answer: 1,
+          explain: '«Halv tre» significa las dos y media: se cuenta media hora hacia las tres.'
+        },
+        {
+          type: 'gap',
+          prompt: 'Completa con el verbo correcto:',
+          sentence: 'Kan du ___ timen til tirsdag?',
+          answers: ['flytte'],
+          bank: ['flytte', 'betale', 'rope'],
+          es: '¿Puedes cambiar la cita al martes?',
+          explain: '«Flytte timen» = cambiar la cita. «Flytte» también se usa para mudarse.'
+        },
+        {
+          type: 'order',
+          prompt: 'Ordena la frase:',
+          words: ['Det', 'passer', 'perfekt', 'for', 'meg.'],
+          es: 'Me va perfecto.',
+          explain: '«Passer for meg» = me conviene. En la conversación basta con «Det passer perfekt».'
+        },
+        {
+          type: 'listen',
+          audio: 'Har dere noe ledig på tirsdag?',
+          es: '¿Tenéis algo libre el martes?',
+          explain: '«Noe ledig» = algo libre. Es la pregunta clave para cambiar una cita.'
+        },
+        {
+          type: 'cloze',
+          prompt: 'Completa la llamada:',
+          text: 'Jeg har en ___ på torsdag, men jeg må ___ den. Er det ___ å bytte?',
+          answers: ['time', 'flytte', 'gratis'],
+          bank: ['time', 'flytte', 'gratis', 'prat', 'betale', 'ledig'],
+          es: 'Tengo cita el jueves, pero tengo que cambiarla. ¿Es gratis cambiarla?',
+          explain: '«Time» es la cita, «flytte» es cambiarla y «gratis» responde a la duda del precio.'
+        }
+      ]
+    }
+  ],
+
+  /* -------------------------------------------------------------------- */
   colloquial: [
     {
       term: 'Hei hei',

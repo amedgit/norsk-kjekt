@@ -613,6 +613,72 @@ main {
 .fun-banner p { color: #5a3c05; font-size: .9rem; max-width: 68ch; }
 .fun-banner-actions { display: flex; flex-wrap: wrap; gap: .5rem; }
 
+/* ---------------- samtaler ---------------- */
+
+.dialogue-banner {
+  display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+  margin-top: 2rem; padding: 1.3rem 1.4rem;
+  background: linear-gradient(135deg, #e7f0fa, #fff);
+  border: 1px solid #c9dcf0; border-radius: var(--radius);
+}
+.dialogue-banner h2 { font-size: clamp(1.1rem, 2.4vw, 1.35rem); margin: .35rem 0 .25rem; }
+.dialogue-banner p { color: #14385c; font-size: .9rem; max-width: 68ch; }
+
+.dialogue-intro {
+  background: linear-gradient(135deg, var(--ink), var(--blue));
+}
+.dialogue-progress {
+  display: flex; align-items: center; gap: .8rem; margin-top: 1rem;
+  font-size: .82rem; color: rgba(255, 255, 255, .86);
+}
+.dialogue-progress .meter { flex: 0 1 240px; background: rgba(255, 255, 255, .22); }
+.dialogue-progress .meter > i { background: #f0b64a; }
+
+.dialogue-card { border-top: 3px solid var(--blue); }
+.dialogue-card:nth-child(2) { border-top-color: var(--green); }
+.dialogue-card:nth-child(3) { border-top-color: var(--amber); }
+.dialogue-card .num { color: var(--blue); }
+
+.dlg-intro-text { color: var(--muted); font-size: .9rem; margin-top: .6rem; max-width: 58ch; }
+
+.dialogue-toolbar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: .75rem; flex-wrap: wrap; margin-bottom: 1rem;
+}
+.dialogue-toolbar h2 { margin: 0; }
+.dialogue { display: flex; flex-direction: column; gap: .85rem; }
+.dline { display: flex; align-items: flex-start; gap: .6rem; max-width: 86%; }
+.dline.me { margin-inline-start: auto; flex-direction: row-reverse; }
+.davatar {
+  width: 2rem; height: 2rem; flex: 0 0 auto;
+  display: grid; place-items: center; border-radius: 50%;
+  background: var(--blue-soft); color: var(--blue);
+  font-size: .72rem; font-weight: 800; letter-spacing: .02em;
+}
+.dline.me .davatar { background: var(--red-soft); color: var(--red); }
+.dbubble {
+  min-width: 0; padding: .62rem .8rem;
+  background: #f8f9fc; border: 1px solid var(--line);
+  border-radius: 4px 14px 14px 14px;
+}
+.dline.me .dbubble {
+  background: #fff7f9; border-color: #f3d3da;
+  border-radius: 14px 4px 14px 14px;
+}
+.dmeta { display: flex; align-items: center; gap: .4rem; margin-bottom: .18rem; }
+.dwho {
+  font-size: .7rem; font-weight: 800; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--muted);
+}
+.dno { font-size: 1.02rem; line-height: 1.45; }
+.des {
+  margin-top: .35rem; padding-top: .32rem;
+  border-top: 1px dashed var(--line);
+  font-size: .84rem; color: var(--muted);
+}
+.des[hidden] { display: none; }
+.des::before { content: "→ "; opacity: .6; }
+
 .fun-grid {
   display: grid; gap: .9rem;
   grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
@@ -913,6 +979,7 @@ html[dir="rtl"] .exam-usertext {
   .fun-hero-card > * { flex: 1 1 auto; }
   .fun-quote { flex-basis: 100%; margin-top: .2rem; }
   .fun-banner { flex-direction: column; align-items: flex-start; }
+  .dialogue-banner { flex-direction: column; align-items: flex-start; }
   .exam-banner { flex-direction: column; align-items: flex-start; }
 }
 
@@ -932,6 +999,13 @@ html[dir="rtl"] .exam-usertext {
   .fix-sentence { font-size: 1.02rem; }
 }
 
+@media (max-width: 560px) {
+  .dline { max-width: 100%; }
+  .dialogue-toolbar { align-items: flex-start; }
+  .dno { font-size: .98rem; }
+  .dialogue-progress { flex-wrap: wrap; }
+}
+
 @media (max-width: 440px) {
   .memory-grid { grid-template-columns: repeat(2, 1fr); }
 }
@@ -949,8 +1023,9 @@ html[lang="fa"] {
 /* el noruego se lee siempre de izquierda a derecha, incluso en la página RTL */
 html[dir="rtl"] .para .no,
 html[dir="rtl"] .gx .no, html[dir="rtl"] .vocab .no, html[dir="rtl"] .phrase .no,
-html[dir="rtl"] .wb-no, html[dir="rtl"] .w-no {
+html[dir="rtl"] .wb-no, html[dir="rtl"] .w-no, html[dir="rtl"] .dno {
   direction: ltr; unicode-bidi: isolate; text-align: start;
 }
 
 html[dir="rtl"] .para .es::before { content: "← "; }
+html[dir="rtl"] .des::before { content: "← "; }

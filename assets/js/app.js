@@ -4,6 +4,7 @@
 
   var COURSE = window.COURSE;
   var LESSONS = COURSE.lessons;
+  var DIALOGUES = COURSE.dialogues || [];
   var I18N = window.I18N;
   var t = I18N.t;
   var tp = I18N.tp;
@@ -18,7 +19,7 @@
   var KEY = 'norsk-kjekt-v1';
 
   function defaults() {
-    return { lessons: {}, fun: {}, exams: {}, xp: 0, days: {}, review: [], version: 1 };
+    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, xp: 0, days: {}, review: [], version: 1 };
   }
 
   var state = (function load() {
@@ -28,6 +29,7 @@
       var d = defaults();
       var lessons = {};
       var fun = {};
+      var dialogues = {};
       Object.keys(raw.lessons || {}).forEach(function (id) {
         var v = raw.lessons[id];
         if (v && typeof v === 'object') {
@@ -40,9 +42,16 @@
           fun[id] = { best: Number(v.best) || 0, total: Number(v.total) || 0, at: Number(v.at) || 0 };
         }
       });
+      Object.keys(raw.dialogues || {}).forEach(function (id) {
+        var v = raw.dialogues[id];
+        if (v && typeof v === 'object') {
+          dialogues[id] = { best: Number(v.best) || 0, total: Number(v.total) || 0, at: Number(v.at) || 0 };
+        }
+      });
       return {
         lessons: lessons,
         fun: fun,
+        dialogues: dialogues,
         exams: raw.exams && typeof raw.exams === 'object' ? raw.exams : {},
         xp: Number(raw.xp) || 0,
         days: raw.days && typeof raw.days === 'object' ? raw.days : d.days,
@@ -946,6 +955,41 @@
   }
 
   /* =======================================================
+     Samtaler: conversaciones cotidianas
+     ======================================================= */
+
+  function dialogueExerciseCount() {
+    return DIALOGUES.reduce(function (n, d) { return n + d.exercises.length; }, 0);
+  }
+
+  function dialogueCompletedCount() {
+    return DIALOGUES.filter(function (d) { return state.dialogues[d.id]; }).length;
+  }
+
+  function dialogueCard(d) {
+    var st = state.dialogues[d.id];
+    var img = d.image || ('assets/img/dialogues/' + d.id + '.svg');
+    return '<a class="lesson-card dialogue-card" href="#/samtale/' + d.id + '">' +
+      '<div class="thumb"><img src="' + esc(img) + '" alt="" width="800" height="500" loading="lazy" decoding="async"></div>' +
+      '<div class="top"><span class="emoji">' + d.emoji + '</span>' +
+      '<span class="num">' + esc(t('dlg.cardNum', { level: d.level })) + '</span></div>' +
+      '<h3>' + esc(d.title) + '</h3>' +
+      '<p class="sub">' + esc(d.subtitle) + '</p>' +
+      '<div class="foot">' +
+      (st ? '<span class="chip done">✓ ' + st.best + '/' + st.total + '</span>' : '<span class="chip">' + esc(t('lesson.new')) + '</span>') +
+      '<span class="chip plain">' + esc(tp('dlg.lines', d.lines.length)) + '</span>' +
+      '<span class="chip plain">' + esc(tp('lesson.exercises', d.exercises.length)) + '</span>' +
+      '</div></a>';
+  }
+
+  function dialogueLevelSection(title, sub, levels) {
+    var list = DIALOGUES.filter(function (d) { return levels.indexOf(d.level) > -1; });
+    if (!list.length) return '';
+    return '<h2 class="section-title">' + title + ' <span>' + sub + '</span></h2>' +
+      '<div class="grid">' + list.map(dialogueCard).join('') + '</div>';
+  }
+
+  /* =======================================================
      Tull & tøys: packs, tabla de palabras y verbos
      ======================================================= */
 
@@ -954,7 +998,8 @@
   }
 
   function totalExerciseCount() {
-    return LESSONS.reduce(function (n, l) { return n + l.exercises.length; }, 0) + funExerciseCount();
+    return LESSONS.reduce(function (n, l) { return n + l.exercises.length; }, 0) +
+      funExerciseCount() + dialogueExerciseCount();
   }
 
   function allFunExercises() {
@@ -1289,6 +1334,7 @@
       })) + '</p>' +
       '    <div class="hero-actions">' +
       '      <a class="btn primary" href="#/leksjon/' + nl.id + '">' + esc(done ? t('home.continue') : t('home.start')) + ' · ' + esc(nl.title) + '</a>' +
+      '      <a class="btn ghost" href="#/samtaler">' + esc(t('nav.dialogues')) + '</a>' +
       '      <a class="btn ghost" href="#/tull">Tull &amp; tøys</a>' +
       '      <a class="btn ghost" href="#/coloquial">' + esc(t('home.street')) + '</a>' +
       '    </div>' +
@@ -1310,6 +1356,20 @@
       levelSection(t('home.b2Title'), t('home.b2Sub'), ['B2']) +
       levelSection(t('home.c1Title'), t('home.c1Sub'), ['C1']) +
       levelSection(t('home.c2Title'), t('home.c2Sub'), ['C2']) +
+
+      '<section class="dialogue-banner">' +
+      '  <div>' +
+      '    <span class="eyebrow">' + esc(t('home.dialogueEyebrow')) + '</span>' +
+      '    <h2>' + esc(t('home.dialogueTitle')) + '</h2>' +
+      '    <p>' + esc(t('home.dialogueText', { n: DIALOGUES.length })) + '</p>' +
+      '  </div>' +
+      '  <div class="fun-banner-actions">' +
+      '    <a class="btn primary" href="#/samtaler">' + esc(t('home.dialogueEnter')) + '</a>' +
+      '  </div>' +
+      '</section>' +
+      '<div class="grid" style="margin-top:1rem">' + DIALOGUES.slice(0, 3).map(dialogueCard).join('') + '</div>' +
+      '<div class="actions" style="margin-top:1rem"><a class="btn ghost" href="#/samtaler">' +
+      esc(tp('home.seeDialogues', DIALOGUES.length)) + '</a></div>' +
 
       '<section class="exam-banner">' +
       '  <div>' +
@@ -1343,6 +1403,133 @@
       }).join('') + '</div>' +
       '<div class="actions" style="margin-top:1rem"><a class="btn ghost" href="#/coloquial">' +
       esc(tp('home.seeExpressions', COURSE.colloquial.length)) + '</a></div>';
+  }
+
+  /* ---------------- Samtaler ---------------- */
+
+  function renderDialogues() {
+    var done = dialogueCompletedCount();
+    var total = DIALOGUES.length;
+    var pct = total ? Math.round((done / total) * 100) : 0;
+
+    app.innerHTML =
+      '<section class="colo-intro dialogue-intro">' +
+      '  <span class="eyebrow">' + esc(t('dlg.eyebrow')) + '</span>' +
+      '  <h1>' + esc(t('dlg.title')) + '</h1>' +
+      '  <p>' + esc(t('dlg.intro', { n: total, exercises: dialogueExerciseCount() })) + '</p>' +
+      '  <div class="dialogue-progress">' +
+      '    <span>' + esc(t('dlg.progress', { done: done, total: total })) + '</span>' +
+      '    <span class="meter"><i style="width:' + pct + '%"></i></span>' +
+      '  </div>' +
+      '</section>' +
+      dialogueLevelSection(t('dlg.a2Title'), t('dlg.a2Sub'), ['A2']) +
+      dialogueLevelSection(t('dlg.b1Title'), t('dlg.b1Sub'), ['B1']);
+  }
+
+  function renderDialogue(d) {
+    var st = state.dialogues[d.id];
+    var img = d.image || ('assets/img/dialogues/' + d.id + '.svg');
+    var imgAlt = d.imageAlt || d.title;
+
+    app.innerHTML =
+      '<div class="crumbs"><a href="#/samtaler">' + esc(t('dlg.crumb')) + '</a> <span>›</span> <span>' + esc(d.title) + '</span></div>' +
+
+      '<header class="lesson-head dialogue-head">' +
+      '  <div class="lesson-copy">' +
+      '  <div class="kicker"><span class="emoji">' + d.emoji + '</span>' +
+      '    <span class="chip">' + d.level + '</span>' +
+      '    <span class="chip plain">' + esc(tp('dlg.lines', d.lines.length)) + '</span>' +
+      '    <span class="chip plain">' + esc(tp('lesson.exercises', d.exercises.length)) + '</span></div>' +
+      '  <h1>' + esc(d.title) + '</h1>' +
+      '  <p class="lead">' + esc(d.subtitle) + '</p>' +
+      '  <p class="dlg-intro-text">' + esc(d.intro) + '</p>' +
+      '  </div>' +
+      '  <figure class="lesson-hero"><img src="' + esc(img) + '" alt="' + esc(imgAlt) + '" width="800" height="500" decoding="async"></figure>' +
+      '</header>' +
+
+      '<section class="card"><div class="dialogue-toolbar">' +
+      '<h2>' + esc(t('dlg.dialogue')) + '</h2>' +
+      '<button class="btn ghost small" id="toggle-tr" aria-expanded="false">' + esc(t('dlg.showTranslations')) + '</button>' +
+      '</div><div class="dialogue">' +
+      d.lines.map(function (l) {
+        var me = l.who === 'Du';
+        return '<div class="dline' + (me ? ' me' : '') + '">' +
+          '<span class="davatar" aria-hidden="true">' + esc(l.who.slice(0, 2)) + '</span>' +
+          '<div class="dbubble">' +
+          '<div class="dmeta"><span class="dwho">' + esc(l.who) + '</span>' + say(l.no) + '</div>' +
+          '<div class="dno">' + esc(l.no) + '</div>' +
+          '<div class="des" hidden>' + esc(l.es) + '</div>' +
+          '</div></div>';
+      }).join('') +
+      '</div></section>' +
+
+      '<section class="card"><h2>' + esc(t('dlg.vocab')) + '</h2><div class="vocab">' +
+      d.vocab.map(function (v) {
+        return '<div class="row">' + say(v.no) +
+          '<span class="txt"><span class="w">' + esc(v.no) + '</span>' +
+          '<span class="t">' + esc(v.es) + '</span></span></div>';
+      }).join('') +
+      '</div></section>' +
+
+      '<section class="card"><h2>' + esc(t('dlg.phrases')) + '</h2><div class="phrases">' +
+      d.phrases.map(function (p) {
+        return '<div class="phrase">' + say(p.no) +
+          '<span class="txt"><span class="no">' + esc(p.no) + '</span>' +
+          '<span class="es">' + esc(p.es) + '</span></span></div>';
+      }).join('') +
+      '</div></section>' +
+
+      '<section class="card"><div class="tip">💡 <b>' + esc(t('dlg.tip')) + ':</b> ' + esc(d.tip) + '</div></section>' +
+
+      '<section class="card" id="practice"><h2>' + esc(t('dlg.practice')) + '</h2><div id="ex-mount"></div></section>';
+
+    var toggle = document.getElementById('toggle-tr');
+    toggle.addEventListener('click', function () {
+      var show = toggle.getAttribute('aria-expanded') !== 'true';
+      app.querySelectorAll('.dialogue .des').forEach(function (el) { el.hidden = !show; });
+      toggle.setAttribute('aria-expanded', show ? 'true' : 'false');
+      toggle.textContent = show ? t('dlg.hideTranslations') : t('dlg.showTranslations');
+    });
+
+    var mount = document.getElementById('ex-mount');
+    mount.innerHTML =
+      '<div class="actions">' +
+      '<button class="btn primary" id="start-ex">' + esc(t('dlg.start', { n: d.exercises.length })) + '</button>' +
+      (st ? '<span class="ex-hint">' + esc(t('dlg.best', { best: st.best, total: st.total })) + '</span>' : '') +
+      '</div>';
+
+    document.getElementById('start-ex').addEventListener('click', function () {
+      document.getElementById('practice').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      runExercises(mount, d.exercises, {
+        label: t('dlg.label', { title: d.title }),
+        onDone: function (res) {
+          var prev = state.dialogues[d.id];
+          state.dialogues[d.id] = {
+            best: Math.max(prev ? prev.best : 0, res.correct),
+            total: res.total,
+            at: Date.now()
+          };
+          state.xp += res.correct * 10;
+          markDay();
+
+          var failedIds = res.failed.map(function (it) { return d.exercises.indexOf(it); });
+          d.exercises.forEach(function (_, i) {
+            var sig = 'dlg#' + d.id + '#' + i;
+            if (failedIds.indexOf(i) > -1) addReview(sig);
+            else removeReview(sig);
+          });
+
+          save();
+          refreshHud();
+
+          var box = mount.querySelector('.result');
+          if (box) {
+            box.insertAdjacentHTML('beforeend',
+              '<p class="ex-hint">' + esc(t('result.progress', { n: res.correct * 10 })) + '</p>');
+          }
+        }
+      });
+    });
   }
 
   function renderLesson(lesson) {
@@ -1555,6 +1742,14 @@
         var funItem = pack && pack.exercises[Number(parts[2])];
         if (pack && funItem) {
           out.push({ sig: sig, item: funItem, title: pack.title, emoji: pack.emoji, label: t('fun.mixLabel') });
+        }
+        return;
+      }
+      if (parts[0] === 'dlg') {
+        var dialogue = DIALOGUES.find(function (d) { return d.id === parts[1]; });
+        var dlgItem = dialogue && dialogue.exercises[Number(parts[2])];
+        if (dialogue && dlgItem) {
+          out.push({ sig: sig, item: dlgItem, title: dialogue.title, emoji: dialogue.emoji, label: t('dlg.reviewLabel', { level: dialogue.level }) });
         }
         return;
       }
@@ -2228,7 +2423,8 @@
       : name === 'repaso' ? 'review'
         : name === 'tull' ? 'fun'
           : name === 'eksamen' ? 'exam'
-            : 'home';
+            : (name === 'samtaler' || name === 'samtale') ? 'dialogues'
+              : 'home';
     document.querySelectorAll('.nav a').forEach(function (a) {
       a.classList.toggle('active', a.dataset.route === active);
     });
@@ -2236,6 +2432,12 @@
     if (name === 'leksjon') {
       var lesson = LESSONS.find(function (l) { return l.id === arg; });
       renderLesson(lesson || LESSONS[0]);
+    } else if (name === 'samtaler') {
+      renderDialogues();
+    } else if (name === 'samtale') {
+      var dialogue = DIALOGUES.find(function (d) { return d.id === arg; });
+      if (dialogue) renderDialogue(dialogue);
+      else renderDialogues();
     } else if (name === 'coloquial') {
       renderColoquial();
     } else if (name === 'tull') {

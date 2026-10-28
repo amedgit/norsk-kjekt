@@ -62,6 +62,26 @@ C.colloquial.forEach((c, i) => {
   c.example.forEach((e, j) => add(p + `.example[${j}].es`, e.es));
 });
 
+(C.dialogues || []).forEach((d) => {
+  const p = `dlg:${d.id}`;
+  add(p + '.imageAlt', d.imageAlt);
+  add(p + '.subtitle', d.subtitle);
+  add(p + '.intro', d.intro);
+  add(p + '.tip', d.tip);
+  d.lines.forEach((l, j) => add(p + `.lines[${j}].es`, l.es));
+  d.vocab.forEach((v, j) => add(p + `.vocab[${j}].es`, v.es));
+  d.phrases.forEach((ph, j) => add(p + `.phrases[${j}].es`, ph.es));
+  d.exercises.forEach((e, j) => {
+    const q = `${p}.ex[${j}]`;
+    add(q + '.prompt', e.prompt);
+    e.options?.forEach((o, k) => add(q + `.options[${k}]`, o));
+    e.pairs?.forEach((q2, k) => add(q + `.pairs[${k}].b`, q2.b));
+    add(q + '.explain', e.explain);
+    add(q + '.es', e.es);
+    add(q + '.hint', e.hint);
+  });
+});
+
 add('fun.intro', C.fun.intro);
 C.fun.packs.forEach((p) => {
   const pp = `pack:${p.id}`;
@@ -123,6 +143,12 @@ for (const c of C.colloquial) {
   addNo(c.term);
   c.example.forEach((e) => { addNo(e.no); addNo(e.who); });
 }
+for (const d of C.dialogues || []) {
+  d.lines.forEach((l) => addNo(l.no));
+  d.vocab.forEach((v) => addNo(v.no));
+  d.phrases.forEach((p) => addNo(p.no));
+  d.exercises.forEach(addExerciseNo);
+}
 for (const p of C.fun.packs) {
   addNo(p.level);
   p.exercises.forEach(addExerciseNo);
@@ -183,8 +209,8 @@ for (const [label, file, globalName] of LANGS) {
   if (missing.length) {
     failed = true;
     console.error(`\n  Faltan traducciones ${label}. Añádelas a assets/js/${file}:`);
-    missing.slice(0, 30).forEach((s) => console.error('    ' + JSON.stringify(s) + '  // ' + byString.get(s).slice(0, 2).join(' | ')));
-    if (missing.length > 30) console.error(`    … y ${missing.length - 30} más`);
+    (process.env.ALL === '1' ? missing : missing.slice(0, 30)).forEach((s) => console.error('    ' + JSON.stringify(s) + '  // ' + byString.get(s).slice(0, 2).join(' | ')));
+    if (process.env.ALL !== '1' && missing.length > 30) console.error(`    … y ${missing.length - 30} más`);
   }
   if (empty.length) {
     failed = true;

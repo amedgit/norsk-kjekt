@@ -15,12 +15,13 @@
   var UI = {
     es: {
       'meta.title': 'Norsk Kjekt — aprende noruego de verdad',
-      'meta.description': 'Curso de noruego bokmål A1–C2: 15 lecciones, 201 ejercicios, 6 packs de humor, tablas con audio, noruego coloquial y 4 simulacros de la Norskprøven.',
-      'meta.ogDescription': '15 lecciones de bokmål (A1–C2), 201 ejercicios, 6 packs de humor, 18 expresiones de la calle y 4 simulacros de examen. Sin registro y sin build.',
+      'meta.description': 'Curso de noruego bokmål A1–C2: 15 lecciones, 231 ejercicios, 6 conversaciones cotidianas, 6 packs de humor, tablas con audio y 4 simulacros de la Norskprøven.',
+      'meta.ogDescription': '15 lecciones de bokmål (A1–C2), 231 ejercicios, 6 conversaciones con audio, 6 packs de humor, 18 expresiones de la calle y 4 simulacros de examen. Sin registro y sin build.',
       'meta.ogAlt': 'Norsk Kjekt: portal de noruego con ejercicios interactivos',
       'skip': 'Saltar al contenido',
       'nav.primary': 'Principal',
       'nav.lessons': 'Lecciones',
+      'nav.dialogues': 'Samtaler',
       'nav.fun': 'Tull & tøys',
       'nav.colloquial': 'Coloquial',
       'nav.review': 'Repaso',
@@ -206,6 +207,36 @@
       'home.streetSub': 'sin diccionario',
       'home.seeExpressions.one': 'Ver la expresión →',
       'home.seeExpressions.many': 'Ver las {n} expresiones →',
+      'home.dialogueEyebrow': 'Nuevo · A2–B1',
+      'home.dialogueTitle': 'Samtaler: noruego de cada día',
+      'home.dialogueText': '{n} conversaciones cotidianas con audio, traducciones y ejercicios. El noruego que oirás en el portal, en la cafetería o en la consulta del médico.',
+      'home.dialogueEnter': 'Ver las conversaciones',
+      'home.seeDialogues.one': 'Ver la conversación →',
+      'home.seeDialogues.many': 'Ver las {n} conversaciones →',
+
+      'dlg.eyebrow': 'Samtaler · A2–B1',
+      'dlg.title': 'Conversaciones cotidianas',
+      'dlg.intro': '{n} escenas para practicar el noruego que se habla de verdad: portal, cafetería, tienda, trabajo, médico y teléfono. Cada diálogo trae audio por réplica, traducciones y {exercises} ejercicios.',
+      'dlg.progress': 'Has completado {done} de {total}.',
+      'dlg.crumb': 'Samtaler',
+      'dlg.cardNum': 'Samtale · {level}',
+      'dlg.lines.one': '{n} réplica',
+      'dlg.lines.many': '{n} réplicas',
+      'dlg.dialogue': 'Diálogo',
+      'dlg.showTranslations': 'Mostrar traducciones',
+      'dlg.hideTranslations': 'Ocultar traducciones',
+      'dlg.vocab': 'Palabras del diálogo',
+      'dlg.phrases': 'Frases útiles',
+      'dlg.tip': 'Consejo',
+      'dlg.practice': 'Practica',
+      'dlg.start': 'Hacer los {n} ejercicios',
+      'dlg.best': 'Mejor resultado: {best}/{total}',
+      'dlg.label': 'Samtale · {title}',
+      'dlg.reviewLabel': 'Samtale · {level}',
+      'dlg.a2Title': 'A2 · situaciones cotidianas',
+      'dlg.a2Sub': 'portal, café y tienda',
+      'dlg.b1Title': 'B1 · con más soltura',
+      'dlg.b1Sub': 'trabajo, médico y teléfono',
 
       'lesson.cardNum': 'Lección {n}',
       'lesson.new': 'nueva',
@@ -316,12 +347,13 @@
 
     en: {
       'meta.title': 'Norsk Kjekt — learn Norwegian for real',
-      'meta.description': 'Norwegian bokmål course A1–C2: 15 lessons, 201 exercises, 6 humour packs, audio word tables, street Norwegian and 4 Norskprøven mock exams.',
-      'meta.ogDescription': '15 bokmål lessons (A1–C2), 201 interactive exercises, 6 humour packs, 18 street expressions and 4 mock exams. No sign-up, no build.',
+      'meta.description': 'Norwegian bokmål course A1–C2: 15 lessons, 231 exercises, 6 everyday conversations, 6 humour packs, audio word tables and 4 Norskprøven mock exams.',
+      'meta.ogDescription': '15 bokmål lessons (A1–C2), 231 interactive exercises, 6 conversations with audio, 6 humour packs, 18 street expressions and 4 mock exams. No sign-up, no build.',
       'meta.ogAlt': 'Norsk Kjekt: a Norwegian portal with interactive exercises',
       'skip': 'Skip to content',
       'nav.primary': 'Main',
       'nav.lessons': 'Lessons',
+      'nav.dialogues': 'Dialogues',
       'nav.fun': 'Tull & tøys',
       'nav.colloquial': 'Street talk',
       'nav.review': 'Review',
@@ -507,6 +539,36 @@
       'home.streetSub': 'no dictionary needed',
       'home.seeExpressions.one': 'See the expression →',
       'home.seeExpressions.many': 'See all {n} expressions →',
+      'home.dialogueEyebrow': 'New · A2–B1',
+      'home.dialogueTitle': 'Samtaler: everyday Norwegian',
+      'home.dialogueText': '{n} everyday conversations with audio, translations and exercises. The Norwegian you will hear in the stairwell, at the café or at the doctor’s.',
+      'home.dialogueEnter': 'See the conversations',
+      'home.seeDialogues.one': 'See the conversation →',
+      'home.seeDialogues.many': 'See all {n} conversations →',
+
+      'dlg.eyebrow': 'Samtaler · A2–B1',
+      'dlg.title': 'Everyday conversations',
+      'dlg.intro': '{n} scenes to practise the Norwegian people actually speak: stairwell, café, shop, work, doctor and phone. Every dialogue has audio for each line, translations and {exercises} exercises.',
+      'dlg.progress': 'You have completed {done} of {total}.',
+      'dlg.crumb': 'Samtaler',
+      'dlg.cardNum': 'Dialogue · {level}',
+      'dlg.lines.one': '{n} line',
+      'dlg.lines.many': '{n} lines',
+      'dlg.dialogue': 'Dialogue',
+      'dlg.showTranslations': 'Show translations',
+      'dlg.hideTranslations': 'Hide translations',
+      'dlg.vocab': 'Dialogue vocabulary',
+      'dlg.phrases': 'Useful phrases',
+      'dlg.tip': 'Tip',
+      'dlg.practice': 'Practise',
+      'dlg.start': 'Do the {n} exercises',
+      'dlg.best': 'Best score: {best}/{total}',
+      'dlg.label': 'Dialogue · {title}',
+      'dlg.reviewLabel': 'Dialogue · {level}',
+      'dlg.a2Title': 'A2 · everyday situations',
+      'dlg.a2Sub': 'stairwell, café and shop',
+      'dlg.b1Title': 'B1 · more confidence',
+      'dlg.b1Sub': 'work, doctor and phone',
 
       'lesson.cardNum': 'Lesson {n}',
       'lesson.new': 'new',
@@ -618,12 +680,13 @@
 
     fa: {
       'meta.title': "Norsk Kjekt — نروژی را واقعی یاد بگیر",
-      'meta.description': "دوره زبان نروژی بوکمول A1–C2: ۱۵ درس، ۲۰۱ تمرین، ۶ بسته طنز، جدول‌های واژه با صدا، نروژی خیابانی و ۴ آزمون آزمایشی Norskprøven.",
-      'meta.ogDescription': "۱۵ درس بوکمول (A1–C2)، ۲۰۱ تمرین تعاملی، ۶ بسته طنز، ۱۸ اصطلاح خیابانی و ۴ آزمون آزمایشی. بدون ثبت‌نام و بدون build.",
+      'meta.description': "دوره زبان نروژی بوکمول A1–C2: ۱۵ درس، ۲۳۱ تمرین، ۶ گفت‌وگوی روزمره، ۶ بسته طنز، جدول‌های واژه با صدا و ۴ آزمون آزمایشی Norskprøven.",
+      'meta.ogDescription': "۱۵ درس بوکمول (A1–C2)، ۲۳۱ تمرین تعاملی، ۶ گفت‌وگو با صدا، ۶ بسته طنز، ۱۸ اصطلاح خیابانی و ۴ آزمون آزمایشی. بدون ثبت‌نام و بدون build.",
       'meta.ogAlt': "Norsk Kjekt: پرتال نروژی با تمرین‌های تعاملی",
       'skip': "پرش به محتوا",
       'nav.primary': "اصلی",
       'nav.lessons': "درس‌ها",
+      'nav.dialogues': "گفت‌وگوها",
       'nav.fun': "Tull & tøys",
       'nav.colloquial': "محاوره",
       'nav.review': "مرور",
@@ -803,6 +866,36 @@
       'home.streetSub': "بدون فرهنگ لغت",
       'home.seeExpressions.one': "دیدن اصطلاح ←",
       'home.seeExpressions.many': "دیدن {n} اصطلاح ←",
+      'home.dialogueEyebrow': "جدید · A2–B1",
+      'home.dialogueTitle': "گفت‌وگوهای روزمره",
+      'home.dialogueText': "{n} گفت‌وگوی روزمره با صدا، ترجمه و تمرین. نروژی‌ای که در راه‌پله، کافه یا مطب پزشک می‌شنوی.",
+      'home.dialogueEnter': "دیدن گفت‌وگوها",
+      'home.seeDialogues.one': "دیدن گفت‌وگو ←",
+      'home.seeDialogues.many': "دیدن {n} گفت‌وگو ←",
+
+      'dlg.eyebrow': "Samtaler · A2–B1",
+      'dlg.title': "گفت‌وگوهای روزمره",
+      'dlg.intro': "{n} صحنه برای تمرین نروژی واقعی: راه‌پله، کافه، فروشگاه، محل کار، مطب و تلفن. هر گفت‌وگو صدا برای هر جمله، ترجمه و {exercises} تمرین دارد.",
+      'dlg.progress': "{done} از {total} را کامل کرده‌ای.",
+      'dlg.crumb': "گفت‌وگوها",
+      'dlg.cardNum': "گفت‌وگو · {level}",
+      'dlg.lines.one': "{n} جمله",
+      'dlg.lines.many': "{n} جمله",
+      'dlg.dialogue': "گفت‌وگو",
+      'dlg.showTranslations': "نمایش ترجمه‌ها",
+      'dlg.hideTranslations': "پنهان کردن ترجمه‌ها",
+      'dlg.vocab': "واژه‌های گفت‌وگو",
+      'dlg.phrases': "جمله‌های کاربردی",
+      'dlg.tip': "نکته",
+      'dlg.practice': "تمرین",
+      'dlg.start': "انجام {n} تمرین",
+      'dlg.best': "بهترین نتیجه: {best}/{total}",
+      'dlg.label': "گفت‌وگو · {title}",
+      'dlg.reviewLabel': "گفت‌وگو · {level}",
+      'dlg.a2Title': "A2 · موقعیت‌های روزمره",
+      'dlg.a2Sub': "راه‌پله، کافه و فروشگاه",
+      'dlg.b1Title': "B1 · روان‌تر",
+      'dlg.b1Sub': "کار، پزشک و تلفن",
       'lesson.cardNum': "درس {n}",
       'lesson.new': "جدید",
       'lesson.exercises.one': "{n} تمرین",
@@ -958,6 +1051,12 @@
       add(c.term);
       c.example.forEach(function (e) { add(e.no); add(e.who); });
     });
+    (C.dialogues || []).forEach(function (d) {
+      d.lines.forEach(function (l) { add(l.no); add(l.who); });
+      d.vocab.forEach(function (v) { add(v.no); });
+      d.phrases.forEach(function (p) { add(p.no); });
+      d.exercises.forEach(addExercise);
+    });
     C.fun.packs.forEach(function (p) {
       add(p.level);
       p.exercises.forEach(addExercise);
@@ -1011,6 +1110,17 @@
         l.grammar.examples.forEach(function (ex) { ex.es = tf(ex.es); });
       }
       l.exercises.forEach(localizeExercise);
+    });
+
+    (C.dialogues || []).forEach(function (d) {
+      if (d.imageAlt) d.imageAlt = tf(d.imageAlt);
+      d.subtitle = tf(d.subtitle);
+      d.intro = tf(d.intro);
+      d.tip = tf(d.tip);
+      d.lines.forEach(function (l) { l.es = tf(l.es); });
+      d.vocab.forEach(function (v) { v.es = tf(v.es); });
+      d.phrases.forEach(function (p) { p.es = tf(p.es); });
+      d.exercises.forEach(localizeExercise);
     });
 
     C.colloquial.forEach(function (c) {

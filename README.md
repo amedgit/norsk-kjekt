@@ -3,8 +3,9 @@
 **Publicado:** <https://amedgit.github.io/norsk-kjekt/>
 
 Portal para practicar noruego **bokmål** (A1–C2): textos cortos, ejercicios
-interactivos, seis packs de humor, tablas de palabras y verbos, una sección de
-noruego coloquial y **cuatro simulacros de examen** estilo Norskprøven. HTML +
+interactivos, seis conversaciones cotidianas con audio, seis packs de humor,
+tablas de palabras y verbos, una sección de noruego coloquial y **cuatro
+simulacros de examen** estilo Norskprøven. HTML +
 CSS + JS puro, sin build, sin dependencias y sin backend.
 La interfaz y las explicaciones se pueden leer en **español, inglés o persa**
 (فارسی, de derecha a izquierda); el noruego del curso no se traduce.
@@ -29,15 +30,16 @@ cd ~/norsk
 | Parte | Contenido |
 |---|---|
 | Lecciones | 15 lecciones A1–C2: base A1–A2, vida diaria B1, noticias/medio ambiente/derechos laborales en B2, debate y escritura académica en C1, ironía y literatura en C2 |
-| Práctica | 201 ejercicios en 10 formatos: opción múltiple, huecos, ordenar, dictado, cloze, transformar, emparejar, ¿qué sobra?, encontrar el error y memoria |
+| Práctica | 231 ejercicios en 10 formatos: opción múltiple, huecos, ordenar, dictado, cloze, transformar, emparejar, ¿qué sobra?, encontrar el error y memoria |
+| Samtaler | 6 conversaciones cotidianas (A2–B1: portal, cafetería, tienda, trabajo, médico y teléfono) con 52 réplicas, audio por línea, traducciones plegables, vocabulario, frases y 30 ejercicios |
 | Tull & tøys | 6 packs con 84 ejercicios de humor (absurdo, supervivencia, oficina, dictados, modismos y verbos) y una mezcla aleatoria de 10 |
 | Tablas | 94 palabras con audio, búsqueda, filtros por nivel/tema, ordenación y modo examen; 14 verbos en presente, pasado y perfecto |
 | Coloquial | 18 expresiones con registro (neutro → vulgar), diálogo de ejemplo y truco |
 | Simulacro | 4 exámenes completos (A1, A2, B1 y B2) estilo Norskprøven: lesing, lytting, skriving y muntlig, con cronómetro, informe por destreza y respuestas modelo |
 | Idioma | selector **ES / EN / فا** en la cabecera: traduce interfaz, explicaciones y tablas; el bokmål se queda intacto y el progreso se conserva. En persa la página cambia a dirección RTL |
-| Progreso | racha de días, XP, mejor resultado por lección/pack, último informe del simulacro y cola de repaso de fallos |
+| Progreso | racha de días, XP, mejor resultado por lección, pack y conversación, último informe del simulacro y cola de repaso de fallos |
 | Velocidad | selector 0,7×–1,3× en la cabecera; se aplica al audio y se recuerda |
-| Audio | 721 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
+| Audio | 857 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
 
 ## Interfaz en español, inglés o persa
 
@@ -46,7 +48,7 @@ El selector **ES / EN / فا** de la cabecera cambia todo lo que no es noruego:
 - textos de la interfaz, botones, filtros, avisos y resultados;
 - explicaciones, objetivos, trucos y notas culturales;
 - traducciones de textos, vocabulario, frases y diálogos;
-- prompts, opciones, pistas y explicaciones de los 201 ejercicios;
+- prompts, opciones, pistas y explicaciones de los 231 ejercicios;
 - instrucciones, explicaciones y rúbricas de autoevaluación del simulacro;
 - las tablas de palabras y verbos (la columna de significados).
 
@@ -100,14 +102,16 @@ norsk/
 ├── tools/
 │   ├── generate-audio.mjs       ← sintetiza los MP3 y el manifiesto
 │   ├── generate-lesson-art.mjs  ← dibuja las 15 ilustraciones SVG de las lecciones
+│   ├── generate-dialogue-art.mjs ← dibuja las 6 ilustraciones de Samtaler
 │   └── check-i18n.mjs           ← comprueba que todo el contenido tiene traducción EN y FA
 └── assets/
     ├── css/style.css
     ├── img/og.png       ← imagen para compartir en redes
     ├── img/lessons/*.svg ← una ilustración original por lección
-    ├── audio/*.mp3      ← 721 audios (≈10,4 MB), generados
+    ├── img/dialogues/*.svg ← una ilustración por conversación
+    ├── audio/*.mp3      ← 857 audios (≈12,5 MB), generados
     └── js/
-        ├── data.js          ← TODO el contenido del curso y los 4 simulacros
+        ├── data.js          ← TODO el contenido del curso, Samtaler y los 4 simulacros
         ├── content-en.js    ← traducciones ES → EN del contenido
         ├── content-fa.js    ← traducciones ES → فارسی del contenido
         ├── lang.js          ← idioma, textos de interfaz y localización del curso
@@ -213,6 +217,20 @@ Tipos de ejercicio:
 
 Para añadir expresiones coloquiales, edita el array `colloquial` con
 `register` ∈ `neutro | informal | muy informal | fuerte | vulgar | oral`.
+
+### Samtaler
+
+La sección `#/samtaler` vive en el array `dialogues` de `data.js`. Cada escena
+tiene `id`, `image`, `imageAlt`, `emoji`, `level`, `title`, `subtitle`, `intro`,
+`lines` (`who`, `no`, `es`), `vocab` (`no`, `es`), `phrases` (`no`, `es`), `tip`
+y `exercises` (los mismos tipos que las lecciones). La ruta de cada diálogo es
+`#/samtale/<id>`.
+
+- El botón **Mostrar traducciones** alterna todos los `es` de las réplicas.
+- El progreso se guarda en `state.dialogues` con la mejor puntuación.
+- Los fallos entran en el repaso con la firma `dlg#<id>#<índice>`.
+- Al añadir o cambiar textos, ejecuta `tools/generate-audio.mjs` para generar
+  los MP3 y el manifiesto, y `tools/check-i18n.mjs` para comprobar EN y FA.
 
 ### Tull & tøys
 
