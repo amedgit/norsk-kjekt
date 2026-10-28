@@ -460,6 +460,179 @@ const arbeid = svg('Equipo trabajando en una oficina híbrida', ['#e8eff8', '#ee
   <text x="84" y="78" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" font-weight="800" fill="${C.blue}" opacity=".55">ARBEIDSLIV</text>
 `);
 
+/* ------------------------------------------------------------------ 12 */
+const retorikk = svg('Persona dando un discurso ante un público con un esquema de argumentos', ['#efe6f5', '#f7f2e9'], `
+  <circle cx="694" cy="92" r="42" fill="${C.amber}" opacity=".8"/>
+  <rect x="52" y="52" width="696" height="52" rx="26" fill="${C.navy}"/>
+  <text x="76" y="86" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="800" fill="${C.white}" letter-spacing="3">DEBATT</text>
+  <text x="620" y="84" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="700" fill="${C.sky2}">C1 · RETORIKK</text>
+  <path d="M0 336 h800 v164 H0 Z" fill="${C.sand}" opacity=".55"/>
+  <path d="M0 374 h800 v126 H0 Z" fill="${C.cream}"/>
+  ${person(286, 424, 1.12, { shirt: C.blue, hair: C.hair2, wave: true })}
+  <g transform="translate(188 282)">
+    <rect x="0" y="0" width="198" height="130" rx="10" fill="${C.red}"/>
+    <rect x="14" y="16" width="170" height="10" rx="5" fill="${C.white}" opacity=".4"/>
+    <rect x="14" y="34" width="126" height="7" rx="3" fill="${C.white}" opacity=".3"/>
+    <path d="M-6 130 h210 l-10 28 H4 Z" fill="${C.navy}"/>
+    <text x="99" y="80" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" font-weight="800" fill="${C.white}">SKJERMTID</text>
+    <text x="99" y="108" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="600" fill="${C.sky2}">i skolen</text>
+  </g>
+  ${bubble(360, 168, 284, 58, 'På den ene siden ...', C.white)}
+  <g transform="translate(650 250) scale(.8)">
+    <path d="M0 48 h132 M66 48 v-30 M66 18 l-47 16 M66 18 l47 16" fill="none" stroke="${C.green}" stroke-width="4" opacity=".6"/>
+    <g>
+      <circle cx="0" cy="62" r="30" fill="${C.mint}" stroke="${C.green}" stroke-width="3"/>
+      <text x="0" y="67" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="800" fill="${C.green}">sak</text>
+      <circle cx="66" cy="0" r="30" fill="${C.sky}" stroke="${C.blue}" stroke-width="3"/>
+      <text x="66" y="5" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="800" fill="${C.blue}">tillit</text>
+      <circle cx="132" cy="62" r="30" fill="#fbe3e7" stroke="${C.red}" stroke-width="3"/>
+      <text x="132" y="67" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" font-weight="800" fill="${C.red}">følelser</text>
+    </g>
+  </g>
+  <g opacity=".92">
+    ${person(620, 446, .78, { shirt: C.amber, skin: C.skin2, hair: C.hair })}
+    ${person(710, 452, .86, { shirt: C.green, skin: C.skin3, hair: C.hair2, flip: true })}
+    ${person(80, 452, .84, { shirt: C.red, skin: C.skin2, hair: C.hair, flip: true })}
+  </g>
+  <g fill="${C.navy}" opacity=".16">
+    <rect x="62" y="392" width="52" height="60" rx="14"/>
+    <rect x="604" y="398" width="52" height="56" rx="14"/>
+  </g>
+  <text x="76" y="304" font-family="ui-sans-serif, system-ui, sans-serif" font-size="34" font-weight="900" fill="${C.red}" opacity=".35">“</text>
+`);
+
+/* ------------------------------------------------------------------ 13 */
+const akademisk = svg('Escritorio académico con libros, portátil, apuntes y café', ['#e9f1f7', '#f7f2e9'], `
+  <rect x="46" y="54" width="708" height="292" rx="18" fill="${C.white}" opacity=".68"/>
+  <rect x="76" y="84" width="190" height="150" rx="9" fill="${C.sky}" stroke="${C.navy}" stroke-width="6"/>
+  <path d="M76 206 L126 154 L170 190 L216 138 L266 206 Z" fill="${C.blue}" opacity=".6"/>
+  <circle cx="228" cy="112" r="15" fill="${C.amber}" opacity=".8"/>
+  <rect x="76" y="234" width="190" height="8" rx="4" fill="${C.sand}"/>
+  <g transform="translate(298 214)">
+    <rect x="0" y="0" width="168" height="10" rx="4" fill="${C.red}"/>
+    <rect x="4" y="-38" width="160" height="34" rx="4" fill="${C.green}"/>
+    <rect x="14" y="-70" width="144" height="28" rx="4" fill="${C.amber}"/>
+    <rect x="24" y="-94" width="122" height="22" rx="4" fill="${C.blue}"/>
+  </g>
+  <g transform="translate(492 118)">
+    <path d="M0 0 h186 l-16 108 H16 Z" fill="${C.navy}"/>
+    <rect x="12" y="12" width="162" height="82" rx="4" fill="${C.sky}"/>
+    <path d="M26 76 l28 -24 l24 12 l30 -34 l32 22 l18 -16" fill="none" stroke="${C.red}" stroke-width="4"/>
+    <rect x="24" y="58" width="136" height="3" rx="1" fill="${C.blue}" opacity=".3"/>
+    <rect x="-30" y="108" width="246" height="12" rx="6" fill="${C.ink}"/>
+  </g>
+  <rect x="50" y="322" width="700" height="20" rx="10" fill="${C.sand}"/>
+  <rect x="50" y="342" width="700" height="10" fill="${C.navy}" opacity=".16"/>
+  <rect x="0" y="352" width="800" height="148" fill="${C.cream}"/>
+  <g transform="translate(96 382)">
+    <rect x="0" y="0" width="86" height="110" rx="4" fill="${C.white}" stroke="${C.ink}" stroke-opacity=".1"/>
+    <rect x="10" y="12" width="66" height="8" rx="3" fill="${C.red}"/>
+    <rect x="10" y="28" width="54" height="4" rx="2" fill="${C.sky2}"/>
+    <rect x="10" y="40" width="66" height="4" rx="2" fill="${C.sky2}"/>
+    <rect x="10" y="52" width="48" height="4" rx="2" fill="${C.sky2}"/>
+    <rect x="10" y="70" width="66" height="28" rx="3" fill="${C.mint}"/>
+  </g>
+  <g transform="translate(196 394) rotate(4)">
+    <rect x="0" y="0" width="118" height="94" rx="4" fill="${C.white}" stroke="${C.ink}" stroke-opacity=".1"/>
+    <text x="12" y="26" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="800" fill="${C.green}">KILDE</text>
+    <rect x="12" y="38" width="82" height="5" rx="2" fill="${C.sky2}"/>
+    <rect x="12" y="50" width="94" height="5" rx="2" fill="${C.sky2}"/>
+    <rect x="12" y="62" width="62" height="5" rx="2" fill="${C.sky2}"/>
+  </g>
+  <g transform="translate(664 386)">
+    <ellipse cx="0" cy="6" rx="38" ry="8" fill="${C.ink}" opacity=".1"/>
+    <rect x="-28" y="-10" width="56" height="54" rx="8" fill="${C.white}" stroke="${C.ink}" stroke-opacity=".12"/>
+    <path d="M28 0 q22 6 0 30" fill="none" stroke="${C.white}" stroke-width="8"/>
+    <path d="M-18 -32 q-4 14 5 22 M8 -32 q4 14 -5 22" stroke="${C.grey}" stroke-width="3" fill="none" opacity=".55"/>
+  </g>
+  ${person(420, 448, 1.02, { shirt: C.green, skin: C.skin2, hair: C.hair })}
+  <g transform="translate(392 310) rotate(-3)">
+    <rect x="0" y="0" width="76" height="50" rx="4" fill="${C.amber}" opacity=".85"/>
+    <text x="38" y="20" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" font-weight="800" fill="${C.navy}">FUNN</text>
+    <path d="M14 32 h48 M14 40 h34" stroke="${C.navy}" stroke-width="3" opacity=".45"/>
+  </g>
+  <text x="76" y="76" font-family="ui-sans-serif, system-ui, sans-serif" font-size="17" font-weight="800" fill="${C.blue}" opacity=".58">AKADEMISK</text>
+`);
+
+/* ------------------------------------------------------------------ 14 */
+const mellomlinjene = svg('Dos personas conversando entre máscaras de teatro y burbujas irónicas', ['#f4eaf0', '#eef2f7'], `
+  <circle cx="400" cy="240" r="184" fill="${C.white}" opacity=".36"/>
+  <path d="M0 332 h800 v168 H0 Z" fill="${C.sand}" opacity=".5"/>
+  <path d="M0 374 h800 v126 H0 Z" fill="${C.cream}"/>
+  <g transform="translate(76 84) rotate(-8)">
+    <path d="M0 0 q54 -24 108 0 q-6 84 -54 106 q-48 -22 -54 -106 Z" fill="${C.cream}" stroke="${C.amber}" stroke-width="6"/>
+    <path d="M20 34 q14 -12 28 0" fill="none" stroke="${C.ink}" stroke-width="5" stroke-linecap="round"/>
+    <path d="M60 34 q14 -12 28 0" fill="none" stroke="${C.ink}" stroke-width="5" stroke-linecap="round"/>
+    <path d="M26 74 q28 22 56 0" fill="none" stroke="${C.ink}" stroke-width="5" stroke-linecap="round"/>
+    <path d="M54 4 v-24" stroke="${C.amber}" stroke-width="5"/>
+  </g>
+  <g transform="translate(618 78) rotate(10)">
+    <path d="M0 0 q54 -24 108 0 q-6 84 -54 106 q-48 -22 -54 -106 Z" fill="${C.sky2}" stroke="${C.blue}" stroke-width="6"/>
+    <path d="M20 34 q14 -12 28 0" fill="none" stroke="${C.ink}" stroke-width="5" stroke-linecap="round"/>
+    <path d="M60 34 q14 -12 28 0" fill="none" stroke="${C.ink}" stroke-width="5" stroke-linecap="round"/>
+    <path d="M30 84 q24 -22 48 0" fill="none" stroke="${C.ink}" stroke-width="5" stroke-linecap="round"/>
+    <path d="M54 4 v-24" stroke="${C.blue}" stroke-width="5"/>
+  </g>
+  ${person(236, 440, 1.1, { shirt: C.red, hair: C.hair2 })}
+  ${person(584, 446, 1.1, { shirt: C.blue, skin: C.skin3, hair: C.hair, flip: true })}
+  ${bubble(118, 194, 216, 60, 'Så hyggelig.', C.white)}
+  <g transform="translate(492 176)">
+    <rect x="0" y="0" width="120" height="52" rx="26" fill="${C.white}" stroke="${C.ink}" stroke-opacity=".12"/>
+    <text x="60" y="33" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="20" font-weight="800" fill="${C.blue}">…eller?</text>
+    <path d="M22 50 l-12 20 l30 -14" fill="${C.white}"/>
+  </g>
+  <g transform="translate(498 272)">
+    <path d="M0 0 l22 24 l8 -30 l30 12 l-18 -32 l32 -6 l-30 -18 l18 -28 l-34 8 l-4 -34 l-22 28 l-26 -20 l8 34 l-34 8 l28 20 l-16 30 l34 -10 Z" fill="${C.amber}" opacity=".9"/>
+    <circle cx="-4" cy="-12" r="24" fill="${C.amber}"/>
+    <text x="-4" y="-6" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" font-weight="900" fill="${C.navy}">?</text>
+  </g>
+  <text x="72" y="70" font-family="ui-sans-serif, system-ui, sans-serif" font-size="30" font-weight="900" fill="${C.red}" opacity=".38">“ ”</text>
+  <text x="330" y="474" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="800" fill="${C.navy}" opacity=".42" letter-spacing="2">MELLOM LINJENE</text>
+`);
+
+/* ------------------------------------------------------------------ 15 */
+const litteratur = svg('Libro abierto del que sale una ventana con una planta y lluvia', ['#e9e4f3', '#f7f2e9'], `
+  <circle cx="650" cy="84" r="38" fill="${C.amber}" opacity=".85"/>
+  <circle cx="650" cy="84" r="56" fill="${C.amber}" opacity=".12"/>
+  <g opacity=".9">
+    <path d="M0 284 q120 -50 270 -4 q160 48 300 -2 q130 -46 230 -2 v224 H0 Z" fill="${C.mint}"/>
+    <path d="M0 356 q160 -46 340 0 q180 46 460 -8 v152 H0 Z" fill="${C.green}" opacity=".35"/>
+  </g>
+  <g transform="translate(400 292)">
+    <path d="M-310 0 q104 -64 214 -28 q56 18 96 28 q40 -10 96 -28 q110 -36 214 28 q-116 60 -210 30 q-60 -18 -100 -26 q-40 8 -100 26 q-94 30 -210 -30 Z" fill="${C.cream}" stroke="${C.ink}" stroke-opacity=".12"/>
+    <path d="M-306 8 q104 -52 210 -18 v116 q-108 -32 -210 20 Z" fill="${C.white}" stroke="${C.ink}" stroke-opacity=".1"/>
+    <path d="M306 8 q-104 -52 -210 -18 v116 q108 -32 210 20 Z" fill="${C.white}" stroke="${C.ink}" stroke-opacity=".1"/>
+    <path d="M0 -18 v110" stroke="${C.ink}" stroke-width="3" opacity=".18"/>
+    <g opacity=".35" stroke="${C.grey}" stroke-width="3" stroke-linecap="round">
+      <path d="M-268 26 h150 M-268 42 h126 M-268 58 h142 M-268 74 h98"/>
+      <path d="M118 26 h150 M142 42 h126 M118 58 h142 M118 74 h150"/>
+    </g>
+  </g>
+  <g transform="translate(356 92)">
+    <rect x="0" y="0" width="188" height="214" rx="6" fill="${C.sky}" stroke="${C.navy}" stroke-width="8"/>
+    <circle cx="142" cy="36" r="17" fill="${C.amber}" opacity=".85"/>
+    <path d="M0 162 q42 -52 86 -18 q44 34 102 -22 v92 H0 Z" fill="${C.green}" opacity=".55"/>
+    <path d="M94 0 v214 M0 108 h188" stroke="${C.navy}" stroke-width="7"/>
+    <g stroke="${C.white}" stroke-width="3" stroke-linecap="round" opacity=".8">
+      <path d="M30 26 l-8 24 M60 44 l-8 24 M132 74 l-8 24 M42 92 l-8 24 M150 112 l-8 24"/>
+    </g>
+    <g transform="translate(-12 190)">
+      <rect x="-18" y="0" width="68" height="50" rx="8" fill="${C.amber}"/>
+      <path d="M16 0 q-34 -28 -20 -72 q34 16 20 72" fill="${C.green}"/>
+      <path d="M16 0 q32 -24 20 -66 q-34 16 -20 66" fill="${C.green}" opacity=".85"/>
+      <path d="M16 0 v-62" stroke="${C.navy}" stroke-width="3" opacity=".45"/>
+      <path d="M-22 10 h72" stroke="${C.ink}" stroke-width="3" opacity=".18"/>
+    </g>
+  </g>
+  <g transform="translate(674 206)">
+    <path d="M0 0 q-26 -26 -48 -18 q10 38 48 18" fill="${C.green}" opacity=".8"/>
+    <path d="M8 12 q-4 -40 24 -54 q12 40 -24 54" fill="${C.green}" opacity=".9"/>
+    <path d="M2 4 q-46 4 -58 42" fill="none" stroke="${C.navy}" stroke-width="4" opacity=".5"/>
+  </g>
+  <text x="62" y="72" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="800" fill="${C.blue}" opacity=".58">LITTERATUR</text>
+  <text x="58" y="112" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="600" fill="${C.red}" opacity=".55">les mellom linjene</text>
+`);
+
 const files = {
   hei,
   kafe,
@@ -471,7 +644,11 @@ const files = {
   bolig,
   nyheter,
   miljo,
-  arbeidsliv: arbeid
+  arbeidsliv: arbeid,
+  retorikk,
+  akademisk,
+  mellomlinjene,
+  litteratur
 };
 
 for (const [id, content] of Object.entries(files)) {

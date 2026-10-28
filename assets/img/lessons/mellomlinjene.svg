@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-labelledby="title">
+  <title id="title">Dos personas conversando entre máscaras de teatro y burbujas irónicas</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f4eaf0"/>
+      <stop offset="1" stop-color="#eef2f7"/>
+    </linearGradient>
+    <clipPath id="round"><rect width="800" height="500" rx="36"/></clipPath>
+  </defs>
+  <g clip-path="url(#round)">
+    <rect width="800" height="500" fill="url(#bg)"/>
+
+  <circle cx="400" cy="240" r="184" fill="#ffffff" opacity=".36"/>
+  <path d="M0 332 h800 v168 H0 Z" fill="#eadfc9" opacity=".5"/>
+  <path d="M0 374 h800 v126 H0 Z" fill="#f7f2e9"/>
+  <g transform="translate(76 84) rotate(-8)">
+    <path d="M0 0 q54 -24 108 0 q-6 84 -54 106 q-48 -22 -54 -106 Z" fill="#f7f2e9" stroke="#e0a43a" stroke-width="6"/>
+    <path d="M20 34 q14 -12 28 0" fill="none" stroke="#12233f" stroke-width="5" stroke-linecap="round"/>
+    <path d="M60 34 q14 -12 28 0" fill="none" stroke="#12233f" stroke-width="5" stroke-linecap="round"/>
+    <path d="M26 74 q28 22 56 0" fill="none" stroke="#12233f" stroke-width="5" stroke-linecap="round"/>
+    <path d="M54 4 v-24" stroke="#e0a43a" stroke-width="5"/>
+  </g>
+  <g transform="translate(618 78) rotate(10)">
+    <path d="M0 0 q54 -24 108 0 q-6 84 -54 106 q-48 -22 -54 -106 Z" fill="#b9d9ef" stroke="#1f4e79" stroke-width="6"/>
+    <path d="M20 34 q14 -12 28 0" fill="none" stroke="#12233f" stroke-width="5" stroke-linecap="round"/>
+    <path d="M60 34 q14 -12 28 0" fill="none" stroke="#12233f" stroke-width="5" stroke-linecap="round"/>
+    <path d="M30 84 q24 -22 48 0" fill="none" stroke="#12233f" stroke-width="5" stroke-linecap="round"/>
+    <path d="M54 4 v-24" stroke="#1f4e79" stroke-width="5"/>
+  </g>
+  <g transform="translate(236 440) scale(1.1 1.1)">
+    <ellipse cx="0" cy="7" rx="31" ry="7" fill="#12233f" opacity=".12"/>
+    <rect x="-23" y="-104" width="46" height="78" rx="21" fill="#c8102e"/>
+    <rect x="-21" y="-34" width="16" height="42" rx="8" fill="#0e2a47"/>
+    <rect x="5" y="-34" width="16" height="42" rx="8" fill="#0e2a47"/>
+    <path d="M-22 -92 q-20 20 -14 42" fill="none" stroke="#c8102e" stroke-width="14" stroke-linecap="round"/>
+    <circle cx="-35" cy="-47" r="8" fill="#f2c9a8"/>
+    <path d="M22 -92 q18 22 14 42" fill="none" stroke="#c8102e" stroke-width="14" stroke-linecap="round"/>
+       <circle cx="36" cy="-47" r="8" fill="#f2c9a8"/>
+    <circle cx="0" cy="-129" r="25" fill="#f2c9a8"/>
+    <path d="M-25 -132 a25 25 0 0 1 50 0 q-7 -19 -25 -19 q-18 0 -25 19" fill="#7a4d2d"/>
+    <circle cx="-8" cy="-131" r="2.3" fill="#12233f"/>
+    <circle cx="8" cy="-131" r="2.3" fill="#12233f"/>
+    <path d="M-7 -120 q7 6 14 0" fill="none" stroke="#12233f" stroke-width="2.2" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(584 446) scale(-1.1 1.1)">
+    <ellipse cx="0" cy="7" rx="31" ry="7" fill="#12233f" opacity=".12"/>
+    <rect x="-23" y="-104" width="46" height="78" rx="21" fill="#1f4e79"/>
+    <rect x="-21" y="-34" width="16" height="42" rx="8" fill="#0e2a47"/>
+    <rect x="5" y="-34" width="16" height="42" rx="8" fill="#0e2a47"/>
+    <path d="M-22 -92 q-20 20 -14 42" fill="none" stroke="#1f4e79" stroke-width="14" stroke-linecap="round"/>
+    <circle cx="-35" cy="-47" r="8" fill="#6f4634"/>
+    <path d="M22 -92 q18 22 14 42" fill="none" stroke="#1f4e79" stroke-width="14" stroke-linecap="round"/>
+       <circle cx="36" cy="-47" r="8" fill="#6f4634"/>
+    <circle cx="0" cy="-129" r="25" fill="#6f4634"/>
+    <path d="M-25 -132 a25 25 0 0 1 50 0 q-7 -19 -25 -19 q-18 0 -25 19" fill="#2b211c"/>
+    <circle cx="-8" cy="-131" r="2.3" fill="#12233f"/>
+    <circle cx="8" cy="-131" r="2.3" fill="#12233f"/>
+    <path d="M-7 -120 q7 6 14 0" fill="none" stroke="#12233f" stroke-width="2.2" stroke-linecap="round"/>
+  </g>
+  <g>
+    <rect x="118" y="194" width="216" height="60" rx="30" fill="#ffffff" stroke="#12233f" stroke-opacity=".12"/>
+    <path d="M142 252 l-9 16 l22 -14" fill="#ffffff"/>
+    <text x="226" y="225" text-anchor="middle" dominant-baseline="middle"
+      font-family="ui-sans-serif, system-ui, sans-serif" font-size="24" font-weight="800" fill="#12233f">Så hyggelig.</text>
+  </g>
+  <g transform="translate(492 176)">
+    <rect x="0" y="0" width="120" height="52" rx="26" fill="#ffffff" stroke="#12233f" stroke-opacity=".12"/>
+    <text x="60" y="33" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="20" font-weight="800" fill="#1f4e79">…eller?</text>
+    <path d="M22 50 l-12 20 l30 -14" fill="#ffffff"/>
+  </g>
+  <g transform="translate(498 272)">
+    <path d="M0 0 l22 24 l8 -30 l30 12 l-18 -32 l32 -6 l-30 -18 l18 -28 l-34 8 l-4 -34 l-22 28 l-26 -20 l8 34 l-34 8 l28 20 l-16 30 l34 -10 Z" fill="#e0a43a" opacity=".9"/>
+    <circle cx="-4" cy="-12" r="24" fill="#e0a43a"/>
+    <text x="-4" y="-6" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" font-weight="900" fill="#0e2a47">?</text>
+  </g>
+  <text x="72" y="70" font-family="ui-sans-serif, system-ui, sans-serif" font-size="30" font-weight="900" fill="#c8102e" opacity=".38">“ ”</text>
+  <text x="330" y="474" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="800" fill="#0e2a47" opacity=".42" letter-spacing="2">MELLOM LINJENE</text>
+
+  </g>
+</svg>

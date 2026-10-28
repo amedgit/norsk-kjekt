@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-labelledby="title">
+  <title id="title">Libro abierto del que sale una ventana con una planta y lluvia</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e9e4f3"/>
+      <stop offset="1" stop-color="#f7f2e9"/>
+    </linearGradient>
+    <clipPath id="round"><rect width="800" height="500" rx="36"/></clipPath>
+  </defs>
+  <g clip-path="url(#round)">
+    <rect width="800" height="500" fill="url(#bg)"/>
+
+  <circle cx="650" cy="84" r="38" fill="#e0a43a" opacity=".85"/>
+  <circle cx="650" cy="84" r="56" fill="#e0a43a" opacity=".12"/>
+  <g opacity=".9">
+    <path d="M0 284 q120 -50 270 -4 q160 48 300 -2 q130 -46 230 -2 v224 H0 Z" fill="#cfe6d8"/>
+    <path d="M0 356 q160 -46 340 0 q180 46 460 -8 v152 H0 Z" fill="#2f7d5b" opacity=".35"/>
+  </g>
+  <g transform="translate(400 292)">
+    <path d="M-310 0 q104 -64 214 -28 q56 18 96 28 q40 -10 96 -28 q110 -36 214 28 q-116 60 -210 30 q-60 -18 -100 -26 q-40 8 -100 26 q-94 30 -210 -30 Z" fill="#f7f2e9" stroke="#12233f" stroke-opacity=".12"/>
+    <path d="M-306 8 q104 -52 210 -18 v116 q-108 -32 -210 20 Z" fill="#ffffff" stroke="#12233f" stroke-opacity=".1"/>
+    <path d="M306 8 q-104 -52 -210 -18 v116 q108 -32 210 20 Z" fill="#ffffff" stroke="#12233f" stroke-opacity=".1"/>
+    <path d="M0 -18 v110" stroke="#12233f" stroke-width="3" opacity=".18"/>
+    <g opacity=".35" stroke="#8aa0b5" stroke-width="3" stroke-linecap="round">
+      <path d="M-268 26 h150 M-268 42 h126 M-268 58 h142 M-268 74 h98"/>
+      <path d="M118 26 h150 M142 42 h126 M118 58 h142 M118 74 h150"/>
+    </g>
+  </g>
+  <g transform="translate(356 92)">
+    <rect x="0" y="0" width="188" height="214" rx="6" fill="#dceefb" stroke="#0e2a47" stroke-width="8"/>
+    <circle cx="142" cy="36" r="17" fill="#e0a43a" opacity=".85"/>
+    <path d="M0 162 q42 -52 86 -18 q44 34 102 -22 v92 H0 Z" fill="#2f7d5b" opacity=".55"/>
+    <path d="M94 0 v214 M0 108 h188" stroke="#0e2a47" stroke-width="7"/>
+    <g stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity=".8">
+      <path d="M30 26 l-8 24 M60 44 l-8 24 M132 74 l-8 24 M42 92 l-8 24 M150 112 l-8 24"/>
+    </g>
+    <g transform="translate(-12 190)">
+      <rect x="-18" y="0" width="68" height="50" rx="8" fill="#e0a43a"/>
+      <path d="M16 0 q-34 -28 -20 -72 q34 16 20 72" fill="#2f7d5b"/>
+      <path d="M16 0 q32 -24 20 -66 q-34 16 -20 66" fill="#2f7d5b" opacity=".85"/>
+      <path d="M16 0 v-62" stroke="#0e2a47" stroke-width="3" opacity=".45"/>
+      <path d="M-22 10 h72" stroke="#12233f" stroke-width="3" opacity=".18"/>
+    </g>
+  </g>
+  <g transform="translate(674 206)">
+    <path d="M0 0 q-26 -26 -48 -18 q10 38 48 18" fill="#2f7d5b" opacity=".8"/>
+    <path d="M8 12 q-4 -40 24 -54 q12 40 -24 54" fill="#2f7d5b" opacity=".9"/>
+    <path d="M2 4 q-46 4 -58 42" fill="none" stroke="#0e2a47" stroke-width="4" opacity=".5"/>
+  </g>
+  <text x="62" y="72" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="800" fill="#1f4e79" opacity=".58">LITTERATUR</text>
+  <text x="58" y="112" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="600" fill="#c8102e" opacity=".55">les mellom linjene</text>
+
+  </g>
+</svg>

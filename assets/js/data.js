@@ -1466,6 +1466,675 @@ window.COURSE = {
           explain: 'Es el representante de los trabajadores, normalmente vinculado al sindicato. No forma parte de la dirección.'
         }
       ]
+    },
+    /* ------------------------------------------------------------------ 12 */
+    {
+      id: 'retorikk',
+      image: 'assets/img/lessons/retorikk.svg',
+      imageAlt: 'Persona dando un discurso ante un público con burbujas de argumentos',
+      num: 12,
+      emoji: '🎤',
+      level: 'C1',
+      title: 'Retorikk i debatten',
+      subtitle: 'Argumentar con matices, refutar y detectar trucos retóricos',
+      goals: [
+        'Estructurar una argumentación con concesiones',
+        'Refutar sin descalificar al adversario',
+        'Reconocer recursos retóricos en un texto'
+      ],
+      text: [
+        {
+          no: 'Debatten om skjermtid i skolen har pågått lenge. På den ene siden står foreldre som mener at mobilen ødelegger konsentrasjonen. På den andre siden står lærere som hevder at skjermen er blitt en naturlig del av undervisningen.',
+          es: 'El debate sobre el tiempo de pantalla en la escuela lleva mucho tiempo en marcha. Por un lado están los padres que opinan que el móvil destruye la concentración. Por otro, los profesores que afirman que la pantalla se ha convertido en una parte natural de la enseñanza.'
+        },
+        {
+          no: 'Det er lett å velge side. Men spørsmålet er ikke om skjermen er god eller dårlig; spørsmålet er når, hvordan og hvor mye den brukes. Her er det grunn til å være nyansert.',
+          es: 'Es fácil tomar partido. Pero la pregunta no es si la pantalla es buena o mala; la pregunta es cuándo, cómo y cuánto se usa. Aquí hay motivos para ser matizado.'
+        },
+        {
+          no: 'Riktignok viser flere studier at hyppige avbrytelser svekker læringen. Det er et tungt argument for tydelige regler. Samtidig viser annen forskning at digitale verktøy kan gi elever med svake norskferdigheter bedre støtte enn en lærebok alene.',
+          es: 'Es cierto que varios estudios muestran que las interrupciones frecuentes debilitan el aprendizaje. Es un argumento de peso a favor de normas claras. Al mismo tiempo, otras investigaciones muestran que las herramientas digitales pueden dar a los alumnos con pocas competencias en noruego un apoyo mejor que un libro de texto por sí solo.'
+        },
+        {
+          no: 'Motstanderne av skjerm i skolen peker ofte på at elevene blir passive. Men er det skjermen som gjør dem passive, eller er det undervisningen? Et dårlig opplegg blir ikke bedre av å bytte ut nettbrettet med en tavle.',
+          es: 'Los opositores a las pantallas en la escuela suelen señalar que los alumnos se vuelven pasivos. Pero ¿es la pantalla lo que los vuelve pasivos, o es la enseñanza? Un mal planteamiento no mejora por cambiar la tableta por una pizarra.'
+        },
+        {
+          no: 'Poenget er ikke å forby eller å lovprise, men å stille krav til bruken. Skolen bør derfor ikke velge mellom skjerm og papir. Den bør velge det som faktisk får elevene til å tenke – og det kan være begge deler.',
+          es: 'La cuestión no es prohibir ni elogiar sin medida, sino exigir un uso responsable. Por eso la escuela no debería elegir entre pantalla y papel. Debería elegir lo que de verdad hace pensar a los alumnos, y eso puede ser ambas cosas.'
+        }
+      ],
+      vocab: [
+        { no: 'å pågå', es: 'estar en curso, prolongarse', note: 'debatten har pågått lenge = el debate lleva mucho tiempo' },
+        { no: 'på den ene siden', es: 'por un lado' },
+        { no: 'å hevde', es: 'afirmar, sostener' },
+        { no: 'nyansert', es: 'matizado, con matices' },
+        { no: 'riktignok', es: 'ciertamente, es verdad que' },
+        { no: 'avbrytelse', es: 'interrupción' },
+        { no: 'å svekke', es: 'debilitar' },
+        { no: 'samtidig', es: 'al mismo tiempo' },
+        { no: 'motstander', es: 'opositor, adversario' },
+        { no: 'passiv', es: 'pasivo' },
+        { no: 'å bytte ut', es: 'sustituir, cambiar por' },
+        { no: 'å lovprise', es: 'elogiar efusivamente' },
+        { no: 'å stille krav', es: 'exigir, poner requisitos' },
+        { no: 'å innvende', es: 'objetar' },
+        { no: 'tungt argument', es: 'argumento de peso' }
+      ],
+      phrases: [
+        { no: 'Det er lett å velge side. Men spørsmålet er ...', es: 'Es fácil tomar partido. Pero la pregunta es...' },
+        { no: 'Riktignok ... men ...', es: 'Es cierto que... pero...' },
+        { no: 'Poenget er ikke å ..., men å ...', es: 'La cuestión no es..., sino...' },
+        { no: 'Det kan innvendes at ...', es: 'Se puede objetar que...' }
+      ],
+      tip: 'En un debate noruego, la concesión no es debilidad: «riktignok ... men ...» demuestra que has entendido al otro. Evita «du tar feil» y usa «jeg ser det annerledes» o «det er et godt poeng, men». Los tríos y las preguntas retóricas suenan bien en un kronikk, pero en una conversación pueden sonar a discurso.',
+      grammar: {
+        title: 'Concesión y refutación',
+        points: [
+          '«Riktignok ... men ...» reconoce un punto y lo contrapone: Riktignok er det dyrt, men det er verdt det.',
+          '«Det stemmer at ..., men ...» valida al adversario y después refuta.',
+          '«På den ene siden ... på den andre siden ...» ordena perspectivas, aunque no sean simétricas.',
+          '«Det kan innvendes at ...» introduce una objeción sin atacar a nadie.',
+          'Adverbios como likevel, derimot y tvert imot refuerzan el giro argumental.'
+        ],
+        examples: [
+          { no: 'Riktignok viser studiene at avbrytelser svekker læringen, men det betyr ikke at all skjerm er skadelig.', es: 'Es cierto que los estudios muestran que las interrupciones debilitan el aprendizaje, pero eso no significa que toda pantalla sea dañina.' },
+          { no: 'Det stemmer at elevene blir passive; spørsmålet er hva som gjør dem passive.', es: 'Es verdad que los alumnos se vuelven pasivos; la pregunta es qué los vuelve pasivos.' },
+          { no: 'Det kan innvendes at reglene er vanskelige å håndheve. Likevel er de bedre enn ingen regler.', es: 'Se puede objetar que las normas son difíciles de aplicar. Aun así, son mejores que ninguna norma.' }
+        ]
+      },
+      exercises: [
+        {
+          type: 'mcq',
+          prompt: '¿Cuál es la tesis central del texto?',
+          options: [
+            'Que el móvil debería prohibirse por completo en clase',
+            'Que lo importante no es el soporte, sino cómo se usa',
+            'Que los libros funcionan mejor que los dispositivos',
+            'Que los profesores no saben usar la tecnología'
+          ],
+          answer: 1,
+          explain: 'El texto rechaza la elección entre pantalla y papel y pone el foco en el uso: cuándo, cómo y cuánto.'
+        },
+        {
+          type: 'gap',
+          prompt: 'Completa con el conector que introduce el contraste:',
+          sentence: 'Riktignok er skjermen nyttig, ___ den kan også forstyrre.',
+          answers: ['men'],
+          bank: ['men', 'fordi', 'derfor'],
+          es: 'Cierto que la pantalla es útil, pero también puede distraer.',
+          explain: '«Riktignok ... men ...» es la pareja clásica de concesión y contraste.'
+        },
+        {
+          type: 'cloze',
+          prompt: 'Completa el párrafo con las palabras del debate:',
+          text: 'Poenget er ikke å ___ skjermen, men å ___ krav til bruken. Det kan ___ at reglene er vanskelige, men de er ___ bedre enn ingen regler.',
+          answers: ['forby', 'stille', 'innvendes', 'likevel'],
+          bank: ['forby', 'stille', 'innvendes', 'likevel', 'lovprise', 'svekke'],
+          es: 'La cuestión no es prohibir la pantalla, sino exigir un uso responsable. Se puede objetar que las normas son difíciles, pero aun así son mejores que ninguna norma.',
+          explain: '«Forby» y «stille krav» forman la antítesis; «det kan innvendes at» introduce la objeción y «likevel» la cierra.'
+        },
+        {
+          type: 'mcq',
+          prompt: '¿Qué efecto tiene la pregunta «Men er det skjermen som gjør dem passive, eller er det undervisningen?»?',
+          options: [
+            'Cierra el debate con una respuesta definitiva.',
+            'Traslada toda la responsabilidad a los alumnos.',
+            'Cuestiona la premisa del adversario con una alternativa.',
+            'Introduce una cita de investigación.'
+          ],
+          answer: 2,
+          explain: 'La pregunta retórica no pide información: obliga a revisar la premisa de que la pantalla es la causa.'
+        },
+        {
+          type: 'order',
+          prompt: 'Ordena la objeción:',
+          words: ['Det', 'kan', 'innvendes', 'at', 'reglene', 'er', 'vanskelige,', 'men', 'de', 'er', 'nødvendige.'],
+          es: 'Se puede objetar que las normas son difíciles, pero son necesarias.',
+          explain: 'El verbo modal «kan» ocupa la segunda posición y el infinitivo «innvendes» va al final del primer bloque.'
+        },
+        {
+          type: 'transform',
+          prompt: 'Une las dos frases con una concesión:',
+          source: 'Skjermen er nyttig. Den kan også forstyrre.',
+          answer: 'Riktignok er skjermen nyttig, men den kan også forstyrre.',
+          hint: 'riktignok ... men ...',
+          es: 'Cierto que la pantalla es útil, pero también puede distraer.',
+          explain: 'Al empezar con «riktignok», el verbo «er» se coloca detrás: riktignok er skjermen nyttig.'
+        },
+        {
+          type: 'match',
+          prompt: 'Empareja cada recurso con su función:',
+          pairs: [
+            { a: 'riktignok ... men', b: 'concesión y contraste' },
+            { a: 'det kan innvendes at', b: 'objeción hipotética' },
+            { a: 'på den ene siden', b: 'ordenar perspectivas' },
+            { a: 'tvert imot', b: 'corrección fuerte del rumbo' },
+            { a: 'er det skjermen ...?', b: 'pregunta retórica' }
+          ],
+          explain: 'Reconocer la función de cada fórmula permite usarla sin copiar frases hechas.'
+        },
+        {
+          type: 'odd',
+          prompt: '¿Qué palabra no pertenece al lenguaje del debate?',
+          options: ['å hevde', 'å innvende', 'å lovprise', 'kanelsnurr'],
+          answer: 3,
+          explain: '«Kanelsnurr» es un rollo de canela. Delicioso, pero no forma parte del repertorio argumentativo.'
+        },
+        {
+          type: 'listen',
+          prompt: 'Dictado: escribe exactamente lo que oyes.',
+          audio: 'Poenget er ikke å forby skjermen, men å stille krav til bruken.',
+          hint: '12 palabras · la tesis del texto',
+          es: 'La cuestión no es prohibir la pantalla, sino exigir un uso responsable.',
+          explain: '«Ikke ... men ...» contrasta dos infinitivos: forby y stille krav.'
+        }
+      ]
+    },
+
+    /* ------------------------------------------------------------------ 13 */
+    {
+      id: 'akademisk',
+      image: 'assets/img/lessons/akademisk.svg',
+      imageAlt: 'Escritorio con libros, portátil, apuntes y una taza de café',
+      num: 13,
+      emoji: '🎓',
+      level: 'C1',
+      title: 'Akademisk skriving',
+      subtitle: 'Resumir fuentes, matizar hallazgos y escribir con precisión',
+      goals: [
+        'Describir un estudio con lenguaje académico',
+        'Matizar afirmaciones con «tyde på», «kan» y «trolig»',
+        'Estructurar introducción, método y conclusión'
+      ],
+      text: [
+        {
+          no: 'Søvn har lenge vært antatt å spille en viktig rolle for læring. I denne studien undersøker vi sammenhengen mellom søvnvaner og skoleprestasjoner blant 240 elever i videregående skole.',
+          es: 'Desde hace tiempo se supone que el sueño desempeña un papel importante en el aprendizaje. En este estudio investigamos la relación entre los hábitos de sueño y el rendimiento escolar de 240 alumnos de secundaria.'
+        },
+        {
+          no: 'Datamaterialet ble samlet inn gjennom et spørreskjema og elevenes karakterer fra to skoleår. Analysen indikerer at elever som sover mindre enn seks timer per natt, i gjennomsnitt oppnår lavere karakterer enn elever som sover mer.',
+          es: 'Los datos se recogieron mediante un cuestionario y las notas de los alumnos de dos cursos escolares. El análisis indica que los alumnos que duermen menos de seis horas por noche obtienen de media notas más bajas que los que duermen más.'
+        },
+        {
+          no: 'Sammenhengen er imidlertid svakere enn forventet når vi kontrollerer for sosioøkonomisk bakgrunn. Dette tyder på at søvn ikke alene forklarer forskjellene, men at den kan forsterke effekten av andre faktorer.',
+          es: 'Sin embargo, la relación es más débil de lo esperado cuando controlamos el origen socioeconómico. Esto indica que el sueño no explica por sí solo las diferencias, pero puede reforzar el efecto de otros factores.'
+        },
+        {
+          no: 'Studien har flere begrensninger. Datamaterialet er selvrapportert, og vi kan ikke utelukke at elever med gode karakterer også husker søvnvanene sine bedre. Funnene bør derfor tolkes med forsiktighet.',
+          es: 'El estudio tiene varias limitaciones. Los datos son autoinformados y no podemos descartar que los alumnos con buenas notas también recuerden mejor sus hábitos de sueño. Por eso los resultados deben interpretarse con cautela.'
+        },
+        {
+          no: 'På bakgrunn av dette argumenterer vi for at skoler bør informere om søvn, samtidig som de ikke bør fremstille søvn som en enkel løsning på strukturelle problemer. Videre forskning bør undersøke hvordan søvnvaner endrer seg over tid.',
+          es: 'Sobre esta base, defendemos que las escuelas informen sobre el sueño, sin presentarlo como una solución sencilla a problemas estructurales. La investigación futura debería examinar cómo cambian los hábitos de sueño con el tiempo.'
+        }
+      ],
+      vocab: [
+        { no: 'å undersøke', es: 'investigar, examinar' },
+        { no: 'sammenheng', es: 'relación, conexión' },
+        { no: 'skoleprestasjon', es: 'rendimiento escolar' },
+        { no: 'datamateriale', es: 'datos, material de datos' },
+        { no: 'å samle inn', es: 'recoger, recopilar' },
+        { no: 'å indikere', es: 'indicar' },
+        { no: 'i gjennomsnitt', es: 'de media, en promedio' },
+        { no: 'å kontrollere for', es: 'controlar (una variable)' },
+        { no: 'sosioøkonomisk', es: 'socioeconómico' },
+        { no: 'å forsterke', es: 'reforzar' },
+        { no: 'begrensning', es: 'limitación' },
+        { no: 'selvrapportert', es: 'autoinformado' },
+        { no: 'å utelukke', es: 'descartar, excluir' },
+        { no: 'med forsiktighet', es: 'con cautela' },
+        { no: 'på bakgrunn av', es: 'sobre la base de, a partir de' },
+        { no: 'å fremstille', es: 'presentar, describir' }
+      ],
+      phrases: [
+        { no: 'I denne studien undersøker vi ...', es: 'En este estudio investigamos...' },
+        { no: 'Funnene tyder på at ...', es: 'Los resultados indican que...' },
+        { no: 'Det er imidlertid viktig å understreke at ...', es: 'Sin embargo, es importante subrayar que...' },
+        { no: 'Funnene bør tolkes med forsiktighet.', es: 'Los resultados deben interpretarse con cautela.' }
+      ],
+      tip: 'El buen texto académico no dice «dette beviser» si el estudio es pequeño: dice «dette tyder på», «det kan se ut som» o «i denne studien». Ese matiz no es falta de seguridad, es precisión. Y no nominalices todo: «gjennomføringen av analysen» pesa más que «da vi analyserte».',
+      grammar: {
+        title: 'Precisión académica: pasiva, nominalización y matices',
+        points: [
+          'Pasiva con «bli»: Datamaterialet ble samlet inn. Sin agente, el foco está en el proceso.',
+          'Nominalización: å analysere → analysen; å påvirke → påvirkningen. Aporta densidad, pero cansa si abusas.',
+          'Matices epistémicos: kan, trolig, muligens, det ser ut til at, funnene tyder på at. Rebajan la certeza.',
+          'Referencia a fuentes: ifølge, basert på, i tråd med, i motsetning til. Evita «alle vet».',
+          '«På bakgrunn av dette» y «av den grunn» conectan el análisis con la conclusión.'
+        ],
+        examples: [
+          { no: 'Datamaterialet ble samlet inn gjennom et spørreskjema.', es: 'Los datos se recogieron mediante un cuestionario.' },
+          { no: 'Funnene tyder på at sammenhengen er svakere enn forventet.', es: 'Los resultados indican que la relación es más débil de lo esperado.' },
+          { no: 'På bakgrunn av dette argumenterer vi for at skolene bør informere om søvn.', es: 'Sobre esta base, defendemos que las escuelas deberían informar sobre el sueño.' }
+        ]
+      },
+      exercises: [
+        {
+          type: 'mcq',
+          prompt: '¿Qué relación describe mejor el estudio entre sueño y notas?',
+          options: [
+            'Una causa directa demostrada sin dudas',
+            'Una correlación que se debilita al controlar el origen socioeconómico',
+            'Ninguna relación relevante',
+            'Una relación más fuerte de lo esperado'
+          ],
+          answer: 1,
+          explain: 'El texto presenta una relación, pero reconoce que pierde fuerza al controlar el contexto socioeconómico.'
+        },
+        {
+          type: 'cloze',
+          prompt: 'Completa con las fórmulas académicas adecuadas:',
+          text: 'Funnene ___ på at søvn har betydning, men sammenhengen er ___ enn forventet. Studien ___ imidlertid flere begrensninger, og resultatene bør ___ med forsiktighet.',
+          answers: ['tyder', 'svakere', 'har', 'tolkes'],
+          bank: ['tyder', 'svakere', 'har', 'tolkes', 'beviser', 'sterkere'],
+          es: 'Los resultados indican que el sueño importa, pero la relación es más débil de lo esperado. El estudio tiene varias limitaciones y los resultados deben interpretarse con cautela.',
+          explain: '«Tyder på» expresa una inferencia prudente; «beviser» sería demasiado categórico para estos datos.'
+        },
+        {
+          type: 'transform',
+          prompt: 'Reescribe en pasiva:',
+          source: 'Vi samlet inn dataene gjennom et spørreskjema.',
+          answer: 'Dataene ble samlet inn gjennom et spørreskjema.',
+          hint: 'bli + participio',
+          es: 'Los datos se recogieron mediante un cuestionario.',
+          explain: 'El objeto «dataene» pasa a sujeto y el verbo va en pasado pasivo: ble samlet inn.'
+        },
+        {
+          type: 'match',
+          prompt: 'Empareja las fórmulas con su función:',
+          pairs: [
+            { a: 'ifølge', b: 'según (fuente)' },
+            { a: 'i tråd med', b: 'en línea con' },
+            { a: 'i motsetning til', b: 'a diferencia de' },
+            { a: 'på bakgrunn av', b: 'sobre la base de' },
+            { a: 'det ser ut til at', b: 'parece que' }
+          ],
+          explain: 'Estas fórmulas sitúan la información respecto a una fuente, una expectativa o una conclusión.'
+        },
+        {
+          type: 'order',
+          prompt: 'Ordena la conclusión:',
+          words: ['På', 'bakgrunn', 'av', 'dette', 'argumenterer', 'vi', 'for', 'at', 'skolene', 'bør', 'informere.'],
+          es: 'Sobre esta base, defendemos que las escuelas deberían informar.',
+          explain: 'La fórmula «på bakgrunn av dette» abre la frase y el verbo principal «argumenterer» va en segunda posición.'
+        },
+        {
+          type: 'mcq',
+          prompt: '¿Cuál es la formulación más académica y prudente?',
+          options: [
+            'Afirmar que el sueño determina las notas.',
+            'Generalizar diciendo que todos los alumnos duermen poco.',
+            'Usar «kan tyde på» para presentar una inferencia.',
+            'Afirmar que se ha demostrado la relación.'
+          ],
+          answer: 2,
+          explain: '«Kan tyde på» deja espacio a la incertidumbre y evita convertir una correlación en una ley.'
+        },
+        {
+          type: 'gap',
+          prompt: 'Completa con la preposición correcta:',
+          sentence: 'Funnene bør tolkes ___ forsiktighet.',
+          answers: ['med'],
+          bank: ['med', 'på', 'for'],
+          es: 'Los resultados deben interpretarse con cautela.',
+          explain: 'La colocación fija es «å tolke noe med forsiktighet».'
+        },
+        {
+          type: 'listen',
+          prompt: 'Dictado: escribe exactamente lo que oyes.',
+          audio: 'Funnene tyder på at sammenhengen er svakere enn forventet.',
+          hint: '9 palabras · un hallazgo matizado',
+          es: 'Los resultados indican que la relación es más débil de lo esperado.',
+          explain: '«Tyder på at» introduce la interpretación; «svakere enn forventet» compara con la expectativa.'
+        },
+        {
+          type: 'fix',
+          prompt: 'Toca la palabra que suena demasiado categórica:',
+          sentence: 'Studien beviser at søvn er viktig.',
+          wrong: 1,
+          correct: 'Studien tyder på at søvn er viktig.',
+          es: 'El estudio indica que el sueño es importante.',
+          explain: 'Un estudio descriptivo no «beviser» una relación compleja. «Tyder på» es la opción académica.'
+        }
+      ]
+    },
+
+    /* ------------------------------------------------------------------ 14 */
+    {
+      id: 'mellomlinjene',
+      image: 'assets/img/lessons/mellomlinjene.svg',
+      imageAlt: 'Dos personas conversando con mascarillas de teatro y burbujas con doble sentido',
+      num: 14,
+      emoji: '🎭',
+      level: 'C2',
+      title: 'Mellom linjene',
+      subtitle: 'Leer la ironía, el eufemismo y todo lo que no se dice',
+      goals: [
+        'Interpretar la ironía y el understatement según el contexto',
+        'Usar partículas modales para cambiar el tono',
+        'Reconocer eufemismos y lenguaje indirecto'
+      ],
+      text: [
+        {
+          no: 'Det sies at nordmenn ikke har sans for ironi. Det er, som mye annet her i landet, en sannhet med modifikasjoner. Vi bruker den bare litt mindre høyt.',
+          es: 'Se dice que los noruegos no tienen sentido de la ironía. Es, como tantas otras cosas aquí, una verdad con matices. Solo la usamos un poco menos alto.'
+        },
+        {
+          no: 'Tenk på en typisk norsk samtale etter en tur i regnet. «Det var da enda godt at vi hadde med regntøy,» sier noen. Ingen tror at turen var behagelig. Setningen betyr omtrent: «Dette var forferdelig, men vi overlevde.»',
+          es: 'Piensa en una conversación noruega típica después de una caminata bajo la lluvia. «Menos mal que llevamos impermeable», dice alguien. Nadie cree que el paseo fuera agradable. La frase viene a significar: «Esto fue horrible, pero sobrevivimos».'
+        },
+        {
+          no: 'Underdrivelsen er en del av språket. Når en nordmann sier «ikke verst», kan det bety alt fra «helt greit» til «imponerende». Når han sier «det går nok», lover han ingenting. Og når han sier «jaja», har samtalen ofte allerede tatt en annen retning.',
+          es: 'La atenuación forma parte de la lengua. Cuando un noruego dice «no está mal», puede significar desde «bastante bien» hasta «impresionante». Cuando dice «ya saldrá», no promete nada. Y cuando dice «bueno...», la conversación a menudo ya ha tomado otra dirección.'
+        },
+        {
+          no: 'Ironi handler ikke bare om ord, men om tonefall, blikk og fellesskap. Den som sier «så hyggelig» med et skjevt smil, mener kanskje det motsatte. Derfor er det lettere å misforstå ironi i skrift – særlig på meldinger, der stemmen mangler.',
+          es: 'La ironía no va solo de palabras, sino de entonación, mirada y complicidad. Quien dice «qué agradable» con una sonrisa torcida quizá quiere decir lo contrario. Por eso es más fácil malinterpretar la ironía por escrito, sobre todo en los mensajes, donde falta la voz.'
+        },
+        {
+          no: 'For den som lærer norsk, er det fristende å ta alt bokstavelig. Men noen ganger ligger poenget ikke i setningen, men i det som ikke blir sagt. Å lytte etter pausene er også å lære språket.',
+          es: 'Para quien aprende noruego, es tentador tomarlo todo al pie de la letra. Pero a veces el quid no está en la frase, sino en lo que no se dice. Escuchar las pausas también es aprender la lengua.'
+        }
+      ],
+      vocab: [
+        { no: 'å ha sans for', es: 'tener sensibilidad para, apreciar' },
+        { no: 'sannhet med modifikasjoner', es: 'verdad con matices' },
+        { no: 'underdrivelse', es: 'atenuación, expresión contenida' },
+        { no: 'enda godt', es: 'menos mal' },
+        { no: 'omtrent', es: 'aproximadamente, más o menos' },
+        { no: 'å overleve', es: 'sobrevivir' },
+        { no: 'ikke verst', es: 'no está mal' },
+        { no: 'å love', es: 'prometer' },
+        { no: 'tonefall', es: 'entonación' },
+        { no: 'blikk', es: 'mirada' },
+        { no: 'skjevt smil', es: 'sonrisa torcida' },
+        { no: 'å misforstå', es: 'malinterpretar' },
+        { no: 'bokstavelig', es: 'literal, al pie de la letra' },
+        { no: 'pause', es: 'pausa' },
+        { no: 'å ligge i', es: 'estar en, residir en', note: 'poenget ligger i ... = el quid está en...' }
+      ],
+      phrases: [
+        { no: 'Det var da enda godt.', es: 'Menos mal.' },
+        { no: 'Det går nok.', es: 'Ya saldrá / seguro que sale.' },
+        { no: 'Ikke verst, altså.', es: 'No está nada mal.' },
+        { no: 'Jeg tar meg ikke nær av det.', es: 'No me lo tomo a mal.' }
+      ],
+      tip: 'El «nei» noruego a menudo empieza con «jeg vet ikke helt» o «det kan nok være». No es evasión: es cortesía. Y cuidado con el understatement: «det var da enda godt» puede ser alivio sincero o ironía pura. Sin contexto, elige la lectura literal; con un «liksom» o una sonrisa torcida, sospecha.',
+      grammar: {
+        title: 'Partículas modales, ironía y eufemismo',
+        points: [
+          'Partículas como jo, da, vel, nok y visst no cambian el contenido, pero sí la actitud: Det er jo sant; Det går nok.',
+          '«jo» busca acuerdo; «da» suaviza o enfatiza; «vel» expresa duda cortés; «nok» probabilidad; «visst» rumor o distancia.',
+          'El understatement resta intensidad: «ikke verst», «ganske greit», «det kunne vært verre».',
+          'El eufemismo evita la palabra directa: å gå bort (morir), en utfordring (un problema), å være kreativ med sannheten (mentir).',
+          'En la escritura, la ironía necesita contexto: comillas, contraste o una frase que corrija la lectura literal.'
+        ],
+        examples: [
+          { no: 'Det er jo ikke akkurat sommer i dag.', es: 'Es que hoy no es precisamente verano.' },
+          { no: 'Det går nok bra, skal du se.', es: 'Ya verás como sale bien.' },
+          { no: '«Litt utfordrende» kan bety «kaos».', es: '«Un poco complicado» puede significar «caos».' }
+        ]
+      },
+      exercises: [
+        {
+          type: 'mcq',
+          prompt: '¿Qué significa «Det var da enda godt» tras una caminata bajo la lluvia?',
+          options: [
+            'Que el paseo fue agradable',
+            'Alivio irónico: menos mal que sobrevivimos',
+            'Que no llevaban impermeable',
+            'Una invitación a repetir el paseo'
+          ],
+          answer: 1,
+          explain: 'La frase reconoce un pequeño alivio dentro de una situación desagradable. El tono puede ser sincero o irónico.'
+        },
+        {
+          type: 'match',
+          prompt: 'Empareja cada expresión con su intención:',
+          pairs: [
+            { a: 'ikke verst', b: 'no está mal; puede ser un elogio' },
+            { a: 'det går nok', b: 'probabilidad tranquila, sin promesa' },
+            { a: 'jaja', b: 'cambio de tema o resignación' },
+            { a: 'så hyggelig', b: 'puede ser ironía si la sonrisa es torcida' },
+            { a: 'det kunne vært verre', b: 'consuelo con atenuación' }
+          ],
+          explain: 'La misma fórmula puede ser sincera o irónica. El contexto y la entonación deciden.'
+        },
+        {
+          type: 'cloze',
+          prompt: 'Completa con las partículas modales:',
+          text: 'Det er ___ sant at han kom sent. – Ja, det er ___ typisk ham. – Det går ___ bra.',
+          answers: ['jo', 'da', 'nok'],
+          bank: ['jo', 'da', 'nok', 'vel', 'visst'],
+          es: 'Es que es verdad que llegó tarde. — Sí, es típico de él. — Seguro que sale bien.',
+          explain: '«Jo» busca acuerdo, «da» presenta lo evidente con un matiz de resignación y «nok» expresa probabilidad.'
+        },
+        {
+          type: 'mcq',
+          prompt: '¿Qué significa «Han gikk bort» en un contexto serio?',
+          options: [
+            'Se mudó',
+            'Murió',
+            'Se perdió',
+            'Se enfadó'
+          ],
+          answer: 1,
+          explain: '«Å gå bort» es un eufemismo establecido para morir. En otro contexto puede ser literal, pero aquí manda el registro.'
+        },
+        {
+          type: 'transform',
+          prompt: 'Reescribe con un understatement:',
+          source: 'Filmen var kjedelig.',
+          answer: 'Filmen var ikke akkurat spennende.',
+          hint: 'ikke akkurat + adjetivo',
+          es: 'La película no era precisamente emocionante.',
+          explain: '«Ikke akkurat spennende» dice lo mismo que «kjedelig», pero con más distancia y menos ataque directo.'
+        },
+        {
+          type: 'gap',
+          prompt: 'Completa la frase con el remate del understatement:',
+          sentence: 'Etter ulykken sa hun bare: «Det kunne vært ___.»',
+          answers: ['verre'],
+          bank: ['verre', 'bedre', 'bra'],
+          es: 'Después del accidente solo dijo: «Podría haber sido peor».',
+          explain: '«Det kunne vært verre» es una fórmula fija de consuelo contenido.'
+        },
+        {
+          type: 'order',
+          prompt: 'Ordena la idea clave:',
+          words: ['Noen', 'ganger', 'ligger', 'poenget', 'i', 'det', 'som', 'ikke', 'blir', 'sagt.'],
+          es: 'A veces el quid está en lo que no se dice.',
+          explain: '«Ligge i» se usa aquí en sentido figurado: el punto reside en algo.'
+        },
+        {
+          type: 'listen',
+          prompt: 'Dictado: escribe exactamente lo que oyes.',
+          audio: 'Jeg sovnet bare to ganger. Det sier vel sitt.',
+          hint: '9 palabras · ironía suave',
+          es: 'Solo me dormí dos veces. Eso lo dice todo.',
+          explain: '«Det sier vel sitt» es una forma irónica de decir que algo habla por sí solo.'
+        },
+        {
+          type: 'fix',
+          prompt: 'Toca la palabra que sobra:',
+          sentence: 'Jeg tar meg ikke nær av det, jeg.',
+          wrong: 7,
+          correct: 'Jeg tar meg ikke nær av det.',
+          es: 'No me lo tomo a mal.',
+          explain: 'El pronombre final «jeg» sobra: la frase ya tiene sujeto. En el habla se oye, pero en la escritura estorba.'
+        }
+      ]
+    },
+
+    /* ------------------------------------------------------------------ 15 */
+    {
+      id: 'litteratur',
+      image: 'assets/img/lessons/litteratur.svg',
+      imageAlt: 'Libro abierto del que sale una ventana con una planta y lluvia',
+      num: 15,
+      emoji: '📖',
+      level: 'C2',
+      title: 'Litteratur og tolkning',
+      subtitle: 'Leer símbolos, voz narrativa y silencios en un relato',
+      goals: [
+        'Analizar la voz narrativa y el punto de vista',
+        'Interpretar símbolos con pruebas del texto',
+        'Escribir una interpretación matizada en presente'
+      ],
+      text: [
+        {
+          no: 'Leiligheten luktet fortsatt av kaffe og sitron. Ingrid satte flyttekassene fra seg i gangen og åpnet vinduet. Ute var det april, og bjørka i gården hadde akkurat fått musører.',
+          es: 'El piso seguía oliendo a café y limón. Ingrid dejó las cajas de mudanza en el recibidor y abrió la ventana. Fuera era abril, y el abedul del patio acababa de echar sus primeras hojas.'
+        },
+        {
+          no: 'Moren hadde bodd der i trettifem år. I skuffen ved komfyren lå det en bunke kvitteringer, en saks og et fotografi av en mann Ingrid ikke kjente. På baksiden stod det bare et årstall: 1978.',
+          es: 'Su madre había vivido allí treinta y cinco años. En el cajón junto a la cocina había un montón de recibos, unas tijeras y una fotografía de un hombre que Ingrid no conocía. En el reverso solo ponía un año: 1978.'
+        },
+        {
+          no: 'Hun satte fotografiet på spisebordet og fortsatte å pakke. Hver gjenstand var lett å legge ned, men vanskelig å kaste. Etter en time hadde hun fylt tre kasser og tomt nesten ingenting.',
+          es: 'Puso la fotografía sobre la mesa y siguió haciendo cajas. Cada objeto era fácil de guardar, pero difícil de tirar. Al cabo de una hora había llenado tres cajas y vaciado casi nada.'
+        },
+        {
+          no: 'Da hun skulle ta ned planten fra vinduskarmen, så hun at potten var sprukket. Røttene hadde vokst gjennom sprekken og laget et tynt, hvitt nett mot glasset. Hun lot den stå.',
+          es: 'Cuando fue a bajar la planta del alféizar, vio que la maceta estaba rajada. Las raíces habían crecido por la grieta y formaban una red fina y blanca contra el cristal. La dejó donde estaba.'
+        },
+        {
+          no: 'Utenfor begynte det å regne. Ingrid tenkte at hun kanskje skulle ringe broren sin. Hun hadde sagt at hun ikke trengte hjelp. Det var sant, og det var ikke sant, på samme tid.',
+          es: 'Fuera empezó a llover. Ingrid pensó que quizá debería llamar a su hermano. Había dicho que no necesitaba ayuda. Era verdad, y no era verdad, al mismo tiempo.'
+        }
+      ],
+      vocab: [
+        { no: 'forteller', es: 'narrador, narradora' },
+        { no: 'synsvinkel', es: 'punto de vista, perspectiva narrativa' },
+        { no: 'motiv', es: 'motivo (tema recurrente)' },
+        { no: 'symbol', es: 'símbolo' },
+        { no: 'metafor', es: 'metáfora' },
+        { no: 'besjeling', es: 'personificación' },
+        { no: 'stemning', es: 'atmósfera, ambiente' },
+        { no: 'antydning', es: 'insinuación, sugerencia' },
+        { no: 'ambivalens', es: 'ambivalencia' },
+        { no: 'undertekst', es: 'subtexto' },
+        { no: 'å tolke', es: 'interpretar' },
+        { no: 'å tyde', es: 'descifrar, interpretar' },
+        { no: 'språklig virkemiddel', es: 'recurso lingüístico' },
+        { no: 'å utelate', es: 'omitir, dejar fuera' },
+        { no: 'gjennomgående', es: 'recurrente, constante' }
+      ],
+      phrases: [
+        { no: 'Teksten kan leses som ...', es: 'El texto puede leerse como...' },
+        { no: 'Det er nærliggende å tolke ...', es: 'Es tentador interpretar...' },
+        { no: 'Forfatteren overlater til leseren å ...', es: 'La autora deja al lector...' },
+        { no: 'Symbolikken peker mot ...', es: 'El simbolismo apunta a...' }
+      ],
+      tip: 'Una interpretación no es adivinar la intención secreta del autor: es proponer una lectura y defenderla con detalles. En noruego académico se dice «teksten kan tolkes som», no «teksten betyr egentlig». Una duda bien argumentada vale más que una certeza sin pruebas.',
+      grammar: {
+        title: 'Voz, símbolo y subtexto',
+        points: [
+          'Synsvinkel: una tercera persona que solo sabe lo que sabe Ingrid da cercanía y, a la vez, distancia.',
+          'Symbol: un objeto concreto (la ventana, la planta, la fotografía) que adquiere varias capas de sentido.',
+          'Metafor y personificación: «bjørka hadde fått musører» da vida a la naturaleza y marca la estación.',
+          'Undertekst: lo que no se dice directamente. Las repeticiones y contradicciones («sant» / «ikke sant») apuntan hacia ello.',
+          'Para escribir sobre literatura: presente, verbos como skildrer, antyder, peker mot, y siempre un detalle o una cita como apoyo.'
+        ],
+        examples: [
+          { no: 'Vinduet fungerer som en terskel mellom inne og ute.', es: 'La ventana funciona como umbral entre el interior y el exterior.' },
+          { no: 'Planten som vokser gjennom den sprukne potten, kan tolkes som et bilde på det som ikke lar seg pakke bort.', es: 'La planta que crece a través de la maceta rajada puede interpretarse como una imagen de lo que no se deja guardar.' },
+          { no: 'Fortelleren sier ikke at Ingrid er ensom; hun lar leseren forstå det.', es: 'La narradora no dice que Ingrid esté sola; deja que el lector lo entienda.' }
+        ]
+      },
+      exercises: [
+        {
+          type: 'mcq',
+          prompt: '¿Qué tipo de narrador tiene el relato?',
+          options: [
+            'Primera persona: Ingrid cuenta su propia historia',
+            'Tercera persona limitada al punto de vista de Ingrid',
+            'Narrador omnisciente que conoce a todos los personajes',
+            'Segunda persona: se dirige al lector'
+          ],
+          answer: 1,
+          explain: 'El relato usa tercera persona, pero solo muestra lo que Ingrid ve, recuerda y piensa.'
+        },
+        {
+          type: 'match',
+          prompt: 'Empareja cada recurso con su ejemplo o función:',
+          pairs: [
+            { a: 'synsvinkel', b: 'solo vemos lo que Ingrid ve y sabe' },
+            { a: 'symbol', b: 'la planta en la maceta rajada' },
+            { a: 'besjeling', b: '«bjørka ... hadde fått musører»' },
+            { a: 'undertekst', b: '«Det var sant, og det var ikke sant»' },
+            { a: 'motiv', b: 'el piso, la ventana y la lluvia' }
+          ],
+          explain: 'El análisis literario une un recurso con un detalle concreto, no con una impresión vaga.'
+        },
+        {
+          type: 'mcq',
+          prompt: '¿Qué lectura de la planta es más defendible?',
+          options: [
+            'Que Ingrid es jardinera profesional',
+            'Que la vida sigue y no todo se puede empaquetar',
+            'Que la madre odiaba las plantas',
+            'Que el piso está en mal estado y nada más'
+          ],
+          answer: 1,
+          explain: 'La maceta rajada y las raíces que escapan sostienen la idea de algo que crece y no se deja guardar.'
+        },
+        {
+          type: 'cloze',
+          prompt: 'Completa el análisis con los verbos adecuados:',
+          text: 'Teksten ___ Ingrids forsøk på å rydde morens leilighet. Vinduet ___ mot gården, og planten ___ som et bilde på noe som vokser videre. Fortelleren ___ imidlertid ikke at Ingrid er alene.',
+          answers: ['skildrer', 'vender', 'fungerer', 'sier'],
+          bank: ['skildrer', 'vender', 'fungerer', 'sier', 'gjemmer', 'roper'],
+          es: 'El texto describe el intento de Ingrid de vaciar el piso de su madre. La ventana da al patio y la planta funciona como imagen de algo que sigue creciendo. Sin embargo, la narradora no dice que Ingrid esté sola.',
+          explain: '«Skildrer» describe, «fungerer som» establece una función simbólica y «sier ikke» señala lo que queda en el subtexto.'
+        },
+        {
+          type: 'order',
+          prompt: 'Ordena la tesis de un análisis:',
+          words: ['Teksten', 'kan', 'leses', 'som', 'en', 'fortelling', 'om', 'tap', 'og', 'videreføring.'],
+          es: 'El texto puede leerse como un relato sobre la pérdida y la continuidad.',
+          explain: '«Kan leses som» es una fórmula académica prudente para proponer una interpretación.'
+        },
+        {
+          type: 'transform',
+          prompt: 'Reescribe en presente y con un matiz académico:',
+          source: 'Ingrid var ensom, men hun innrømmet det ikke.',
+          answer: 'Teksten antyder at Ingrid er ensom, men hun innrømmer det ikke.',
+          hint: 'antydet at + presente',
+          es: 'El texto sugiere que Ingrid está sola, pero ella no lo admite.',
+          explain: 'El análisis literario suele ir en presente. «Antyder at» presenta la lectura como inferencia, no como hecho.'
+        },
+        {
+          type: 'gap',
+          prompt: 'Completa con el verbo que expresa dirección simbólica:',
+          sentence: 'Symbolikken ___ mot det som ikke lar seg si.',
+          answers: ['peker'],
+          bank: ['peker', 'ser', 'går'],
+          es: 'El simbolismo apunta a lo que no se puede decir.',
+          explain: '«Å peke mot» es la colocación habitual para indicar hacia dónde apunta un símbolo.'
+        },
+        {
+          type: 'listen',
+          prompt: 'Dictado: escribe exactamente lo que oyes.',
+          audio: 'Hun hadde sagt at hun ikke trengte hjelp.',
+          hint: '8 palabras · una frase clave del relato',
+          es: 'Había dicho que no necesitaba ayuda.',
+          explain: 'El pluscuamperfecto «hadde sagt» marca una acción anterior al momento de la mudanza.'
+        },
+        {
+          type: 'mcq',
+          prompt: '¿Qué detalle del texto es más ambiguo?',
+          options: [
+            'El olor a café y limón',
+            'El año 1978 en la fotografía',
+            'La lluvia tras la ventana',
+            'Las cajas de mudanza'
+          ],
+          answer: 1,
+          explain: 'El año y el hombre desconocido abren una historia que el relato no explica. Esa ausencia es parte del sentido.'
+        }
+      ]
     }
   ],
 
@@ -2527,7 +3196,15 @@ window.COURSE = {
     { no: 'snill', es: 'amable', level: 'A2', tag: 'falsos amigos', note: 'No es «silly». Un perro snill no hace gracias: es bueno.' },
     { no: 'kjekk', es: 'guapo, majo', level: 'A2', tag: 'falsos amigos', note: 'No es «cheeky». También puede significar «majo» sin más.' },
     { no: 'aktuell', es: 'relevante', level: 'B2', tag: 'falsos amigos', note: 'No es «actual»: es lo que está sobre la mesa ahora.' },
-    { no: 'real', es: 'de fiar, legal', level: 'B1', tag: 'falsos amigos', note: '«En real fyr» es un tío de fiar, no alguien real.' }
+    { no: 'real', es: 'de fiar, legal', level: 'B1', tag: 'falsos amigos', note: '«En real fyr» es un tío de fiar, no alguien real.' },
+    { no: 'retorikk', es: 'retórica', level: 'C1', tag: 'sociedad' },
+    { no: 'premiss', es: 'premisa', level: 'C1', tag: 'sociedad' },
+    { no: 'kilde', es: 'fuente', level: 'C1', tag: 'sociedad', note: 'kildekritikk = espíritu crítico con las fuentes' },
+    { no: 'nyansert', es: 'matizado', level: 'C1', tag: 'mente' },
+    { no: 'underdrivelse', es: 'atenuación', level: 'C2', tag: 'mente' },
+    { no: 'tonefall', es: 'entonación', level: 'C2', tag: 'mente' },
+    { no: 'undertekst', es: 'subtexto', level: 'C2', tag: 'mente' },
+    { no: 'forteller', es: 'narrador, narradora', level: 'C2', tag: 'mente' }
   ],
 
   /* ==================================================================

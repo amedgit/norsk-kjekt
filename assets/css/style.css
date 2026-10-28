@@ -43,11 +43,11 @@ a { color: inherit; }
 button { font: inherit; }
 
 .skip {
-  position: absolute; left: -999px; top: 8px; z-index: 100;
+  position: absolute; inset-inline-start: -999px; top: 8px; z-index: 100;
   background: var(--ink); color: #fff; padding: .6rem 1rem; border-radius: 10px;
   border: 0; font: inherit; cursor: pointer;
 }
-.skip:focus { left: 8px; }
+.skip:focus { inset-inline-start: 8px; }
 
 /* ---------------- topbar ---------------- */
 
@@ -688,6 +688,8 @@ main {
 .wb-level.lvl-a2 { background: #e8f3ff; color: #0b5d9c; }
 .wb-level.lvl-b1 { background: var(--amber-soft); color: var(--amber); }
 .wb-level.lvl-b2 { background: var(--red-soft); color: var(--red); }
+.wb-level.lvl-c1 { background: #ede9fe; color: #6d28d9; }
+.wb-level.lvl-c2 { background: #fce7f3; color: #be185d; }
 .wb-tag {
   display: inline-block; font-size: .72rem; color: var(--muted);
   background: var(--bg); padding: .15rem .45rem; border-radius: 6px;
@@ -948,7 +950,7 @@ html[lang="fa"] {
 html[dir="rtl"] .para .no,
 html[dir="rtl"] .gx .no, html[dir="rtl"] .vocab .no, html[dir="rtl"] .phrase .no,
 html[dir="rtl"] .wb-no, html[dir="rtl"] .w-no {
-  unicode-bidi: plaintext;
+  direction: ltr; unicode-bidi: isolate; text-align: start;
 }
 
 html[dir="rtl"] .para .es::before { content: "← "; }

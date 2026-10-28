@@ -2,7 +2,7 @@
 
 **Publicado:** <https://amedgit.github.io/norsk-kjekt/>
 
-Portal para practicar noruego **bokmål** (A1–B2): textos cortos, ejercicios
+Portal para practicar noruego **bokmål** (A1–C2): textos cortos, ejercicios
 interactivos, seis packs de humor, tablas de palabras y verbos, una sección de
 noruego coloquial y **cuatro simulacros de examen** estilo Norskprøven. HTML +
 CSS + JS puro, sin build, sin dependencias y sin backend.
@@ -28,16 +28,16 @@ cd ~/norsk
 
 | Parte | Contenido |
 |---|---|
-| Lecciones | 11 lecciones A1–B2: base A1–A2, vida diaria B1 y noticias, medio ambiente y derechos laborales en B2 |
-| Práctica | 165 ejercicios en 10 formatos: opción múltiple, huecos, ordenar, dictado, cloze, transformar, emparejar, ¿qué sobra?, encontrar el error y memoria |
+| Lecciones | 15 lecciones A1–C2: base A1–A2, vida diaria B1, noticias/medio ambiente/derechos laborales en B2, debate y escritura académica en C1, ironía y literatura en C2 |
+| Práctica | 201 ejercicios en 10 formatos: opción múltiple, huecos, ordenar, dictado, cloze, transformar, emparejar, ¿qué sobra?, encontrar el error y memoria |
 | Tull & tøys | 6 packs con 84 ejercicios de humor (absurdo, supervivencia, oficina, dictados, modismos y verbos) y una mezcla aleatoria de 10 |
-| Tablas | 86 palabras con audio, búsqueda, filtros por nivel/tema, ordenación y modo examen; 14 verbos en presente, pasado y perfecto |
+| Tablas | 94 palabras con audio, búsqueda, filtros por nivel/tema, ordenación y modo examen; 14 verbos en presente, pasado y perfecto |
 | Coloquial | 18 expresiones con registro (neutro → vulgar), diálogo de ejemplo y truco |
 | Simulacro | 4 exámenes completos (A1, A2, B1 y B2) estilo Norskprøven: lesing, lytting, skriving y muntlig, con cronómetro, informe por destreza y respuestas modelo |
 | Idioma | selector **ES / EN / فا** en la cabecera: traduce interfaz, explicaciones y tablas; el bokmål se queda intacto y el progreso se conserva. En persa la página cambia a dirección RTL |
 | Progreso | racha de días, XP, mejor resultado por lección/pack, último informe del simulacro y cola de repaso de fallos |
 | Velocidad | selector 0,7×–1,3× en la cabecera; se aplica al audio y se recuerda |
-| Audio | 578 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
+| Audio | 721 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
 
 ## Interfaz en español, inglés o persa
 
@@ -46,7 +46,7 @@ El selector **ES / EN / فا** de la cabecera cambia todo lo que no es noruego:
 - textos de la interfaz, botones, filtros, avisos y resultados;
 - explicaciones, objetivos, trucos y notas culturales;
 - traducciones de textos, vocabulario, frases y diálogos;
-- prompts, opciones, pistas y explicaciones de los 165 ejercicios;
+- prompts, opciones, pistas y explicaciones de los 201 ejercicios;
 - instrucciones, explicaciones y rúbricas de autoevaluación del simulacro;
 - las tablas de palabras y verbos (la columna de significados).
 
@@ -99,13 +99,13 @@ norsk/
 ├── .github/workflows/pages.yml
 ├── tools/
 │   ├── generate-audio.mjs       ← sintetiza los MP3 y el manifiesto
-│   ├── generate-lesson-art.mjs  ← dibuja las 11 ilustraciones SVG de las lecciones
+│   ├── generate-lesson-art.mjs  ← dibuja las 15 ilustraciones SVG de las lecciones
 │   └── check-i18n.mjs           ← comprueba que todo el contenido tiene traducción EN y FA
 └── assets/
     ├── css/style.css
     ├── img/og.png       ← imagen para compartir en redes
     ├── img/lessons/*.svg ← una ilustración original por lección
-    ├── audio/*.mp3      ← 578 audios (≈7,8 MB), generados
+    ├── audio/*.mp3      ← 721 audios (≈10,4 MB), generados
     └── js/
         ├── data.js          ← TODO el contenido del curso y los 4 simulacros
         ├── content-en.js    ← traducciones ES → EN del contenido
@@ -141,9 +141,9 @@ Todo el contenido vive en `assets/js/data.js`. Copia un objeto del array
 ```js
 {
   id: 'ny',              // único, sin espacios
-  num: 12,
+  num: 16,
   emoji: '🍕',
-  level: 'A2',           // A1 | A2 | B1 | B2
+  level: 'A2',           // A1 | A2 | B1 | B2 | C1 | C2
   title: 'På pizzeria',
   subtitle: 'Pedir, compartir y pagar',
   goals: ['...'],
@@ -160,10 +160,11 @@ Todo el contenido vive en `assets/js/data.js`. Copia un objeto del array
 }
 ```
 
-En B1 y B2 las traducciones del texto salen plegadas por defecto; los ejemplos
-de gramática y el vocabulario siguen visibles. Añade también las traducciones
-inglesas en `content-en.js` y ejecuta `node tools/check-i18n.mjs` antes de
-publicar.
+En B1 y B2 las traducciones del texto salen plegadas por defecto; en C1 y C2
+se muestran desplegadas, igual que en A1 y A2. Los ejemplos de gramática y el
+vocabulario siguen siempre visibles. Añade también las traducciones inglesa y
+persa en `content-en.js` y `content-fa.js`, y ejecuta
+`node tools/check-i18n.mjs` antes de publicar.
 
 Tipos de ejercicio:
 

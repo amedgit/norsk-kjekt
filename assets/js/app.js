@@ -1042,7 +1042,7 @@
       '<label class="wb-switch"><input type="checkbox" id="wb-hide"' + (funUi.hide ? ' checked' : '') + '> ' + esc(t('fun.examMode')) + '</label>' +
       '</div>' +
       '<div class="wb-levels">' +
-      ['all', 'A1', 'A2', 'B1', 'B2'].map(function (l) {
+      ['all', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'].map(function (l) {
         return '<button class="fchip" data-wb-level="' + l + '">' + (l === 'all' ? esc(t('fun.all')) : l) + '</button>';
       }).join('') + '</div>' +
       '<div class="wtable-wrap"><table class="wtable' + (funUi.hide ? ' hide-es' : '') + '" id="word-table">' +
@@ -1308,6 +1308,8 @@
       levelSection(t('home.basicTitle'), t('home.basicSub'), ['A1', 'A2']) +
       levelSection(t('home.b1Title'), t('home.b1Sub'), ['B1']) +
       levelSection(t('home.b2Title'), t('home.b2Sub'), ['B2']) +
+      levelSection(t('home.c1Title'), t('home.c1Sub'), ['C1']) +
+      levelSection(t('home.c2Title'), t('home.c2Sub'), ['C2']) +
 
       '<section class="exam-banner">' +
       '  <div>' +
