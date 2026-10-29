@@ -1,0 +1,35 @@
+{
+  "name": "Norsk Kjekt — aprende noruego de verdad",
+  "short_name": "Norsk Kjekt",
+  "description": "Curso de noruego bokmål A1–C2: lecciones, ejercicios, conversaciones, chats y simulacros de examen. Funciona sin conexión.",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f5f6f8",
+  "theme_color": "#ba0c2f",
+  "lang": "es",
+  "dir": "ltr",
+  "categories": ["education", "language"],
+  "icons": [
+    {
+      "src": "assets/img/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/img/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/img/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

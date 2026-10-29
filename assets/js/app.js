@@ -13,6 +13,24 @@
   var hudStreak = document.getElementById('hud-streak');
   var hudXp = document.getElementById('hud-xp');
 
+  /* Instalación como app (PWA): guardamos el evento para mostrar el botón. */
+  var deferredInstallPrompt = null;
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault();
+    deferredInstallPrompt = e;
+    var btn = document.getElementById('install-app');
+    var hint = document.getElementById('install-hint');
+    if (btn) btn.hidden = false;
+    if (hint) hint.hidden = true;
+  });
+  window.addEventListener('appinstalled', function () {
+    deferredInstallPrompt = null;
+    var btn = document.getElementById('install-app');
+    var hint = document.getElementById('install-hint');
+    if (btn) btn.hidden = true;
+    if (hint) { hint.hidden = false; hint.textContent = t('home.appInstalled'); }
+  });
+
   /* =======================================================
      Estado / persistencia
      ======================================================= */
@@ -1411,6 +1429,19 @@
       '  </div>' +
       '</section>' +
 
+      '<section class="app-banner">' +
+      '  <div>' +
+      '    <span class="eyebrow">' + esc(t('home.appEyebrow')) + '</span>' +
+      '    <h2>' + esc(t('home.appTitle')) + '</h2>' +
+      '    <p>' + esc(t('home.appText')) + '</p>' +
+      '    <p class="install-hint" id="install-hint">' + esc(t('home.appManual')) + '</p>' +
+      '  </div>' +
+      '  <div class="fun-banner-actions">' +
+      '    <button class="btn primary" id="install-app" hidden>' + esc(t('home.appInstall')) + '</button>' +
+      '    <a class="btn ghost" href="assets/app/norsk-kjekt.apk" download>' + esc(t('home.appApk')) + '</a>' +
+      '  </div>' +
+      '</section>' +
+
       '<section class="exam-banner">' +
       '  <div>' +
       '    <span class="eyebrow">' + esc(t('exam.eyebrow')) + '</span>' +
@@ -1443,6 +1474,27 @@
       }).join('') + '</div>' +
       '<div class="actions" style="margin-top:1rem"><a class="btn ghost" href="#/coloquial">' +
       esc(tp('home.seeExpressions', COURSE.colloquial.length)) + '</a></div>';
+
+    var installBtn = document.getElementById('install-app');
+    var installHint = document.getElementById('install-hint');
+    if (installBtn && window.matchMedia('(display-mode: standalone)').matches) {
+      installBtn.hidden = true;
+      installHint.textContent = t('home.appInstalled');
+    } else if (installBtn && deferredInstallPrompt) {
+      installBtn.hidden = false;
+      installHint.hidden = true;
+    }
+    if (installBtn) {
+      installBtn.addEventListener('click', function () {
+        if (!deferredInstallPrompt) return;
+        deferredInstallPrompt.prompt();
+        deferredInstallPrompt.userChoice.finally(function () {
+          deferredInstallPrompt = null;
+          installBtn.hidden = true;
+          installHint.hidden = false;
+        });
+      });
+    }
   }
 
   /* ---------------- Samtaler ---------------- */

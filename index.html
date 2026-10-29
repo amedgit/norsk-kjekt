@@ -6,6 +6,11 @@
   <title>Norsk Kjekt — aprende noruego de verdad</title>
   <meta name="description" content="Curso de noruego bokmål A1–C2: 15 lecciones, 231 ejercicios, 6 conversaciones cotidianas, 4 grupos de WhatsApp, 6 packs de humor, tablas con audio y 4 simulacros de la Norskprøven.">
   <meta name="theme-color" content="#ba0c2f">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="assets/img/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Norsk Kjekt">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Norsk Kjekt">
   <meta property="og:title" content="Norsk Kjekt — aprende noruego de verdad">
@@ -77,5 +82,12 @@
   <script src="assets/js/audio-manifest.js"></script>
   <script src="assets/js/tts.js"></script>
   <script src="assets/js/app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('./sw.js').catch(function () { /* sin offline */ });
+      });
+    }
+  </script>
 </body>
 </html>
