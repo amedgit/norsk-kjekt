@@ -47,17 +47,27 @@ public class MainActivity extends Activity {
         web.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                Uri url = request.getUrl();
-                String host = url.getHost();
-                if (host != null && host.equals("amedgit.github.io")) {
-                    return false;
-                }
-                return openExternally(url);
+                return handleUrl(request.getUrl());
+            }
+
+            /* Android 5–6 (API 21–23) usan la variante antigua. */
+            @SuppressWarnings("deprecation")
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                return handleUrl(Uri.parse(url));
             }
 
             @Override
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                 if (request.isForMainFrame()) {
+                    showOffline();
+                }
+            }
+
+            @SuppressWarnings("deprecation")
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                if (failingUrl != null && failingUrl.equals(view.getUrl())) {
                     showOffline();
                 }
             }
@@ -86,6 +96,14 @@ public class MainActivity extends Activity {
         } else {
             web.restoreState(state);
         }
+    }
+
+    private boolean handleUrl(Uri url) {
+        String host = url.getHost();
+        if (host != null && host.equals("amedgit.github.io")) {
+            return false;
+        }
+        return openExternally(url);
     }
 
     private boolean openExternally(Uri url) {

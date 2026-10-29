@@ -721,6 +721,13 @@ main {
 .install-hint { font-size: .78rem; color: var(--muted); margin-top: .5rem; }
 .install-hint:empty { display: none; }
 
+.app-help { margin-top: 1rem; border-top: 1px dashed var(--line); padding-top: .8rem; }
+.app-help summary { cursor: pointer; font-weight: 700; font-size: .9rem; }
+.app-help ul {
+  display: grid; gap: .35rem; margin: .6rem 0 0;
+  padding-inline-start: 1.2rem; color: var(--ink-soft); font-size: .86rem;
+}
+
 .app-pill { text-decoration: none; }
 .app-pill:hover { border-color: #b9c3d4; color: var(--ink); }
 .site-foot a { color: var(--blue); }

@@ -1557,6 +1557,14 @@
       '      <li>' + esc(t('app.apkStep2')) + '</li>' +
       '      <li>' + esc(t('app.apkStep3')) + '</li>' +
       '    </ol>' +
+      '    <details class="app-help">' +
+      '      <summary>' + esc(t('app.helpTitle')) + '</summary>' +
+      '      <ul>' +
+      '        <li>' + esc(t('app.help1')) + '</li>' +
+      '        <li>' + esc(t('app.help2')) + '</li>' +
+      '        <li>' + esc(t('app.help3')) + '</li>' +
+      '      </ul>' +
+      '    </details>' +
       '  </section>' +
       '</div>' +
 

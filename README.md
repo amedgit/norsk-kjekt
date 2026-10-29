@@ -52,7 +52,7 @@ sin conexión) o **descargar el APK** e instalarlo como una app normal.
   navegador o el gestor de archivos; es lo normal al instalar un APK fuera de
   Play. Después se instala como cualquier app.
 
-El APK es un **envoltorio WebView nativo** de 14 KB: abre la misma web publicada
+El APK es un **envoltorio WebView nativo** de 17 KB: abre la misma web publicada
 a pantalla completa, sin barra de direcciones, con el icono de la bandera. Como
 carga la web en vivo, cualquier cambio del curso llega sin actualizar la app.
 Necesita conexión la primera vez; para uso **offline** instala la PWA.
@@ -62,8 +62,8 @@ Datos de la build:
 | Campo | Valor |
 |---|---|
 | Paquete | `io.github.amedgit.norskkjekt` |
-| Versión | 1.0.0 (código 1) |
-| minSdk / targetSdk | 24 / 36 |
+| Versión | 1.0.1 (código 2) |
+| minSdk / targetSdk | 21 / 36 |
 | Firma (SHA-256) | `03:BF:7B:24:E6:8E:C2:C8:DD:3D:AF:9D:C3:CD:FE:8A:41:1A:20:28:7C:0F:75:A3:09:A0:D2:68:4C:AB:3A:4D` |
 
 ### Recompilar el APK
@@ -107,7 +107,7 @@ cacheada.
 | Progreso | racha de días, XP, mejor resultado por lección, pack y conversación, último informe del simulacro y cola de repaso de fallos |
 | Velocidad | selector 0,7×–1,3× en la cabecera; se aplica al audio y se recuerda |
 | Audio | 935 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
-| App | PWA instalable (offline) y APK Android firmado de 14 KB que abre la web a pantalla completa, descargable desde la propia web |
+| App | PWA instalable (offline) y APK Android firmado de 17 KB que abre la web a pantalla completa, descargable desde la propia web |
 
 ## Interfaz en español, inglés o persa
 
