@@ -43,8 +43,11 @@ sin conexión) o **descargar el APK** e instalarlo como una app normal.
 
 - Enlace directo: <https://amedgit.github.io/norsk-kjekt/assets/app/norsk-kjekt.apk>
 - Página con instrucciones: <https://amedgit.github.io/norsk-kjekt/#/app>
-- También en el icono **📲 APK** de la cabecera (visible en todas las páginas),
-  en el botón **App Android** del hero y en el banner de la portada.
+- El icono **📲 APK** de la cabecera (en todas las páginas) **descarga el archivo
+  directamente**. También está en el botón **App Android** del hero y en el
+  banner de la portada.
+- Si Chrome muestra el aviso «este tipo de archivo puede dañar tu dispositivo»,
+  elige **Descargar de todos modos**; luego abre el archivo para instalarlo.
 - Android pedirá permitir «instalar apps de origen desconocido» para el
   navegador o el gestor de archivos; es lo normal al instalar un APK fuera de
   Play. Después se instala como cualquier app.
@@ -80,6 +83,13 @@ tools/build-apk.sh
 
 **Guarda el keystore**: sin él no se pueden publicar actualizaciones que Android
 acepte como la misma app.
+
+### Caché tras un despliegue
+
+Al cambiar JS o CSS, sube la versión de `index.html` (`?v=AAAAMMDD`) y
+`CACHE_VERSION` en `sw.js`. Así los navegadores con el service worker antiguo
+descargan el código nuevo en la siguiente visita, sin quedarse con la copia
+cacheada.
 
 ## Qué incluye
 

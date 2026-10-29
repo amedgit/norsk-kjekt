@@ -196,6 +196,30 @@
     return out;
   }
 
+  /* Descarga del APK forzada cuando la web se usa como app instalada (PWA):
+     ahí la navegación a un fichero puede quedar bloqueada. */
+  function forceApkDownload(url) {
+    if (!window.fetch || !window.URL || !URL.createObjectURL) {
+      window.location.href = url;
+      return;
+    }
+    fetch(url, { cache: 'no-store' }).then(function (res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.blob();
+    }).then(function (blob) {
+      var u = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = u;
+      a.download = 'norsk-kjekt.apk';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(u); }, 60000);
+    }).catch(function () {
+      window.location.href = url;
+    });
+  }
+
   /* =======================================================
      Motor de ejercicios
      ======================================================= */
@@ -1452,7 +1476,7 @@
       '  </div>' +
       '  <div class="fun-banner-actions">' +
       '    <button class="btn primary" data-install hidden>' + esc(t('home.appInstall')) + '</button>' +
-      '    <a class="btn ghost" href="assets/app/norsk-kjekt.apk" download>' + esc(t('home.appApk')) + '</a>' +
+      '    <a class="btn ghost" href="assets/app/norsk-kjekt.apk" download="norsk-kjekt.apk" type="application/vnd.android.package-archive" data-apk>' + esc(t('home.appApk')) + '</a>' +
       '  </div>' +
       '</section>' +
 
@@ -1526,7 +1550,7 @@
       '    <h2>' + esc(t('app.apkTitle')) + '</h2>' +
       '    <p>' + esc(t('app.apkText')) + '</p>' +
       '    <div class="app-actions">' +
-      '      <a class="btn primary" href="assets/app/norsk-kjekt.apk" download>' + esc(t('home.appApk')) + '</a>' +
+      '      <a class="btn primary" href="assets/app/norsk-kjekt.apk" download="norsk-kjekt.apk" type="application/vnd.android.package-archive" data-apk>' + esc(t('home.appApk')) + '</a>' +
       '    </div>' +
       '    <ol class="app-steps">' +
       '      <li>' + esc(t('app.apkStep1')) + '</li>' +
@@ -2705,6 +2729,15 @@
         deferredInstallPrompt = null;
         refreshInstallUI();
       });
+      return;
+    }
+    var apk = e.target.closest('[data-apk]');
+    if (apk) {
+      var standalone = window.matchMedia('(display-mode: standalone)').matches ||
+        window.navigator.standalone === true;
+      if (!standalone) return;
+      e.preventDefault();
+      forceApkDownload(apk.href);
     }
   });
 
