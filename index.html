@@ -6,6 +6,14 @@
   <title>Norsk Kjekt — aprende noruego de verdad</title>
   <meta name="description" content="Curso de noruego bokmål A1–C2: 15 lecciones, 231 ejercicios, 6 conversaciones cotidianas, 4 grupos de WhatsApp, 6 packs de humor, tablas con audio y 4 simulacros de la Norskprøven.">
   <meta name="theme-color" content="#ba0c2f">
+  <script>
+    try {
+      var st = localStorage.getItem('norsk-kjekt-theme');
+      if (st === 'dark' || (!st && matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    } catch (e) { /* modo privado */ }
+  </script>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="assets/img/icons/apple-touch-icon.png">
   <meta name="mobile-web-app-capable" content="yes">
@@ -24,7 +32,7 @@
   <meta name="twitter:description" content="15 lecciones de bokmål (A1–C2), 231 ejercicios, 6 conversaciones con audio, 4 grupos de WhatsApp, 6 packs de humor, 18 expresiones de la calle y 4 simulacros de examen.">
   <meta name="twitter:image" content="https://amedgit.github.io/norsk-kjekt/assets/img/og.png">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23ba0c2f'/><rect x='22' y='14' width='16' height='72' fill='white'/><rect x='14' y='42' width='72' height='16' fill='white'/><rect x='30' y='14' width='6' height='72' fill='%2300205b'/><rect x='14' y='48' width='72' height='6' fill='%2300205b'/></svg>">
-  <link rel="stylesheet" href="assets/css/style.css?v=20261029b">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261029c">
 </head>
 <body>
   <button class="skip" type="button" data-skip data-i18n="skip">Saltar al contenido</button>
@@ -63,9 +71,10 @@
           <option value="1.3">1.3×</option>
         </select>
       </label>
+      <button class="pill theme-pill" id="theme-toggle" type="button" title="Cambiar tema" aria-label="Cambiar tema">🌙</button>
       <a class="pill app-pill" href="assets/app/norsk-kjekt.apk" download="norsk-kjekt.apk" type="application/vnd.android.package-archive" title="Descargar APK (Android)" data-i18n-title="app.pillTitle" aria-label="Descargar APK para Android" data-i18n-aria="app.pillTitle" data-apk>📲 <span>APK</span></a>
-      <span class="pill" title="Días seguidos practicando" data-i18n-title="hud.streak">🔥 <b id="hud-streak">0</b></span>
-      <span class="pill" title="Puntos de experiencia" data-i18n-title="hud.xp">⭐ <b id="hud-xp">0</b></span>
+      <a class="pill" href="#/progreso" title="Días seguidos practicando" data-i18n-title="hud.streak">🔥 <b id="hud-streak">0</b></a>
+      <a class="pill" href="#/progreso" title="Puntos de experiencia" data-i18n-title="hud.xp">⭐ <b id="hud-xp">0</b></a>
     </div>
   </header>
 
@@ -74,16 +83,22 @@
   <footer class="site-foot">
     <p><b>Norsk Kjekt</b> · <span data-i18n="footer.tagline">bokmål A1–C2 · hecho para practicar un poco cada día.</span></p>
     <p class="muted" data-i18n="footer.audio">Audio neuronal pregrabado en bokmål (nb_NO). Sin cuentas: tu progreso se guarda en este dispositivo.</p>
-    <p><a href="#/app" data-i18n="footer.app">App Android (APK)</a></p>
+    <p class="foot-links"><a href="#/progreso" data-i18n="footer.progress">Mi progreso</a> · <a href="#/nivel" data-i18n="footer.level">Test de nivel</a> · <a href="#/trener" data-i18n="footer.trainer">Entrenador</a> · <a href="#/app" data-i18n="footer.app">App Android (APK)</a></p>
   </footer>
 
-  <script src="assets/js/data.js?v=20261029b"></script>
-  <script src="assets/js/content-en.js?v=20261029b"></script>
-  <script src="assets/js/content-fa.js?v=20261029b"></script>
-  <script src="assets/js/lang.js?v=20261029b"></script>
-  <script src="assets/js/audio-manifest.js?v=20261029b"></script>
-  <script src="assets/js/tts.js?v=20261029b"></script>
-  <script src="assets/js/app.js?v=20261029b"></script>
+  <div id="kbd" class="kbd" hidden>
+    <button type="button" data-kbd="æ">æ</button>
+    <button type="button" data-kbd="ø">ø</button>
+    <button type="button" data-kbd="å">å</button>
+  </div>
+
+  <script src="assets/js/data.js?v=20261029c"></script>
+  <script src="assets/js/content-en.js?v=20261029c"></script>
+  <script src="assets/js/content-fa.js?v=20261029c"></script>
+  <script src="assets/js/lang.js?v=20261029c"></script>
+  <script src="assets/js/audio-manifest.js?v=20261029c"></script>
+  <script src="assets/js/tts.js?v=20261029c"></script>
+  <script src="assets/js/app.js?v=20261029c"></script>
   <script>
     if ('serviceWorker' in navigator) {
       var hadController = !!navigator.serviceWorker.controller;

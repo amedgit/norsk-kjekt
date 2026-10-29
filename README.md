@@ -91,12 +91,29 @@ Al cambiar JS o CSS, sube la versión de `index.html` (`?v=AAAAMMDD`) y
 descargan el código nuevo en la siguiente visita, sin quedarse con la copia
 cacheada.
 
+## Práctica, progreso y modo oscuro
+
+- **Test de nivel** (`#/nivel`): 18 preguntas de A1 a C2 y una recomendación de
+  por dónde empezar.
+- **Entrenador** (`#/trener`): rondas de 8 preguntas sobre números, la hora
+  (`halv tre`, `kvart på`…) y preposiciones (`i`, `på`, `til`…).
+- **Repaso espaciado** (`#/repaso`): los fallos vuelven a los 1, 3, 7, 15 y 30
+  días; si aciertas, se alejan; si fallas, vuelven al día siguiente.
+- **Mi progreso** (`#/progreso`): racha, XP, mapa de calor de 12 semanas, ocho
+  logros y copia de seguridad. También se llega tocando la racha o el XP de la
+  cabecera.
+- **Modo oscuro** con el botón 🌙/☀️; sigue el tema del sistema y recuerda tu
+  elección.
+- **Teclado æ ø å** flotante al escribir en cualquier ejercicio.
+- **Exportar/importar**: descarga un JSON con todo el estado y vuelve a cargarlo
+  en otro móvil o tras borrar el navegador.
+
 ## Qué incluye
 
 | Parte | Contenido |
 |---|---|
 | Lecciones | 15 lecciones A1–C2: base A1–A2, vida diaria B1, noticias/medio ambiente/derechos laborales en B2, debate y escritura académica en C1, ironía y literatura en C2 |
-| Práctica | 231 ejercicios en 10 formatos: opción múltiple, huecos, ordenar, dictado, cloze, transformar, emparejar, ¿qué sobra?, encontrar el error y memoria |
+| Práctica | 231 ejercicios en 10 formatos, test de nivel de 18 preguntas y entrenador de números, hora y preposiciones |
 | Samtaler | 6 conversaciones cotidianas (A2–B1: portal, cafetería, tienda, trabajo, médico y teléfono) con 52 réplicas, audio por línea, traducciones plegables, vocabulario, frases y 30 ejercicios |
 | Meldinger | 4 grupos de WhatsApp (A2–B1: vecinos, familia, amigos y trabajo) con 48 mensajes en formato chat, audio por mensaje, traducción, glosario de abreviaturas y truco cultural |
 | Tull & tøys | 6 packs con 84 ejercicios de humor (absurdo, supervivencia, oficina, dictados, modismos y verbos) y una mezcla aleatoria de 10 |
@@ -104,7 +121,8 @@ cacheada.
 | Coloquial | 18 expresiones con registro (neutro → vulgar), diálogo de ejemplo y truco |
 | Simulacro | 4 exámenes completos (A1, A2, B1 y B2) estilo Norskprøven: lesing, lytting, skriving y muntlig, con cronómetro, informe por destreza y respuestas modelo |
 | Idioma | selector **ES / EN / فا** en la cabecera: traduce interfaz, explicaciones y tablas; el bokmål se queda intacto y el progreso se conserva. En persa la página cambia a dirección RTL |
-| Progreso | racha de días, XP, mejor resultado por lección, pack y conversación, último informe del simulacro y cola de repaso de fallos |
+| Progreso | racha, XP, mapa de calor de 12 semanas, 8 logros, repaso espaciado (1/3/7/15/30 días) y exportación/importación del progreso en JSON |
+| Extras | modo oscuro, teclado noruego æ ø å en los ejercicios de escritura, PWA offline y APK Android |
 | Velocidad | selector 0,7×–1,3× en la cabecera; se aplica al audio y se recuerda |
 | Audio | 935 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
 | App | PWA instalable (offline) y APK Android firmado de 17 KB que abre la web a pantalla completa, descargable desde la propia web |

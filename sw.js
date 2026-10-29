@@ -5,7 +5,7 @@
    - navegación: red primero, con la app cacheada como respaldo offline.
    Sube CACHE_VERSION en cada despliegue para renovar los caches. */
 
-const CACHE_VERSION = 'v5';
+const CACHE_VERSION = 'v6';
 const CORE = `norsk-kjekt-core-${CACHE_VERSION}`;
 const RUNTIME = `norsk-kjekt-runtime-${CACHE_VERSION}`;
 
@@ -80,7 +80,7 @@ self.addEventListener('fetch', (event) => {
           }
           return res;
         })
-        .catch(() => caches.match(request))
+        .catch(() => caches.match(request, { ignoreSearch: true }))
     );
     return;
   }
@@ -101,7 +101,7 @@ self.addEventListener('fetch', (event) => {
 
   /* Resto same-origin: cache con actualización en segundo plano. */
   event.respondWith(
-    caches.match(request).then((hit) => {
+    caches.match(request, { ignoreSearch: true }).then((hit) => {
       const fetching = fetch(request).then((res) => {
         if (res.ok) {
           const copy = res.clone();

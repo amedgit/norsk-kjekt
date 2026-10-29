@@ -51,7 +51,7 @@
   var KEY = 'norsk-kjekt-v1';
 
   function defaults() {
-    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, xp: 0, days: {}, review: [], version: 1 };
+    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, xp: 0, days: {}, review: [], srs: {}, version: 1 };
   }
 
   var state = (function load() {
@@ -62,6 +62,7 @@
       var lessons = {};
       var fun = {};
       var dialogues = {};
+      var srs = {};
       Object.keys(raw.lessons || {}).forEach(function (id) {
         var v = raw.lessons[id];
         if (v && typeof v === 'object') {
@@ -80,10 +81,17 @@
           dialogues[id] = { best: Number(v.best) || 0, total: Number(v.total) || 0, at: Number(v.at) || 0 };
         }
       });
+      Object.keys(raw.srs || {}).forEach(function (sig) {
+        var v = raw.srs[sig];
+        if (v && typeof v === 'object') {
+          srs[sig] = { step: Number(v.step) || 0, due: typeof v.due === 'string' ? v.due : todayKey() };
+        }
+      });
       return {
         lessons: lessons,
         fun: fun,
         dialogues: dialogues,
+        srs: srs,
         exams: raw.exams && typeof raw.exams === 'object' ? raw.exams : {},
         xp: Number(raw.xp) || 0,
         days: raw.days && typeof raw.days === 'object' ? raw.days : d.days,
@@ -105,7 +113,9 @@
   }
 
   function markDay() {
-    state.days[todayKey()] = true;
+    var k = todayKey();
+    var v = state.days[k];
+    state.days[k] = typeof v === 'number' ? v + 1 : (v ? 2 : 1);
   }
 
   function currentStreak() {
@@ -124,13 +134,47 @@
     hudXp.textContent = state.xp;
   }
 
+  var SRS_DAYS = [1, 3, 7, 15, 30];
+
+  function addDays(n) {
+    var d = new Date();
+    d.setDate(d.getDate() + n);
+    return todayKey(d);
+  }
+
+  function srsEntry(sig) {
+    if (!state.srs[sig]) state.srs[sig] = { step: 0, due: todayKey() };
+    return state.srs[sig];
+  }
+
   function addReview(sig) {
+    var e = srsEntry(sig);
+    e.step = 0;
+    e.due = todayKey();
     if (state.review.indexOf(sig) === -1) state.review.push(sig);
   }
 
   function removeReview(sig) {
     var i = state.review.indexOf(sig);
     if (i > -1) state.review.splice(i, 1);
+    delete state.srs[sig];
+  }
+
+  /* Acierto en el repaso: programa la próxima vuelta (1, 3, 7, 15, 30 días). */
+  function srsPass(sig) {
+    var e = srsEntry(sig);
+    var days = SRS_DAYS[Math.min(e.step, SRS_DAYS.length - 1)];
+    e.step = Math.min(e.step + 1, SRS_DAYS.length - 1);
+    e.due = addDays(days);
+    var i = state.review.indexOf(sig);
+    if (i > -1) state.review.splice(i, 1);
+  }
+
+  function srsFail(sig) {
+    var e = srsEntry(sig);
+    e.step = 0;
+    e.due = todayKey();
+    if (state.review.indexOf(sig) === -1) state.review.push(sig);
   }
 
   /* =======================================================
@@ -1436,6 +1480,12 @@
       '  </aside>' +
       '</section>' +
 
+      '<div class="practice-strip">' +
+      '  <a class="practice-chip" href="#/nivel"><b>🎯 ' + esc(t('home.testChip')) + '</b><span>' + esc(t('home.testChipSub')) + '</span></a>' +
+      '  <a class="practice-chip" href="#/trener"><b>🏋️ ' + esc(t('home.trainerChip')) + '</b><span>' + esc(t('home.trainerChipSub')) + '</span></a>' +
+      '  <a class="practice-chip" href="#/progreso"><b>📊 ' + esc(t('home.progressChip')) + '</b><span>' + esc(t('home.progressChipSub')) + '</span></a>' +
+      '</div>' +
+
       levelSection(t('home.basicTitle'), t('home.basicSub'), ['A1', 'A2']) +
       levelSection(t('home.b1Title'), t('home.b1Sub'), ['B1']) +
       levelSection(t('home.b2Title'), t('home.b2Sub'), ['B2']) +
@@ -1576,7 +1626,472 @@
     refreshInstallUI();
   }
 
+  /* ---------------- Tema, teclado y progreso ---------------- */
+
+  function applyTheme(dark) {
+    var root = document.documentElement;
+    if (dark) root.setAttribute('data-theme', 'dark');
+    else root.removeAttribute('data-theme');
+    var btn = document.getElementById('theme-toggle');
+    if (btn) {
+      btn.textContent = dark ? '☀️' : '🌙';
+      btn.title = t(dark ? 'theme.toLight' : 'theme.toDark');
+      btn.setAttribute('aria-label', btn.title);
+    }
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', dark ? '#0e141d' : '#ba0c2f');
+  }
+
+  function initTheme() {
+    var stored = null;
+    try { stored = localStorage.getItem('norsk-kjekt-theme'); } catch (e) { /* modo privado */ }
+    var dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(dark);
+    var btn = document.getElementById('theme-toggle');
+    if (btn) {
+      btn.addEventListener('click', function () {
+        var next = document.documentElement.getAttribute('data-theme') !== 'dark';
+        try { localStorage.setItem('norsk-kjekt-theme', next ? 'dark' : 'light'); } catch (e) { /* modo privado */ }
+        applyTheme(next);
+      });
+    }
+  }
+
+  function initKeyboard() {
+    var bar = document.getElementById('kbd');
+    if (!bar) return;
+    var current = null;
+    document.addEventListener('focusin', function (e) {
+      var el = e.target;
+      if (el && el.matches && el.matches('input[type="text"], input:not([type]), textarea')) {
+        current = el;
+        bar.hidden = false;
+      }
+    });
+    document.addEventListener('focusout', function (e) {
+      if (e.target !== current) return;
+      setTimeout(function () {
+        if (document.activeElement !== current) {
+          bar.hidden = true;
+          current = null;
+        }
+      }, 150);
+    });
+    bar.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-kbd]');
+      if (!b || !current) return;
+      var ch = b.getAttribute('data-kbd');
+      var start = current.selectionStart || 0;
+      var end = current.selectionEnd || 0;
+      current.setRangeText(ch, start, end, 'end');
+      current.dispatchEvent(new Event('input', { bubbles: true }));
+      current.focus();
+    });
+  }
+
+  function exercisesDone() {
+    var n = 0;
+    [state.lessons, state.fun, state.dialogues].forEach(function (group) {
+      Object.keys(group).forEach(function (id) { n += Number(group[id].best) || 0; });
+    });
+    return n;
+  }
+
+  function achievements() {
+    var done = completedCount();
+    var ex = exercisesDone();
+    var streak = currentStreak();
+    var srsCount = Object.keys(state.srs).length;
+    return [
+      { icon: '🌱', earned: done >= 1, title: t('badge.first'), desc: t('badge.firstDesc') },
+      { icon: '📚', earned: done >= 5, title: t('badge.five'), desc: t('badge.fiveDesc') },
+      { icon: '🏆', earned: done >= LESSONS.length, title: t('badge.all'), desc: t('badge.allDesc') },
+      { icon: '🔥', earned: streak >= 7, title: t('badge.week'), desc: t('badge.weekDesc') },
+      { icon: '🗓️', earned: streak >= 30, title: t('badge.month'), desc: t('badge.monthDesc') },
+      { icon: '💯', earned: ex >= 100, title: t('badge.hundred'), desc: t('badge.hundredDesc') },
+      { icon: '📝', earned: Object.keys(state.exams).length > 0, title: t('badge.exam'), desc: t('badge.examDesc') },
+      { icon: '🔁', earned: srsCount >= 10, title: t('badge.srs'), desc: t('badge.srsDesc') }
+    ];
+  }
+
+  function heatmapHTML() {
+    var days = 84;
+    var end = new Date();
+    var start = new Date();
+    start.setDate(end.getDate() - (days - 1));
+    var lead = (start.getDay() + 6) % 7;
+    var out = [];
+    for (var i = 0; i < lead; i++) out.push('<span class="hm empty"></span>');
+    for (var j = 0; j < days; j++) {
+      var k = todayKey(start);
+      var v = state.days[k] || 0;
+      var level = typeof v === 'number' ? Math.min(4, v) : (v ? 1 : 0);
+      out.push('<span class="hm l' + level + '" title="' + esc(k) + '"></span>');
+      start.setDate(start.getDate() + 1);
+    }
+    return '<div class="heatmap">' + out.join('') + '</div>' +
+      '<div class="hm-legend"><span>' + esc(t('prog.less')) + '</span>' +
+      '<i class="hm l0"></i><i class="hm l1"></i><i class="hm l2"></i><i class="hm l3"></i><i class="hm l4"></i>' +
+      '<span>' + esc(t('prog.more')) + '</span></div>';
+  }
+
+  function nextReviewDate() {
+    var dates = Object.keys(state.srs).map(function (sig) { return state.srs[sig].due; }).sort();
+    return dates.length ? dates[0] : '';
+  }
+
+  function exportProgress() {
+    var blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'norsk-kjekt-progreso.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 5000);
+  }
+
+  function importProgress(file, status) {
+    var reader = new FileReader();
+    reader.onload = function () {
+      try {
+        var data = JSON.parse(String(reader.result));
+        if (!data || typeof data !== 'object' || !data.lessons || typeof data.lessons !== 'object') {
+          throw new Error('formato');
+        }
+        localStorage.setItem(KEY, JSON.stringify(data));
+        if (status) {
+          status.textContent = t('prog.importOk');
+          status.hidden = false;
+        }
+        setTimeout(function () { location.reload(); }, 700);
+      } catch (e) {
+        if (status) {
+          status.textContent = t('prog.importError');
+          status.hidden = false;
+        }
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  function renderProgress() {
+    var due = reviewEntries().length;
+    var next = nextReviewDate();
+    var done = completedCount();
+    var ex = exercisesDone();
+    var streak = currentStreak();
+    var badges = achievements();
+    var earned = badges.filter(function (b) { return b.earned; }).length;
+
+    app.innerHTML =
+      '<div class="crumbs"><a href="#/">' + esc(t('lesson.crumb')) + '</a> <span>›</span> <span>' + esc(t('prog.crumb')) + '</span></div>' +
+
+      '<section class="colo-intro prog-intro">' +
+      '  <span class="eyebrow">' + esc(t('prog.eyebrow')) + '</span>' +
+      '  <h1>' + esc(t('prog.title')) + '</h1>' +
+      '  <p>' + esc(t('prog.intro')) + '</p>' +
+      '</section>' +
+
+      '<div class="prog-stats">' +
+      '  <div class="prog-stat"><span>' + esc(t('prog.streak')) + '</span><b>' + streak + '</b><small>' + esc(t('prog.days')) + '</small></div>' +
+      '  <div class="prog-stat"><span>' + esc(t('prog.xp')) + '</span><b>' + state.xp + '</b><small>XP</small></div>' +
+      '  <div class="prog-stat"><span>' + esc(t('prog.lessons')) + '</span><b>' + done + '/' + LESSONS.length + '</b><small>' + esc(t('prog.completed')) + '</small></div>' +
+      '  <div class="prog-stat"><span>' + esc(t('prog.exercises')) + '</span><b>' + ex + '</b><small>' + esc(t('prog.done')) + '</small></div>' +
+      '</div>' +
+
+      '<section class="card"><h2>' + esc(t('prog.activity')) + '</h2>' + heatmapHTML() + '</section>' +
+
+      '<section class="card"><div class="prog-card-head"><h2>' + esc(t('prog.badges')) + '</h2>' +
+      '<span class="chip plain">' + earned + '/' + badges.length + '</span></div>' +
+      '<div class="badges">' + badges.map(function (b) {
+        return '<div class="badge' + (b.earned ? ' earned' : '') + '">' +
+          '<span class="b-ico">' + b.icon + '</span>' +
+          '<b>' + esc(b.title) + '</b><small>' + esc(b.desc) + '</small></div>';
+      }).join('') + '</div></section>' +
+
+      '<section class="card"><div class="prog-card-head"><h2>' + esc(t('prog.review')) + '</h2>' +
+      '<a class="btn ghost small" href="#/repaso">' + esc(t('review.title')) + '</a></div>' +
+      '<p class="prog-review">' + (due ? esc(t('prog.reviewDue', { n: due })) : esc(t('prog.reviewNone'))) + '</p>' +
+      (next && !due ? '<p class="muted">' + esc(t('prog.reviewNext', { date: next })) + '</p>' : '') +
+      '</section>' +
+
+      '<section class="card"><h2>' + esc(t('prog.practice')) + '</h2>' +
+      '<div class="prog-links">' +
+      '  <a class="btn ghost" href="#/nivel">🎯 ' + esc(t('home.testChip')) + '</a>' +
+      '  <a class="btn ghost" href="#/trener">🏋️ ' + esc(t('home.trainerChip')) + '</a>' +
+      '  <a class="btn ghost" href="#/samtaler">💬 ' + esc(t('nav.dialogues')) + '</a>' +
+      '  <a class="btn ghost" href="#/meldinger">📱 ' + esc(t('nav.chats')) + '</a>' +
+      '</div></section>' +
+
+      '<section class="card"><h2>' + esc(t('prog.data')) + '</h2>' +
+      '<p class="muted">' + esc(t('prog.dataText')) + '</p>' +
+      '<div class="prog-links">' +
+      '  <button class="btn primary" id="export-progress" type="button">' + esc(t('prog.export')) + '</button>' +
+      '  <label class="btn ghost file-btn">' + esc(t('prog.import')) +
+      '    <input type="file" id="import-progress" accept="application/json,.json" hidden>' +
+      '  </label>' +
+      '</div>' +
+      '<p class="muted" id="import-status" hidden></p>' +
+      '</section>';
+
+    var exportBtn = document.getElementById('export-progress');
+    if (exportBtn) exportBtn.addEventListener('click', exportProgress);
+    var importInput = document.getElementById('import-progress');
+    if (importInput) {
+      importInput.addEventListener('change', function () {
+        if (importInput.files && importInput.files[0]) {
+          importProgress(importInput.files[0], document.getElementById('import-status'));
+        }
+      });
+    }
+  }
+
+  /* ---------------- Test de nivel ---------------- */
+
+  function placementItems() {
+    var out = [];
+    ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'].forEach(function (level) {
+      var pool = [];
+      LESSONS.filter(function (l) { return l.level === level; }).forEach(function (l) {
+        l.exercises.forEach(function (e) { pool.push(e); });
+      });
+      var picked = pool.filter(function (e) { return e.type === 'mcq'; }).slice(0, 3);
+      if (picked.length < 3) {
+        picked = picked.concat(pool.filter(function (e) { return e.type !== 'mcq'; }).slice(0, 3 - picked.length));
+      }
+      picked.forEach(function (e) {
+        out.push(Object.assign({}, e, { _level: level }));
+      });
+    });
+    return out;
+  }
+
+  function renderLevelTest() {
+    var items = placementItems();
+    app.innerHTML =
+      '<div class="crumbs"><a href="#/">' + esc(t('lesson.crumb')) + '</a> <span>›</span> <span>' + esc(t('level.crumb')) + '</span></div>' +
+      '<section class="colo-intro level-intro">' +
+      '  <span class="eyebrow">' + esc(t('level.eyebrow')) + '</span>' +
+      '  <h1>' + esc(t('level.title')) + '</h1>' +
+      '  <p>' + esc(t('level.intro', { n: items.length })) + '</p>' +
+      '  <div class="level-start"><button class="btn primary" id="start-level" type="button">' + esc(t('level.start')) + '</button></div>' +
+      '</section>' +
+      '<section class="card" id="level-mount" style="display:none"></section>';
+
+    document.getElementById('start-level').addEventListener('click', function () {
+      var mount = document.getElementById('level-mount');
+      mount.style.display = 'block';
+      mount.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      runExercises(mount, items, {
+        label: t('level.label'),
+        exitLabel: t('result.finish'),
+        onExit: renderLevelTest,
+        onDone: function (res) {
+          markDay();
+          state.xp += res.correct * 5;
+          save();
+          refreshHud();
+
+          var levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+          var stats = {};
+          levels.forEach(function (lv) { stats[lv] = { ok: 0, total: 0 }; });
+          items.forEach(function (it) {
+            if (!it._level) return;
+            stats[it._level].total++;
+            if (res.failed.indexOf(it) === -1) stats[it._level].ok++;
+          });
+          var recommended = 'A1';
+          levels.forEach(function (lv) {
+            var s = stats[lv];
+            if (s.total && s.ok / s.total >= 0.6) recommended = lv;
+          });
+
+          var first = LESSONS.find(function (l) { return l.level === recommended; }) || LESSONS[0];
+          mount.innerHTML =
+            '<h2>' + esc(t('level.resultTitle')) + '</h2>' +
+            '<p class="level-verdict">' + esc(t('level.recommended')) + ' <b>' + recommended + '</b></p>' +
+            '<div class="level-bars">' + levels.map(function (lv) {
+              var s = stats[lv];
+              var pct = s.total ? Math.round((s.ok / s.total) * 100) : 0;
+              return '<div class="level-row"><span>' + lv + '</span>' +
+                '<span class="meter"><i style="width:' + pct + '%"></i></span>' +
+                '<small>' + s.ok + '/' + s.total + '</small></div>';
+            }).join('') + '</div>' +
+            '<div class="prog-links"><a class="btn primary" href="#/leksjon/' + first.id + '">' +
+            esc(t('level.go', { n: first.num, title: first.title })) + '</a>' +
+            '<button class="btn ghost" id="retry-level" type="button">' + esc(t('level.retry')) + '</button></div>';
+
+          var retry = document.getElementById('retry-level');
+          if (retry) retry.addEventListener('click', renderLevelTest);
+        }
+      });
+    });
+  }
+
+  /* ---------------- Entrenador ---------------- */
+
+  var PREPS = [
+    { s: 'Jeg bor ___ Oslo.', a: 'i' },
+    { s: 'Vi reiser ___ Norge i morgen.', a: 'til' },
+    { s: 'Boka ligger ___ bordet.', a: 'på' },
+    { s: 'Jeg kommer ___ Spania.', a: 'fra' },
+    { s: 'Han snakker ___ sjefen.', a: 'med' },
+    { s: 'Vi venter ___ bussen.', a: 'på' },
+    { s: 'Hun er redd ___ hunder.', a: 'for' },
+    { s: 'Vi møtes ___ mandag.', a: 'på' },
+    { s: 'Jeg er hjemme ___ kvelden.', a: 'om' },
+    { s: 'Gi boka ___ meg.', a: 'til' },
+    { s: 'Vi snakker ___ været.', a: 'om' },
+    { s: 'Jeg drar ___ jobb klokka åtte.', a: 'til' }
+  ];
+
+  function numberWord(n) {
+    var ones = ['null', 'en', 'to', 'tre', 'fire', 'fem', 'seks', 'sju', 'åtte', 'ni'];
+    var teens = ['ti', 'elleve', 'tolv', 'tretten', 'fjorten', 'femten', 'seksten', 'sytten', 'atten', 'nitten'];
+    var tens = ['', '', 'tjue', 'tretti', 'førti', 'femti', 'seksti', 'sytti', 'åtti', 'nitti'];
+    if (n < 10) return ones[n];
+    if (n < 20) return teens[n - 10];
+    if (n < 100) return tens[Math.floor(n / 10)] + (n % 10 ? ones[n % 10] : '');
+    if (n < 1000) {
+      var h = Math.floor(n / 100);
+      return (h === 1 ? 'hundre' : ones[h] + ' hundre') + (n % 100 ? ' og ' + numberWord(n % 100) : '');
+    }
+    return 'tusen';
+  }
+
+  function hourWord(n) {
+    return n === 1 ? 'ett' : numberWord(n);
+  }
+
+  function timeWord(h24, m) {
+    var h = h24 % 12;
+    if (h === 0) h = 12;
+    var next = h === 12 ? 1 : h + 1;
+    if (m === 0) return hourWord(h);
+    if (m === 30) return 'halv ' + hourWord(next);
+    if (m === 15) return 'kvart over ' + hourWord(h);
+    if (m === 45) return 'kvart på ' + hourWord(next);
+    if (m < 30) return numberWord(m) + ' over ' + hourWord(h);
+    return numberWord(60 - m) + ' på ' + hourWord(next);
+  }
+
+  function pickOptions(correct, pool, size) {
+    var out = [correct];
+    var copy = shuffle(pool.filter(function (x) { return x !== correct; }));
+    for (var i = 0; i < copy.length && out.length < size; i++) {
+      if (out.indexOf(copy[i]) === -1) out.push(copy[i]);
+    }
+    return shuffle(out);
+  }
+
+  var NUMBER_POOL = [3, 7, 12, 16, 21, 28, 34, 40, 57, 68, 75, 82, 91, 100, 104, 120, 143, 250, 500, 999, 1000];
+  var TIME_POOL = [];
+  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].forEach(function (h) {
+    [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55].forEach(function (m) {
+      TIME_POOL.push(h + ':' + String(m).padStart(2, '0'));
+    });
+  });
+
+  function trainerItems(mode) {
+    var items = [];
+    var i;
+    if (mode === 'numbers') {
+      for (i = 0; i < 8; i++) {
+        var n = NUMBER_POOL[Math.floor(Math.random() * NUMBER_POOL.length)];
+        var opts = pickOptions(numberWord(n), NUMBER_POOL.map(numberWord), 4);
+        items.push({
+          type: 'mcq',
+          prompt: t('tr.numPrompt', { n: n }),
+          options: opts,
+          answer: opts.indexOf(numberWord(n)),
+          explain: t('tr.numExplain')
+        });
+      }
+    } else if (mode === 'time') {
+      for (i = 0; i < 8; i++) {
+        var key = TIME_POOL[Math.floor(Math.random() * TIME_POOL.length)];
+        var parts = key.split(':');
+        var correct = timeWord(Number(parts[0]), Number(parts[1]));
+        var opts2 = pickOptions(correct, TIME_POOL.map(function (k) {
+          var p = k.split(':');
+          return timeWord(Number(p[0]), Number(p[1]));
+        }), 4);
+        items.push({
+          type: 'mcq',
+          prompt: t('tr.timePrompt', { time: key }),
+          options: opts2,
+          answer: opts2.indexOf(correct),
+          explain: t('tr.timeExplain')
+        });
+      }
+    } else {
+      var bank = shuffle(PREPS).slice(0, 8);
+      bank.forEach(function (p) {
+        var options = pickOptions(p.a, ['i', 'på', 'til', 'med', 'for', 'fra', 'om'], 4);
+        items.push({
+          type: 'mcq',
+          prompt: t('tr.prepPrompt', { sentence: p.s }),
+          options: options,
+          answer: options.indexOf(p.a),
+          explain: t('tr.prepExplain')
+        });
+      });
+    }
+    return items;
+  }
+
+  function renderTrainer(mode) {
+    if (mode !== 'numbers' && mode !== 'time' && mode !== 'preps') mode = '';
+    if (!mode) {
+      app.innerHTML =
+        '<div class="crumbs"><a href="#/">' + esc(t('lesson.crumb')) + '</a> <span>›</span> <span>' + esc(t('tr.crumb')) + '</span></div>' +
+        '<section class="colo-intro tr-intro">' +
+        '  <span class="eyebrow">' + esc(t('tr.eyebrow')) + '</span>' +
+        '  <h1>' + esc(t('tr.title')) + '</h1>' +
+        '  <p>' + esc(t('tr.intro')) + '</p>' +
+        '</section>' +
+        '<div class="tr-grid">' +
+        [['numbers', '🔢', t('tr.numbersTitle'), t('tr.numbersText')],
+         ['time', '🕒', t('tr.timeTitle'), t('tr.timeText')],
+         ['preps', '🧩', t('tr.prepTitle'), t('tr.prepText')]].map(function (m) {
+          return '<a class="tr-card" href="#/trener/' + m[0] + '">' +
+            '<span class="tr-ico">' + m[1] + '</span>' +
+            '<b>' + esc(m[2]) + '</b><span>' + esc(m[3]) + '</span>' +
+            '<em>' + esc(t('tr.start')) + ' →</em></a>';
+        }).join('') + '</div>';
+      return;
+    }
+
+    var items = trainerItems(mode);
+    app.innerHTML =
+      '<div class="crumbs"><a href="#/trener">' + esc(t('tr.crumb')) + '</a> <span>›</span> <span>' + esc(t('tr.' + mode + 'Title')) + '</span></div>' +
+      '<section class="card" id="tr-mount"></section>';
+    var mount = document.getElementById('tr-mount');
+    runExercises(mount, items, {
+      label: t('tr.label'),
+      exitLabel: t('result.finish'),
+      onExit: function () { renderTrainer(mode); },
+      onDone: function (res) {
+        markDay();
+        state.xp += res.correct * 5;
+        save();
+        refreshHud();
+        var box = mount.querySelector('.result');
+        if (box) {
+          box.insertAdjacentHTML('beforeend',
+            '<div class="prog-links"><button class="btn ghost" id="tr-again" type="button">' +
+            esc(t('tr.again')) + '</button><a class="btn ghost" href="#/trener">' + esc(t('tr.crumb')) + '</a></div>');
+          var again = document.getElementById('tr-again');
+          if (again) again.addEventListener('click', function () { renderTrainer(mode); });
+        }
+      }
+    });
+  }
+
   /* ---------------- Samtaler ---------------- */
+
 
   function renderDialogues() {
     var done = dialogueCompletedCount();
@@ -1982,31 +2497,44 @@
 
   /* ---------------- repaso ---------------- */
 
+  function reviewItem(sig) {
+    var parts = sig.split('#');
+    if (parts[0] === 'fun') {
+      var pack = COURSE.fun.packs.find(function (p) { return p.id === parts[1]; });
+      var funItem = pack && pack.exercises[Number(parts[2])];
+      if (pack && funItem) {
+        return { sig: sig, item: funItem, title: pack.title, emoji: pack.emoji, label: t('fun.mixLabel') };
+      }
+      return null;
+    }
+    if (parts[0] === 'dlg') {
+      var dialogue = DIALOGUES.find(function (d) { return d.id === parts[1]; });
+      var dlgItem = dialogue && dialogue.exercises[Number(parts[2])];
+      if (dialogue && dlgItem) {
+        return { sig: sig, item: dlgItem, title: dialogue.title, emoji: dialogue.emoji, label: t('dlg.reviewLabel', { level: dialogue.level }) };
+      }
+      return null;
+    }
+    var lesson = LESSONS.find(function (l) { return l.id === parts[0]; });
+    var item = lesson && lesson.exercises[Number(parts[1])];
+    if (lesson && item) {
+      return { sig: sig, item: item, title: lesson.title, emoji: lesson.emoji, label: t('review.lessonLabel', { n: lesson.num }) };
+    }
+    return null;
+  }
+
   function reviewEntries() {
     var out = [];
-    state.review.forEach(function (sig) {
-      var parts = sig.split('#');
-      if (parts[0] === 'fun') {
-        var pack = COURSE.fun.packs.find(function (p) { return p.id === parts[1]; });
-        var funItem = pack && pack.exercises[Number(parts[2])];
-        if (pack && funItem) {
-          out.push({ sig: sig, item: funItem, title: pack.title, emoji: pack.emoji, label: t('fun.mixLabel') });
-        }
-        return;
-      }
-      if (parts[0] === 'dlg') {
-        var dialogue = DIALOGUES.find(function (d) { return d.id === parts[1]; });
-        var dlgItem = dialogue && dialogue.exercises[Number(parts[2])];
-        if (dialogue && dlgItem) {
-          out.push({ sig: sig, item: dlgItem, title: dialogue.title, emoji: dialogue.emoji, label: t('dlg.reviewLabel', { level: dialogue.level }) });
-        }
-        return;
-      }
-      var lesson = LESSONS.find(function (l) { return l.id === parts[0]; });
-      var item = lesson && lesson.exercises[Number(parts[1])];
-      if (lesson && item) {
-        out.push({ sig: sig, item: item, title: lesson.title, emoji: lesson.emoji, label: t('review.lessonLabel', { n: lesson.num }) });
-      }
+    var seen = {};
+    var today = todayKey();
+    function push(sig) {
+      if (seen[sig]) return;
+      var entry = reviewItem(sig);
+      if (entry) { seen[sig] = true; out.push(entry); }
+    }
+    state.review.forEach(push);
+    Object.keys(state.srs).forEach(function (sig) {
+      if (state.srs[sig].due <= today) push(sig);
     });
     return out;
   }
@@ -2046,7 +2574,8 @@
         onDone: function (res) {
           var failedSet = res.failed;
           entries.forEach(function (e) {
-            if (failedSet.indexOf(e.item) === -1) removeReview(e.sig);
+            if (failedSet.indexOf(e.item) === -1) srsPass(e.sig);
+            else srsFail(e.sig);
           });
           markDay();
           state.xp += res.correct * 5;
@@ -2674,7 +3203,7 @@
           : name === 'eksamen' ? 'exam'
             : (name === 'samtaler' || name === 'samtale') ? 'dialogues'
               : (name === 'meldinger' || name === 'melding') ? 'chats'
-                : name === 'app' ? ''
+                : (name === 'app' || name === 'progreso' || name === 'nivel' || name === 'trener') ? ''
                   : 'home';
     document.querySelectorAll('.nav a').forEach(function (a) {
       a.classList.toggle('active', a.dataset.route === active);
@@ -2687,6 +3216,12 @@
       renderDialogues();
     } else if (name === 'app') {
       renderApp();
+    } else if (name === 'progreso') {
+      renderProgress();
+    } else if (name === 'nivel') {
+      renderLevelTest();
+    } else if (name === 'trener') {
+      renderTrainer(arg);
     } else if (name === 'meldinger') {
       renderChats();
     } else if (name === 'melding') {
@@ -2760,6 +3295,8 @@
     });
   }
 
+  initTheme();
+  initKeyboard();
   window.addEventListener('hashchange', route);
   route();
 })();
