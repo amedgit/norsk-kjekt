@@ -1,0 +1,39 @@
+plugins {
+    id 'com.android.application'
+}
+
+def keystoreFile = System.getenv('KEYSTORE_FILE')
+
+android {
+    namespace 'io.github.amedgit.norskkjekt'
+    compileSdk 36
+
+    defaultConfig {
+        applicationId 'io.github.amedgit.norskkjekt'
+        minSdk 24
+        targetSdk 36
+        versionCode 1
+        versionName '1.0.0'
+    }
+
+    signingConfigs {
+        release {
+            storeFile file(keystoreFile)
+            storePassword System.getenv('KEYSTORE_PASS')
+            keyAlias 'android'
+            keyPassword System.getenv('KEY_PASS')
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}

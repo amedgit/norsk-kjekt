@@ -26,6 +26,59 @@ cd ~/norsk
 ./serve.sh 3000     # otro puerto
 ```
 
+## App Android (APK y PWA)
+
+Hay dos formas de tenerlo en el móvil: **instalar la PWA** (recomendado, funciona
+sin conexión) o **descargar el APK** e instalarlo como una app normal.
+
+### Instalar como app (recomendado)
+
+1. Abre <https://amedgit.github.io/norsk-kjekt/> en Chrome (Android).
+2. Toca el botón **«Instalar app»** del banner, o el menú ⋮ → *Añadir a pantalla
+   de inicio*.
+3. Queda en el cajón de aplicaciones, abre a pantalla completa y **funciona sin
+   conexión**: el service worker cachea el núcleo y los audios que ya has oído.
+
+### Descargar el APK
+
+- Enlace directo: <https://amedgit.github.io/norsk-kjekt/assets/app/norsk-kjekt.apk>
+- También está en el banner **«Norsk Kjekt en tu móvil»** de la portada.
+- Android pedirá permitir «instalar apps de origen desconocido» para el
+  navegador o el gestor de archivos; es lo normal al instalar un APK fuera de
+  Play. Después se instala como cualquier app.
+
+El APK es un **envoltorio WebView nativo** de 14 KB: abre la misma web publicada
+a pantalla completa, sin barra de direcciones, con el icono de la bandera. Como
+carga la web en vivo, cualquier cambio del curso llega sin actualizar la app.
+Necesita conexión la primera vez; para uso **offline** instala la PWA.
+
+Datos de la build:
+
+| Campo | Valor |
+|---|---|
+| Paquete | `io.github.amedgit.norskkjekt` |
+| Versión | 1.0.0 (código 1) |
+| minSdk / targetSdk | 24 / 36 |
+| Firma (SHA-256) | `03:BF:7B:24:E6:8E:C2:C8:DD:3D:AF:9D:C3:CD:FE:8A:41:1A:20:28:7C:0F:75:A3:09:A0:D2:68:4C:AB:3A:4D` |
+
+### Recompilar el APK
+
+Las fuentes Android están en `tools/android/` y el script
+`tools/build-apk.sh` compila y firma el APK. Necesita JDK 17, Android SDK
+(platform 36) y el keystore de firma, que **no está en el repositorio**:
+
+```bash
+export JAVA_HOME=/ruta/jdk-17
+export ANDROID_HOME=/ruta/android-sdk
+export KEYSTORE_FILE=$HOME/.config/norsk-kjekt/android.keystore
+export KEYSTORE_PASS=...
+export KEY_PASS=...
+tools/build-apk.sh
+```
+
+**Guarda el keystore**: sin él no se pueden publicar actualizaciones que Android
+acepte como la misma app.
+
 ## Qué incluye
 
 | Parte | Contenido |
@@ -42,6 +95,7 @@ cd ~/norsk
 | Progreso | racha de días, XP, mejor resultado por lección, pack y conversación, último informe del simulacro y cola de repaso de fallos |
 | Velocidad | selector 0,7×–1,3× en la cabecera; se aplica al audio y se recuerda |
 | Audio | 935 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
+| App | PWA instalable (offline) y APK Android firmado de 14 KB que abre la web a pantalla completa, descargable desde la propia web |
 
 ## Interfaz en español, inglés o persa
 
