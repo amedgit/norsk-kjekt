@@ -90,6 +90,26 @@ C.colloquial.forEach((c, i) => {
   c.messages.forEach((m, j) => add(p + `.messages[${j}].es`, m.es));
   c.glossary.forEach((g, j) => add(p + `.glossary[${j}].es`, g.es));
 });
+(C.body ? [C.body] : []).forEach((b) => {
+  b.parts.forEach((x, j) => add(`body.parts[${j}].es`, x.es));
+  b.phrases.forEach((x, j) => add(`body.phrases[${j}].es`, x.es));
+  b.sensations.forEach((x, j) => add(`body.sensations[${j}].es`, x.es));
+  b.intensities.forEach((x, j) => add(`body.intensities[${j}].es`, x.es));
+  b.durations.forEach((x, j) => add(`body.durations[${j}].es`, x.es));
+  b.scenarios.forEach((sc, j) => {
+    add(`body.scenarios[${j}].intro`, sc.intro);
+    sc.lines.forEach((l, k) => add(`body.scenarios[${j}].lines[${k}].es`, l.es));
+  });
+  add('body.tip', b.tip);
+  b.exercises.forEach((e, j) => {
+    const q = `body.ex[${j}]`;
+    add(q + '.prompt', e.prompt);
+    e.options?.forEach((o, k) => add(q + `.options[${k}]`, o));
+    e.pairs?.forEach((q2, k) => add(q + `.pairs[${k}].b`, q2.b));
+    add(q + '.explain', e.explain);
+    add(q + '.es', e.es);
+  });
+});
 
 add('fun.intro', C.fun.intro);
 C.fun.packs.forEach((p) => {
@@ -157,6 +177,14 @@ for (const d of C.dialogues || []) {
   d.vocab.forEach((v) => addNo(v.no));
   d.phrases.forEach((p) => addNo(p.no));
   d.exercises.forEach(addExerciseNo);
+}
+if (C.body) {
+  C.body.parts.forEach((p) => { addNo(p.no); addNo(p.def); });
+  C.body.phrases.forEach((p) => addNo(p.no));
+  C.body.scenarios.forEach((sc) => {
+    sc.lines.forEach((l) => { addNo(l.no); addNo(l.who); });
+  });
+  C.body.exercises.forEach(addExerciseNo);
 }
 for (const c of C.chats || []) {
   c.people.forEach((p) => addNo(p.name));

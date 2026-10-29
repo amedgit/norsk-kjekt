@@ -6,6 +6,7 @@
   var LESSONS = COURSE.lessons;
   var DIALOGUES = COURSE.dialogues || [];
   var CHATS = COURSE.chats || [];
+  var BODY = COURSE.body || { zones: [], parts: [], sensations: [], intensities: [], durations: [], phrases: [], scenarios: [], exercises: [] };
   var I18N = window.I18N;
   var t = I18N.t;
   var tp = I18N.tp;
@@ -51,7 +52,7 @@
   var KEY = 'norsk-kjekt-v1';
 
   function defaults() {
-    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, xp: 0, days: {}, review: [], srs: {}, version: 1 };
+    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, body: {}, xp: 0, days: {}, review: [], srs: {}, version: 1 };
   }
 
   var state = (function load() {
@@ -63,6 +64,7 @@
       var fun = {};
       var dialogues = {};
       var srs = {};
+      var body = {};
       Object.keys(raw.lessons || {}).forEach(function (id) {
         var v = raw.lessons[id];
         if (v && typeof v === 'object') {
@@ -81,6 +83,9 @@
           dialogues[id] = { best: Number(v.best) || 0, total: Number(v.total) || 0, at: Number(v.at) || 0 };
         }
       });
+      if (raw.body && typeof raw.body === 'object') {
+        body = { best: Number(raw.body.best) || 0, total: Number(raw.body.total) || 0, at: Number(raw.body.at) || 0 };
+      }
       Object.keys(raw.srs || {}).forEach(function (sig) {
         var v = raw.srs[sig];
         if (v && typeof v === 'object') {
@@ -91,6 +96,7 @@
         lessons: lessons,
         fun: fun,
         dialogues: dialogues,
+        body: body,
         srs: srs,
         exams: raw.exams && typeof raw.exams === 'object' ? raw.exams : {},
         xp: Number(raw.xp) || 0,
@@ -1103,7 +1109,7 @@
 
   function totalExerciseCount() {
     return LESSONS.reduce(function (n, l) { return n + l.exercises.length; }, 0) +
-      funExerciseCount() + dialogueExerciseCount();
+      funExerciseCount() + dialogueExerciseCount() + (BODY.exercises ? BODY.exercises.length : 0);
   }
 
   function allFunExercises() {
@@ -1460,6 +1466,7 @@
       '  <a class="practice-chip" href="#/nivel"><b>🎯 ' + esc(t('home.testChip')) + '</b><span>' + esc(t('home.testChipSub')) + '</span></a>' +
       '  <a class="practice-chip" href="#/trener"><b>🏋️ ' + esc(t('home.trainerChip')) + '</b><span>' + esc(t('home.trainerChipSub')) + '</span></a>' +
       '  <a class="practice-chip" href="#/progreso"><b>📊 ' + esc(t('home.progressChip')) + '</b><span>' + esc(t('home.progressChipSub')) + '</span></a>' +
+      '  <a class="practice-chip" href="#/kroppen"><b>🧍 ' + esc(t('home.bodyChip')) + '</b><span>' + esc(t('home.bodyChipSub')) + '</span></a>' +
       '</div>' +
 
       levelSection(t('home.basicTitle'), t('home.basicSub'), ['A1', 'A2']) +
@@ -1575,7 +1582,316 @@
     refreshInstallUI();
   }
 
+  /* ---------------- Kroppen ---------------- */
+
+  var bodyZone = 'hode';
+  var bodyPartId = 'hode';
+
+  function bodyPart(id) {
+    return BODY.parts.find(function (p) { return p.id === id; }) || BODY.parts[0];
+  }
+
+  function bodyZoneParts(zone) {
+    return BODY.parts.filter(function (p) { return p.zone === zone; });
+  }
+
+  function bodySentence() {
+    var part = bodyPart(bodyPartId);
+    var sel = {
+      sensation: BODY.sensations.find(function (s) { return s.id === document.getElementById('b-sensation').value; }) || BODY.sensations[0],
+      intensity: BODY.intensities.find(function (s) { return s.id === document.getElementById('b-intensity').value; }) || BODY.intensities[1],
+      duration: BODY.durations.find(function (s) { return s.id === document.getElementById('b-duration').value; }) || BODY.durations[1]
+    };
+    var past = sel.duration.id !== 'i dag';
+    return {
+      no: 'Jeg har ' + (past ? 'hatt ' : '') + 'vondt i ' + part.def + ' ' + sel.duration.no + '. ' +
+        sel.intensity.phrase + ' ' + sel.sensation.phrase,
+      gloss: part.es + ' · ' + sel.duration.es + ' · ' + sel.sensation.es
+    };
+  }
+
+  function bodyMapHTML() {
+    function zoneAttr(z) {
+      return ' data-zone="' + z + '" tabindex="0" role="button" class="bz' + (bodyZone === z ? ' active' : '') + '"';
+    }
+    return '<svg class="bodymap" viewBox="0 0 560 620" aria-label="' + esc(t('body.mapTitle')) + '">' +
+      '<g' + zoneAttr('hode') + '><title>' + esc(t('body.zone.hode')) + '</title>' +
+      '<circle class="bshape" cx="150" cy="82" r="40" fill="#f2c9a8"/>' +
+      '<rect class="bshape" x="138" y="118" width="24" height="24" rx="8" fill="#f2c9a8"/></g>' +
+      '<g' + zoneAttr('overkropp') + '><title>' + esc(t('body.zone.overkropp')) + '</title>' +
+      '<rect class="bshape" x="94" y="140" width="112" height="200" rx="32" fill="#c8102e"/></g>' +
+      '<g' + zoneAttr('arm') + '><title>' + esc(t('body.zone.arm')) + '</title>' +
+      '<rect class="bshape" x="66" y="158" width="24" height="158" rx="12" fill="#c8102e"/>' +
+      '<rect class="bshape" x="210" y="158" width="24" height="158" rx="12" fill="#c8102e"/></g>' +
+      '<g' + zoneAttr('hånd') + '><title>' + esc(t('body.zone.hånd')) + '</title>' +
+      '<circle class="bshape" cx="60" cy="330" r="17" fill="#f2c9a8"/>' +
+      '<circle class="bshape" cx="240" cy="330" r="17" fill="#f2c9a8"/></g>' +
+      '<g' + zoneAttr('bein') + '><title>' + esc(t('body.zone.bein')) + '</title>' +
+      '<rect class="bshape" x="108" y="340" width="30" height="182" rx="13" fill="#0e2a47"/>' +
+      '<rect class="bshape" x="162" y="340" width="30" height="182" rx="13" fill="#0e2a47"/></g>' +
+      '<g' + zoneAttr('fot') + '><title>' + esc(t('body.zone.fot')) + '</title>' +
+      '<ellipse class="bshape" cx="123" cy="534" rx="24" ry="12" fill="#0e2a47"/>' +
+      '<ellipse class="bshape" cx="177" cy="534" rx="24" ry="12" fill="#0e2a47"/></g>' +
+      '<rect x="350" y="158" width="22" height="150" rx="11" fill="#1f4e79" opacity=".55"/>' +
+      '<rect x="484" y="158" width="22" height="150" rx="11" fill="#1f4e79" opacity=".55"/>' +
+      '<circle cx="361" cy="320" r="15" fill="#f2c9a8" opacity=".75"/>' +
+      '<circle cx="495" cy="320" r="15" fill="#f2c9a8" opacity=".75"/>' +
+      '<rect x="392" y="340" width="28" height="182" rx="13" fill="#0e2a47" opacity=".55"/>' +
+      '<rect x="440" y="340" width="28" height="182" rx="13" fill="#0e2a47" opacity=".55"/>' +
+      '<ellipse cx="406" cy="534" rx="22" ry="11" fill="#0e2a47" opacity=".55"/>' +
+      '<ellipse cx="454" cy="534" rx="22" ry="11" fill="#0e2a47" opacity=".55"/>' +
+      '<circle cx="428" cy="82" r="34" fill="#f2c9a8"/>' +
+      '<path d="M394 82 a34 34 0 0 1 68 0 q-8 -22 -34 -22 q-26 0 -34 22" fill="#2b211c"/>' +
+      '<rect x="416" y="114" width="24" height="28" rx="8" fill="#f2c9a8"/>' +
+      '<g' + zoneAttr('rygg') + '><title>' + esc(t('body.zone.rygg')) + '</title>' +
+      '<rect class="bshape" x="372" y="140" width="112" height="200" rx="32" fill="#1f4e79"/>' +
+      '<path d="M428 150 v180" stroke="#ffffff" stroke-opacity=".25" stroke-width="4" stroke-dasharray="7 8"/></g>' +
+      '<text x="150" y="590" text-anchor="middle" class="bmap-label">' + esc(t('body.front')) + '</text>' +
+      '<text x="428" y="590" text-anchor="middle" class="bmap-label">' + esc(t('body.back')) + '</text>' +
+      '</svg>';
+  }
+
+  function handSVG() {
+    return '<svg class="digitmap" viewBox="0 0 230 210" aria-hidden="true">' +
+      '<rect x="72" y="88" width="92" height="92" rx="20" fill="#f2c9a8"/>' +
+      '<g data-part="tommel" tabindex="0" role="button" class="bz"><rect x="42" y="104" width="30" height="58" rx="15" fill="#f2c9a8" transform="rotate(28 57 133)"/></g>' +
+      '<g data-part="pekefinger" tabindex="0" role="button" class="bz"><rect x="70" y="32" width="22" height="66" rx="11" fill="#f2c9a8"/></g>' +
+      '<g data-part="langfinger" tabindex="0" role="button" class="bz"><rect x="94" y="20" width="22" height="78" rx="11" fill="#f2c9a8"/></g>' +
+      '<g data-part="ringfinger" tabindex="0" role="button" class="bz"><rect x="118" y="30" width="22" height="68" rx="11" fill="#f2c9a8"/></g>' +
+      '<g data-part="lillefinger" tabindex="0" role="button" class="bz"><rect x="142" y="48" width="20" height="52" rx="10" fill="#f2c9a8"/></g>' +
+      '</svg>';
+  }
+
+  function footSVG() {
+    return '<svg class="digitmap" viewBox="0 0 230 210" aria-hidden="true">' +
+      '<path d="M92 70 q34 -14 58 8 q20 22 10 56 q-8 30 -30 44 q-30 18 -52 -8 q-14 -18 -12 -42 q2 -34 26 -58z" fill="#f2c9a8"/>' +
+      '<g data-part="storta" tabindex="0" role="button" class="bz"><circle cx="76" cy="55" r="17" fill="#f2c9a8"/></g>' +
+      '<g data-part="andreta" tabindex="0" role="button" class="bz"><circle cx="108" cy="42" r="12" fill="#f2c9a8"/></g>' +
+      '<g data-part="tredjeta" tabindex="0" role="button" class="bz"><circle cx="130" cy="42" r="10" fill="#f2c9a8"/></g>' +
+      '<g data-part="fjerdeta" tabindex="0" role="button" class="bz"><circle cx="150" cy="50" r="9" fill="#f2c9a8"/></g>' +
+      '<g data-part="lilleta" tabindex="0" role="button" class="bz"><circle cx="166" cy="63" r="8" fill="#f2c9a8"/></g>' +
+      '</svg>';
+  }
+
+  function renderBodyZone(zone) {
+    bodyZone = zone;
+    var parts = bodyZoneParts(zone);
+    if (!parts.some(function (p) { return p.id === bodyPartId; })) bodyPartId = parts[0].id;
+    var panel = document.getElementById('zone-parts');
+    if (!panel) return;
+    var digits = zone === 'hånd' ? handSVG() : zone === 'fot' ? footSVG() : '';
+    panel.innerHTML =
+      '<div class="zone-parts-head"><h3>' + esc(t('body.partsTitle')) + '</h3>' +
+      '<span class="chip plain">' + esc(t('body.zone.' + zone)) + '</span></div>' +
+      (digits ? '<div class="digit-wrap">' + digits + '<p class="ex-hint">' + esc(t('body.touchDetail')) + '</p></div>' : '') +
+      '<div class="part-grid">' + parts.map(function (p) {
+        return '<button type="button" class="part-chip' + (p.id === bodyPartId ? ' active' : '') + '" data-part="' + p.id + '">' +
+          '<b>' + esc(p.no) + '</b><span>' + esc(p.es) + '</span></button>';
+      }).join('') + '</div>';
+    document.querySelectorAll('#body-map .bz').forEach(function (g) {
+      g.classList.toggle('active', g.getAttribute('data-zone') === zone);
+    });
+    document.querySelectorAll('[data-zone-tab]').forEach(function (b) {
+      b.classList.toggle('active', b.getAttribute('data-zone-tab') === zone);
+    });
+    renderBodyPart(bodyPartId);
+  }
+
+  function renderBodyPart(id) {
+    bodyPartId = id;
+    var p = bodyPart(id);
+    var box = document.getElementById('body-detail');
+    if (!box) return;
+    box.innerHTML =
+      '<div class="part-detail-inner">' +
+      '<div class="part-title"><h3>' + esc(p.no) + '</h3>' + say(p.no) + '</div>' +
+      '<p class="part-def">' + esc(t('body.definite')) + ': <b>' + esc(p.def) + '</b></p>' +
+      '<p class="part-es">' + esc(p.es) + '</p>' +
+      '<div class="part-example">' + say('Jeg har vondt i ' + p.def + '.') +
+      '<span>Jeg har vondt i ' + esc(p.def) + '.</span></div>' +
+      '<button type="button" class="btn ghost small" id="use-builder">' + esc(t('body.useBuilder')) + '</button>' +
+      '</div>';
+    document.querySelectorAll('.part-chip').forEach(function (b) {
+      b.classList.toggle('active', b.getAttribute('data-part') === id);
+    });
+    document.querySelectorAll('#body-map [data-part]').forEach(function (g) {
+      g.classList.toggle('active', g.getAttribute('data-part') === id);
+    });
+    var use = document.getElementById('use-builder');
+    if (use) {
+      use.addEventListener('click', function () {
+        var sel = document.getElementById('b-part');
+        if (sel) sel.value = id;
+        updateBodyBuilder();
+        var card = document.querySelector('.body-builder');
+        if (card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    }
+  }
+
+  function updateBodyBuilder() {
+    var out = bodySentence();
+    var s = document.getElementById('b-sentence');
+    var g = document.getElementById('b-gloss');
+    var sp = document.getElementById('b-say');
+    if (s) s.textContent = out.no;
+    if (g) g.textContent = out.gloss;
+    if (sp) sp.innerHTML = say(out.no);
+  }
+
+  function renderBody() {
+    var best = state.body && state.body.best ? state.body.best + '/' + state.body.total : '';
+    app.innerHTML =
+      '<div class="crumbs"><a href="#/">' + esc(t('crumb.home')) + '</a> <span>›</span> <span>' + esc(t('body.crumb')) + '</span></div>' +
+
+      '<section class="colo-intro body-intro">' +
+      '  <span class="eyebrow">' + esc(t('body.eyebrow')) + '</span>' +
+      '  <h1>' + esc(t('body.title')) + '</h1>' +
+      '  <p>' + esc(t('body.intro')) + '</p>' +
+      '  <p class="body-disclaimer">' + esc(t('body.disclaimer')) + '</p>' +
+      '</section>' +
+
+      '<section class="card"><h2>' + esc(t('body.mapTitle')) + '</h2>' +
+      '<div class="zone-tabs">' + BODY.zones.map(function (z) {
+        return '<button type="button" class="zone-tab' + (z === bodyZone ? ' active' : '') + '" data-zone-tab="' + z + '">' +
+          esc(t('body.zone.' + z)) + '</button>';
+      }).join('') + '</div>' +
+      '<div class="body-layout">' +
+      '  <div class="bodymap-wrap" id="body-map">' + bodyMapHTML() + '</div>' +
+      '  <div class="body-panel"><div id="zone-parts" class="zone-parts"></div><div id="body-detail" class="part-detail"></div></div>' +
+      '</div></section>' +
+
+      '<section class="card body-builder"><h2>' + esc(t('body.builderTitle')) + '</h2>' +
+      '<p class="muted">' + esc(t('body.builderText')) + '</p>' +
+      '<div class="builder-grid">' +
+      '  <label>' + esc(t('body.part')) + '<select id="b-part">' + BODY.zones.map(function (z) {
+        return '<optgroup label="' + esc(t('body.zone.' + z)) + '">' + bodyZoneParts(z).map(function (p) {
+          return '<option value="' + p.id + '"' + (p.id === bodyPartId ? ' selected' : '') + '>' + esc(p.no) + ' — ' + esc(p.es) + '</option>';
+        }).join('') + '</optgroup>';
+      }).join('') + '</select></label>' +
+      '  <label>' + esc(t('body.sensation')) + '<select id="b-sensation">' + BODY.sensations.map(function (s) {
+        return '<option value="' + s.id + '"' + (s.id === 'verkende' ? ' selected' : '') + '>' + esc(s.no) + '</option>';
+      }).join('') + '</select></label>' +
+      '  <label>' + esc(t('body.intensity')) + '<select id="b-intensity">' + BODY.intensities.map(function (s) {
+        return '<option value="' + s.id + '"' + (s.id === 'ganske' ? ' selected' : '') + '>' + esc(s.no) + '</option>';
+      }).join('') + '</select></label>' +
+      '  <label>' + esc(t('body.duration')) + '<select id="b-duration">' + BODY.durations.map(function (s) {
+        return '<option value="' + s.id + '"' + (s.id === 'i to dager' ? ' selected' : '') + '>' + esc(s.no) + '</option>';
+      }).join('') + '</select></label>' +
+      '</div>' +
+      '<div class="builder-out"><span id="b-say"></span><p id="b-sentence" class="b-sentence"></p>' +
+      '<p id="b-gloss" class="muted"></p>' +
+      '<div class="prog-links"><button type="button" class="btn ghost small" id="copy-body">' + esc(t('body.copy')) + '</button>' +
+      '<button type="button" class="btn ghost small" id="share-body">' + esc(t('body.share')) + '</button></div>' +
+      '<p id="copy-status" class="ex-hint" hidden></p></div></section>' +
+
+      '<section class="card"><h2>' + esc(t('body.phrasesTitle')) + '</h2><div class="phrases body-phrases">' +
+      BODY.phrases.map(function (p) {
+        return '<div class="phrase">' + say(p.no) + '<span class="txt"><span class="no">' + esc(p.no) + '</span>' +
+          '<span class="es">' + esc(p.es) + '</span></span></div>';
+      }).join('') + '</div></section>' +
+
+      '<section class="card"><h2>' + esc(t('body.scenariosTitle')) + '</h2>' +
+      BODY.scenarios.map(function (sc) {
+        return '<details class="scenario"><summary>' + esc(sc.title) + '<span>' + esc(sc.intro) + '</span></summary>' +
+          sc.lines.map(function (l) {
+            return '<div class="sline"><span class="swho">' + esc(l.who) + '</span>' + say(l.no) +
+              '<span class="sno">' + esc(l.no) + '</span><span class="ses">' + esc(l.es) + '</span></div>';
+          }).join('') + '</details>';
+      }).join('') + '</section>' +
+
+      '<section class="card redflags"><h2>' + esc(t('body.redTitle')) + '</h2>' +
+      '<ul><li>' + esc(t('body.red1')) + '</li><li>' + esc(t('body.red2')) + '</li></ul></section>' +
+
+      '<section class="card" id="body-practice"><h2>' + esc(t('body.practice')) + '</h2>' +
+      '<div id="body-mount"></div></section>' +
+
+      '<section class="card"><div class="tip">💡 <b>' + esc(t('body.tipTitle')) + ':</b> ' + esc(BODY.tip) + '</div></section>';
+
+    renderBodyZone(bodyZone);
+    renderBodyPart(bodyPartId);
+    updateBodyBuilder();
+
+    document.getElementById('body-map').addEventListener('click', function (e) {
+      var g = e.target.closest('[data-zone]');
+      if (!g) return;
+      renderBodyZone(g.getAttribute('data-zone'));
+    });
+    document.getElementById('body-map').addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      var g = e.target.closest('[data-zone]');
+      if (!g) return;
+      e.preventDefault();
+      renderBodyZone(g.getAttribute('data-zone'));
+    });
+    document.querySelectorAll('[data-zone-tab]').forEach(function (b) {
+      b.addEventListener('click', function () { renderBodyZone(b.getAttribute('data-zone-tab')); });
+    });
+    document.getElementById('zone-parts').addEventListener('click', function (e) {
+      var part = e.target.closest('[data-part]');
+      if (!part) return;
+      e.preventDefault();
+      renderBodyPart(part.getAttribute('data-part'));
+    });
+    ['b-part', 'b-sensation', 'b-intensity', 'b-duration'].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.addEventListener('change', updateBodyBuilder);
+    });
+    var copy = document.getElementById('copy-body');
+    if (copy) {
+      copy.addEventListener('click', function () {
+        var text = bodySentence().no;
+        var status = document.getElementById('copy-status');
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function () {
+            if (status) { status.textContent = t('body.copied'); status.hidden = false; }
+          });
+        }
+      });
+    }
+    var share = document.getElementById('share-body');
+    if (share) {
+      share.addEventListener('click', function () {
+        var text = bodySentence().no;
+        if (navigator.share) navigator.share({ text: text }).catch(function () { /* cancelado */ });
+        else if (navigator.clipboard) navigator.clipboard.writeText(text);
+      });
+    }
+
+    var mount = document.getElementById('body-mount');
+    mount.innerHTML = '<div class="actions">' +
+      '<button class="btn primary" id="start-body" type="button">' + esc(t('body.start')) + '</button>' +
+      (best ? '<span class="ex-hint">' + esc(t('body.best', { best: state.body.best, total: state.body.total })) + '</span>' : '') +
+      '</div>';
+    document.getElementById('start-body').addEventListener('click', function () {
+      document.getElementById('body-practice').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      runExercises(mount, BODY.exercises, {
+        label: t('body.label'),
+        onDone: function (res) {
+          var prev = state.body || { best: 0 };
+          state.body = {
+            best: Math.max(prev.best || 0, res.correct),
+            total: res.total,
+            at: Date.now()
+          };
+          state.xp += res.correct * 10;
+          markDay();
+          BODY.exercises.forEach(function (_, i) {
+            var sig = 'body#' + i;
+            if (res.failed.indexOf(BODY.exercises[i]) > -1) addReview(sig);
+            else removeReview(sig);
+          });
+          save();
+          refreshHud();
+          var box = mount.querySelector('.result');
+          if (box) box.insertAdjacentHTML('beforeend', '<p class="ex-hint">' + esc(t('result.progress', { n: res.correct * 10 })) + '</p>');
+        }
+      });
+    });
+  }
+
   /* ---------------- Tema, teclado y progreso ---------------- */
+
 
   function applyTheme(dark) {
     var root = document.documentElement;
@@ -1643,6 +1959,7 @@
     [state.lessons, state.fun, state.dialogues].forEach(function (group) {
       Object.keys(group).forEach(function (id) { n += Number(group[id].best) || 0; });
     });
+    if (state.body && state.body.best) n += Number(state.body.best) || 0;
     return n;
   }
 
@@ -2456,6 +2773,13 @@
       }
       return null;
     }
+    if (parts[0] === 'body') {
+      var bodyItem = COURSE.body && COURSE.body.exercises[Number(parts[1])];
+      if (bodyItem) {
+        return { sig: sig, item: bodyItem, title: t('body.title'), emoji: '🧍', label: t('body.reviewLabel') };
+      }
+      return null;
+    }
     if (parts[0] === 'dlg') {
       var dialogue = DIALOGUES.find(function (d) { return d.id === parts[1]; });
       var dlgItem = dialogue && dialogue.exercises[Number(parts[2])];
@@ -3152,11 +3476,16 @@
           : name === 'eksamen' ? 'exam'
             : (name === 'samtaler' || name === 'samtale') ? 'dialogues'
               : (name === 'meldinger' || name === 'melding') ? 'chats'
-                : (name === 'app' || name === 'progreso' || name === 'nivel' || name === 'trener') ? ''
-                  : 'home';
+                : name === 'kroppen' ? 'body'
+                  : (name === 'app' || name === 'progreso' || name === 'nivel' || name === 'trener') ? ''
+                    : 'home';
     document.querySelectorAll('.nav a').forEach(function (a) {
       a.classList.toggle('active', a.dataset.route === active);
     });
+    var activeLink = document.querySelector('.nav a.active');
+    if (activeLink && activeLink.scrollIntoView) {
+      activeLink.scrollIntoView({ block: 'nearest', inline: 'center' });
+    }
 
     if (name === 'leksjon') {
       var lesson = LESSONS.find(function (l) { return l.id === arg; });
@@ -3171,6 +3500,8 @@
       renderLevelTest();
     } else if (name === 'trener') {
       renderTrainer(arg);
+    } else if (name === 'kroppen') {
+      renderBody();
     } else if (name === 'meldinger') {
       renderChats();
     } else if (name === 'melding') {

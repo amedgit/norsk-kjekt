@@ -15,8 +15,8 @@
   var UI = {
     es: {
       'meta.title': 'Norsk Kjekt — aprende noruego de verdad',
-      'meta.description': 'Curso de noruego bokmål A1–C2: 15 lecciones, 231 ejercicios, 6 conversaciones cotidianas, 4 grupos de WhatsApp, 6 packs de humor, tablas con audio y 4 simulacros de la Norskprøven.',
-      'meta.ogDescription': '15 lecciones de bokmål (A1–C2), 231 ejercicios, 6 conversaciones con audio, 4 grupos de WhatsApp, 6 packs de humor, 18 expresiones de la calle y 4 simulacros de examen. Sin registro y sin build.',
+      'meta.description': 'Curso de noruego bokmål A1–C2: 15 lecciones, 239 ejercicios, 6 conversaciones cotidianas, 4 grupos de WhatsApp, 6 packs de humor, tablas con audio y 4 simulacros de la Norskprøven.',
+      'meta.ogDescription': '15 lecciones de bokmål (A1–C2), 239 ejercicios, 6 conversaciones con audio, 4 grupos de WhatsApp, 6 packs de humor, 18 expresiones de la calle y 4 simulacros de examen. Sin registro y sin build.',
       'meta.ogAlt': 'Norsk Kjekt: portal de noruego con ejercicios interactivos',
       'skip': 'Saltar al contenido',
       'nav.primary': 'Principal',
@@ -325,6 +325,49 @@
       'tr.numExplain': 'Repasa las decenas y los números compuestos.',
       'tr.timeExplain': 'Recuerda: «halv tre» son las dos y media; se cuenta hacia la hora siguiente.',
       'tr.prepExplain': 'La preposición depende del verbo o de la expresión fija.',
+      'nav.body': 'Kroppen',
+      'footer.body': 'Kroppen',
+      'home.bodyChip': 'Kroppen',
+      'home.bodyChipSub': 'El cuerpo y el dolor',
+      'body.crumb': 'Kroppen',
+      'body.eyebrow': 'Salud · A1–B1',
+      'body.title': 'El cuerpo y el dolor',
+      'body.intro': 'Aprende las partes del cuerpo y a decir qué te duele, cuánto y desde cuándo.',
+      'body.disclaimer': 'Material de práctica de idioma; no es consejo médico.',
+      'body.mapTitle': 'Toca una zona del cuerpo',
+      'body.partsTitle': 'Partes de esta zona',
+      'body.touchDetail': 'Toca un dedo para seleccionarlo.',
+      'body.definite': 'Forma definida',
+      'body.useBuilder': 'Usar en el generador',
+      'body.builderTitle': 'Constructor de síntomas',
+      'body.builderText': 'Elige y copia la frase para llevar preparada a la consulta.',
+      'body.part': 'Parte del cuerpo',
+      'body.sensation': 'Sensación',
+      'body.intensity': 'Intensidad',
+      'body.duration': 'Duración',
+      'body.copy': 'Copiar frase',
+      'body.copied': 'Frase copiada.',
+      'body.share': 'Compartir',
+      'body.phrasesTitle': 'Frases para la consulta',
+      'body.scenariosTitle': 'En la consulta',
+      'body.redTitle': 'Cuándo buscar ayuda urgente',
+      'body.red1': 'Dolor en el pecho, dificultad para respirar o pérdida de consciencia: llama al 113.',
+      'body.red2': 'Fuera del horario del fastlege: legevakt, 116 117.',
+      'body.practice': 'Practica',
+      'body.start': 'Hacer los 8 ejercicios',
+      'body.best': 'Mejor resultado: {best}/{total}',
+      'body.label': 'Kroppen',
+      'body.reviewLabel': 'Kroppen',
+      'body.tipTitle': 'Truco',
+      'body.zone.hode': 'Cabeza',
+      'body.zone.overkropp': 'Torso',
+      'body.zone.rygg': 'Espalda',
+      'body.zone.arm': 'Brazo',
+      'body.zone.hånd': 'Mano',
+      'body.zone.bein': 'Pierna',
+      'body.zone.fot': 'Pie',
+      'body.front': 'Delante',
+      'body.back': 'Detrás',
 
       'chat.eyebrow': 'Meldinger · A2–B1',
       'chat.title': 'Grupos de WhatsApp noruegos',
@@ -477,8 +520,8 @@
 
     en: {
       'meta.title': 'Norsk Kjekt — learn Norwegian for real',
-      'meta.description': 'Norwegian bokmål course A1–C2: 15 lessons, 231 exercises, 6 everyday conversations, 4 WhatsApp groups, 6 humour packs, audio word tables and 4 Norskprøven mock exams.',
-      'meta.ogDescription': '15 bokmål lessons (A1–C2), 231 interactive exercises, 6 conversations with audio, 4 WhatsApp groups, 6 humour packs, 18 street expressions and 4 mock exams. No sign-up, no build.',
+      'meta.description': 'Norwegian bokmål course A1–C2: 15 lessons, 239 exercises, 6 everyday conversations, 4 WhatsApp groups, 6 humour packs, audio word tables and 4 Norskprøven mock exams.',
+      'meta.ogDescription': '15 bokmål lessons (A1–C2), 239 interactive exercises, 6 conversations with audio, 4 WhatsApp groups, 6 humour packs, 18 street expressions and 4 mock exams. No sign-up, no build.',
       'meta.ogAlt': 'Norsk Kjekt: a Norwegian portal with interactive exercises',
       'skip': 'Skip to content',
       'nav.primary': 'Main',
@@ -787,6 +830,49 @@
       'tr.numExplain': 'Review the tens and compound numbers.',
       'tr.timeExplain': 'Remember: «halv tre» is half past two; you count towards the next hour.',
       'tr.prepExplain': 'The preposition depends on the verb or the fixed expression.',
+      'nav.body': 'The body',
+      'footer.body': 'The body',
+      'home.bodyChip': 'The body',
+      'home.bodyChipSub': 'Body parts and pain',
+      'body.crumb': 'The body',
+      'body.eyebrow': 'Health · A1–B1',
+      'body.title': 'The body and pain',
+      'body.intro': 'Learn the body parts and how to say exactly what hurts, how much and for how long.',
+      'body.disclaimer': 'Language practice material; not medical advice.',
+      'body.mapTitle': 'Tap a body zone',
+      'body.partsTitle': 'Parts in this zone',
+      'body.touchDetail': 'Tap a finger or toe to select it.',
+      'body.definite': 'Definite form',
+      'body.useBuilder': 'Use in the builder',
+      'body.builderTitle': 'Symptom builder',
+      'body.builderText': 'Choose and copy the sentence to take to the appointment.',
+      'body.part': 'Body part',
+      'body.sensation': 'Sensation',
+      'body.intensity': 'Intensity',
+      'body.duration': 'Duration',
+      'body.copy': 'Copy sentence',
+      'body.copied': 'Sentence copied.',
+      'body.share': 'Share',
+      'body.phrasesTitle': 'Phrases for the appointment',
+      'body.scenariosTitle': 'At the appointment',
+      'body.redTitle': 'When to get urgent help',
+      'body.red1': 'Chest pain, difficulty breathing or loss of consciousness: call 113.',
+      'body.red2': 'Outside your fastlege’s hours: legevakt, 116 117.',
+      'body.practice': 'Practise',
+      'body.start': 'Do the 8 exercises',
+      'body.best': 'Best score: {best}/{total}',
+      'body.label': 'The body',
+      'body.reviewLabel': 'The body',
+      'body.tipTitle': 'Tip',
+      'body.zone.hode': 'Head',
+      'body.zone.overkropp': 'Torso',
+      'body.zone.rygg': 'Back',
+      'body.zone.arm': 'Arm',
+      'body.zone.hånd': 'Hand',
+      'body.zone.bein': 'Leg',
+      'body.zone.fot': 'Foot',
+      'body.front': 'Front',
+      'body.back': 'Back',
 
       'chat.eyebrow': 'Meldinger · A2–B1',
       'chat.title': 'Norwegian WhatsApp groups',
@@ -940,8 +1026,8 @@
 
     fa: {
       'meta.title': "Norsk Kjekt — نروژی را واقعی یاد بگیر",
-      'meta.description': "دوره زبان نروژی بوکمول A1–C2: ۱۵ درس، ۲۳۱ تمرین، ۶ گفت‌وگوی روزمره، ۴ گروه واتساپ، ۶ بسته طنز، جدول‌های واژه با صدا و ۴ آزمون آزمایشی Norskprøven.",
-      'meta.ogDescription': "۱۵ درس بوکمول (A1–C2)، ۲۳۱ تمرین تعاملی، ۶ گفت‌وگو با صدا، ۴ گروه واتساپ، ۶ بسته طنز، ۱۸ اصطلاح خیابانی و ۴ آزمون آزمایشی. بدون ثبت‌نام و بدون build.",
+      'meta.description': "دوره زبان نروژی بوکمول A1–C2: ۱۵ درس، ۲۳۹ تمرین، ۶ گفت‌وگوی روزمره، ۴ گروه واتساپ، ۶ بسته طنز، جدول‌های واژه با صدا و ۴ آزمون آزمایشی Norskprøven.",
+      'meta.ogDescription': "۱۵ درس بوکمول (A1–C2)، ۲۳۹ تمرین تعاملی، ۶ گفت‌وگو با صدا، ۴ گروه واتساپ، ۶ بسته طنز، ۱۸ اصطلاح خیابانی و ۴ آزمون آزمایشی. بدون ثبت‌نام و بدون build.",
       'meta.ogAlt': "Norsk Kjekt: پرتال نروژی با تمرین‌های تعاملی",
       'skip': "پرش به محتوا",
       'nav.primary': "اصلی",
@@ -1244,6 +1330,49 @@
       'tr.numExplain': "دهگان و عددهای مرکب را مرور کن.",
       'tr.timeExplain': "یادت باشد: «halv tre» یعنی دو و نیم؛ به سمت ساعت بعد شمرده می‌شود.",
       'tr.prepExplain': "حرف اضافه به فعل یا عبارت ثابت بستگی دارد.",
+      'nav.body': "بدن",
+      'footer.body': "بدن",
+      'home.bodyChip': "بدن",
+      'home.bodyChipSub': "اعضای بدن و درد",
+      'body.crumb': "بدن",
+      'body.eyebrow': "سلامت · A1–B1",
+      'body.title': "بدن و درد",
+      'body.intro': "اعضای بدن را یاد بگیر و بگو دقیقاً کجا درد می‌کند، چقدر و از چه زمانی.",
+      'body.disclaimer': "این مطالب برای تمرین زبان است، نه توصیهٔ پزشکی.",
+      'body.mapTitle': "یک ناحیه از بدن را لمس کن",
+      'body.partsTitle': "اعضای این ناحیه",
+      'body.touchDetail': "برای انتخاب، یک انگشت را لمس کن.",
+      'body.definite': "شکل معرفه",
+      'body.useBuilder': "استفاده در جمله‌ساز",
+      'body.builderTitle': "جمله‌ساز نشانه‌ها",
+      'body.builderText': "جمله را انتخاب و کپی کن تا برای مطب همراه داشته باشی.",
+      'body.part': "عضو بدن",
+      'body.sensation': "حس درد",
+      'body.intensity': "شدت",
+      'body.duration': "مدت",
+      'body.copy': "کپی جمله",
+      'body.copied': "جمله کپی شد.",
+      'body.share': "اشتراک‌گذاری",
+      'body.phrasesTitle': "جمله‌های مطب",
+      'body.scenariosTitle': "در مطب",
+      'body.redTitle': "چه زمانی کمک فوری بگیریم",
+      'body.red1': "درد قفسهٔ سینه، تنگی نفس یا از دست دادن هوشیاری: با ۱۱۳ تماس بگیر.",
+      'body.red2': "خارج از ساعت کار fastlege: اورژانس شهری (legevakt)، ۱۱۶ ۱۱۷.",
+      'body.practice': "تمرین",
+      'body.start': "انجام ۸ تمرین",
+      'body.best': "بهترین نتیجه: {best}/{total}",
+      'body.label': "بدن",
+      'body.reviewLabel': "بدن",
+      'body.tipTitle': "نکته",
+      'body.zone.hode': "سر",
+      'body.zone.overkropp': "تنه",
+      'body.zone.rygg': "پشت",
+      'body.zone.arm': "بازو",
+      'body.zone.hånd': "دست",
+      'body.zone.bein': "ساق پا",
+      'body.zone.fot': "کف پا",
+      'body.front': "از جلو",
+      'body.back': "از پشت",
 
       'chat.eyebrow': "Meldinger · A2–B1",
       'chat.title': "گروه‌های واتساپ نروژی",
@@ -1452,6 +1581,14 @@
       c.messages.forEach(function (m) { add(m.no); });
       c.glossary.forEach(function (g) { add(g.no); });
     });
+    if (C.body) {
+      C.body.parts.forEach(function (p) { add(p.no); add(p.def); });
+      C.body.phrases.forEach(function (p) { add(p.no); });
+      C.body.scenarios.forEach(function (sc) {
+        sc.lines.forEach(function (l) { add(l.no); add(l.who); });
+      });
+      C.body.exercises.forEach(addExercise);
+    }
     C.fun.packs.forEach(function (p) {
       add(p.level);
       p.exercises.forEach(addExercise);
@@ -1525,6 +1662,20 @@
       c.messages.forEach(function (m) { m.es = tf(m.es); });
       c.glossary.forEach(function (g) { g.es = tf(g.es); });
     });
+
+    if (C.body) {
+      C.body.parts.forEach(function (p) { p.es = tf(p.es); });
+      C.body.phrases.forEach(function (p) { p.es = tf(p.es); });
+      C.body.sensations.forEach(function (x) { x.es = tf(x.es); });
+      C.body.intensities.forEach(function (x) { x.es = tf(x.es); });
+      C.body.durations.forEach(function (x) { x.es = tf(x.es); });
+      C.body.scenarios.forEach(function (sc) {
+        sc.intro = tf(sc.intro);
+        sc.lines.forEach(function (l) { l.es = tf(l.es); });
+      });
+      C.body.tip = tf(C.body.tip);
+      C.body.exercises.forEach(localizeExercise);
+    }
 
     C.colloquial.forEach(function (c) {
       c.literal = tf(c.literal);

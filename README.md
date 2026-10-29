@@ -76,9 +76,10 @@ cacheada.
 | Parte | Contenido |
 |---|---|
 | Lecciones | 15 lecciones A1–C2: base A1–A2, vida diaria B1, noticias/medio ambiente/derechos laborales en B2, debate y escritura académica en C1, ironía y literatura en C2 |
-| Práctica | 231 ejercicios en 10 formatos, test de nivel de 18 preguntas y entrenador de números, hora y preposiciones |
+| Práctica | 239 ejercicios en 10 formatos, test de nivel de 18 preguntas y entrenador de números, hora y preposiciones |
 | Samtaler | 6 conversaciones cotidianas (A2–B1: portal, cafetería, tienda, trabajo, médico y teléfono) con 52 réplicas, audio por línea, traducciones plegables, vocabulario, frases y 30 ejercicios |
 | Meldinger | 4 grupos de WhatsApp (A2–B1: vecinos, familia, amigos y trabajo) con 48 mensajes en formato chat, audio por mensaje, traducción, glosario de abreviaturas y truco cultural |
+| Kroppen | Mapa corporal interactivo (34 partes), zoom de mano y pie, constructor de síntomas, 10 frases de consulta, 3 escenarios médicos y 8 ejercicios (A1–B1) |
 | Tull & tøys | 6 packs con 84 ejercicios de humor (absurdo, supervivencia, oficina, dictados, modismos y verbos) y una mezcla aleatoria de 10 |
 | Tablas | 94 palabras con audio, búsqueda, filtros por nivel/tema, ordenación y modo examen; 14 verbos en presente, pasado y perfecto |
 | Coloquial | 18 expresiones con registro (neutro → vulgar), diálogo de ejemplo y truco |
@@ -87,7 +88,7 @@ cacheada.
 | Progreso | racha, XP, mapa de calor de 12 semanas, 8 logros, repaso espaciado (1/3/7/15/30 días) y exportación/importación del progreso en JSON |
 | Extras | modo oscuro, teclado noruego æ ø å en los ejercicios de escritura y PWA offline |
 | Velocidad | selector 0,7×–1,3× en la cabecera; se aplica al audio y se recuerda |
-| Audio | 935 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
+| Audio | 1060 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
 | App | PWA instalable (offline) con icono propio, pantalla completa y funcionamiento sin conexión; el APK está retirado temporalmente |
 
 ## Interfaz en español, inglés o persa
@@ -97,7 +98,7 @@ El selector **ES / EN / فا** de la cabecera cambia todo lo que no es noruego:
 - textos de la interfaz, botones, filtros, avisos y resultados;
 - explicaciones, objetivos, trucos y notas culturales;
 - traducciones de textos, vocabulario, frases y diálogos;
-- prompts, opciones, pistas y explicaciones de los 231 ejercicios;
+- prompts, opciones, pistas y explicaciones de los 239 ejercicios;
 - instrucciones, explicaciones y rúbricas de autoevaluación del simulacro;
 - las tablas de palabras y verbos (la columna de significados).
 
@@ -158,7 +159,7 @@ norsk/
     ├── img/og.png       ← imagen para compartir en redes
     ├── img/lessons/*.svg ← una ilustración original por lección
     ├── img/dialogues/*.svg ← una ilustración por conversación
-    ├── audio/*.mp3      ← 935 audios (≈12,8 MB), generados
+    ├── audio/*.mp3      ← 1060 audios (≈13,7 MB), generados
     └── js/
         ├── data.js          ← TODO el contenido del curso, Samtaler y los 4 simulacros
         ├── content-en.js    ← traducciones ES → EN del contenido
@@ -294,6 +295,22 @@ La sección `#/meldinger` vive en el array `chats` de `data.js`. Cada chat tiene
   tiene audio; los que llevan abreviaturas usan el campo opcional `say` con la
   versión hablada («kl 10» → «klokka ti», «HBD» → «Gratulerer med dagen»).
 - Al añadir contenido, ejecuta `tools/check-i18n.mjs` para completar EN y FA.
+
+### Kroppen (el cuerpo y el dolor)
+
+La sección `#/kroppen` vive en `body` dentro de `data.js`:
+
+- `parts`: 34 partes con `no`, `def` (forma definida), `es` y `zone`.
+- `sensations`, `intensities` y `durations`: piezas del constructor de frases.
+- `phrases`: frases para la consulta; `scenarios`: tres diálogos médicos.
+- `tip`: la regla «vondt i» + forma definida.
+- `exercises`: los mismos tipos que las lecciones.
+
+El mapa corporal es SVG inline: las zonas se marcan con `data-zone` y los
+dedos de mano/pie con `data-part`. El constructor genera la frase en vivo y usa
+el audio pregrabado para las partes, frases y ejemplos; las combinaciones nuevas
+caen a la voz del dispositivo. Los ejercicios guardan `state.body` y entran en
+el repaso con la firma `body#<índice>`.
 
 ### Tull & tøys
 

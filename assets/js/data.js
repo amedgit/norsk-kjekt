@@ -2785,6 +2785,181 @@ window.COURSE = {
   ],
 
   /* -------------------------------------------------------------------- */
+  body: {
+    zones: ['hode', 'overkropp', 'rygg', 'arm', 'hånd', 'bein', 'fot'],
+    parts: [
+      { id: 'hode', no: 'hode', def: 'hodet', es: 'la cabeza', zone: 'hode' },
+      { id: 'oye', no: 'øye', def: 'øyet', es: 'el ojo', zone: 'hode' },
+      { id: 'ore', no: 'øre', def: 'øret', es: 'la oreja', zone: 'hode' },
+      { id: 'nese', no: 'nese', def: 'nesen', es: 'la nariz', zone: 'hode' },
+      { id: 'munn', no: 'munn', def: 'munnen', es: 'la boca', zone: 'hode' },
+      { id: 'tann', no: 'tann', def: 'tannen', es: 'el diente', zone: 'hode' },
+      { id: 'hals', no: 'hals', def: 'halsen', es: 'la garganta', zone: 'hode' },
+      { id: 'skulder', no: 'skulder', def: 'skulderen', es: 'el hombro', zone: 'overkropp' },
+      { id: 'bryst', no: 'bryst', def: 'brystet', es: 'el pecho', zone: 'overkropp' },
+      { id: 'mage', no: 'mage', def: 'magen', es: 'la barriga', zone: 'overkropp' },
+      { id: 'hofte', no: 'hofte', def: 'hoften', es: 'la cadera', zone: 'overkropp' },
+      { id: 'nakke', no: 'nakke', def: 'nakken', es: 'la nuca', zone: 'rygg' },
+      { id: 'rygg', no: 'rygg', def: 'ryggen', es: 'la espalda', zone: 'rygg' },
+      { id: 'korsrygg', no: 'korsrygg', def: 'korsryggen', es: 'la zona lumbar', zone: 'rygg' },
+      { id: 'arm', no: 'arm', def: 'armen', es: 'el brazo', zone: 'arm' },
+      { id: 'albue', no: 'albue', def: 'albuen', es: 'el codo', zone: 'arm' },
+      { id: 'handledd', no: 'håndledd', def: 'håndleddet', es: 'la muñeca', zone: 'arm' },
+      { id: 'hand', no: 'hånd', def: 'hånden', es: 'la mano', zone: 'hånd' },
+      { id: 'tommel', no: 'tommel', def: 'tommelen', es: 'el pulgar', zone: 'hånd' },
+      { id: 'pekefinger', no: 'pekefinger', def: 'pekefingeren', es: 'el dedo índice', zone: 'hånd' },
+      { id: 'langfinger', no: 'langfinger', def: 'langfingeren', es: 'el dedo corazón', zone: 'hånd' },
+      { id: 'ringfinger', no: 'ringfinger', def: 'ringfingeren', es: 'el dedo anular', zone: 'hånd' },
+      { id: 'lillefinger', no: 'lillefinger', def: 'lillefingeren', es: 'el meñique', zone: 'hånd' },
+      { id: 'lar', no: 'lår', def: 'låret', es: 'el muslo', zone: 'bein' },
+      { id: 'kne', no: 'kne', def: 'kneet', es: 'la rodilla', zone: 'bein' },
+      { id: 'legg', no: 'legg', def: 'leggen', es: 'la pantorrilla', zone: 'bein' },
+      { id: 'ankel', no: 'ankel', def: 'ankelen', es: 'el tobillo', zone: 'bein' },
+      { id: 'fot', no: 'fot', def: 'foten', es: 'el pie', zone: 'fot' },
+      { id: 'hael', no: 'hæl', def: 'hælen', es: 'el talón', zone: 'fot' },
+      { id: 'storta', no: 'stortå', def: 'stortåa', es: 'el dedo gordo del pie', zone: 'fot' },
+      { id: 'andreta', no: 'andretå', def: 'andretåa', es: 'el segundo dedo del pie', zone: 'fot' },
+      { id: 'tredjeta', no: 'tredje tå', def: 'tredje tåa', es: 'el tercer dedo del pie', zone: 'fot' },
+      { id: 'fjerdeta', no: 'fjerde tå', def: 'fjerde tåa', es: 'el cuarto dedo del pie', zone: 'fot' },
+      { id: 'lilleta', no: 'lilletå', def: 'lilletåa', es: 'el quinto dedo del pie', zone: 'fot' }
+    ],
+    sensations: [
+      { id: 'verkende', no: 'verkende', es: 'El dolor es sordo.', phrase: 'Det verker.' },
+      { id: 'bankende', no: 'bankende', es: 'Late como un pulso.', phrase: 'Det banker.' },
+      { id: 'stikkende', no: 'stikkende', es: 'Es un dolor punzante.', phrase: 'Det stikker.' },
+      { id: 'stiv', no: 'stiv', es: 'Está rígido.', phrase: 'Det føles stivt.' },
+      { id: 'hoven', no: 'hoven', es: 'Está hinchado.', phrase: 'Det er hovent.' },
+      { id: 'nummen', no: 'nummen', es: 'Está adormecido.', phrase: 'Det er numment.' }
+    ],
+    intensities: [
+      { id: 'litt', no: 'litt', es: 'Me duele un poco.', phrase: 'Det gjør litt vondt.' },
+      { id: 'ganske', no: 'ganske', es: 'Me duele bastante.', phrase: 'Det gjør ganske vondt.' },
+      { id: 'veldig', no: 'veldig', es: 'Me duele mucho.', phrase: 'Det gjør veldig vondt.' }
+    ],
+    durations: [
+      { id: 'i dag', no: 'i dag', es: 'hoy' },
+      { id: 'i to dager', no: 'i to dager', es: 'desde hace dos días' },
+      { id: 'i en uke', no: 'i en uke', es: 'desde hace una semana' },
+      { id: 'i tre uker', no: 'i tre uker', es: 'desde hace tres semanas' }
+    ],
+    phrases: [
+      { no: 'Hvor gjør det vondt?', es: '¿Dónde te duele?' },
+      { no: 'Det gjør vondt her.', es: 'Me duele aquí.' },
+      { no: 'Jeg har vondt i ...', es: 'Me duele ...' },
+      { no: 'Jeg har hatt vondt i ... i ... dager.', es: 'Llevo ... días con dolor en ...' },
+      { no: 'Det er hovent og rødt.', es: 'Está hinchado y rojo.' },
+      { no: 'Jeg klarer ikke å gå på det.', es: 'No puedo apoyarme en él.' },
+      { no: 'Jeg har feber og fryser.', es: 'Tengo fiebre y escalofríos.' },
+      { no: 'Jeg er kvalm.', es: 'Tengo náuseas.' },
+      { no: 'Kan jeg få en time hos fastlegen?', es: '¿Puedo pedir cita con mi médico de cabecera?' },
+      { no: 'Jeg trenger en sykmelding.', es: 'Necesito una baja médica.' }
+    ],
+    scenarios: [
+      {
+        id: 'hodepine',
+        title: 'Hodepine',
+        intro: 'Un dolor de cabeza que no se va.',
+        lines: [
+          { who: 'Lege', no: 'Hvor lenge har du hatt vondt i hodet?', es: '¿Cuánto tiempo llevas con dolor de cabeza?' },
+          { who: 'Du', no: 'I tre dager. Det banker, og jeg er kvalm.', es: 'Desde hace tres días. Me late y tengo náuseas.' },
+          { who: 'Lege', no: 'Har du tatt noe smertestillende?', es: '¿Has tomado algo para el dolor?' },
+          { who: 'Du', no: 'Ja, men det hjelper ikke.', es: 'Sí, pero no ayuda.' }
+        ]
+      },
+      {
+        id: 'mage',
+        title: 'Magesmerter',
+        intro: 'Dolor en la parte baja del abdomen.',
+        lines: [
+          { who: 'Lege', no: 'Hvor gjør det vondt?', es: '¿Dónde te duele?' },
+          { who: 'Du', no: 'Her, nederst i magen. Det stikker.', es: 'Aquí, en la parte baja del estómago. Es punzante.' },
+          { who: 'Lege', no: 'Har du hatt diaré eller feber?', es: '¿Has tenido diarrea o fiebre?' },
+          { who: 'Du', no: 'Litt feber, men ikke diaré.', es: 'Un poco de fiebre, pero no diarrea.' }
+        ]
+      },
+      {
+        id: 'ankel',
+        title: 'Forstuet ankel',
+        intro: 'Un tobillo torcido después de entrenar.',
+        lines: [
+          { who: 'Lege', no: 'Hva har skjedd?', es: '¿Qué ha pasado?' },
+          { who: 'Du', no: 'Jeg tråkket over på trening. Ankelen er hoven.', es: 'Me torcí el tobillo entrenando. Lo tengo hinchado.' },
+          { who: 'Lege', no: 'Kan du stå på foten?', es: '¿Puedes apoyar el pie?' },
+          { who: 'Du', no: 'Ja, men det gjør veldig vondt.', es: 'Sí, pero me duele mucho.' }
+        ]
+      }
+    ],
+    tip: 'La fórmula base es «jeg har vondt i» + la forma definida de la parte del cuerpo: «hodet», «kneet», «tåa». No uses «på»: «vondt på magen» es el error clásico. Para la duración, «i tre dager» significa «desde hace tres días»; el verbo pasa a «jeg har hatt».',
+    exercises: [
+      {
+        type: 'mcq',
+        prompt: '¿Qué significa «tå»?',
+        options: ['Dedo del pie', 'Dedo de la mano', 'Talón', 'Tobillo'],
+        answer: 0,
+        explain: '«Tå» es un dedo del pie; «fot» es el pie entero y «hæl» el talón.'
+      },
+      {
+        type: 'gap',
+        prompt: 'Completa con la preposición correcta:',
+        sentence: 'Jeg har vondt ___ hodet.',
+        answers: ['i'],
+        bank: ['i', 'på', 'av'],
+        es: 'Me duele la cabeza.',
+        explain: 'La colocación es «vondt i» + parte del cuerpo en forma definida.'
+      },
+      {
+        type: 'order',
+        prompt: 'Ordena la frase:',
+        words: ['Jeg', 'har', 'hatt', 'vondt', 'i', 'kneet', 'i', 'tre', 'dager.'],
+        es: 'Llevo tres días con dolor en la rodilla.',
+        explain: 'Con duración se usa «har hatt vondt i ... i ... dager».'
+      },
+      {
+        type: 'listen',
+        audio: 'Det gjør vondt når jeg går.',
+        es: 'Me duele cuando camino.',
+        explain: '«Når jeg går» = cuando camino. Sirve para describir cuándo duele.'
+      },
+      {
+        type: 'match',
+        prompt: 'Empareja las partes del cuerpo:',
+        pairs: [
+          { a: 'hode', b: 'cabeza' },
+          { a: 'fot', b: 'pie' },
+          { a: 'tann', b: 'diente' },
+          { a: 'kne', b: 'rodilla' }
+        ],
+        explain: 'Cuatro básicas para cualquier consulta.'
+      },
+      {
+        type: 'fix',
+        prompt: 'Toca la palabra equivocada:',
+        sentence: 'Jeg har vondt på magen.',
+        wrong: 3,
+        correct: 'Jeg har vondt i magen.',
+        es: 'Me duele la barriga.',
+        explain: 'Siempre «vondt i», nunca «vondt på».'
+      },
+      {
+        type: 'cloze',
+        prompt: 'Completa la consulta:',
+        text: 'Jeg har ___ i halsen og ___. Jeg trenger en ___.',
+        answers: ['vondt', 'feber', 'sykmelding'],
+        bank: ['vondt', 'feber', 'sykmelding', 'varm', 'ferie', 'time'],
+        es: 'Me duele la garganta y tengo fiebre. Necesito una baja médica.',
+        explain: '«Vondt i halsen», «feber» y «sykmelding» son las tres palabras clave.'
+      },
+      {
+        type: 'mcq',
+        prompt: 'El médico pregunta: «Gjør det vondt når jeg trykker her?». ¿Qué te está preguntando?',
+        options: ['Si duele cuando presiona ahí', 'Si puedes caminar', 'Si tienes fiebre', 'Cuándo comiste'],
+        answer: 0,
+        explain: '«Å trykke» es presionar; «gjør det vondt» pregunta si duele.'
+      }
+    ]
+  },
+
+  /* -------------------------------------------------------------------- */
   colloquial: [
     {
       term: 'Hei hei',

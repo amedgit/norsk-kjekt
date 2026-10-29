@@ -123,6 +123,44 @@ for (const c of COURSE.chats || []) {
   c.glossary.forEach((g) => texts.add(g.say || g.no));
 }
 
+/* Kroppen: partes, frases, escenarios y ejercicios */
+if (COURSE.body) {
+  for (const part of COURSE.body.parts) {
+    texts.add(part.no);
+    texts.add(part.def);
+    texts.add('Jeg har vondt i ' + part.def + '.');
+  }
+  for (const phrase of COURSE.body.phrases) texts.add(phrase.no);
+  for (const sc of COURSE.body.scenarios) {
+    for (const line of sc.lines) texts.add(line.no);
+  }
+  for (const e of COURSE.body.exercises) {
+    if (e.type === 'gap') texts.add(e.sentence.replace('___', e.answers[0]));
+    if (e.type === 'order') texts.add(e.words.join(' '));
+    if (e.type === 'mcq' && e.audio) texts.add(e.audio);
+    if (e.type === 'listen') texts.add(e.audio);
+    if (e.type === 'transform') {
+      texts.add(e.source);
+      const list = e.answers || (e.answer ? [e.answer] : []);
+      list.forEach((a) => texts.add(a));
+    }
+    if (e.type === 'cloze') {
+      let i = 0;
+      const filled = String(e.text).replace(/___/g, () => {
+        const a = e.answers[i++];
+        return Array.isArray(a) ? a[0] : a;
+      });
+      texts.add(filled);
+    }
+    if (e.type === 'match') {
+      e.pairs.forEach((p) => {
+        texts.add(p.a);
+        if (e.sayB) texts.add(p.b);
+      });
+    }
+  }
+}
+
 /* Tull & tøys: packs, tabla de palabras y tabla de verbos */
 if (COURSE.fun) {
   for (const pack of COURSE.fun.packs) {
