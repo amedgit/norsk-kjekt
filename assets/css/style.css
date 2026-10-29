@@ -704,8 +704,8 @@ main {
 
 .app-intro { background: linear-gradient(135deg, #7a0a20, var(--red)); }
 .app-options {
-  display: grid; gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  display: grid; gap: 1rem; max-width: 680px;
+  grid-template-columns: 1fr;
 }
 .app-option h2 { margin-top: .3rem; }
 .app-option > p { color: var(--muted); font-size: .92rem; }

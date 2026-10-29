@@ -26,63 +26,26 @@ cd ~/norsk
 ./serve.sh 3000     # otro puerto
 ```
 
-## App Android (APK y PWA)
+## Instalar como app (PWA)
 
-Hay dos formas de tenerlo en el móvil: **instalar la PWA** (recomendado, funciona
-sin conexión) o **descargar el APK** e instalarlo como una app normal.
-
-### Instalar como app (recomendado)
+La web se instala como app desde Chrome: icono propio, pantalla completa y uso
+sin conexión. No pasa por tiendas ni por APK.
 
 1. Abre <https://amedgit.github.io/norsk-kjekt/> en Chrome (Android).
 2. Toca el botón **«Instalar app»** del banner, o el menú ⋮ → *Añadir a pantalla
    de inicio*.
-3. Queda en el cajón de aplicaciones, abre a pantalla completa y **funciona sin
-   conexión**: el service worker cachea el núcleo y los audios que ya has oído.
+3. Queda en el cajón de aplicaciones y el service worker cachea el núcleo y los
+   audios que ya has oído.
 
-### Descargar el APK
+La página `#/app` explica los pasos y el icono **📲 App** de la cabecera lleva
+directamente allí.
 
-- Enlace directo: <https://amedgit.github.io/norsk-kjekt/assets/app/norsk-kjekt.apk>
-- Página con instrucciones: <https://amedgit.github.io/norsk-kjekt/#/app>
-- El icono **📲 APK** de la cabecera (en todas las páginas) **descarga el archivo
-  directamente**. También está en el botón **App Android** del hero y en el
-  banner de la portada.
-- Si Chrome muestra el aviso «este tipo de archivo puede dañar tu dispositivo»,
-  elige **Descargar de todos modos**; luego abre el archivo para instalarlo.
-- Android pedirá permitir «instalar apps de origen desconocido» para el
-  navegador o el gestor de archivos; es lo normal al instalar un APK fuera de
-  Play. Después se instala como cualquier app.
+### APK (en pausa)
 
-El APK es un **envoltorio WebView nativo** de 17 KB: abre la misma web publicada
-a pantalla completa, sin barra de direcciones, con el icono de la bandera. Como
-carga la web en vivo, cualquier cambio del curso llega sin actualizar la app.
-Necesita conexión la primera vez; para uso **offline** instala la PWA.
-
-Datos de la build:
-
-| Campo | Valor |
-|---|---|
-| Paquete | `io.github.amedgit.norskkjekt` |
-| Versión | 1.0.1 (código 2) |
-| minSdk / targetSdk | 21 / 36 |
-| Firma (SHA-256) | `03:BF:7B:24:E6:8E:C2:C8:DD:3D:AF:9D:C3:CD:FE:8A:41:1A:20:28:7C:0F:75:A3:09:A0:D2:68:4C:AB:3A:4D` |
-
-### Recompilar el APK
-
-Las fuentes Android están en `tools/android/` y el script
-`tools/build-apk.sh` compila y firma el APK. Necesita JDK 17, Android SDK
-(platform 36) y el keystore de firma, que **no está en el repositorio**:
-
-```bash
-export JAVA_HOME=/ruta/jdk-17
-export ANDROID_HOME=/ruta/android-sdk
-export KEYSTORE_FILE=$HOME/.config/norsk-kjekt/android.keystore
-export KEYSTORE_PASS=...
-export KEY_PASS=...
-tools/build-apk.sh
-```
-
-**Guarda el keystore**: sin él no se pueden publicar actualizaciones que Android
-acepte como la misma app.
+El APK se retiró de la web porque algunos móviles bloqueaban la instalación. Las
+fuentes siguen en `tools/android/` y `tools/build-apk.sh` para retomarlo más
+adelante; el keystore se guarda fuera del repositorio. **No hay enlace público
+mientras esté en pausa.**
 
 ### Caché tras un despliegue
 
@@ -122,10 +85,10 @@ cacheada.
 | Simulacro | 4 exámenes completos (A1, A2, B1 y B2) estilo Norskprøven: lesing, lytting, skriving y muntlig, con cronómetro, informe por destreza y respuestas modelo |
 | Idioma | selector **ES / EN / فا** en la cabecera: traduce interfaz, explicaciones y tablas; el bokmål se queda intacto y el progreso se conserva. En persa la página cambia a dirección RTL |
 | Progreso | racha, XP, mapa de calor de 12 semanas, 8 logros, repaso espaciado (1/3/7/15/30 días) y exportación/importación del progreso en JSON |
-| Extras | modo oscuro, teclado noruego æ ø å en los ejercicios de escritura, PWA offline y APK Android |
+| Extras | modo oscuro, teclado noruego æ ø å en los ejercicios de escritura y PWA offline |
 | Velocidad | selector 0,7×–1,3× en la cabecera; se aplica al audio y se recuerda |
 | Audio | 935 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
-| App | PWA instalable (offline) y APK Android firmado de 17 KB que abre la web a pantalla completa, descargable desde la propia web |
+| App | PWA instalable (offline) con icono propio, pantalla completa y funcionamiento sin conexión; el APK está retirado temporalmente |
 
 ## Interfaz en español, inglés o persa
 
