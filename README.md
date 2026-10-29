@@ -3,7 +3,8 @@
 **Publicado:** <https://amedgit.github.io/norsk-kjekt/>
 
 Portal para practicar noruego **bokmål** (A1–C2): textos cortos, ejercicios
-interactivos, seis conversaciones cotidianas con audio, seis packs de humor,
+interactivos, seis conversaciones cotidianas con audio, cuatro grupos de WhatsApp
+noruego, seis packs de humor,
 tablas de palabras y verbos, una sección de noruego coloquial y **cuatro
 simulacros de examen** estilo Norskprøven. HTML +
 CSS + JS puro, sin build, sin dependencias y sin backend.
@@ -32,6 +33,7 @@ cd ~/norsk
 | Lecciones | 15 lecciones A1–C2: base A1–A2, vida diaria B1, noticias/medio ambiente/derechos laborales en B2, debate y escritura académica en C1, ironía y literatura en C2 |
 | Práctica | 231 ejercicios en 10 formatos: opción múltiple, huecos, ordenar, dictado, cloze, transformar, emparejar, ¿qué sobra?, encontrar el error y memoria |
 | Samtaler | 6 conversaciones cotidianas (A2–B1: portal, cafetería, tienda, trabajo, médico y teléfono) con 52 réplicas, audio por línea, traducciones plegables, vocabulario, frases y 30 ejercicios |
+| Meldinger | 4 grupos de WhatsApp (A2–B1: vecinos, familia, amigos y trabajo) con 48 mensajes en formato chat, traducción por mensaje, glosario de abreviaturas y truco cultural |
 | Tull & tøys | 6 packs con 84 ejercicios de humor (absurdo, supervivencia, oficina, dictados, modismos y verbos) y una mezcla aleatoria de 10 |
 | Tablas | 94 palabras con audio, búsqueda, filtros por nivel/tema, ordenación y modo examen; 14 verbos en presente, pasado y perfecto |
 | Coloquial | 18 expresiones con registro (neutro → vulgar), diálogo de ejemplo y truco |
@@ -231,6 +233,19 @@ y `exercises` (los mismos tipos que las lecciones). La ruta de cada diálogo es
 - Los fallos entran en el repaso con la firma `dlg#<id>#<índice>`.
 - Al añadir o cambiar textos, ejecuta `tools/generate-audio.mjs` para generar
   los MP3 y el manifiesto, y `tools/check-i18n.mjs` para comprobar EN y FA.
+
+### Meldinger (grupos de WhatsApp)
+
+La sección `#/meldinger` vive en el array `chats` de `data.js`. Cada chat tiene
+`id`, `emoji`, `level`, `title`, `subtitle`, `intro`, `day` (separador de día),
+`people` (`id`, `name`, `color`), `messages` (`who`, `time`, `no`, `es`),
+`glossary` (`no`, `es`) y `tip`. La ruta de cada grupo es `#/melding/<id>`.
+
+- El mensaje con `who: 'me'` se dibuja a la derecha, como propio, con ✓✓.
+- El botón **Mostrar traducciones** alterna todos los `es` del chat.
+- Es una sección de solo lectura: sin ejercicios, sin progreso y sin audio
+  (los mensajes son lenguaje escrito, no hablado).
+- Al añadir contenido, ejecuta `tools/check-i18n.mjs` para completar EN y FA.
 
 ### Tull & tøys
 

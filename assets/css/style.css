@@ -679,6 +679,105 @@ main {
 .des[hidden] { display: none; }
 .des::before { content: "→ "; opacity: .6; }
 
+/* ---------------- meldinger (WhatsApp noruego) ---------------- */
+
+.chat-banner {
+  display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+  margin-top: 1rem; padding: 1.3rem 1.4rem;
+  background: linear-gradient(135deg, #e4f6ec, #fff);
+  border: 1px solid #c2e6d1; border-radius: var(--radius);
+}
+.chat-banner h2 { font-size: clamp(1.1rem, 2.4vw, 1.35rem); margin: .35rem 0 .25rem; }
+.chat-banner p { color: #0c4a38; font-size: .9rem; max-width: 68ch; }
+
+.chat-intro { background: linear-gradient(135deg, #075e54, #128c7e); }
+
+.chat-card { border-top: 3px solid #128c7e; }
+.chat-card .num { color: #128c7e; }
+.chat-thumb {
+  position: relative; display: flex; flex-direction: column; gap: 8px;
+  padding: 14px; background: #ece5dd; min-height: 148px;
+  border-bottom: 1px solid var(--line);
+}
+.chat-thumb-emoji { font-size: 1.9rem; line-height: 1; }
+.cb-mini {
+  display: block; width: 72%; padding: 7px 9px;
+  background: #fff; border-radius: 10px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
+}
+.cb-mini.right { align-self: flex-end; width: 56%; background: #d9fdd3; }
+.cb-mini i { display: block; height: 6px; border-radius: 3px; background: #d6dbe3; margin: 3px 0; }
+.cb-mini i:last-child { width: 55%; }
+.cb-mini.right i { background: #a7d99a; }
+
+.chat-head-block { margin: .4rem 0 1.4rem; }
+
+.chatphone {
+  max-width: 470px; margin: .5rem auto 0;
+  border: 1px solid var(--line); border-radius: 18px; overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.chat-topbar {
+  display: flex; align-items: center; gap: .6rem;
+  background: #075e54; color: #fff; padding: .55rem .85rem;
+}
+.chat-back { font-size: 1.5rem; line-height: 1; opacity: .85; }
+.chat-ava {
+  width: 2.2rem; height: 2.2rem; flex: 0 0 auto;
+  display: grid; place-items: center; border-radius: 50%;
+  background: #fff; font-size: 1.1rem;
+}
+.chat-titles { display: flex; flex-direction: column; line-height: 1.2; min-width: 0; }
+.chat-titles b { font-size: .95rem; }
+.chat-titles small { opacity: .82; font-size: .72rem; }
+.chat-ico { margin-inline-start: auto; opacity: .92; }
+
+.chat-body {
+  display: flex; flex-direction: column; gap: .45rem;
+  padding: 1rem .8rem 1.2rem; background: #efeae2; min-height: 320px;
+}
+.daysep { display: flex; justify-content: center; margin-bottom: .4rem; }
+.daysep span {
+  background: #fff; color: var(--muted); font-size: .68rem; font-weight: 700;
+  padding: .22rem .75rem; border-radius: 999px; box-shadow: 0 1px 2px rgba(0, 0, 0, .08);
+}
+.cmsg { display: flex; }
+.cbub {
+  max-width: 82%; padding: .4rem .55rem .3rem;
+  background: #fff; border-radius: 10px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
+}
+.cmsg.me { justify-content: flex-end; }
+.cmsg.me .cbub { background: #d9fdd3; }
+.cname { display: block; font-size: .72rem; font-weight: 800; margin-bottom: 1px; }
+.cno { margin: 0; font-size: .92rem; line-height: 1.38; overflow-wrap: anywhere; }
+.ces {
+  margin: .28rem 0 0; padding-top: .25rem;
+  border-top: 1px dashed var(--line);
+  font-size: .8rem; color: var(--muted);
+}
+.ces[hidden] { display: none; }
+.ces::before { content: "→ "; opacity: .6; }
+.ctime { display: block; text-align: end; font-size: .64rem; color: #8696a0; margin-top: 2px; }
+.ctime .ticks { color: #53bdeb; font-style: normal; }
+
+.chat-input {
+  display: flex; align-items: center; justify-content: space-between; gap: .6rem;
+  background: #f0f2f5; padding: .5rem .8rem; color: #8696a0; font-size: .9rem;
+}
+.chat-input-text { flex: 1; background: #fff; border-radius: 999px; padding: .45rem .9rem; }
+
+.glossary {
+  display: grid; gap: .55rem;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+}
+.g-item {
+  display: flex; align-items: baseline; gap: .55rem;
+  border: 1px solid var(--line); border-radius: 10px; padding: .5rem .65rem;
+}
+.g-no { font-weight: 800; white-space: nowrap; }
+.g-es { font-size: .84rem; color: var(--muted); }
+
 .fun-grid {
   display: grid; gap: .9rem;
   grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
@@ -980,6 +1079,7 @@ html[dir="rtl"] .exam-usertext {
   .fun-quote { flex-basis: 100%; margin-top: .2rem; }
   .fun-banner { flex-direction: column; align-items: flex-start; }
   .dialogue-banner { flex-direction: column; align-items: flex-start; }
+  .chat-banner { flex-direction: column; align-items: flex-start; }
   .exam-banner { flex-direction: column; align-items: flex-start; }
 }
 
@@ -1004,6 +1104,8 @@ html[dir="rtl"] .exam-usertext {
   .dialogue-toolbar { align-items: flex-start; }
   .dno { font-size: .98rem; }
   .dialogue-progress { flex-wrap: wrap; }
+  .chatphone { max-width: none; }
+  .cbub { max-width: 88%; }
 }
 
 @media (max-width: 440px) {
@@ -1023,9 +1125,11 @@ html[lang="fa"] {
 /* el noruego se lee siempre de izquierda a derecha, incluso en la página RTL */
 html[dir="rtl"] .para .no,
 html[dir="rtl"] .gx .no, html[dir="rtl"] .vocab .no, html[dir="rtl"] .phrase .no,
-html[dir="rtl"] .wb-no, html[dir="rtl"] .w-no, html[dir="rtl"] .dno {
+html[dir="rtl"] .wb-no, html[dir="rtl"] .w-no, html[dir="rtl"] .dno,
+html[dir="rtl"] .cno, html[dir="rtl"] .g-no {
   direction: ltr; unicode-bidi: isolate; text-align: start;
 }
 
 html[dir="rtl"] .para .es::before { content: "← "; }
 html[dir="rtl"] .des::before { content: "← "; }
+html[dir="rtl"] .ces::before { content: "← "; }

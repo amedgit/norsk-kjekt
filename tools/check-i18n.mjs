@@ -82,6 +82,15 @@ C.colloquial.forEach((c, i) => {
   });
 });
 
+(C.chats || []).forEach((c) => {
+  const p = `chat:${c.id}`;
+  add(p + '.subtitle', c.subtitle);
+  add(p + '.intro', c.intro);
+  add(p + '.tip', c.tip);
+  c.messages.forEach((m, j) => add(p + `.messages[${j}].es`, m.es));
+  c.glossary.forEach((g, j) => add(p + `.glossary[${j}].es`, g.es));
+});
+
 add('fun.intro', C.fun.intro);
 C.fun.packs.forEach((p) => {
   const pp = `pack:${p.id}`;
@@ -148,6 +157,11 @@ for (const d of C.dialogues || []) {
   d.vocab.forEach((v) => addNo(v.no));
   d.phrases.forEach((p) => addNo(p.no));
   d.exercises.forEach(addExerciseNo);
+}
+for (const c of C.chats || []) {
+  c.people.forEach((p) => addNo(p.name));
+  c.messages.forEach((m) => addNo(m.no));
+  c.glossary.forEach((g) => addNo(g.no));
 }
 for (const p of C.fun.packs) {
   addNo(p.level);

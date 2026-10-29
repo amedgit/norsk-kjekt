@@ -5,6 +5,7 @@
   var COURSE = window.COURSE;
   var LESSONS = COURSE.lessons;
   var DIALOGUES = COURSE.dialogues || [];
+  var CHATS = COURSE.chats || [];
   var I18N = window.I18N;
   var t = I18N.t;
   var tp = I18N.tp;
@@ -990,6 +991,34 @@
   }
 
   /* =======================================================
+     Meldinger: grupos de WhatsApp noruegos
+     ======================================================= */
+
+  function chatCard(c) {
+    return '<a class="lesson-card chat-card" href="#/melding/' + c.id + '">' +
+      '<div class="chat-thumb" aria-hidden="true">' +
+      '<span class="chat-thumb-emoji">' + c.emoji + '</span>' +
+      '<span class="cb-mini"><i></i><i></i></span>' +
+      '<span class="cb-mini right"><i></i></span>' +
+      '</div>' +
+      '<div class="top"><span class="emoji">' + c.emoji + '</span>' +
+      '<span class="num">' + esc(t('chat.cardNum', { level: c.level })) + '</span></div>' +
+      '<h3>' + esc(c.title) + '</h3>' +
+      '<p class="sub">' + esc(c.subtitle) + '</p>' +
+      '<div class="foot">' +
+      '<span class="chip plain">' + esc(tp('chat.members', c.people.length)) + '</span>' +
+      '<span class="chip plain">' + esc(tp('chat.messages', c.messages.length)) + '</span>' +
+      '</div></a>';
+  }
+
+  function chatLevelSection(title, sub, levels) {
+    var list = CHATS.filter(function (c) { return levels.indexOf(c.level) > -1; });
+    if (!list.length) return '';
+    return '<h2 class="section-title">' + title + ' <span>' + sub + '</span></h2>' +
+      '<div class="grid">' + list.map(chatCard).join('') + '</div>';
+  }
+
+  /* =======================================================
      Tull & tøys: packs, tabla de palabras y verbos
      ======================================================= */
 
@@ -1371,6 +1400,17 @@
       '<div class="actions" style="margin-top:1rem"><a class="btn ghost" href="#/samtaler">' +
       esc(tp('home.seeDialogues', DIALOGUES.length)) + '</a></div>' +
 
+      '<section class="chat-banner">' +
+      '  <div>' +
+      '    <span class="eyebrow">' + esc(t('home.chatEyebrow')) + '</span>' +
+      '    <h2>' + esc(t('home.chatTitle')) + '</h2>' +
+      '    <p>' + esc(t('home.chatText', { n: CHATS.length })) + '</p>' +
+      '  </div>' +
+      '  <div class="fun-banner-actions">' +
+      '    <a class="btn primary" href="#/meldinger">' + esc(t('home.chatEnter')) + '</a>' +
+      '  </div>' +
+      '</section>' +
+
       '<section class="exam-banner">' +
       '  <div>' +
       '    <span class="eyebrow">' + esc(t('exam.eyebrow')) + '</span>' +
@@ -1529,6 +1569,83 @@
           }
         }
       });
+    });
+  }
+
+  /* ---------------- Meldinger ---------------- */
+
+  function renderChats() {
+    app.innerHTML =
+      '<section class="colo-intro chat-intro">' +
+      '  <span class="eyebrow">' + esc(t('chat.eyebrow')) + '</span>' +
+      '  <h1>' + esc(t('chat.title')) + '</h1>' +
+      '  <p>' + esc(t('chat.intro', { n: CHATS.length })) + '</p>' +
+      '</section>' +
+      chatLevelSection(t('chat.a2Title'), t('chat.a2Sub'), ['A2']) +
+      chatLevelSection(t('chat.b1Title'), t('chat.b1Sub'), ['B1']);
+  }
+
+  function renderChat(c) {
+    var people = {};
+    c.people.forEach(function (p) { people[p.id] = p; });
+
+    app.innerHTML =
+      '<div class="crumbs"><a href="#/meldinger">' + esc(t('chat.crumb')) + '</a> <span>›</span> <span>' + esc(c.title) + '</span></div>' +
+
+      '<header class="chat-head-block">' +
+      '  <div class="kicker"><span class="emoji">' + c.emoji + '</span>' +
+      '    <span class="chip">' + c.level + '</span>' +
+      '    <span class="chip plain">' + esc(tp('chat.members', c.people.length)) + '</span>' +
+      '    <span class="chip plain">' + esc(tp('chat.messages', c.messages.length)) + '</span></div>' +
+      '  <h1>' + esc(c.title) + '</h1>' +
+      '  <p class="lead">' + esc(c.subtitle) + '</p>' +
+      '  <p class="dlg-intro-text">' + esc(c.intro) + '</p>' +
+      '</header>' +
+
+      '<section class="card"><div class="dialogue-toolbar">' +
+      '<h2>' + esc(t('chat.group')) + '</h2>' +
+      '<button class="btn ghost small" id="toggle-tr" aria-expanded="false">' + esc(t('dlg.showTranslations')) + '</button>' +
+      '</div>' +
+      '<div class="chatphone">' +
+      '  <div class="chat-topbar">' +
+      '    <span class="chat-back" aria-hidden="true">‹</span>' +
+      '    <span class="chat-ava" aria-hidden="true">' + c.emoji + '</span>' +
+      '    <span class="chat-titles"><b>' + esc(c.title) + '</b>' +
+      '    <small>' + esc(tp('chat.members', c.people.length)) + ' · ' + esc(t('chat.online')) + '</small></span>' +
+      '    <span class="chat-ico" aria-hidden="true">📞</span>' +
+      '  </div>' +
+      '  <div class="chat-body">' +
+      '    <div class="daysep"><span>' + esc(c.day) + '</span></div>' +
+      c.messages.map(function (m) {
+        var me = m.who === 'me';
+        var person = people[m.who] || { name: m.who, color: 'inherit' };
+        return '<div class="cmsg' + (me ? ' me' : '') + '"><div class="cbub">' +
+          (me ? '' : '<span class="cname" style="color:' + esc(person.color) + '">' + esc(person.name) + '</span>') +
+          '<p class="cno">' + esc(m.no) + '</p>' +
+          '<p class="ces" hidden>' + esc(m.es) + '</p>' +
+          '<span class="ctime">' + esc(m.time) + (me ? ' <i class="ticks" aria-hidden="true">✓✓</i>' : '') + '</span>' +
+          '</div></div>';
+      }).join('') +
+      '  </div>' +
+      '  <div class="chat-input"><span class="chat-input-text">' + esc(t('chat.input')) + '</span>' +
+      '  <span aria-hidden="true">😊&nbsp;&nbsp;🎤</span></div>' +
+      '</div></section>' +
+
+      '<section class="card"><h2>' + esc(t('chat.glossary')) + '</h2><div class="glossary">' +
+      c.glossary.map(function (g) {
+        return '<div class="g-item"><span class="g-no">' + esc(g.no) + '</span>' +
+          '<span class="g-es">' + esc(g.es) + '</span></div>';
+      }).join('') +
+      '</div></section>' +
+
+      '<section class="card"><div class="tip">💡 <b>' + esc(t('dlg.tip')) + ':</b> ' + esc(c.tip) + '</div></section>';
+
+    var toggle = document.getElementById('toggle-tr');
+    toggle.addEventListener('click', function () {
+      var show = toggle.getAttribute('aria-expanded') !== 'true';
+      app.querySelectorAll('.chat-body .ces').forEach(function (el) { el.hidden = !show; });
+      toggle.setAttribute('aria-expanded', show ? 'true' : 'false');
+      toggle.textContent = show ? t('dlg.hideTranslations') : t('dlg.showTranslations');
     });
   }
 
@@ -2424,7 +2541,8 @@
         : name === 'tull' ? 'fun'
           : name === 'eksamen' ? 'exam'
             : (name === 'samtaler' || name === 'samtale') ? 'dialogues'
-              : 'home';
+              : (name === 'meldinger' || name === 'melding') ? 'chats'
+                : 'home';
     document.querySelectorAll('.nav a').forEach(function (a) {
       a.classList.toggle('active', a.dataset.route === active);
     });
@@ -2434,6 +2552,12 @@
       renderLesson(lesson || LESSONS[0]);
     } else if (name === 'samtaler') {
       renderDialogues();
+    } else if (name === 'meldinger') {
+      renderChats();
+    } else if (name === 'melding') {
+      var chat = CHATS.find(function (c) { return c.id === arg; });
+      if (chat) renderChat(chat);
+      else renderChats();
     } else if (name === 'samtale') {
       var dialogue = DIALOGUES.find(function (d) { return d.id === arg; });
       if (dialogue) renderDialogue(dialogue);

@@ -15,13 +15,14 @@
   var UI = {
     es: {
       'meta.title': 'Norsk Kjekt — aprende noruego de verdad',
-      'meta.description': 'Curso de noruego bokmål A1–C2: 15 lecciones, 231 ejercicios, 6 conversaciones cotidianas, 6 packs de humor, tablas con audio y 4 simulacros de la Norskprøven.',
-      'meta.ogDescription': '15 lecciones de bokmål (A1–C2), 231 ejercicios, 6 conversaciones con audio, 6 packs de humor, 18 expresiones de la calle y 4 simulacros de examen. Sin registro y sin build.',
+      'meta.description': 'Curso de noruego bokmål A1–C2: 15 lecciones, 231 ejercicios, 6 conversaciones cotidianas, 4 grupos de WhatsApp, 6 packs de humor, tablas con audio y 4 simulacros de la Norskprøven.',
+      'meta.ogDescription': '15 lecciones de bokmål (A1–C2), 231 ejercicios, 6 conversaciones con audio, 4 grupos de WhatsApp, 6 packs de humor, 18 expresiones de la calle y 4 simulacros de examen. Sin registro y sin build.',
       'meta.ogAlt': 'Norsk Kjekt: portal de noruego con ejercicios interactivos',
       'skip': 'Saltar al contenido',
       'nav.primary': 'Principal',
       'nav.lessons': 'Lecciones',
       'nav.dialogues': 'Samtaler',
+      'nav.chats': 'Meldinger',
       'nav.fun': 'Tull & tøys',
       'nav.colloquial': 'Coloquial',
       'nav.review': 'Repaso',
@@ -213,6 +214,28 @@
       'home.dialogueEnter': 'Ver las conversaciones',
       'home.seeDialogues.one': 'Ver la conversación →',
       'home.seeDialogues.many': 'Ver las {n} conversaciones →',
+      'home.chatEyebrow': 'Nuevo · A2–B1',
+      'home.chatTitle': 'Meldinger: WhatsApp noruego de verdad',
+      'home.chatText': '{n} grupos de chat para leer cómo escriben los noruegos entre sí: abreviaturas, emojis y préstamos del inglés. Vecinos, familia, amigos y trabajo.',
+      'home.chatEnter': 'Abrir los chats',
+
+      'chat.eyebrow': 'Meldinger · A2–B1',
+      'chat.title': 'Grupos de WhatsApp noruegos',
+      'chat.intro': '{n} grupos para leer el noruego que se escribe de verdad: minúsculas, abreviaturas como «hbd» y «kl», emojis y préstamos del inglés. Cada chat trae traducción de cada mensaje y un glosario.',
+      'chat.crumb': 'Meldinger',
+      'chat.cardNum': 'Chat · {level}',
+      'chat.members.one': '{n} participante',
+      'chat.members.many': '{n} participantes',
+      'chat.messages.one': '{n} mensaje',
+      'chat.messages.many': '{n} mensajes',
+      'chat.group': 'El grupo',
+      'chat.online': 'en línea',
+      'chat.input': 'Mensaje',
+      'chat.glossary': 'Abreviaturas y expresiones',
+      'chat.a2Title': 'A2 · vecinos y familia',
+      'chat.a2Sub': 'la dugnad y los domingos',
+      'chat.b1Title': 'B1 · amigos y trabajo',
+      'chat.b1Sub': 'planes de viernes y turnos',
 
       'dlg.eyebrow': 'Samtaler · A2–B1',
       'dlg.title': 'Conversaciones cotidianas',
@@ -347,13 +370,14 @@
 
     en: {
       'meta.title': 'Norsk Kjekt — learn Norwegian for real',
-      'meta.description': 'Norwegian bokmål course A1–C2: 15 lessons, 231 exercises, 6 everyday conversations, 6 humour packs, audio word tables and 4 Norskprøven mock exams.',
-      'meta.ogDescription': '15 bokmål lessons (A1–C2), 231 interactive exercises, 6 conversations with audio, 6 humour packs, 18 street expressions and 4 mock exams. No sign-up, no build.',
+      'meta.description': 'Norwegian bokmål course A1–C2: 15 lessons, 231 exercises, 6 everyday conversations, 4 WhatsApp groups, 6 humour packs, audio word tables and 4 Norskprøven mock exams.',
+      'meta.ogDescription': '15 bokmål lessons (A1–C2), 231 interactive exercises, 6 conversations with audio, 4 WhatsApp groups, 6 humour packs, 18 street expressions and 4 mock exams. No sign-up, no build.',
       'meta.ogAlt': 'Norsk Kjekt: a Norwegian portal with interactive exercises',
       'skip': 'Skip to content',
       'nav.primary': 'Main',
       'nav.lessons': 'Lessons',
       'nav.dialogues': 'Dialogues',
+      'nav.chats': 'Chats',
       'nav.fun': 'Tull & tøys',
       'nav.colloquial': 'Street talk',
       'nav.review': 'Review',
@@ -545,6 +569,28 @@
       'home.dialogueEnter': 'See the conversations',
       'home.seeDialogues.one': 'See the conversation →',
       'home.seeDialogues.many': 'See all {n} conversations →',
+      'home.chatEyebrow': 'New · A2–B1',
+      'home.chatTitle': 'Meldinger: real Norwegian WhatsApp',
+      'home.chatText': '{n} chat groups to read how Norwegians actually write to each other: abbreviations, emojis and English loanwords. Neighbours, family, friends and work.',
+      'home.chatEnter': 'Open the chats',
+
+      'chat.eyebrow': 'Meldinger · A2–B1',
+      'chat.title': 'Norwegian WhatsApp groups',
+      'chat.intro': '{n} groups to read the Norwegian people actually write: lowercase, abbreviations like «hbd» and «kl», emojis and English loanwords. Every message has a translation and each chat comes with a glossary.',
+      'chat.crumb': 'Chats',
+      'chat.cardNum': 'Chat · {level}',
+      'chat.members.one': '{n} participant',
+      'chat.members.many': '{n} participants',
+      'chat.messages.one': '{n} message',
+      'chat.messages.many': '{n} messages',
+      'chat.group': 'The group',
+      'chat.online': 'online',
+      'chat.input': 'Message',
+      'chat.glossary': 'Abbreviations and expressions',
+      'chat.a2Title': 'A2 · neighbours and family',
+      'chat.a2Sub': 'the dugnad and the Sundays',
+      'chat.b1Title': 'B1 · friends and work',
+      'chat.b1Sub': 'Friday plans and shifts',
 
       'dlg.eyebrow': 'Samtaler · A2–B1',
       'dlg.title': 'Everyday conversations',
@@ -680,13 +726,14 @@
 
     fa: {
       'meta.title': "Norsk Kjekt — نروژی را واقعی یاد بگیر",
-      'meta.description': "دوره زبان نروژی بوکمول A1–C2: ۱۵ درس، ۲۳۱ تمرین، ۶ گفت‌وگوی روزمره، ۶ بسته طنز، جدول‌های واژه با صدا و ۴ آزمون آزمایشی Norskprøven.",
-      'meta.ogDescription': "۱۵ درس بوکمول (A1–C2)، ۲۳۱ تمرین تعاملی، ۶ گفت‌وگو با صدا، ۶ بسته طنز، ۱۸ اصطلاح خیابانی و ۴ آزمون آزمایشی. بدون ثبت‌نام و بدون build.",
+      'meta.description': "دوره زبان نروژی بوکمول A1–C2: ۱۵ درس، ۲۳۱ تمرین، ۶ گفت‌وگوی روزمره، ۴ گروه واتساپ، ۶ بسته طنز، جدول‌های واژه با صدا و ۴ آزمون آزمایشی Norskprøven.",
+      'meta.ogDescription': "۱۵ درس بوکمول (A1–C2)، ۲۳۱ تمرین تعاملی، ۶ گفت‌وگو با صدا، ۴ گروه واتساپ، ۶ بسته طنز، ۱۸ اصطلاح خیابانی و ۴ آزمون آزمایشی. بدون ثبت‌نام و بدون build.",
       'meta.ogAlt': "Norsk Kjekt: پرتال نروژی با تمرین‌های تعاملی",
       'skip': "پرش به محتوا",
       'nav.primary': "اصلی",
       'nav.lessons': "درس‌ها",
       'nav.dialogues': "گفت‌وگوها",
+      'nav.chats': "پیام‌ها",
       'nav.fun': "Tull & tøys",
       'nav.colloquial': "محاوره",
       'nav.review': "مرور",
@@ -872,6 +919,28 @@
       'home.dialogueEnter': "دیدن گفت‌وگوها",
       'home.seeDialogues.one': "دیدن گفت‌وگو ←",
       'home.seeDialogues.many': "دیدن {n} گفت‌وگو ←",
+      'home.chatEyebrow': "جدید · A2–B1",
+      'home.chatTitle': "واتساپ واقعی نروژی",
+      'home.chatText': "{n} گروه چت برای خواندن نروژی‌ای که واقعاً می‌نویسند: مخفف‌ها، ایموجی و وام‌واژه‌های انگلیسی. همسایه‌ها، خانواده، دوستان و کار.",
+      'home.chatEnter': "باز کردن چت‌ها",
+
+      'chat.eyebrow': "Meldinger · A2–B1",
+      'chat.title': "گروه‌های واتساپ نروژی",
+      'chat.intro': "{n} گروه برای خواندن نروژی واقعی نوشتاری: حروف کوچک، مخفف‌هایی مثل «hbd» و «kl»، ایموجی و وام‌واژه‌ها. هر پیام ترجمه دارد و هر چت یک واژه‌نامه.",
+      'chat.crumb': "پیام‌ها",
+      'chat.cardNum': "چت · {level}",
+      'chat.members.one': "{n} عضو",
+      'chat.members.many': "{n} عضو",
+      'chat.messages.one': "{n} پیام",
+      'chat.messages.many': "{n} پیام",
+      'chat.group': "گروه",
+      'chat.online': "آنلاین",
+      'chat.input': "پیام",
+      'chat.glossary': "مخفف‌ها و عبارت‌ها",
+      'chat.a2Title': "A2 · همسایه‌ها و خانواده",
+      'chat.a2Sub': "دوگناد و یکشنبه‌ها",
+      'chat.b1Title': "B1 · دوستان و کار",
+      'chat.b1Sub': "برنامهٔ جمعه و شیفت‌ها",
 
       'dlg.eyebrow': "Samtaler · A2–B1",
       'dlg.title': "گفت‌وگوهای روزمره",
@@ -1057,6 +1126,11 @@
       d.phrases.forEach(function (p) { add(p.no); });
       d.exercises.forEach(addExercise);
     });
+    (C.chats || []).forEach(function (c) {
+      c.people.forEach(function (p) { add(p.name); });
+      c.messages.forEach(function (m) { add(m.no); });
+      c.glossary.forEach(function (g) { add(g.no); });
+    });
     C.fun.packs.forEach(function (p) {
       add(p.level);
       p.exercises.forEach(addExercise);
@@ -1121,6 +1195,14 @@
       d.vocab.forEach(function (v) { v.es = tf(v.es); });
       d.phrases.forEach(function (p) { p.es = tf(p.es); });
       d.exercises.forEach(localizeExercise);
+    });
+
+    (C.chats || []).forEach(function (c) {
+      c.subtitle = tf(c.subtitle);
+      c.intro = tf(c.intro);
+      c.tip = tf(c.tip);
+      c.messages.forEach(function (m) { m.es = tf(m.es); });
+      c.glossary.forEach(function (g) { g.es = tf(g.es); });
     });
 
     C.colloquial.forEach(function (c) {

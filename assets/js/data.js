@@ -2621,6 +2621,170 @@ window.COURSE = {
   ],
 
   /* -------------------------------------------------------------------- */
+  chats: [
+    {
+      id: 'oppganga',
+      emoji: '🏢',
+      level: 'A2',
+      title: 'Oppganga 3B',
+      subtitle: 'Dugnad, vafler y el lavadero',
+      intro: 'El grupo del portal: avisos, dugnad y la promesa de gofres. Así se organiza un edificio noruego sin levantar la voz.',
+      day: 'mandag',
+      people: [
+        { id: 'kari', name: 'Kari', color: '#ba0c2f' },
+        { id: 'bjorn', name: 'Bjørn', color: '#00205b' },
+        { id: 'lene', name: 'Lene', color: '#a86500' },
+        { id: 'me', name: 'Du', color: '#12855a' }
+      ],
+      messages: [
+        { who: 'kari', time: '08:12', no: 'Morn, alle sammen! 🌞 Påminnelse: dugnad på lørdag kl 10 🧹', es: '¡Holaaa a todos! 🌞 Recordatorio: dugnad el sábado a las 10 🧹' },
+        { who: 'bjorn', time: '08:15', no: 'Godt poeng. Jeg tar med koster og sekker 💪', es: 'Buena idea. Yo llevo escobas y bolsas 💪' },
+        { who: 'lene', time: '08:21', no: 'Kan jeg komme kl 11? Jobber nattvakt 😴', es: '¿Puedo venir a las 11? Trabajo en turno de noche 😴' },
+        { who: 'kari', time: '08:22', no: 'Selvfølgelig! Bare kom når du kan 😊', es: '¡Claro! Ven cuando puedas 😊' },
+        { who: 'me', time: '08:40', no: 'Jeg kan vaske trappen i 3. etasje 🧽', es: 'Yo puedo limpiar la escalera del 3.º 🧽' },
+        { who: 'kari', time: '08:41', no: 'Kult! Den trengs etter vinteren ❄️', es: '¡Genial! Le hace falta después del invierno ❄️' },
+        { who: 'bjorn', time: '08:43', no: 'Btw: vaskerommet er ledig søndag igjen. Ingen kø! 🎉', es: 'Por cierto: el lavadero está libre el domingo otra vez. ¡Sin cola! 🎉' },
+        { who: 'lene', time: '08:44', no: 'Endelig 😅 sist sto det tre stk og ventet', es: 'Por fin 😅 la otra vez había tres personas esperando' },
+        { who: 'kari', time: '09:02', no: 'Jeg lager vafler til alle etterpå 🧇', es: 'Hago gofres para todos después 🧇' },
+        { who: 'me', time: '09:03', no: 'Da er jeg med 😍', es: 'Entonces yo voy 😍' },
+        { who: 'bjorn', time: '09:05', no: 'Samme her. Jeg tar med kaffe ☕', es: 'Yo también. Llevo el café ☕' },
+        { who: 'lene', time: '09:06', no: 'Beste oppgang i Oslo, hands down 🙌', es: 'El mejor portal de Oslo, sin duda 🙌' }
+      ],
+      glossary: [
+        { no: 'morn', es: '«hola» informal, del norte' },
+        { no: 'kl', es: 'klokka = a las (hora)' },
+        { no: 'dugnad', es: 'trabajo comunitario del vecindario' },
+        { no: 'nattvakt', es: 'turno de noche' },
+        { no: 'stk', es: 'stykker = personas, unidades' },
+        { no: 'vafler', es: 'gofres' },
+        { no: 'samme her', es: 'yo también' },
+        { no: 'hands down', es: 'sin duda (préstamo del inglés)' }
+      ],
+      tip: 'La «dugnad» —el trabajo comunitario del edificio— es casi sagrada en Noruega. Fíjate en las abreviaturas: «kl» es «klokka», «stk» es «stykker». En los chats casi todo va en minúsculas y los préstamos del inglés («btw», «hands down») son del todo normales.'
+    },
+    {
+      id: 'familien',
+      emoji: '👨‍👩‍👧',
+      level: 'A2',
+      title: 'FAMILIEN',
+      subtitle: 'Cumpleaños, pinnekjøtt y la cabaña',
+      intro: 'El grupo de la familia: felicitar a papá, planear la cena del domingo y hablar de la cabaña. Abreviaturas y muchos corazones.',
+      day: 'torsdag',
+      people: [
+        { id: 'mor', name: 'Mor', color: '#ba0c2f' },
+        { id: 'far', name: 'Pappa', color: '#00205b' },
+        { id: 'ida', name: 'Ida', color: '#7a4d2d' },
+        { id: 'me', name: 'Du', color: '#12855a' }
+      ],
+      messages: [
+        { who: 'mor', time: '07:58', no: 'HBD til pappa i dag!!! 🎂🎉', es: '¡¡¡Felicidades, papá!!! 🎂🎉' },
+        { who: 'ida', time: '07:59', no: 'HBD pappa!!! ❤️❤️❤️', es: '¡¡Felicidades, papá!! ❤️❤️❤️' },
+        { who: 'me', time: '08:01', no: 'Hbd! 🥳 Ringer deg etter jobb', es: '¡Felicidades! 🥳 Te llamo después del trabajo' },
+        { who: 'far', time: '08:03', no: 'Takk, takk 😊 58 år, kan dere tro det', es: 'Gracias, gracias 😊 58 años, ¿os lo creéis?' },
+        { who: 'mor', time: '08:04', no: 'Middag søndag kl 17. Pinnekjøtt 🍖', es: 'Cena el domingo a las 17. Pinnekjøtt 🍖' },
+        { who: 'ida', time: '08:05', no: 'Nam!! Kan jeg ta med Jonas?', es: '¡Ñam! ¿Puedo traer a Jonas?' },
+        { who: 'mor', time: '08:06', no: 'Alltid plass til Jonas 💕', es: 'Siempre hay sitio para Jonas 💕' },
+        { who: 'far', time: '08:10', no: 'Sender bilder fra hytta. Snø her nå!! ⛷️', es: 'Os mando fotos de la cabaña. ¡¡Nieve aquí!! ⛷️' },
+        { who: 'me', time: '08:12', no: 'Så fint!! Savner hytta 😍', es: '¡¡Qué bonito!! Echo de menos la cabaña 😍' },
+        { who: 'ida', time: '08:13', no: 'Kan vi dra neste helg? 🙏', es: '¿Podemos ir el finde que viene? 🙏' },
+        { who: 'far', time: '08:15', no: 'Kanskje, hvis været holder ❄️', es: 'Quizá, si aguanta el tiempo ❄️' },
+        { who: 'mor', time: '08:16', no: 'Ta med ullundertøy, alle sammen 🧣 Det blir kaldt!', es: 'Llevad ropa interior de lana todos 🧣 ¡Va a hacer frío!' }
+      ],
+      glossary: [
+        { no: 'hbd', es: 'happy birthday = feliz cumple' },
+        { no: 'takk takk', es: 'gracias, gracias (más cálido)' },
+        { no: 'pinnekjøtt', es: 'cordero curado al vapor, plato de fiesta' },
+        { no: 'nam', es: 'ñam (qué rico)' },
+        { no: 'hytta', es: 'la cabaña (la de la familia)' },
+        { no: 'å dra', es: 'ir (coloquial)' },
+        { no: 'ullundertøy', es: 'ropa interior de lana' },
+        { no: 'alle sammen', es: 'todos (en familia, en grupo)' }
+      ],
+      tip: '«HBD» es «happy birthday» a lo noruego: las familias abrevian mucho y duplican emojis. «Pinnekjøtt» es el plato de cordero de las fiestas, y «hytta» no es una cabaña cualquiera: es LA cabaña, la de la familia, la de los fines de semana.'
+    },
+    {
+      id: 'fredag',
+      emoji: '🍻',
+      level: 'B1',
+      title: 'Fredag??',
+      subtitle: 'Quiz, Vipps y «no lo gafes»',
+      intro: 'El grupo de los amigos: organizar el viernes por chat, con préstamos del inglés en cada línea. Lo que oyes en la calle, pero escrito.',
+      day: 'onsdag',
+      people: [
+        { id: 'mari', name: 'Mari', color: '#ba0c2f' },
+        { id: 'jonas', name: 'Jonas', color: '#00205b' },
+        { id: 'ahmed', name: 'Ahmed', color: '#7a4d2d' },
+        { id: 'me', name: 'Du', color: '#12855a' }
+      ],
+      messages: [
+        { who: 'mari', time: '16:02', no: 'FREDAGSQUIZ på kafeen kl 19?? 🍻', es: '¿QUIZ DE VIERNES en la cafetería a las 19?? 🍻' },
+        { who: 'jonas', time: '16:03', no: 'Er med! Det var dødsgøy sist 😂', es: '¡Me apunto! La última vez fue la bomba 😂' },
+        { who: 'ahmed', time: '16:05', no: 'Kan ikke før 20 😕 skiftet på jobb', es: 'No puedo antes de las 20 😕 cambio en el trabajo' },
+        { who: 'mari', time: '16:06', no: 'De venter til 20, chill', es: 'Esperan hasta las 20, tranqui' },
+        { who: 'me', time: '16:10', no: 'Jeg også! Møtes 19.30?', es: '¡Yo también! ¿Quedamos a las 19.30?' },
+        { who: 'jonas', time: '16:11', no: 'Perf. Jeg bestiller bord nå 👍', es: 'Perf. Reservo mesa ahora 👍' },
+        { who: 'ahmed', time: '16:12', no: 'Hvis vi vinner igjen, kjøper jeg en runde 🏆', es: 'Si ganamos otra vez, invito a una ronda 🏆' },
+        { who: 'mari', time: '16:13', no: 'Deal 🤝 men du sier det HVER gang', es: 'Trato 🤝 pero lo dices TODAS las veces' },
+        { who: 'jonas', time: '16:14', no: 'Og vi vinner hver gang 😎', es: 'Y ganamos todas 😎' },
+        { who: 'me', time: '16:15', no: 'Ikke jinx det!! 🤞', es: '¡¡No lo gafes!! 🤞' },
+        { who: 'mari', time: '16:16', no: 'Ta med kontanter, de tar ikke vipps der', es: 'Llevad efectivo, allí no aceptan Vipps' },
+        { who: 'ahmed', time: '16:17', no: 'Boomer-kafé, lol. Vi ses! 👋', es: 'Café para boomers, jaja. ¡Nos vemos! 👋' }
+      ],
+      glossary: [
+        { no: 'er med', es: 'me apunto' },
+        { no: 'dødsgøy', es: 'divertidísimo (lit. mortal de risa)' },
+        { no: 'chill', es: 'tranqui, sin prisa' },
+        { no: 'perf', es: 'perfecto' },
+        { no: 'en runde', es: 'una ronda (de bebidas)' },
+        { no: 'deal', es: 'trato' },
+        { no: 'jinx', es: 'gafar (préstamo del inglés)' },
+        { no: 'vipps', es: 'la app noruega de pagos' }
+      ],
+      tip: 'El chat de amigos mezcla noruego e inglés sin pensarlo: «chill», «deal», «perf», «jinx». «Ikke jinx det» es «no lo gafes». Y «Vipps» es la app de pagos noruega, tan común que «å vippse» se usa como verbo: «jeg vippser deg» = te lo paso por Vipps.'
+    },
+    {
+      id: 'vakter',
+      emoji: '☕',
+      level: 'B1',
+      title: 'Vakter · kafeen',
+      subtitle: 'Turnos, cambios y rollos de canela',
+      intro: 'El grupo del trabajo: cambiar turnos, avisar de que se acaban los kanelboller y agradecer el esfuerzo. Informal incluso con la jefa.',
+      day: 'tirsdag',
+      people: [
+        { id: 'siri', name: 'Siri (sjef)', color: '#ba0c2f' },
+        { id: 'ole', name: 'Ole', color: '#00205b' },
+        { id: 'nina', name: 'Nina', color: '#7a4d2d' },
+        { id: 'me', name: 'Du', color: '#12855a' }
+      ],
+      messages: [
+        { who: 'siri', time: '07:30', no: 'Morgen! Noen som kan ta kveldsvakt i morgen? 🙏', es: '¡Buenos días! ¿Alguien puede hacer el turno de tarde mañana? 🙏' },
+        { who: 'ole', time: '07:33', no: 'Kan dessverre ikke, skal til tannlegen 🦷', es: 'No puedo, lo siento, voy al dentista 🦷' },
+        { who: 'nina', time: '07:35', no: 'Jeg kan bytte hvis du tar lørdagsvakten min?', es: 'Puedo cambiar si tú haces mi turno del sábado' },
+        { who: 'me', time: '07:38', no: 'Deal! Tar du søndagen min da?', es: '¡Trato! ¿Y tú haces mi domingo?' },
+        { who: 'nina', time: '07:39', no: 'Funker 👍', es: 'Me vale 👍' },
+        { who: 'siri', time: '07:40', no: 'Dere er gull 🌟 Oppdatert i systemet nå', es: 'Sois de oro 🌟 Ya está actualizado en el sistema' },
+        { who: 'ole', time: '07:41', no: 'Btw: vi er tomme for kanelboller igjen 😅', es: 'Oye: nos hemos quedado sin rollos de canela otra vez 😅' },
+        { who: 'siri', time: '07:43', no: 'Seriøst?? Bestiller 200 til fredag', es: '¿¿En serio?? Pido 200 para el viernes' },
+        { who: 'nina', time: '07:44', no: 'Folk elsker dem på morgenen 🥐', es: 'La gente los adora por la mañana 🥐' },
+        { who: 'siri', time: '07:46', no: 'Og takk for innsatsen i helgen, alle sammen 💪', es: 'Y gracias por el esfuerzo del finde a todos 💪' },
+        { who: 'ole', time: '07:47', no: 'Bra tempo lørdag! Vi rocka 😎', es: '¡Buen ritmo el sábado! Lo petamos 😎' },
+        { who: 'me', time: '07:48', no: 'Enig! Men nå: kaffepause ☕😴', es: '¡De acuerdo! Pero ahora: pausa para el café ☕😴' }
+      ],
+      glossary: [
+        { no: 'vakt', es: 'turno (de trabajo)' },
+        { no: 'å bytte', es: 'cambiar (turnos)' },
+        { no: 'deal', es: 'trato' },
+        { no: 'funker', es: 'funciona, me vale' },
+        { no: 'tomme for', es: 'sin existencias de' },
+        { no: 'btw', es: 'by the way = por cierto' },
+        { no: 'takk for innsatsen', es: 'gracias por el esfuerzo' },
+        { no: 'vi rocka', es: 'lo petamos (lit. rockeamos)' }
+      ],
+      tip: 'Incluso con la jefa el tono es informal: «dere er gull» (sois de oro), «vi rocka» (lo petamos). «Vakt» es turno y «å bytte» es cambiar; negociar turnos por chat es deporte nacional. «Kveldsvakt» es el turno de tarde/noche, «lørdagsvakt» el del sábado.'
+    }
+  ],
+
+  /* -------------------------------------------------------------------- */
   colloquial: [
     {
       term: 'Hei hei',
