@@ -13,22 +13,35 @@
   var hudStreak = document.getElementById('hud-streak');
   var hudXp = document.getElementById('hud-xp');
 
-  /* Instalación como app (PWA): guardamos el evento para mostrar el botón. */
+  /* Instalación como app (PWA): guardamos el evento para mostrar los botones. */
   var deferredInstallPrompt = null;
+  var installedNow = false;
+
+  function isStandalone() {
+    return window.matchMedia('(display-mode: standalone)').matches ||
+      window.navigator.standalone === true;
+  }
+
+  function refreshInstallUI() {
+    var done = installedNow || isStandalone();
+    document.querySelectorAll('[data-install]').forEach(function (btn) {
+      btn.hidden = done || !deferredInstallPrompt;
+    });
+    document.querySelectorAll('[data-install-hint]').forEach(function (hint) {
+      hint.hidden = !done && !!deferredInstallPrompt;
+      hint.textContent = done ? t('home.appInstalled') : t('home.appManual');
+    });
+  }
+
   window.addEventListener('beforeinstallprompt', function (e) {
     e.preventDefault();
     deferredInstallPrompt = e;
-    var btn = document.getElementById('install-app');
-    var hint = document.getElementById('install-hint');
-    if (btn) btn.hidden = false;
-    if (hint) hint.hidden = true;
+    refreshInstallUI();
   });
   window.addEventListener('appinstalled', function () {
+    installedNow = true;
     deferredInstallPrompt = null;
-    var btn = document.getElementById('install-app');
-    var hint = document.getElementById('install-hint');
-    if (btn) btn.hidden = true;
-    if (hint) { hint.hidden = false; hint.textContent = t('home.appInstalled'); }
+    refreshInstallUI();
   });
 
   /* =======================================================
@@ -1382,6 +1395,7 @@
       '    <div class="hero-actions">' +
       '      <a class="btn primary" href="#/leksjon/' + nl.id + '">' + esc(done ? t('home.continue') : t('home.start')) + ' · ' + esc(nl.title) + '</a>' +
       '      <a class="btn ghost" href="#/samtaler">' + esc(t('nav.dialogues')) + '</a>' +
+      '      <a class="btn ghost" href="#/app">' + esc(t('home.appButton')) + '</a>' +
       '      <a class="btn ghost" href="#/tull">Tull &amp; tøys</a>' +
       '      <a class="btn ghost" href="#/coloquial">' + esc(t('home.street')) + '</a>' +
       '    </div>' +
@@ -1434,10 +1448,10 @@
       '    <span class="eyebrow">' + esc(t('home.appEyebrow')) + '</span>' +
       '    <h2>' + esc(t('home.appTitle')) + '</h2>' +
       '    <p>' + esc(t('home.appText')) + '</p>' +
-      '    <p class="install-hint" id="install-hint">' + esc(t('home.appManual')) + '</p>' +
+      '    <p class="install-hint" data-install-hint>' + esc(t('home.appManual')) + '</p>' +
       '  </div>' +
       '  <div class="fun-banner-actions">' +
-      '    <button class="btn primary" id="install-app" hidden>' + esc(t('home.appInstall')) + '</button>' +
+      '    <button class="btn primary" data-install hidden>' + esc(t('home.appInstall')) + '</button>' +
       '    <a class="btn ghost" href="assets/app/norsk-kjekt.apk" download>' + esc(t('home.appApk')) + '</a>' +
       '  </div>' +
       '</section>' +
@@ -1475,26 +1489,59 @@
       '<div class="actions" style="margin-top:1rem"><a class="btn ghost" href="#/coloquial">' +
       esc(tp('home.seeExpressions', COURSE.colloquial.length)) + '</a></div>';
 
-    var installBtn = document.getElementById('install-app');
-    var installHint = document.getElementById('install-hint');
-    if (installBtn && window.matchMedia('(display-mode: standalone)').matches) {
-      installBtn.hidden = true;
-      installHint.textContent = t('home.appInstalled');
-    } else if (installBtn && deferredInstallPrompt) {
-      installBtn.hidden = false;
-      installHint.hidden = true;
-    }
-    if (installBtn) {
-      installBtn.addEventListener('click', function () {
-        if (!deferredInstallPrompt) return;
-        deferredInstallPrompt.prompt();
-        deferredInstallPrompt.userChoice.finally(function () {
-          deferredInstallPrompt = null;
-          installBtn.hidden = true;
-          installHint.hidden = false;
-        });
-      });
-    }
+    refreshInstallUI();
+  }
+
+  /* ---------------- App Android ---------------- */
+
+  function renderApp() {
+    app.innerHTML =
+      '<div class="crumbs"><a href="#/">' + esc(t('lesson.crumb')) + '</a> <span>›</span> <span>' + esc(t('app.crumb')) + '</span></div>' +
+
+      '<section class="colo-intro app-intro">' +
+      '  <span class="eyebrow">' + esc(t('app.eyebrow')) + '</span>' +
+      '  <h1>' + esc(t('app.title')) + '</h1>' +
+      '  <p>' + esc(t('app.intro')) + '</p>' +
+      '</section>' +
+
+      '<div class="app-options">' +
+      '  <section class="card app-option">' +
+      '    <div class="app-ico" aria-hidden="true">📲</div>' +
+      '    <h2>' + esc(t('app.pwaTitle')) + '</h2>' +
+      '    <p>' + esc(t('app.pwaText')) + '</p>' +
+      '    <div class="app-actions">' +
+      '      <button class="btn primary" data-install hidden>' + esc(t('home.appInstall')) + '</button>' +
+      '      <a class="btn ghost" href="#/">' + esc(t('app.pwaOpen')) + '</a>' +
+      '    </div>' +
+      '    <p class="install-hint" data-install-hint>' + esc(t('home.appManual')) + '</p>' +
+      '    <ol class="app-steps">' +
+      '      <li>' + esc(t('app.pwaStep1')) + '</li>' +
+      '      <li>' + esc(t('app.pwaStep2')) + '</li>' +
+      '      <li>' + esc(t('app.pwaStep3')) + '</li>' +
+      '    </ol>' +
+      '  </section>' +
+
+      '  <section class="card app-option">' +
+      '    <div class="app-ico" aria-hidden="true">🤖</div>' +
+      '    <h2>' + esc(t('app.apkTitle')) + '</h2>' +
+      '    <p>' + esc(t('app.apkText')) + '</p>' +
+      '    <div class="app-actions">' +
+      '      <a class="btn primary" href="assets/app/norsk-kjekt.apk" download>' + esc(t('home.appApk')) + '</a>' +
+      '    </div>' +
+      '    <ol class="app-steps">' +
+      '      <li>' + esc(t('app.apkStep1')) + '</li>' +
+      '      <li>' + esc(t('app.apkStep2')) + '</li>' +
+      '      <li>' + esc(t('app.apkStep3')) + '</li>' +
+      '    </ol>' +
+      '  </section>' +
+      '</div>' +
+
+      '<section class="card app-meta">' +
+      '  <p><b>' + esc(t('app.metaTitle')) + '</b> ' + esc(t('app.metaText')) + '</p>' +
+      '  <p class="muted">' + esc(t('app.apkNote')) + '</p>' +
+      '</section>';
+
+    refreshInstallUI();
   }
 
   /* ---------------- Samtaler ---------------- */
@@ -2595,7 +2642,8 @@
           : name === 'eksamen' ? 'exam'
             : (name === 'samtaler' || name === 'samtale') ? 'dialogues'
               : (name === 'meldinger' || name === 'melding') ? 'chats'
-                : 'home';
+                : name === 'app' ? ''
+                  : 'home';
     document.querySelectorAll('.nav a').forEach(function (a) {
       a.classList.toggle('active', a.dataset.route === active);
     });
@@ -2605,6 +2653,8 @@
       renderLesson(lesson || LESSONS[0]);
     } else if (name === 'samtaler') {
       renderDialogues();
+    } else if (name === 'app') {
+      renderApp();
     } else if (name === 'meldinger') {
       renderChats();
     } else if (name === 'melding') {
@@ -2646,6 +2696,15 @@
     if (b && window.TTS) {
       e.preventDefault();
       window.TTS.speak(b.getAttribute('data-say'));
+    }
+    var install = e.target.closest('[data-install]');
+    if (install) {
+      if (!deferredInstallPrompt) return;
+      deferredInstallPrompt.prompt();
+      deferredInstallPrompt.userChoice.then(function () {
+        deferredInstallPrompt = null;
+        refreshInstallUI();
+      });
     }
   });
 

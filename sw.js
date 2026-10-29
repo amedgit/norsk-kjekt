@@ -5,7 +5,7 @@
    - navegación: red primero, con la app cacheada como respaldo offline.
    Sube CACHE_VERSION en cada despliegue para renovar los caches. */
 
-const CACHE_VERSION = 'v2';
+const CACHE_VERSION = 'v3';
 const CORE = `norsk-kjekt-core-${CACHE_VERSION}`;
 const RUNTIME = `norsk-kjekt-runtime-${CACHE_VERSION}`;
 
@@ -64,6 +64,23 @@ self.addEventListener('fetch', (event) => {
           return res;
         })
         .catch(() => caches.match('index.html'))
+    );
+    return;
+  }
+
+  /* JS, CSS y manifest: red primero para que los cambios se vean al instante,
+     con la copia cacheada como red de seguridad offline. */
+  if (/\.(?:js|css|webmanifest)$/.test(url.pathname)) {
+    event.respondWith(
+      fetch(request)
+        .then((res) => {
+          if (res.ok) {
+            const copy = res.clone();
+            caches.open(CORE).then((c) => c.put(request, copy));
+          }
+          return res;
+        })
+        .catch(() => caches.match(request))
     );
     return;
   }

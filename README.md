@@ -42,7 +42,9 @@ sin conexión) o **descargar el APK** e instalarlo como una app normal.
 ### Descargar el APK
 
 - Enlace directo: <https://amedgit.github.io/norsk-kjekt/assets/app/norsk-kjekt.apk>
-- También está en el banner **«Norsk Kjekt en tu móvil»** de la portada.
+- Página con instrucciones: <https://amedgit.github.io/norsk-kjekt/#/app>
+- También en el icono **📲 APK** de la cabecera (visible en todas las páginas),
+  en el botón **App Android** del hero y en el banner de la portada.
 - Android pedirá permitir «instalar apps de origen desconocido» para el
   navegador o el gestor de archivos; es lo normal al instalar un APK fuera de
   Play. Después se instala como cualquier app.
