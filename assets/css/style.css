@@ -761,6 +761,16 @@ main {
 .ctime { display: block; text-align: end; font-size: .64rem; color: #8696a0; margin-top: 2px; }
 .ctime .ticks { color: #53bdeb; font-style: normal; }
 
+.say.csay {
+  width: 1.25rem; height: 1.25rem; font-size: .6rem;
+  vertical-align: -2px; margin-inline-end: .3rem;
+  background: transparent; border-color: transparent; color: #8696a0;
+}
+.say.csay:hover { background: rgba(0, 0, 0, .06); color: var(--ink); transform: none; }
+.say.csay.playing { background: #128c7e; color: #fff; border-color: #128c7e; }
+.g-item .say.csay { align-self: center; margin-inline-end: 0; color: var(--ink-soft); border-color: var(--line); background: #fff; }
+.g-item .say.csay:hover { background: var(--blue-soft); color: var(--blue); }
+
 .chat-input {
   display: flex; align-items: center; justify-content: space-between; gap: .6rem;
   background: #f0f2f5; padding: .5rem .8rem; color: #8696a0; font-size: .9rem;

@@ -33,7 +33,7 @@ cd ~/norsk
 | Lecciones | 15 lecciones A1–C2: base A1–A2, vida diaria B1, noticias/medio ambiente/derechos laborales en B2, debate y escritura académica en C1, ironía y literatura en C2 |
 | Práctica | 231 ejercicios en 10 formatos: opción múltiple, huecos, ordenar, dictado, cloze, transformar, emparejar, ¿qué sobra?, encontrar el error y memoria |
 | Samtaler | 6 conversaciones cotidianas (A2–B1: portal, cafetería, tienda, trabajo, médico y teléfono) con 52 réplicas, audio por línea, traducciones plegables, vocabulario, frases y 30 ejercicios |
-| Meldinger | 4 grupos de WhatsApp (A2–B1: vecinos, familia, amigos y trabajo) con 48 mensajes en formato chat, traducción por mensaje, glosario de abreviaturas y truco cultural |
+| Meldinger | 4 grupos de WhatsApp (A2–B1: vecinos, familia, amigos y trabajo) con 48 mensajes en formato chat, audio por mensaje, traducción, glosario de abreviaturas y truco cultural |
 | Tull & tøys | 6 packs con 84 ejercicios de humor (absurdo, supervivencia, oficina, dictados, modismos y verbos) y una mezcla aleatoria de 10 |
 | Tablas | 94 palabras con audio, búsqueda, filtros por nivel/tema, ordenación y modo examen; 14 verbos en presente, pasado y perfecto |
 | Coloquial | 18 expresiones con registro (neutro → vulgar), diálogo de ejemplo y truco |
@@ -41,7 +41,7 @@ cd ~/norsk
 | Idioma | selector **ES / EN / فا** en la cabecera: traduce interfaz, explicaciones y tablas; el bokmål se queda intacto y el progreso se conserva. En persa la página cambia a dirección RTL |
 | Progreso | racha de días, XP, mejor resultado por lección, pack y conversación, último informe del simulacro y cola de repaso de fallos |
 | Velocidad | selector 0,7×–1,3× en la cabecera; se aplica al audio y se recuerda |
-| Audio | 857 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
+| Audio | 935 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
 
 ## Interfaz en español, inglés o persa
 
@@ -111,7 +111,7 @@ norsk/
     ├── img/og.png       ← imagen para compartir en redes
     ├── img/lessons/*.svg ← una ilustración original por lección
     ├── img/dialogues/*.svg ← una ilustración por conversación
-    ├── audio/*.mp3      ← 857 audios (≈12,5 MB), generados
+    ├── audio/*.mp3      ← 935 audios (≈12,8 MB), generados
     └── js/
         ├── data.js          ← TODO el contenido del curso, Samtaler y los 4 simulacros
         ├── content-en.js    ← traducciones ES → EN del contenido
@@ -243,8 +243,9 @@ La sección `#/meldinger` vive en el array `chats` de `data.js`. Cada chat tiene
 
 - El mensaje con `who: 'me'` se dibuja a la derecha, como propio, con ✓✓.
 - El botón **Mostrar traducciones** alterna todos los `es` del chat.
-- Es una sección de solo lectura: sin ejercicios, sin progreso y sin audio
-  (los mensajes son lenguaje escrito, no hablado).
+- Es una sección de solo lectura: sin ejercicios y sin progreso. Cada mensaje
+  tiene audio; los que llevan abreviaturas usan el campo opcional `say` con la
+  versión hablada («kl 10» → «klokka ti», «HBD» → «Gratulerer med dagen»).
 - Al añadir contenido, ejecuta `tools/check-i18n.mjs` para completar EN y FA.
 
 ### Tull & tøys

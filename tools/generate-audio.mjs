@@ -117,6 +117,12 @@ for (const d of COURSE.dialogues || []) {
   });
 }
 
+/* Meldinger: mensajes de WhatsApp (con versión hablada opcional en `say`) */
+for (const c of COURSE.chats || []) {
+  c.messages.forEach((m) => texts.add(m.say || m.no));
+  c.glossary.forEach((g) => texts.add(g.say || g.no));
+}
+
 /* Tull & tøys: packs, tabla de palabras y tabla de verbos */
 if (COURSE.fun) {
   for (const pack of COURSE.fun.packs) {

@@ -2637,14 +2637,14 @@ window.COURSE = {
         { id: 'me', name: 'Du', color: '#12855a' }
       ],
       messages: [
-        { who: 'kari', time: '08:12', no: 'Morn, alle sammen! 🌞 Påminnelse: dugnad på lørdag kl 10 🧹', es: '¡Holaaa a todos! 🌞 Recordatorio: dugnad el sábado a las 10 🧹' },
+        { who: 'kari', time: '08:12', say: 'Morn, alle sammen! Påminnelse: dugnad på lørdag klokka ti.', no: 'Morn, alle sammen! 🌞 Påminnelse: dugnad på lørdag kl 10 🧹', es: '¡Holaaa a todos! 🌞 Recordatorio: dugnad el sábado a las 10 🧹' },
         { who: 'bjorn', time: '08:15', no: 'Godt poeng. Jeg tar med koster og sekker 💪', es: 'Buena idea. Yo llevo escobas y bolsas 💪' },
-        { who: 'lene', time: '08:21', no: 'Kan jeg komme kl 11? Jobber nattvakt 😴', es: '¿Puedo venir a las 11? Trabajo en turno de noche 😴' },
+        { who: 'lene', time: '08:21', say: 'Kan jeg komme klokka elleve? Jobber nattvakt.', no: 'Kan jeg komme kl 11? Jobber nattvakt 😴', es: '¿Puedo venir a las 11? Trabajo en turno de noche 😴' },
         { who: 'kari', time: '08:22', no: 'Selvfølgelig! Bare kom når du kan 😊', es: '¡Claro! Ven cuando puedas 😊' },
         { who: 'me', time: '08:40', no: 'Jeg kan vaske trappen i 3. etasje 🧽', es: 'Yo puedo limpiar la escalera del 3.º 🧽' },
         { who: 'kari', time: '08:41', no: 'Kult! Den trengs etter vinteren ❄️', es: '¡Genial! Le hace falta después del invierno ❄️' },
-        { who: 'bjorn', time: '08:43', no: 'Btw: vaskerommet er ledig søndag igjen. Ingen kø! 🎉', es: 'Por cierto: el lavadero está libre el domingo otra vez. ¡Sin cola! 🎉' },
-        { who: 'lene', time: '08:44', no: 'Endelig 😅 sist sto det tre stk og ventet', es: 'Por fin 😅 la otra vez había tres personas esperando' },
+        { who: 'bjorn', time: '08:43', say: 'Forresten: vaskerommet er ledig søndag igjen. Ingen kø!', no: 'Btw: vaskerommet er ledig søndag igjen. Ingen kø! 🎉', es: 'Por cierto: el lavadero está libre el domingo otra vez. ¡Sin cola! 🎉' },
+        { who: 'lene', time: '08:44', say: 'Endelig! Sist sto det tre stykker og ventet.', no: 'Endelig 😅 sist sto det tre stk og ventet', es: 'Por fin 😅 la otra vez había tres personas esperando' },
         { who: 'kari', time: '09:02', no: 'Jeg lager vafler til alle etterpå 🧇', es: 'Hago gofres para todos después 🧇' },
         { who: 'me', time: '09:03', no: 'Da er jeg med 😍', es: 'Entonces yo voy 😍' },
         { who: 'bjorn', time: '09:05', no: 'Samme her. Jeg tar med kaffe ☕', es: 'Yo también. Llevo el café ☕' },
@@ -2652,10 +2652,10 @@ window.COURSE = {
       ],
       glossary: [
         { no: 'morn', es: '«hola» informal, del norte' },
-        { no: 'kl', es: 'klokka = a las (hora)' },
+        { no: 'kl', say: 'klokka', es: 'klokka = a las (hora)' },
         { no: 'dugnad', es: 'trabajo comunitario del vecindario' },
         { no: 'nattvakt', es: 'turno de noche' },
-        { no: 'stk', es: 'stykker = personas, unidades' },
+        { no: 'stk', say: 'stykker', es: 'stykker = personas, unidades' },
         { no: 'vafler', es: 'gofres' },
         { no: 'samme her', es: 'yo también' },
         { no: 'hands down', es: 'sin duda (préstamo del inglés)' }
@@ -2677,11 +2677,11 @@ window.COURSE = {
         { id: 'me', name: 'Du', color: '#12855a' }
       ],
       messages: [
-        { who: 'mor', time: '07:58', no: 'HBD til pappa i dag!!! 🎂🎉', es: '¡¡¡Felicidades, papá!!! 🎂🎉' },
-        { who: 'ida', time: '07:59', no: 'HBD pappa!!! ❤️❤️❤️', es: '¡¡Felicidades, papá!! ❤️❤️❤️' },
-        { who: 'me', time: '08:01', no: 'Hbd! 🥳 Ringer deg etter jobb', es: '¡Felicidades! 🥳 Te llamo después del trabajo' },
+        { who: 'mor', time: '07:58', say: 'Gratulerer med dagen, pappa!', no: 'HBD til pappa i dag!!! 🎂🎉', es: '¡¡¡Felicidades, papá!!! 🎂🎉' },
+        { who: 'ida', time: '07:59', say: 'Gratulerer med dagen, pappa!', no: 'HBD pappa!!! ❤️❤️❤️', es: '¡¡Felicidades, papá!! ❤️❤️❤️' },
+        { who: 'me', time: '08:01', say: 'Gratulerer med dagen! Ringer deg etter jobb.', no: 'Hbd! 🥳 Ringer deg etter jobb', es: '¡Felicidades! 🥳 Te llamo después del trabajo' },
         { who: 'far', time: '08:03', no: 'Takk, takk 😊 58 år, kan dere tro det', es: 'Gracias, gracias 😊 58 años, ¿os lo creéis?' },
-        { who: 'mor', time: '08:04', no: 'Middag søndag kl 17. Pinnekjøtt 🍖', es: 'Cena el domingo a las 17. Pinnekjøtt 🍖' },
+        { who: 'mor', time: '08:04', say: 'Middag søndag klokka sytten. Pinnekjøtt.', no: 'Middag søndag kl 17. Pinnekjøtt 🍖', es: 'Cena el domingo a las 17. Pinnekjøtt 🍖' },
         { who: 'ida', time: '08:05', no: 'Nam!! Kan jeg ta med Jonas?', es: '¡Ñam! ¿Puedo traer a Jonas?' },
         { who: 'mor', time: '08:06', no: 'Alltid plass til Jonas 💕', es: 'Siempre hay sitio para Jonas 💕' },
         { who: 'far', time: '08:10', no: 'Sender bilder fra hytta. Snø her nå!! ⛷️', es: 'Os mando fotos de la cabaña. ¡¡Nieve aquí!! ⛷️' },
@@ -2717,7 +2717,7 @@ window.COURSE = {
         { id: 'me', name: 'Du', color: '#12855a' }
       ],
       messages: [
-        { who: 'mari', time: '16:02', no: 'FREDAGSQUIZ på kafeen kl 19?? 🍻', es: '¿QUIZ DE VIERNES en la cafetería a las 19?? 🍻' },
+        { who: 'mari', time: '16:02', say: 'Fredagsquiz på kafeen klokka nitten?', no: 'FREDAGSQUIZ på kafeen kl 19?? 🍻', es: '¿QUIZ DE VIERNES en la cafetería a las 19?? 🍻' },
         { who: 'jonas', time: '16:03', no: 'Er med! Det var dødsgøy sist 😂', es: '¡Me apunto! La última vez fue la bomba 😂' },
         { who: 'ahmed', time: '16:05', no: 'Kan ikke før 20 😕 skiftet på jobb', es: 'No puedo antes de las 20 😕 cambio en el trabajo' },
         { who: 'mari', time: '16:06', no: 'De venter til 20, chill', es: 'Esperan hasta las 20, tranqui' },
@@ -2728,7 +2728,7 @@ window.COURSE = {
         { who: 'jonas', time: '16:14', no: 'Og vi vinner hver gang 😎', es: 'Y ganamos todas 😎' },
         { who: 'me', time: '16:15', no: 'Ikke jinx det!! 🤞', es: '¡¡No lo gafes!! 🤞' },
         { who: 'mari', time: '16:16', no: 'Ta med kontanter, de tar ikke vipps der', es: 'Llevad efectivo, allí no aceptan Vipps' },
-        { who: 'ahmed', time: '16:17', no: 'Boomer-kafé, lol. Vi ses! 👋', es: 'Café para boomers, jaja. ¡Nos vemos! 👋' }
+        { who: 'ahmed', time: '16:17', say: 'Boomer-kafé, haha. Vi ses!', no: 'Boomer-kafé, lol. Vi ses! 👋', es: 'Café para boomers, jaja. ¡Nos vemos! 👋' }
       ],
       glossary: [
         { no: 'er med', es: 'me apunto' },
@@ -2763,7 +2763,7 @@ window.COURSE = {
         { who: 'me', time: '07:38', no: 'Deal! Tar du søndagen min da?', es: '¡Trato! ¿Y tú haces mi domingo?' },
         { who: 'nina', time: '07:39', no: 'Funker 👍', es: 'Me vale 👍' },
         { who: 'siri', time: '07:40', no: 'Dere er gull 🌟 Oppdatert i systemet nå', es: 'Sois de oro 🌟 Ya está actualizado en el sistema' },
-        { who: 'ole', time: '07:41', no: 'Btw: vi er tomme for kanelboller igjen 😅', es: 'Oye: nos hemos quedado sin rollos de canela otra vez 😅' },
+        { who: 'ole', time: '07:41', say: 'Forresten: vi er tomme for kanelboller igjen.', no: 'Btw: vi er tomme for kanelboller igjen 😅', es: 'Oye: nos hemos quedado sin rollos de canela otra vez 😅' },
         { who: 'siri', time: '07:43', no: 'Seriøst?? Bestiller 200 til fredag', es: '¿¿En serio?? Pido 200 para el viernes' },
         { who: 'nina', time: '07:44', no: 'Folk elsker dem på morgenen 🥐', es: 'La gente los adora por la mañana 🥐' },
         { who: 'siri', time: '07:46', no: 'Og takk for innsatsen i helgen, alle sammen 💪', es: 'Y gracias por el esfuerzo del finde a todos 💪' },

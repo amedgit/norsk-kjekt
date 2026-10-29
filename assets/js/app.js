@@ -1623,7 +1623,7 @@
           (me ? '' : '<span class="cname" style="color:' + esc(person.color) + '">' + esc(person.name) + '</span>') +
           '<p class="cno">' + esc(m.no) + '</p>' +
           '<p class="ces" hidden>' + esc(m.es) + '</p>' +
-          '<span class="ctime">' + esc(m.time) + (me ? ' <i class="ticks" aria-hidden="true">✓✓</i>' : '') + '</span>' +
+          '<span class="ctime">' + say(m.say || m.no, 'csay') + esc(m.time) + (me ? ' <i class="ticks" aria-hidden="true">✓✓</i>' : '') + '</span>' +
           '</div></div>';
       }).join('') +
       '  </div>' +
@@ -1633,7 +1633,8 @@
 
       '<section class="card"><h2>' + esc(t('chat.glossary')) + '</h2><div class="glossary">' +
       c.glossary.map(function (g) {
-        return '<div class="g-item"><span class="g-no">' + esc(g.no) + '</span>' +
+        return '<div class="g-item">' + say(g.say || g.no, 'csay') +
+          '<span class="g-no">' + esc(g.no) + '</span>' +
           '<span class="g-es">' + esc(g.es) + '</span></div>';
       }).join('') +
       '</div></section>' +
