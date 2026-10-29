@@ -28,7 +28,8 @@ jobs:
         run: |
           mkdir -p _site
           cp -r index.html assets _site/
-          cp robots.txt .nojekyll _site/ 2>/dev/null || true
+          cp robots.txt .nojekyll manifest.webmanifest sw.js _site/ 2>/dev/null || true
+          cp -r .well-known _site/ 2>/dev/null || true
 
       - name: Configurar Pages
         uses: actions/configure-pages@v5
