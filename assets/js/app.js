@@ -1311,7 +1311,7 @@
       '<section class="fun-hero">' +
       '  <div class="fun-hero-text">' +
       '    <span class="eyebrow">' + esc(t('fun.eyebrow')) + '</span>' +
-      '    <h1>Tull &amp; tøys</h1>' +
+      '    <h1>' + esc(t('fun.title')) + '</h1>' +
       '    <p>' + esc(COURSE.fun.intro) + '</p>' +
       '    <div class="hero-actions">' +
       '      <button class="btn primary" id="mix-start">' + esc(t('fun.mix')) + '</button>' +
@@ -1375,7 +1375,7 @@
 
     var st = state.fun[pack.id];
     app.innerHTML =
-      '<div class="crumbs"><a href="#/tull">Tull &amp; tøys</a> <span>›</span> <span>' + esc(pack.title) + '</span></div>' +
+      '<div class="crumbs"><a href="#/tull">' + esc(t('nav.fun')) + '</a> <span>›</span> <span>' + esc(pack.title) + '</span></div>' +
       '<header class="lesson-head">' +
       '  <div class="kicker"><span class="emoji">' + pack.emoji + '</span>' +
       '    <span class="chip">' + esc(pack.level) + '</span>' +
@@ -1536,7 +1536,7 @@
       '      <a class="btn primary" href="#/leksjon/' + nl.id + '">' + esc(done ? t('home.continue') : t('home.start')) + ' · ' + esc(nl.title) + '</a>' +
       '      <a class="btn ghost" href="#/samtaler">' + esc(t('nav.dialogues')) + '</a>' +
       '      <a class="btn ghost" href="#/app">' + esc(t('home.appButton')) + '</a>' +
-      '      <a class="btn ghost" href="#/tull">Tull &amp; tøys</a>' +
+      '      <a class="btn ghost" href="#/tull">' + esc(t('nav.fun')) + '</a>' +
       '      <a class="btn ghost" href="#/coloquial">' + esc(t('home.street')) + '</a>' +
       '    </div>' +
       '  </div>' +
