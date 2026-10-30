@@ -3158,7 +3158,139 @@ window.COURSE = {
         { who: 'B', no: 'Takk for besøket!', es: '¡Gracias por la visita!' }
       ],
       tip: 'Se dice al irte, nunca al llegar. Es la fórmula estrella al terminar una visita.'
-    }
+    },
+    {
+      term: 'Tuller du?',
+      literal: '¿bromeas tú?',
+      meaning: '¿Estás de broma? Se usa cuando no te crees lo que oyes.',
+      register: 'informal',
+      example: [
+        { who: 'A', no: 'Tuller du? Har du virkelig kjøpt en elg?', es: '¿Estás de broma? ¿De verdad has comprado un alce?' },
+        { who: 'B', no: 'Nei, jeg tuller ikke. Den står i hagen.', es: 'No, no bromeo. Está en el jardín.' }
+      ],
+      tip: '«Å tulle» es bromear. «Tuller du?» es la reacción natural ante algo increíble; más suave que «kødder du?», que es más vulgar.'
+    },
+    {
+      term: 'Jeg gidder ikke',
+      literal: 'no me digno',
+      meaning: 'No me apetece / no pienso hacerlo. Pereza o rechazo.',
+      register: 'informal',
+      example: [
+        { who: 'A', no: 'Skal vi rydde i dag?', es: '¿Recogemos hoy?' },
+        { who: 'B', no: 'Nei, jeg gidder ikke. Vi gjør det i morgen.', es: 'No, no me apetece. Lo hacemos mañana.' }
+      ],
+      tip: '«Gidde» es tener ganas de molestarse. «Jeg gidder ikke» puede sonar borde; suaviza con «jeg orker ikke akkurat nå».'
+    },
+    {
+      term: 'Jeg orker ikke',
+      literal: 'no aguanto',
+      meaning: 'No tengo fuerzas / no puedo más, física o mentalmente.',
+      register: 'informal',
+      example: [
+        { who: 'A', no: 'Blir du med på trening?', es: '¿Vienes a entrenar?' },
+        { who: 'B', no: 'Nei, jeg orker ikke i dag. Jeg er helt sliten.', es: 'No, hoy no puedo. Estoy agotado.' }
+      ],
+      tip: '«Orke» es tener energía para algo. «Jeg orker ikke» es cansancio, no necesariamente rechazo; no lo confundas con «gidde» (pereza).'
+    },
+    {
+      term: 'Å ha peiling',
+      literal: 'tener conocimiento',
+      meaning: 'Tener idea / controlar de algo.',
+      register: 'informal',
+      example: [
+        { who: 'A', no: 'Kan du fikse sykkelen?', es: '¿Puedes arreglar la bici?' },
+        { who: 'B', no: 'Ja, jeg har peiling på sykler.', es: 'Sí, controlo de bicis.' }
+      ],
+      tip: '«Peiling» es conocimiento práctico. «Jeg har ikke peiling» es «no tengo ni idea», más suave que «jeg aner ikke».'
+    },
+    {
+      term: 'Å ane',
+      literal: 'vislumbrar',
+      meaning: 'Tener ni idea / sospechar.',
+      register: 'informal',
+      example: [
+        { who: 'A', no: 'Hvor er nøklene?', es: '¿Dónde están las llaves?' },
+        { who: 'B', no: 'Jeg aner ikke. Har du sett i jakken?', es: 'Ni idea. ¿Has mirado en la chaqueta?' }
+      ],
+      tip: '«Jeg aner ikke» es la forma más común de decir «no tengo ni idea». En este sentido, «ane» se usa sobre todo en negativo.'
+    },
+    {
+      term: 'Å henge',
+      literal: 'colgar',
+      meaning: 'Pasar el rato / hacer «hanging out».',
+      register: 'informal',
+      example: [
+        { who: 'A', no: 'Hva skal dere gjøre i helgen?', es: '¿Qué vais a hacer el finde?' },
+        { who: 'B', no: 'Vi henger bare hjemme hos meg.', es: 'Solo vamos a pasar el rato en mi casa.' }
+      ],
+      tip: '«Å henge» es el «hang out» noruego. «Vi henger» = pasamos el rato; «henge med» = juntarse con alguien.'
+    },
+    {
+      term: 'Å stikke',
+      literal: 'pinchar',
+      meaning: 'Irse / largarse.',
+      register: 'informal',
+      example: [
+        { who: 'A', no: 'Skal du allerede?', es: '¿Ya te vas?' },
+        { who: 'B', no: 'Ja, jeg stikker. Vi snakkes!', es: 'Sí, me largo. ¡Hablamos!' }
+      ],
+      tip: '«Å stikke» es irse rápido. «Jeg stikker» suena informal; en una entrevista usa «jeg må gå».'
+    },
+    {
+      term: 'Helt konge',
+      literal: 'totalmente rey',
+      meaning: 'Genial / del carajo (en positivo).',
+      register: 'informal',
+      example: [
+        { who: 'A', no: 'Hvordan var konserten?', es: '¿Qué tal el concierto?' },
+        { who: 'B', no: 'Helt konge! Du burde ha vært der.', es: '¡Genial! Deberías haber estado.' }
+      ],
+      tip: '«Konge» como adjetivo es «genial». «Helt konge» es muy noruego y no tiene nada que ver con la monarquía.'
+    },
+    {
+      term: 'Digg',
+      literal: '(jerga) rico, agradable',
+      meaning: 'Buenísimo / rico / agradable.',
+      register: 'informal',
+      example: [
+        { who: 'A', no: 'Smaker det?', es: '¿Está bueno?' },
+        { who: 'B', no: 'Så digg! Prøv.', es: '¡Buenísimo! Prueba.' }
+      ],
+      tip: '«Digg» vale para comida, música o planes. Es slang; en un texto formal escribe «godt» o «deilig».'
+    },
+    {
+      term: 'Uff da',
+      literal: 'uf, pues',
+      meaning: 'Vaya / pobrecillo / qué pena.',
+      register: 'neutro',
+      example: [
+        { who: 'A', no: 'Jeg mistet telefonen i gulvet.', es: 'Se me cayó el móvil al suelo.' },
+        { who: 'B', no: 'Uff da! Gikk den i stykker?', es: '¡Vaya! ¿Se rompió?' }
+      ],
+      tip: '«Uff da» es empatía suave. No es insulto ni lástima exagerada; se dice mucho ante pequeñas desgracias.'
+    },
+    {
+      term: 'Det ordner seg',
+      literal: 'se arregla',
+      meaning: 'Ya se arreglará / todo saldrá bien.',
+      register: 'neutro',
+      example: [
+        { who: 'A', no: 'Jeg rekker ikke bussen!', es: '¡No llego al autobús!' },
+        { who: 'B', no: 'Slapp av, det ordner seg.', es: 'Tranquilo, ya se arreglará.' }
+      ],
+      tip: '«Å ordne» es arreglar. «Det ordner seg» es el «todo va a salir bien» noruego, muy usado para calmar.'
+    },
+    {
+      term: 'Vi snakkes',
+      literal: 'nos hablamos',
+      meaning: 'Hasta luego / hablamos.',
+      register: 'informal',
+      example: [
+        { who: 'A', no: 'Jeg må gå nå.', es: 'Me tengo que ir ya.' },
+        { who: 'B', no: 'Ok, vi snakkes!', es: 'Vale, ¡hablamos!' }
+      ],
+      tip: 'Despedida estándar e informal. «Vi sees» es «nos vemos»; «ha det» es más neutro.'
+    },
   ],
 
   /* ==================================================================

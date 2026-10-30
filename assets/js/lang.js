@@ -16,7 +16,7 @@
     es: {
       'meta.title': 'Norsk Kjekt — aprende noruego de verdad',
       'meta.description': 'Curso de noruego bokmål A1–C2: 15 lecciones, 239 ejercicios, 6 conversaciones cotidianas, 4 grupos de WhatsApp, 6 packs de humor, tablas con audio y 4 simulacros de la Norskprøven.',
-      'meta.ogDescription': '15 lecciones de bokmål (A1–C2), 239 ejercicios, 6 conversaciones con audio, 4 grupos de WhatsApp, 6 packs de humor, 18 expresiones de la calle y 4 simulacros de examen. Sin registro y sin build.',
+      'meta.ogDescription': '15 lecciones de bokmål (A1–C2), 239 ejercicios, 6 conversaciones con audio, 4 grupos de WhatsApp, 6 packs de humor, 30 expresiones de la calle y 4 simulacros de examen. Sin registro y sin build.',
       'meta.ogAlt': 'Norsk Kjekt: portal de noruego con ejercicios interactivos',
       'skip': 'Saltar al contenido',
       'nav.primary': 'Principal',
@@ -523,7 +523,7 @@
     en: {
       'meta.title': 'Norsk Kjekt — learn Norwegian for real',
       'meta.description': 'Norwegian bokmål course A1–C2: 15 lessons, 239 exercises, 6 everyday conversations, 4 WhatsApp groups, 6 humour packs, audio word tables and 4 Norskprøven mock exams.',
-      'meta.ogDescription': '15 bokmål lessons (A1–C2), 239 interactive exercises, 6 conversations with audio, 4 WhatsApp groups, 6 humour packs, 18 street expressions and 4 mock exams. No sign-up, no build.',
+      'meta.ogDescription': '15 bokmål lessons (A1–C2), 239 interactive exercises, 6 conversations with audio, 4 WhatsApp groups, 6 humour packs, 30 street expressions and 4 mock exams. No sign-up, no build.',
       'meta.ogAlt': 'Norsk Kjekt: a Norwegian portal with interactive exercises',
       'skip': 'Skip to content',
       'nav.primary': 'Main',
@@ -1031,7 +1031,7 @@
     fa: {
       'meta.title': "Norsk Kjekt — نروژی را واقعی یاد بگیر",
       'meta.description': "دوره زبان نروژی بوکمول A1–C2: ۱۵ درس، ۲۳۹ تمرین، ۶ گفت‌وگوی روزمره، ۴ گروه واتساپ، ۶ بسته طنز، جدول‌های واژه با صدا و ۴ آزمون آزمایشی Norskprøven.",
-      'meta.ogDescription': "۱۵ درس بوکمول (A1–C2)، ۲۳۹ تمرین تعاملی، ۶ گفت‌وگو با صدا، ۴ گروه واتساپ، ۶ بسته طنز، ۱۸ اصطلاح خیابانی و ۴ آزمون آزمایشی. بدون ثبت‌نام و بدون build.",
+      'meta.ogDescription': "۱۵ درس بوکمول (A1–C2)، ۲۳۹ تمرین تعاملی، ۶ گفت‌وگو با صدا، ۴ گروه واتساپ، ۶ بسته طنز، ۳۰ اصطلاح خیابانی و ۴ آزمون آزمایشی. بدون ثبت‌نام و بدون build.",
       'meta.ogAlt': "Norsk Kjekt: پرتال نروژی با تمرین‌های تعاملی",
       'skip': "پرش به محتوا",
       'nav.primary': "اصلی",
