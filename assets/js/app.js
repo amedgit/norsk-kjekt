@@ -1688,7 +1688,6 @@
   function renderBodyZone(zone) {
     bodyZone = zone;
     var parts = bodyZoneParts(zone);
-    if (!parts.some(function (p) { return p.id === bodyPartId; })) bodyPartId = parts[0].id;
     var panel = document.getElementById('zone-parts');
     if (!panel) return;
     var digits = zone === 'hånd' ? handSVG() : zone === 'fot' ? footSVG() : '';
@@ -1706,7 +1705,6 @@
     document.querySelectorAll('[data-zone-tab]').forEach(function (b) {
       b.classList.toggle('active', b.getAttribute('data-zone-tab') === zone);
     });
-    renderBodyPart(bodyPartId);
   }
 
   function renderBodyPart(id) {
@@ -1730,10 +1728,7 @@
       g.classList.toggle('active', g.getAttribute('data-part') === id);
     });
     var partSelect = document.getElementById('b-part');
-    if (partSelect) {
-      partSelect.value = id;
-      updateBodyBuilder();
-    }
+    if (partSelect) partSelect.value = id;
     var use = document.getElementById('use-builder');
     if (use) {
       use.addEventListener('click', function () {
@@ -1741,6 +1736,14 @@
         if (card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
       });
     }
+  }
+
+  function syncBodyPart(id) {
+    var p = bodyPart(id);
+    bodyPartId = id;
+    if (bodyZone !== p.zone) renderBodyZone(p.zone);
+    renderBodyPart(id);
+    updateBodyBuilder();
   }
 
   function updateBodyBuilder() {
@@ -1830,25 +1833,28 @@
     document.getElementById('body-map').addEventListener('click', function (e) {
       var g = e.target.closest('[data-zone]');
       if (!g) return;
-      renderBodyZone(g.getAttribute('data-zone'));
+      var z = g.getAttribute('data-zone');
+      syncBodyPart(bodyZoneParts(z)[0].id);
     });
     document.getElementById('body-map').addEventListener('keydown', function (e) {
       if (e.key !== 'Enter' && e.key !== ' ') return;
       var g = e.target.closest('[data-zone]');
       if (!g) return;
       e.preventDefault();
-      renderBodyZone(g.getAttribute('data-zone'));
+      syncBodyPart(bodyZoneParts(g.getAttribute('data-zone'))[0].id);
     });
     document.querySelectorAll('[data-zone-tab]').forEach(function (b) {
-      b.addEventListener('click', function () { renderBodyZone(b.getAttribute('data-zone-tab')); });
+      b.addEventListener('click', function () { syncBodyPart(bodyZoneParts(b.getAttribute('data-zone-tab'))[0].id); });
     });
     document.getElementById('zone-parts').addEventListener('click', function (e) {
       var part = e.target.closest('[data-part]');
       if (!part) return;
       e.preventDefault();
-      renderBodyPart(part.getAttribute('data-part'));
+      syncBodyPart(part.getAttribute('data-part'));
     });
-    ['b-part', 'b-sensation', 'b-intensity', 'b-duration'].forEach(function (id) {
+    var partSel = document.getElementById('b-part');
+    if (partSel) partSel.addEventListener('change', function () { syncBodyPart(partSel.value); });
+    ['b-sensation', 'b-intensity', 'b-duration'].forEach(function (id) {
       var el = document.getElementById(id);
       if (el) el.addEventListener('change', updateBodyBuilder);
     });
