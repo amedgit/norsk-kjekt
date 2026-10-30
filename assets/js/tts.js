@@ -20,6 +20,7 @@
   var synth = typeof window !== 'undefined' && 'speechSynthesis' in window;
   var voice = null;
   var current = null;
+  var seq = null;
   var warned = false;
 
   function clamp(v) { return Math.min(MAX_RATE, Math.max(MIN_RATE, v)); }
@@ -135,6 +136,70 @@
     }
   }
 
+  /* Reproduce una secuencia de frases (cada una con su MP3) sin cortes. */
+  function markSequence(texts, on) {
+    var key = texts.join('|||');
+    var btns = document.querySelectorAll('[data-say-seq]');
+    for (var i = 0; i < btns.length; i++) {
+      if (btns[i].getAttribute('data-say-seq') === key) btns[i].classList.toggle('playing', on);
+    }
+  }
+
+  function synthNext(text) {
+    if (!synth) { playNext(); return; }
+    if (!voice) pickVoice();
+    if (!window.speechSynthesis.getVoices().length) { playNext(); return; }
+    try {
+      var u = new SpeechSynthesisUtterance(text);
+      if (voice) u.voice = voice;
+      u.lang = (voice && voice.lang) || 'nb-NO';
+      u.rate = Math.min(2, 0.92 * rate);
+      u.onend = function () { playNext(); };
+      u.onerror = function () { playNext(); };
+      window.speechSynthesis.speak(u);
+    } catch (e) {
+      playNext();
+    }
+  }
+
+  function playNext() {
+    if (!seq) return;
+    var item = seq.items[seq.i++];
+    if (!item) {
+      var done = seq;
+      seq = null;
+      markSequence(done.items, false);
+      clearPlaying();
+      return;
+    }
+    var file = map[norm(item)];
+    if (!file || !audio) {
+      synthNext(item);
+      return;
+    }
+    try {
+      audio.pause();
+      audio.currentTime = 0;
+      audio.src = 'assets/audio/' + file;
+      audio.defaultPlaybackRate = rate;
+      audio.playbackRate = rate;
+      audio.onended = function () { playNext(); };
+      audio.onerror = function () { synthNext(item); };
+      var p = audio.play();
+      if (p && typeof p.catch === 'function') p.catch(function () { synthNext(item); });
+    } catch (e) {
+      synthNext(item);
+    }
+  }
+
+  function speakSequence(texts) {
+    if (!texts || !texts.length) return;
+    stop();
+    seq = { items: texts.slice(), i: 0 };
+    markSequence(seq.items, true);
+    playNext();
+  }
+
   /** true si hay MP3 pregrabado para ese texto. */
   function hasAudio(text) {
     return !!map[norm(text)];
@@ -153,6 +218,10 @@
   }
 
   function stop() {
+    if (seq) {
+      markSequence(seq.items, false);
+      seq = null;
+    }
     if (synth) window.speechSynthesis.cancel();
     if (audio) {
       try {
@@ -177,6 +246,7 @@
 
   window.TTS = {
     speak: speak,
+    speakSequence: speakSequence,
     stop: stop,
     setRate: setRate,
     getRate: getRate,

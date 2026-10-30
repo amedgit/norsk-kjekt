@@ -88,7 +88,7 @@ cacheada.
 | Progreso | racha, XP, mapa de calor de 12 semanas, 8 logros, repaso espaciado (1/3/7/15/30 días) y exportación/importación del progreso en JSON |
 | Extras | modo oscuro, teclado noruego æ ø å en los ejercicios de escritura y PWA offline |
 | Velocidad | selector 0,7×–1,3× en la cabecera; se aplica al audio y se recuerda |
-| Audio | 1060 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
+| Audio | 1213 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
 | App | PWA instalable (offline) con icono propio, pantalla completa y funcionamiento sin conexión; el APK está retirado temporalmente |
 
 ## Interfaz en español, inglés o persa
@@ -159,7 +159,7 @@ norsk/
     ├── img/og.png       ← imagen para compartir en redes
     ├── img/lessons/*.svg ← una ilustración original por lección
     ├── img/dialogues/*.svg ← una ilustración por conversación
-    ├── audio/*.mp3      ← 1060 audios (≈13,7 MB), generados
+    ├── audio/*.mp3      ← 1213 audios (≈15,5 MB), generados
     └── js/
         ├── data.js          ← TODO el contenido del curso, Samtaler y los 4 simulacros
         ├── content-en.js    ← traducciones ES → EN del contenido

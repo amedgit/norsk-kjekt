@@ -129,6 +129,14 @@ if (COURSE.body) {
     texts.add(part.no);
     texts.add(part.def);
     texts.add('Jeg har vondt i ' + part.def + '.');
+    for (const d of COURSE.body.durations) {
+      texts.add('Jeg har ' + (d.id === 'i dag' ? '' : 'hatt ') + 'vondt i ' + part.def + ' ' + d.no + '.');
+    }
+  }
+  for (const intensity of COURSE.body.intensities) {
+    for (const sensation of COURSE.body.sensations) {
+      texts.add(intensity.phrase + ' ' + sensation.phrase);
+    }
   }
   for (const phrase of COURSE.body.phrases) texts.add(phrase.no);
   for (const sc of COURSE.body.scenarios) {

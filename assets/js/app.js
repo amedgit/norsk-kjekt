@@ -205,6 +205,10 @@
     return '<button class="say ' + (cls || '') + '" data-say="' + esc(text) + '" ' +
       'aria-label="' + esc(t('say.listenNo')) + '" title="' + esc(t('say.title')) + '">🔊</button>';
   }
+  function saySeq(first, second) {
+    return '<button class="say" data-say-seq="' + esc(first + '|||' + second) + '" ' +
+      'aria-label="' + esc(t('say.listenNo')) + '" title="' + esc(t('say.title')) + '">🔊</button>';
+  }
 
   function shuffle(arr) {
     var a = arr.slice();
@@ -1603,9 +1607,12 @@
       duration: BODY.durations.find(function (s) { return s.id === document.getElementById('b-duration').value; }) || BODY.durations[1]
     };
     var past = sel.duration.id !== 'i dag';
+    var base = 'Jeg har ' + (past ? 'hatt ' : '') + 'vondt i ' + part.def + ' ' + sel.duration.no + '.';
+    var combo = sel.intensity.phrase + ' ' + sel.sensation.phrase;
     return {
-      no: 'Jeg har ' + (past ? 'hatt ' : '') + 'vondt i ' + part.def + ' ' + sel.duration.no + '. ' +
-        sel.intensity.phrase + ' ' + sel.sensation.phrase,
+      no: base + ' ' + combo,
+      base: base,
+      combo: combo,
       gloss: part.es + ' · ' + sel.duration.es + ' · ' + sel.sensation.es
     };
   }
@@ -1736,7 +1743,7 @@
     var sp = document.getElementById('b-say');
     if (s) s.textContent = out.no;
     if (g) g.textContent = out.gloss;
-    if (sp) sp.innerHTML = say(out.no);
+    if (sp) sp.innerHTML = saySeq(out.base, out.combo);
   }
 
   function renderBody() {
@@ -3543,6 +3550,12 @@
     if (b && window.TTS) {
       e.preventDefault();
       window.TTS.speak(b.getAttribute('data-say'));
+    }
+    var seqBtn = e.target.closest('[data-say-seq]');
+    if (seqBtn && window.TTS) {
+      e.preventDefault();
+      window.TTS.speakSequence(seqBtn.getAttribute('data-say-seq').split('|||'));
+      return;
     }
     var install = e.target.closest('[data-install]');
     if (install) {
