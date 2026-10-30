@@ -1613,7 +1613,12 @@
       no: base + ' ' + combo,
       base: base,
       combo: combo,
-      gloss: part.es + ' · ' + sel.duration.es + ' · ' + sel.sensation.es
+      gloss: t('body.translation', {
+        part: part.es,
+        duration: sel.duration.es,
+        intensity: sel.intensity.es,
+        sensation: sel.sensation.es
+      })
     };
   }
 
@@ -1724,12 +1729,14 @@
     document.querySelectorAll('#body-map [data-part]').forEach(function (g) {
       g.classList.toggle('active', g.getAttribute('data-part') === id);
     });
+    var partSelect = document.getElementById('b-part');
+    if (partSelect) {
+      partSelect.value = id;
+      updateBodyBuilder();
+    }
     var use = document.getElementById('use-builder');
     if (use) {
       use.addEventListener('click', function () {
-        var sel = document.getElementById('b-part');
-        if (sel) sel.value = id;
-        updateBodyBuilder();
         var card = document.querySelector('.body-builder');
         if (card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
       });
@@ -1787,7 +1794,8 @@
       }).join('') + '</select></label>' +
       '</div>' +
       '<div class="builder-out"><span id="b-say"></span><p id="b-sentence" class="b-sentence"></p>' +
-      '<p id="b-gloss" class="muted"></p>' +
+      '<p class="b-gloss-label">' + esc(t('body.translationLabel')) + '</p>' +
+      '<p id="b-gloss" class="b-gloss"></p>' +
       '<div class="prog-links"><button type="button" class="btn ghost small" id="copy-body">' + esc(t('body.copy')) + '</button>' +
       '<button type="button" class="btn ghost small" id="share-body">' + esc(t('body.share')) + '</button></div>' +
       '<p id="copy-status" class="ex-hint" hidden></p></div></section>' +
