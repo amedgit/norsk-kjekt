@@ -1428,6 +1428,92 @@
     });
   }
 
+  /* ---------------- Lecciones ---------------- */
+
+  var LESSON_LEVELS = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+
+  function plainSearch(s) {
+    return String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
+
+  function lessonMatches(l) {
+    var q = plainSearch(lessonsQuery.trim());
+    if (!q) return true;
+    return plainSearch(l.title + ' ' + l.subtitle + ' ' + l.level + ' ' + l.goals.join(' ')).indexOf(q) > -1;
+  }
+
+  function paintLessonsList() {
+    var box = document.getElementById('lessons-list');
+    if (!box) return;
+    var levels = lessonsLevel === 'all' ? LESSON_LEVELS : [lessonsLevel];
+    var html = '';
+    levels.forEach(function (lv) {
+      var list = LESSONS.filter(function (l) { return l.level === lv && lessonMatches(l); });
+      if (!list.length) return;
+      html += '<h2 class="section-title">' + lv + ' <span>' + esc(tp('lessons.count', list.length)) + '</span></h2>' +
+        '<div class="grid">' + list.map(lessonCard).join('') + '</div>';
+    });
+    box.innerHTML = html || '<div class="empty lessons-empty"><span class="big">🔎</span>' + esc(t('lessons.none')) + '</div>';
+    var next = nextLesson();
+    var card = box.querySelector('.lesson-card[href="#/leksjon/' + next.id + '"]');
+    if (card) card.classList.add('next-lesson');
+  }
+
+  function renderLessons(levelArg) {
+    var wanted = String(levelArg || '').toUpperCase();
+    lessonsLevel = LESSON_LEVELS.indexOf(wanted) > -1 ? wanted : 'all';
+    lessonsQuery = '';
+    var done = completedCount();
+    var total = LESSONS.length;
+    var pct = total ? Math.round((done / total) * 100) : 0;
+    var next = nextLesson();
+
+    app.innerHTML =
+      '<div class="crumbs"><a href="#/">' + esc(t('crumb.home')) + '</a> <span>›</span> <span>' + esc(t('lesson.crumb')) + '</span></div>' +
+      '<section class="colo-intro lessons-intro">' +
+      '  <span class="eyebrow">' + esc(t('lessons.eyebrow')) + '</span>' +
+      '  <h1>' + esc(t('lessons.title')) + '</h1>' +
+      '  <p>' + esc(t('lessons.intro')) + '</p>' +
+      '  <div class="lessons-progress"><span>' + esc(t('lessons.progress', { done: done, total: total })) + '</span>' +
+      '    <span class="meter"><i style="width:' + pct + '%"></i></span></div>' +
+      '  <div class="fun-banner-actions lessons-actions">' +
+      '    <a class="btn primary" href="#/leksjon/' + next.id + '">' + esc(t('lessons.continue', { title: next.title })) + '</a>' +
+      '    <a class="btn ghost" href="#/nivel">' + esc(t('lessons.test')) + '</a>' +
+      '  </div>' +
+      '</section>' +
+      '<div class="lessons-toolbar">' +
+      '  <input id="lesson-q" type="search" placeholder="' + esc(t('lessons.search')) + '" aria-label="' + esc(t('lessons.search')) + '">' +
+      '  <div class="level-chips">' +
+      '    <button type="button" class="level-chip' + (lessonsLevel === 'all' ? ' active' : '') + '" data-level="all">' +
+      esc(t('lessons.all')) + ' <small>' + total + '</small></button>' +
+      LESSON_LEVELS.map(function (lv) {
+        var n = LESSONS.filter(function (l) { return l.level === lv; }).length;
+        return '<button type="button" class="level-chip' + (lessonsLevel === lv ? ' active' : '') + '" data-level="' + lv + '">' +
+          lv + ' <small>' + n + '</small></button>';
+      }).join('') +
+      '  </div>' +
+      '</div>' +
+      '<div id="lessons-list"></div>';
+
+    paintLessonsList();
+
+    var input = document.getElementById('lesson-q');
+    input.addEventListener('input', function () {
+      lessonsQuery = input.value;
+      paintLessonsList();
+    });
+    document.querySelectorAll('.level-chip').forEach(function (b) {
+      b.addEventListener('click', function () {
+        lessonsLevel = b.getAttribute('data-level');
+        document.querySelectorAll('.level-chip').forEach(function (x) {
+          x.classList.toggle('active', x === b);
+        });
+        try { history.replaceState(null, '', lessonsLevel === 'all' ? '#/lecciones' : '#/lecciones/' + lessonsLevel); } catch (e) { /* file:// */ }
+        paintLessonsList();
+      });
+    });
+  }
+
   function renderHome() {
     var done = completedCount();
     var total = LESSONS.length;
@@ -1472,6 +1558,9 @@
       '  <a class="practice-chip" href="#/progreso"><b>📊 ' + esc(t('home.progressChip')) + '</b><span>' + esc(t('home.progressChipSub')) + '</span></a>' +
       '  <a class="practice-chip" href="#/kroppen"><b>🧍 ' + esc(t('home.bodyChip')) + '</b><span>' + esc(t('home.bodyChipSub')) + '</span></a>' +
       '</div>' +
+
+      '<div class="lessons-home-head"><h2 class="section-title">' + esc(t('lessons.homeTitle')) + ' <span>' + esc(tp('lessons.count', LESSONS.length)) + '</span></h2>' +
+      '<a class="btn ghost small" href="#/lecciones">' + esc(t('lessons.open')) + '</a></div>' +
 
       levelSection(t('home.basicTitle'), t('home.basicSub'), ['A1', 'A2']) +
       levelSection(t('home.b1Title'), t('home.b1Sub'), ['B1']) +
@@ -1588,6 +1677,8 @@
 
   /* ---------------- Kroppen ---------------- */
 
+  var lessonsLevel = 'all';
+  var lessonsQuery = '';
   var bodyZone = 'hode';
   var bodyPartId = 'hode';
 
@@ -1949,7 +2040,7 @@
     var current = null;
     document.addEventListener('focusin', function (e) {
       var el = e.target;
-      if (el && el.matches && el.matches('input[type="text"], input:not([type]), textarea')) {
+      if (el && el.matches && el.matches('input[type="text"], input[type="search"], input:not([type]), textarea')) {
         current = el;
         bar.hidden = false;
       }
@@ -2590,7 +2681,7 @@
     var imgAlt = lesson.imageAlt || lesson.title;
 
     app.innerHTML =
-      '<div class="crumbs"><a href="#/">' + esc(t('lesson.crumb')) + '</a> <span>›</span> <span>' + esc(t('lesson.breadcrumb', { n: lesson.num })) + '</span></div>' +
+      '<div class="crumbs"><a href="#/lecciones">' + esc(t('lesson.crumb')) + '</a> <span>›</span> <span>' + esc(t('lesson.breadcrumb', { n: lesson.num })) + '</span></div>' +
 
       '<header class="lesson-head">' +
       '  <div class="lesson-copy">' +
@@ -3491,7 +3582,8 @@
     clearExamTimer();
     window.scrollTo({ top: 0, behavior: 'auto' });
 
-    var active = name === 'coloquial' ? 'coloquial'
+    var active = (name === 'lecciones' || name === 'leksjon') ? 'lessons'
+      : name === 'coloquial' ? 'coloquial'
       : name === 'repaso' ? 'review'
         : name === 'tull' ? 'fun'
           : name === 'eksamen' ? 'exam'
@@ -3511,6 +3603,8 @@
     if (name === 'leksjon') {
       var lesson = LESSONS.find(function (l) { return l.id === arg; });
       renderLesson(lesson || LESSONS[0]);
+    } else if (name === 'lecciones') {
+      renderLessons(arg);
     } else if (name === 'samtaler') {
       renderDialogues();
     } else if (name === 'app') {

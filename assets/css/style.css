@@ -1137,11 +1137,11 @@ html[dir="rtl"] .exam-usertext {
 }
 
 @media (max-width: 640px) {
-  .topbar { flex-wrap: wrap; padding: .6rem 1rem; gap: .5rem .75rem; }
+  .topbar { position: static; flex-wrap: wrap; padding: .6rem 1rem; gap: .5rem .75rem; }
   .brand { font-size: 1rem; }
   .hud { margin-inline-start: auto; }
-  .nav { order: 3; width: 100%; overflow-x: auto; }
-  .nav a { padding: .4rem .7rem; font-size: .88rem; white-space: nowrap; }
+  .nav { order: 3; width: 100%; flex-wrap: wrap; overflow: visible; row-gap: .15rem; }
+  .nav a { padding: .34rem .55rem; font-size: .82rem; white-space: nowrap; }
   .vocab { grid-template-columns: 1fr 1fr; }
   .result .score { font-size: 2.1rem; }
   .para .no { font-size: .98rem; }
@@ -1525,3 +1525,46 @@ html[data-theme="dark"] .redflags { background: #2a141b; border-color: #4a2530; 
   .digit-wrap { flex-direction: column; align-items: flex-start; }
   .sline { grid-template-columns: 5.2rem 1.8rem 1fr; }
 }
+
+/* ---------------- lecciones ---------------- */
+
+.lessons-intro { background: linear-gradient(135deg, #0e2a47, #1f4e79); }
+.lessons-progress {
+  display: flex; align-items: center; gap: .8rem; margin-top: 1rem;
+  font-size: .82rem; color: rgba(255, 255, 255, .86);
+}
+.lessons-progress .meter { flex: 0 1 240px; background: rgba(255, 255, 255, .22); }
+.lessons-progress .meter > i { background: #fff; }
+.lessons-actions { margin-top: 1rem; }
+
+.lessons-toolbar {
+  display: flex; flex-wrap: wrap; gap: .6rem;
+  align-items: center; margin: 1.2rem 0 .4rem;
+}
+.lessons-toolbar input {
+  flex: 1 1 220px; min-width: 180px; padding: .6rem .9rem;
+  border: 1px solid var(--line); border-radius: 12px;
+  background: var(--card); color: var(--ink); font: inherit; font-size: .9rem;
+  outline: none;
+}
+.lessons-toolbar input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(0, 32, 91, .08); }
+.level-chips { display: flex; flex-wrap: wrap; gap: .35rem; }
+.level-chip {
+  border: 1px solid var(--line); background: var(--card); color: var(--ink-soft);
+  border-radius: 999px; padding: .35rem .7rem; font: inherit; font-size: .82rem;
+  min-width: 3.4rem; text-align: center;
+  cursor: pointer; transition: background .15s, color .15s, border-color .15s;
+}
+.level-chip small { opacity: .6; font-size: .72rem; margin-inline-start: .15rem; }
+.level-chip:hover { border-color: #b9c3d4; }
+.level-chip.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+.lessons-home-head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: .8rem; margin-top: 1.6rem;
+}
+.lessons-home-head .section-title { margin: 0; }
+.lessons-empty { margin-top: 1rem; }
+.lesson-card.next-lesson { outline: 2px solid var(--red); outline-offset: 2px; }
+
+html[data-theme="dark"] .level-chip.active { background: var(--ink); color: #0d1420; border-color: var(--ink); }

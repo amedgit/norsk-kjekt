@@ -75,7 +75,7 @@ cacheada.
 
 | Parte | Contenido |
 |---|---|
-| Lecciones | 15 lecciones A1–C2: base A1–A2, vida diaria B1, noticias/medio ambiente/derechos laborales en B2, debate y escritura académica en C1, ironía y literatura en C2 |
+| Lecciones | 15 lecciones A1–C2 con página propia (`#/lecciones`): buscador, filtros por nivel, progreso y acceso directo a cada lección |
 | Práctica | 239 ejercicios en 10 formatos, test de nivel de 18 preguntas y entrenador de números, hora y preposiciones |
 | Samtaler | 6 conversaciones cotidianas (A2–B1: portal, cafetería, tienda, trabajo, médico y teléfono) con 52 réplicas, audio por línea, traducciones plegables, vocabulario, frases y 30 ejercicios |
 | Meldinger | 4 grupos de WhatsApp (A2–B1: vecinos, familia, amigos y trabajo) con 48 mensajes en formato chat, audio por mensaje, traducción, glosario de abreviaturas y truco cultural |
@@ -281,6 +281,13 @@ y `exercises` (los mismos tipos que las lecciones). La ruta de cada diálogo es
 - Los fallos entran en el repaso con la firma `dlg#<id>#<índice>`.
 - Al añadir o cambiar textos, ejecuta `tools/generate-audio.mjs` para generar
   los MP3 y el manifiesto, y `tools/check-i18n.mjs` para comprobar EN y FA.
+
+### Lecciones
+
+La página `#/lecciones` es el índice del curso: buscador por título/tema,
+filtros A1–C2 (también con URL directa, p. ej. `#/lecciones/B1`), progreso y
+resaltado de la siguiente lección. El logo de la cabecera vuelve al inicio; el
+elemento **Lecciones** del menú abre este índice, no la portada.
 
 ### Meldinger (grupos de WhatsApp)
 
