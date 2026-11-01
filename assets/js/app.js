@@ -6,6 +6,7 @@
   var LESSONS = COURSE.lessons;
   var DIALOGUES = COURSE.dialogues || [];
   var CHATS = COURSE.chats || [];
+  var CORE = COURSE.core || { packs: [], totalTarget: 1000 };
   var BODY = COURSE.body || { zones: [], parts: [], sensations: [], intensities: [], durations: [], phrases: [], scenarios: [], exercises: [] };
   var I18N = window.I18N;
   var t = I18N.t;
@@ -52,7 +53,7 @@
   var KEY = 'norsk-kjekt-v1';
 
   function defaults() {
-    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, body: {}, xp: 0, days: {}, review: [], srs: {}, version: 1 };
+    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, body: {}, core: { known: {}, packs: {} }, xp: 0, days: {}, review: [], srs: {}, version: 1 };
   }
 
   var state = (function load() {
@@ -65,6 +66,7 @@
       var dialogues = {};
       var srs = {};
       var body = {};
+      var core = { known: {}, packs: {} };
       Object.keys(raw.lessons || {}).forEach(function (id) {
         var v = raw.lessons[id];
         if (v && typeof v === 'object') {
@@ -86,6 +88,15 @@
       if (raw.body && typeof raw.body === 'object') {
         body = { best: Number(raw.body.best) || 0, total: Number(raw.body.total) || 0, at: Number(raw.body.at) || 0 };
       }
+      if (raw.core && typeof raw.core === 'object') {
+        Object.keys(raw.core.known || {}).forEach(function (id) {
+          if (raw.core.known[id]) core.known[id] = true;
+        });
+        Object.keys(raw.core.packs || {}).forEach(function (id) {
+          var v = raw.core.packs[id];
+          if (v && typeof v === 'object') core.packs[id] = { best: Number(v.best) || 0, total: Number(v.total) || 0, at: Number(v.at) || 0 };
+        });
+      }
       Object.keys(raw.srs || {}).forEach(function (sig) {
         var v = raw.srs[sig];
         if (v && typeof v === 'object') {
@@ -97,6 +108,7 @@
         fun: fun,
         dialogues: dialogues,
         body: body,
+        core: core,
         srs: srs,
         exams: raw.exams && typeof raw.exams === 'object' ? raw.exams : {},
         xp: Number(raw.xp) || 0,
@@ -1428,7 +1440,221 @@
     });
   }
 
+  /* ---------------- Kjerneord: las 1000 palabras clave ---------------- */
+
+  var corePackId = '1';
+  var coreQuery = '';
+  var coreFilter = 'all';
+  var CORE_CATS = ['greet', 'pron', 'q', 'verb1', 'verb2', 'time', 'place', 'food', 'health', 'link'];
+
+  function corePack(id) {
+    return CORE.packs.find(function (p) { return p.id === id; }) || null;
+  }
+
+  function coreKnownCount(pack) {
+    if (!pack || !pack.words) return 0;
+    return pack.words.filter(function (w) { return state.core.known[w.id]; }).length;
+  }
+
+  function coreAvailable() {
+    return CORE.packs.filter(function (p) { return p.words && p.words.length; });
+  }
+
+  function coreWordCard(w) {
+    var known = !!state.core.known[w.id];
+    return '<div class="core-word' + (known ? ' known' : '') + '" data-word="' + w.id + '">' +
+      '<div class="cw-main">' +
+      '  <div class="cw-top"><b class="cw-no">' + esc(w.no) + '</b>' + say(w.no) +
+      (w.chunk ? '<span class="chip plain">' + esc(t('core.chunk')) + '</span>' : '') + '</div>' +
+      '  <span class="cw-es">' + esc(w.es) + '</span>' +
+      (w.forms ? '<span class="cw-forms">' + esc(w.forms) + '</span>' : '') +
+      '</div>' +
+      '<button type="button" class="cw-know' + (known ? ' on' : '') + '" data-know="' + w.id + '">' +
+      (known ? '✓ ' + esc(t('core.known')) : esc(t('core.markKnown'))) + '</button>' +
+      '</div>';
+  }
+
+  function paintCoreWords() {
+    var box = document.getElementById('core-words');
+    var pack = corePack(corePackId);
+    if (!box || !pack) return;
+    var q = String(coreQuery).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    var html = '';
+    CORE_CATS.forEach(function (cat) {
+      var list = pack.words.filter(function (w) {
+        if (w.cat !== cat) return false;
+        if (coreFilter === 'known' && !state.core.known[w.id]) return false;
+        if (coreFilter === 'pending' && state.core.known[w.id]) return false;
+        if (!q) return true;
+        return (w.no + ' ' + w.es + ' ' + (w.forms || '')).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').indexOf(q) > -1;
+      });
+      if (!list.length) return;
+      html += '<h3 class="core-cat">' + esc(t('core.cat.' + cat)) + '</h3>' +
+        '<div class="core-word-grid">' + list.map(coreWordCard).join('') + '</div>';
+    });
+    box.innerHTML = html || '<div class="empty core-empty"><span class="big">🔎</span>' + esc(t('core.none')) + '</div>';
+  }
+
+  function refreshCoreProgress(pack) {
+    var known = coreKnownCount(pack);
+    var total = pack.words.length;
+    var text = document.getElementById('core-known');
+    var meter = document.getElementById('core-meter');
+    if (text) text.textContent = t('core.learned', { n: known, total: total });
+    if (meter) meter.style.width = Math.round((known / total) * 100) + '%';
+  }
+
+  function renderCore() {
+    var available = coreAvailable();
+    var totalAvail = available.reduce(function (n, p) { return n + p.words.length; }, 0);
+    var known = available.reduce(function (n, p) { return n + coreKnownCount(p); }, 0);
+    var pct = totalAvail ? Math.round((known / totalAvail) * 100) : 0;
+
+    app.innerHTML =
+      '<div class="crumbs"><a href="#/">' + esc(t('crumb.home')) + '</a> <span>›</span> <span>' + esc(t('core.crumb')) + '</span></div>' +
+      '<section class="colo-intro core-intro">' +
+      '  <span class="eyebrow">' + esc(t('core.eyebrow')) + '</span>' +
+      '  <h1>' + esc(t('core.title')) + '</h1>' +
+      '  <p>' + esc(t('core.intro')) + '</p>' +
+      '  <div class="lessons-progress"><span>' + esc(t('core.available', { n: totalAvail, total: CORE.totalTarget })) + '</span>' +
+      '    <span class="meter"><i style="width:' + pct + '%"></i></span></div>' +
+      '</section>' +
+      '<section class="core-packs">' + CORE.packs.map(function (p) {
+        var done = coreKnownCount(p);
+        var best = state.core.packs[p.id];
+        if (!p.words || p.soon) {
+          return '<div class="core-pack soon">' +
+            '<div class="cp-top"><span>' + p.emoji + '</span><span class="chip plain">' + p.level + '</span></div>' +
+            '<h3>' + esc(p.title) + '</h3><p>' + esc(p.subtitle) + '</p>' +
+            '<span class="cp-soon">🔒 ' + esc(t('core.soon')) + '</span></div>';
+        }
+        return '<a class="core-pack" href="#/kjerneord/' + p.id + '">' +
+          '<div class="cp-top"><span>' + p.emoji + '</span><span class="chip plain">' + p.level + '</span></div>' +
+          '<h3>' + esc(p.title) + '</h3><p>' + esc(p.subtitle) + '</p>' +
+          '<div class="cp-foot"><span class="chip done">✓ ' + done + '/' + p.words.length + '</span>' +
+          (best ? '<span class="chip plain">' + esc(t('core.best', { best: best.best, total: best.total })) + '</span>' : '') +
+          '</div></a>';
+      }).join('') + '</section>' +
+      '<p class="core-note">' + esc(t('core.note')) + '</p>';
+  }
+
+  function coreTestItems(pack) {
+    var picked = shuffle(pack.words).slice(0, 10);
+    return picked.map(function (w, i) {
+      var reverse = i % 2 === 1;
+      var correct = reverse ? w.no : w.es;
+      var pool = [];
+      pack.words.forEach(function (x) {
+        var v = reverse ? x.no : x.es;
+        if (v !== correct && pool.indexOf(v) === -1) pool.push(v);
+      });
+      var options = pickOptions(correct, pool, 4);
+      return {
+        type: 'mcq',
+        prompt: reverse ? t('core.reverse', { es: w.es }) : t('core.forward', { no: w.no }),
+        options: options,
+        answer: options.indexOf(correct),
+        explain: ''
+      };
+    });
+  }
+
+  function startCoreTest(pack) {
+    var mount = document.getElementById('core-test-mount');
+    if (!mount) return;
+    mount.style.display = 'block';
+    mount.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    runExercises(mount, coreTestItems(pack), {
+      label: t('core.testLabel'),
+      onDone: function (res) {
+        var prev = state.core.packs[pack.id] || { best: 0 };
+        state.core.packs[pack.id] = {
+          best: Math.max(prev.best || 0, res.correct),
+          total: 10,
+          at: Date.now()
+        };
+        state.xp += res.correct * 10;
+        markDay();
+        save();
+        refreshHud();
+        var box = mount.querySelector('.result');
+        if (box) box.insertAdjacentHTML('beforeend', '<p class="ex-hint">' + esc(t('result.progress', { n: res.correct * 10 })) + '</p>');
+      }
+    });
+  }
+
+  function renderCorePack(id) {
+    var pack = corePack(id);
+    if (!pack || !pack.words) { renderCore(); return; }
+    corePackId = pack.id;
+    coreQuery = '';
+    coreFilter = 'all';
+    var known = coreKnownCount(pack);
+    var best = state.core.packs[pack.id];
+
+    app.innerHTML =
+      '<div class="crumbs"><a href="#/">' + esc(t('crumb.home')) + '</a> <span>›</span> <a href="#/kjerneord">' + esc(t('core.crumb')) + '</a> <span>›</span> <span>' + esc(pack.title) + '</span></div>' +
+      '<section class="colo-intro core-intro">' +
+      '  <span class="eyebrow">' + esc(t('core.eyebrow')) + '</span>' +
+      '  <h1>' + esc(pack.title) + '</h1>' +
+      '  <p>' + esc(pack.subtitle) + '</p>' +
+      '  <div class="core-meta"><span class="chip plain">' + esc(pack.level) + '</span>' +
+      '    <span class="chip plain">' + esc(tp('core.words', pack.words.length)) + '</span>' +
+      (best ? '<span class="chip plain">' + esc(t('core.best', { best: best.best, total: best.total })) + '</span>' : '') + '</div>' +
+      '  <div class="lessons-progress"><span id="core-known">' + esc(t('core.learned', { n: known, total: pack.words.length })) + '</span>' +
+      '    <span class="meter"><i id="core-meter" style="width:' + Math.round((known / pack.words.length) * 100) + '%"></i></span></div>' +
+      '  <div class="fun-banner-actions lessons-actions"><a class="btn ghost" href="#/kjerneord">' + esc(t('core.back')) + '</a></div>' +
+      '</section>' +
+
+      '<section class="card"><div class="core-toolbar">' +
+      '  <input id="core-q" type="search" placeholder="' + esc(t('core.search')) + '" aria-label="' + esc(t('core.search')) + '">' +
+      '  <div class="level-chips">' +
+      '    <button type="button" class="level-chip active" data-cfilter="all">' + esc(t('core.all')) + '</button>' +
+      '    <button type="button" class="level-chip" data-cfilter="pending">' + esc(t('core.pending')) + '</button>' +
+      '    <button type="button" class="level-chip" data-cfilter="known">' + esc(t('core.knownFilter')) + '</button>' +
+      '  </div>' +
+      '</div><div id="core-words"></div></section>' +
+
+      '<section class="card" id="core-test-card"><h2>' + esc(t('core.test')) + '</h2>' +
+      '<p class="muted">' + esc(t('core.testIntro')) + '</p>' +
+      '<div class="actions"><button class="btn primary" id="start-core-test" type="button">' + esc(t('core.startTest')) + '</button></div>' +
+      '<div id="core-test-mount" style="display:none"></div></section>';
+
+    paintCoreWords();
+    refreshCoreProgress(pack);
+
+    var input = document.getElementById('core-q');
+    input.addEventListener('input', function () {
+      coreQuery = input.value;
+      paintCoreWords();
+    });
+    document.querySelectorAll('[data-cfilter]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        coreFilter = b.getAttribute('data-cfilter');
+        document.querySelectorAll('[data-cfilter]').forEach(function (x) {
+          x.classList.toggle('active', x === b);
+        });
+        paintCoreWords();
+      });
+    });
+    document.getElementById('core-words').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-know]');
+      if (!b) return;
+      var id = b.getAttribute('data-know');
+      if (state.core.known[id]) delete state.core.known[id];
+      else state.core.known[id] = true;
+      save();
+      markDay();
+      paintCoreWords();
+      refreshCoreProgress(pack);
+    });
+    document.getElementById('start-core-test').addEventListener('click', function () {
+      startCoreTest(pack);
+    });
+  }
+
   /* ---------------- Lecciones ---------------- */
+
 
   var LESSON_LEVELS = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
 
@@ -1557,6 +1783,7 @@
       '  <a class="practice-chip" href="#/trener"><b>🏋️ ' + esc(t('home.trainerChip')) + '</b><span>' + esc(t('home.trainerChipSub')) + '</span></a>' +
       '  <a class="practice-chip" href="#/progreso"><b>📊 ' + esc(t('home.progressChip')) + '</b><span>' + esc(t('home.progressChipSub')) + '</span></a>' +
       '  <a class="practice-chip" href="#/kroppen"><b>🧍 ' + esc(t('home.bodyChip')) + '</b><span>' + esc(t('home.bodyChipSub')) + '</span></a>' +
+      '  <a class="practice-chip" href="#/kjerneord"><b>📚 ' + esc(t('home.coreChip')) + '</b><span>' + esc(t('home.coreChipSub')) + '</span></a>' +
       '</div>' +
 
       '<div class="lessons-home-head"><h2 class="section-title">' + esc(t('lessons.homeTitle')) + ' <span>' + esc(tp('lessons.count', LESSONS.length)) + '</span></h2>' +
@@ -2201,6 +2428,7 @@
       '  <a class="btn ghost" href="#/trener">🏋️ ' + esc(t('home.trainerChip')) + '</a>' +
       '  <a class="btn ghost" href="#/samtaler">💬 ' + esc(t('nav.dialogues')) + '</a>' +
       '  <a class="btn ghost" href="#/meldinger">📱 ' + esc(t('nav.chats')) + '</a>' +
+      '  <a class="btn ghost" href="#/kjerneord">📚 ' + esc(t('home.coreChip')) + '</a>' +
       '</div></section>' +
 
       '<section class="card"><h2>' + esc(t('prog.data')) + '</h2>' +
@@ -3590,7 +3818,7 @@
             : (name === 'samtaler' || name === 'samtale') ? 'dialogues'
               : (name === 'meldinger' || name === 'melding') ? 'chats'
                 : name === 'kroppen' ? 'body'
-                  : (name === 'app' || name === 'progreso' || name === 'nivel' || name === 'trener') ? ''
+                  : (name === 'app' || name === 'progreso' || name === 'nivel' || name === 'trener' || name === 'kjerneord') ? ''
                     : 'home';
     document.querySelectorAll('.nav a').forEach(function (a) {
       a.classList.toggle('active', a.dataset.route === active);
@@ -3605,6 +3833,9 @@
       renderLesson(lesson || LESSONS[0]);
     } else if (name === 'lecciones') {
       renderLessons(arg);
+    } else if (name === 'kjerneord') {
+      if (arg) renderCorePack(arg);
+      else renderCore();
     } else if (name === 'samtaler') {
       renderDialogues();
     } else if (name === 'app') {

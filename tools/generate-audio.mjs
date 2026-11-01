@@ -123,6 +123,13 @@ for (const c of COURSE.chats || []) {
   c.glossary.forEach((g) => texts.add(g.say || g.no));
 }
 
+/* Kjerneord: palabras y frases del núcleo */
+if (COURSE.core) {
+  for (const pack of COURSE.core.packs) {
+    for (const w of pack.words || []) texts.add(w.no);
+  }
+}
+
 /* Kroppen: partes, frases, escenarios y ejercicios */
 if (COURSE.body) {
   for (const part of COURSE.body.parts) {

@@ -384,6 +384,46 @@
       'lessons.open': 'Ver todas las lecciones',
       'lessons.homeTitle': 'Lecciones',
       'lessons.test': 'Test de nivel',
+      'lessons.test': 'Test de nivel',
+      'home.coreChip': 'Palabras clave',
+      'home.coreChipSub': '1000 en 10 paquetes',
+      'footer.core': 'Palabras clave',
+      'core.crumb': 'Palabras clave',
+      'core.eyebrow': 'Núcleo 1000 · A1–B2',
+      'core.title': 'Las 1000 palabras clave',
+      'core.intro': 'Diez paquetes de 100 palabras y frases para pasar de sobrevivir a conversar de verdad. Audio, formas útiles y repaso en cada ficha.',
+      'core.available': '{n} de {total} palabras disponibles',
+      'core.note': 'Los diez paquetes se abren en tandas. El primero ya está completo; los siguientes se irán añadiendo.',
+      'core.soon': 'Próximamente',
+      'core.words.one': '{n} palabra',
+      'core.words.many': '{n} palabras',
+      'core.learned': '{n} de {total} aprendidas',
+      'core.search': 'Buscar palabra o traducción…',
+      'core.all': 'Todas',
+      'core.pending': 'Pendientes',
+      'core.knownFilter': 'Aprendidas',
+      'core.markKnown': 'La sé',
+      'core.known': 'Aprendida',
+      'core.chunk': 'frase',
+      'core.test': 'Test del paquete',
+      'core.testIntro': 'Diez preguntas mezcladas para comprobar si las palabras se quedan. No cuenta para la nota del curso.',
+      'core.startTest': 'Empezar el test',
+      'core.best': 'Mejor: {best}/{total}',
+      'core.testLabel': 'Núcleo 1000',
+      'core.forward': '¿Qué significa «{no}»?',
+      'core.reverse': '¿Cómo se dice «{es}» en noruego?',
+      'core.none': 'No hay palabras que coincidan. Prueba otra búsqueda o filtro.',
+      'core.back': 'Volver a los paquetes',
+      'core.cat.greet': 'Saludos y cortesía',
+      'core.cat.pron': 'Pronombres y básicos',
+      'core.cat.q': 'Preguntas',
+      'core.cat.verb1': 'Verbos esenciales I',
+      'core.cat.verb2': 'Verbos esenciales II',
+      'core.cat.time': 'Tiempo y números',
+      'core.cat.place': 'Lugares y direcciones',
+      'core.cat.food': 'Comida y compras',
+      'core.cat.health': 'Cuerpo y salud',
+      'core.cat.link': 'Conectores y reacciones',
 
       'chat.eyebrow': 'Mensajes · A2–B1',
       'chat.title': 'Grupos de WhatsApp noruegos',
@@ -906,6 +946,46 @@
       'lessons.open': 'See all lessons',
       'lessons.homeTitle': 'Lessons',
       'lessons.test': 'Level test',
+      'lessons.test': 'Level test',
+      'home.coreChip': 'Core words',
+      'home.coreChipSub': '1000 in 10 packs',
+      'footer.core': 'Core words',
+      'core.crumb': 'Core words',
+      'core.eyebrow': 'Core 1000 · A1–B2',
+      'core.title': 'The 1000 core words',
+      'core.intro': 'Ten packs of 100 words and phrases to go from surviving to actually chatting. Audio, useful forms and review in every card.',
+      'core.available': '{n} of {total} words available',
+      'core.note': 'The ten packs open in batches. The first one is complete; the rest will be added over time.',
+      'core.soon': 'Coming soon',
+      'core.words.one': '{n} word',
+      'core.words.many': '{n} words',
+      'core.learned': '{n} of {total} learned',
+      'core.search': 'Search a word or translation…',
+      'core.all': 'All',
+      'core.pending': 'To learn',
+      'core.knownFilter': 'Learned',
+      'core.markKnown': 'I know it',
+      'core.known': 'Learned',
+      'core.chunk': 'phrase',
+      'core.test': 'Pack test',
+      'core.testIntro': 'Ten mixed questions to check whether the words stick. It does not count towards the course grade.',
+      'core.startTest': 'Start the test',
+      'core.best': 'Best: {best}/{total}',
+      'core.testLabel': 'Core 1000',
+      'core.forward': 'What does «{no}» mean?',
+      'core.reverse': 'How do you say «{es}» in Norwegian?',
+      'core.none': 'No words match. Try another search or filter.',
+      'core.back': 'Back to the packs',
+      'core.cat.greet': 'Greetings and courtesy',
+      'core.cat.pron': 'Pronouns and basics',
+      'core.cat.q': 'Questions',
+      'core.cat.verb1': 'Essential verbs I',
+      'core.cat.verb2': 'Essential verbs II',
+      'core.cat.time': 'Time and numbers',
+      'core.cat.place': 'Places and directions',
+      'core.cat.food': 'Food and shopping',
+      'core.cat.health': 'Body and health',
+      'core.cat.link': 'Connectors and reactions',
 
       'chat.eyebrow': 'Messages · A2–B1',
       'chat.title': 'Norwegian WhatsApp groups',
@@ -1423,6 +1503,46 @@
       'lessons.open': "دیدن همهٔ درس‌ها",
       'lessons.homeTitle': "درس‌ها",
       'lessons.test': "آزمون سطح",
+      'lessons.test': "آزمون سطح",
+      'home.coreChip': "واژه‌های کلیدی",
+      'home.coreChipSub': "۱۰۰۰ در ۱۰ بسته",
+      'footer.core': "واژه‌های کلیدی",
+      'core.crumb': "واژه‌های کلیدی",
+      'core.eyebrow': "هستهٔ ۱۰۰۰ · A1–B2",
+      'core.title': "۱۰۰۰ واژهٔ کلیدی",
+      'core.intro': "ده بستهٔ ۱۰۰تایی از واژه‌ها و عبارت‌های پرکاربرد برای گذر از بقا به گفت‌وگوی واقعی. صدا، شکل‌های کاربردی و مرور در هر کارت.",
+      'core.available': "{n} از {total} واژه موجود است",
+      'core.note': "ده بسته به‌تدریج باز می‌شوند. بستهٔ اول کامل است؛ بقیه بعداً اضافه می‌شوند.",
+      'core.soon': "به‌زودی",
+      'core.words.one': "{n} واژه",
+      'core.words.many': "{n} واژه",
+      'core.learned': "{n} از {total} آموخته‌شده",
+      'core.search': "جست‌وجوی واژه یا ترجمه…",
+      'core.all': "همه",
+      'core.pending': "برای یادگیری",
+      'core.knownFilter': "آموخته‌شده",
+      'core.markKnown': "می‌دانمش",
+      'core.known': "آموخته‌شده",
+      'core.chunk': "عبارت",
+      'core.test': "آزمون بسته",
+      'core.testIntro': "ده پرسش ترکیبی برای بررسی ماندگاری واژه‌ها. در نمرهٔ دوره حساب نمی‌شود.",
+      'core.startTest': "شروع آزمون",
+      'core.best': "بهترین: {best}/{total}",
+      'core.testLabel': "هستهٔ ۱۰۰۰",
+      'core.forward': "«{no}» یعنی چه؟",
+      'core.reverse': "«{es}» به نروژی چه می‌شود؟",
+      'core.none': "واژه‌ای با این جست‌وجو نیست. جست‌وجو یا فیلتر دیگری را امتحان کن.",
+      'core.back': "بازگشت به بسته‌ها",
+      'core.cat.greet': "سلام و ادب",
+      'core.cat.pron': "ضمیرها و پایه‌ها",
+      'core.cat.q': "پرسش‌ها",
+      'core.cat.verb1': "فعل‌های ضروری ۱",
+      'core.cat.verb2': "فعل‌های ضروری ۲",
+      'core.cat.time': "زمان و عدد",
+      'core.cat.place': "مکان و مسیر",
+      'core.cat.food': "غذا و خرید",
+      'core.cat.health': "بدن و سلامت",
+      'core.cat.link': "حروف ربط و واکنش‌ها",
 
       'chat.eyebrow': "پیام‌ها · A2–B1",
       'chat.title': "گروه‌های واتساپ نروژی",
@@ -1632,6 +1752,14 @@
       c.messages.forEach(function (m) { add(m.no); });
       c.glossary.forEach(function (g) { add(g.no); });
     });
+    if (C.core) {
+      C.core.packs.forEach(function (p) {
+        (p.words || []).forEach(function (w) {
+          add(w.no);
+          if (w.forms) add(w.forms);
+        });
+      });
+    }
     if (C.body) {
       C.body.parts.forEach(function (p) { add(p.no); add(p.def); });
       C.body.phrases.forEach(function (p) { add(p.no); });
@@ -1714,6 +1842,13 @@
       c.glossary.forEach(function (g) { g.es = tf(g.es); });
     });
 
+    if (C.core) {
+      C.core.packs.forEach(function (p) {
+        p.title = tf(p.title);
+        p.subtitle = tf(p.subtitle);
+        (p.words || []).forEach(function (w) { w.es = tf(w.es); });
+      });
+    }
     if (C.body) {
       C.body.parts.forEach(function (p) { p.es = tf(p.es); });
       C.body.phrases.forEach(function (p) { p.es = tf(p.es); });
