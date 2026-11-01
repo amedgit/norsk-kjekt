@@ -1445,7 +1445,7 @@
   var corePackId = '1';
   var coreQuery = '';
   var coreFilter = 'all';
-  var CORE_CATS = ['greet', 'pron', 'q', 'verb1', 'verb2', 'time', 'place', 'food', 'health', 'link', 'home', 'objects', 'kitchen', 'shop', 'transport', 'directions', 'routine', 'actions', 'money', 'social'];
+  var CORE_CATS = ['greet', 'pron', 'q', 'verb1', 'verb2', 'time', 'place', 'food', 'health', 'link', 'home', 'objects', 'kitchen', 'shop', 'transport', 'directions', 'routine', 'actions', 'money', 'social', 'family', 'people', 'feelings', 'plans', 'freetime', 'future', 'socialfood', 'personality', 'communication', 'celebration', 'bodyparts', 'organs', 'symptoms', 'doctor', 'pharmacy', 'emergency', 'habits', 'mental', 'appointments', 'movement'];
 
   function corePack(id) {
     return CORE.packs.find(function (p) { return p.id === id; }) || null;

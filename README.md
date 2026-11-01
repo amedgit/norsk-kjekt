@@ -78,7 +78,7 @@ cacheada.
 | Lecciones | 15 lecciones A1–C2 con página propia (`#/lecciones`): buscador, filtros por nivel, progreso y acceso directo a cada lección |
 | Práctica | 239 ejercicios en 10 formatos, test de nivel de 18 preguntas y entrenador de números, hora y preposiciones |
 | Samtaler | 6 conversaciones cotidianas (A2–B1: portal, cafetería, tienda, trabajo, médico y teléfono) con 52 réplicas, audio por línea, traducciones plegables, vocabulario, frases y 30 ejercicios |
-| Kjerneord | Núcleo de 1000 palabras y frases en 10 paquetes de 100; los paquetes 1 y 2 (200 palabras: supervivencia y vida diaria) ya están disponibles con audio, filtros y test |
+| Kjerneord | Núcleo de 1000 palabras y frases en 10 paquetes de 100; los paquetes 1 a 4 (400 palabras: supervivencia, vida diaria, personas y planes, salud y cuerpo) ya están disponibles con audio, filtros y test |
 | Meldinger | 4 grupos de WhatsApp (A2–B1: vecinos, familia, amigos y trabajo) con 48 mensajes en formato chat, audio por mensaje, traducción, glosario de abreviaturas y truco cultural |
 | Kroppen | Mapa corporal interactivo (34 partes), zoom de mano y pie, constructor de síntomas, 10 frases de consulta, 3 escenarios médicos y 8 ejercicios (A1–B1) |
 | Tull & tøys | 6 packs con 84 ejercicios de humor (absurdo, supervivencia, oficina, dictados, modismos y verbos) y una mezcla aleatoria de 10 |
@@ -89,7 +89,7 @@ cacheada.
 | Progreso | racha, XP, mapa de calor de 12 semanas, 8 logros, repaso espaciado (1/3/7/15/30 días) y exportación/importación del progreso en JSON |
 | Extras | modo oscuro, teclado noruego æ ø å en los ejercicios de escritura y PWA offline |
 | Velocidad | selector 0,7×–1,3× en la cabecera; se aplica al audio y se recuerda |
-| Audio | 1408 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
+| Audio | 1589 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
 | App | PWA instalable (offline) con icono propio, pantalla completa y funcionamiento sin conexión; el APK está retirado temporalmente |
 
 ## Interfaz en español, inglés o persa
@@ -160,7 +160,7 @@ norsk/
     ├── img/og.png       ← imagen para compartir en redes
     ├── img/lessons/*.svg ← una ilustración original por lección
     ├── img/dialogues/*.svg ← una ilustración por conversación
-    ├── audio/*.mp3      ← 1408 audios (≈16,8 MB), generados
+    ├── audio/*.mp3      ← 1589 audios (≈17,8 MB), generados
     └── js/
         ├── data.js          ← TODO el contenido del curso, Samtaler y los 4 simulacros
         ├── content-en.js    ← traducciones ES → EN del contenido
@@ -308,9 +308,9 @@ La sección `#/meldinger` vive en el array `chats` de `data.js`. Cada chat tiene
 
 `#/kjerneord` es el núcleo de vocabulario: **10 paquetes de 100** palabras y
 frases, pensados para pasar de sobrevivir a conversar. El acceso está en el menú superior como **Palabras**, además del chip de la
-portada y el pie. Los paquetes 1 y 2 (`#/kjerneord/1` y `#/kjerneord/2`, 200
-palabras de supervivencia y vida diaria) ya están abiertos; los otros ocho aparecen como
-«próximamente» y se irán añadiendo en tandas.
+portada y el pie. Los paquetes 1–4 (`#/kjerneord/1` a `#/kjerneord/4`, 400 palabras de
+supervivencia, vida diaria, personas y salud) ya están abiertos; los otros seis
+aparecen como «próximamente» y se irán añadiendo en tandas.
 
 Cada paquete tiene buscador, filtros (todas/pendientes/aprendidas), audio por
 palabra, formas útiles (plural, género o conjugación) y un test de 10 preguntas.
