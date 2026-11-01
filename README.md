@@ -307,8 +307,9 @@ La sección `#/meldinger` vive en el array `chats` de `data.js`. Cada chat tiene
 ### Kjerneord (las 1000 palabras clave)
 
 `#/kjerneord` es el núcleo de vocabulario: **10 paquetes de 100** palabras y
-frases, pensados para pasar de sobrevivir a conversar. Los paquetes 1 y 2 (`#/kjerneord/1` y `#/kjerneord/2`, 200 palabras de
-supervivencia y vida diaria) ya están abiertos; los otros ocho aparecen como
+frases, pensados para pasar de sobrevivir a conversar. El acceso está en el menú superior como **Palabras**, además del chip de la
+portada y el pie. Los paquetes 1 y 2 (`#/kjerneord/1` y `#/kjerneord/2`, 200
+palabras de supervivencia y vida diaria) ya están abiertos; los otros ocho aparecen como
 «próximamente» y se irán añadiendo en tandas.
 
 Cada paquete tiene buscador, filtros (todas/pendientes/aprendidas), audio por

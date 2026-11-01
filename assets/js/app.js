@@ -3811,14 +3811,15 @@
     window.scrollTo({ top: 0, behavior: 'auto' });
 
     var active = (name === 'lecciones' || name === 'leksjon') ? 'lessons'
-      : name === 'coloquial' ? 'coloquial'
+      : name === 'kjerneord' ? 'core'
+        : name === 'coloquial' ? 'coloquial'
       : name === 'repaso' ? 'review'
         : name === 'tull' ? 'fun'
           : name === 'eksamen' ? 'exam'
             : (name === 'samtaler' || name === 'samtale') ? 'dialogues'
               : (name === 'meldinger' || name === 'melding') ? 'chats'
                 : name === 'kroppen' ? 'body'
-                  : (name === 'app' || name === 'progreso' || name === 'nivel' || name === 'trener' || name === 'kjerneord') ? ''
+                  : (name === 'app' || name === 'progreso' || name === 'nivel' || name === 'trener') ? ''
                     : 'home';
     document.querySelectorAll('.nav a').forEach(function (a) {
       a.classList.toggle('active', a.dataset.route === active);
