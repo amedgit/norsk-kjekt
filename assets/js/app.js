@@ -1980,6 +1980,7 @@
       '  <a class="practice-chip" href="#/progreso"><b>📊 ' + esc(t('home.progressChip')) + '</b><span>' + esc(t('home.progressChipSub')) + '</span></a>' +
       '  <a class="practice-chip" href="#/kroppen"><b>🧍 ' + esc(t('home.bodyChip')) + '</b><span>' + esc(t('home.bodyChipSub')) + '</span></a>' +
       '  <a class="practice-chip" href="#/kjerneord"><b>📚 ' + esc(t('home.coreChip')) + '</b><span>' + esc(t('home.coreChipSub')) + '</span></a>' +
+      '  <a class="practice-chip" href="#/historien"><b>📖 ' + esc(t('home.storyChip')) + '</b><span>' + esc(t('home.storyChipSub')) + '</span></a>' +
       '</div>' +
 
       '<div class="lessons-home-head"><h2 class="section-title">' + esc(t('lessons.homeTitle')) + ' <span>' + esc(tp('lessons.count', LESSONS.length)) + '</span></h2>' +
