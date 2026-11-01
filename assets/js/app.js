@@ -8,6 +8,7 @@
   var CHATS = COURSE.chats || [];
   var CORE = COURSE.core || { packs: [], totalTarget: 1000 };
   var BODY = COURSE.body || { zones: [], parts: [], sensations: [], intensities: [], durations: [], phrases: [], scenarios: [], exercises: [] };
+  var STORIES = COURSE.stories || { totalTarget: 12, chapters: [] };
   var I18N = window.I18N;
   var t = I18N.t;
   var tp = I18N.tp;
@@ -53,7 +54,7 @@
   var KEY = 'norsk-kjekt-v1';
 
   function defaults() {
-    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, body: {}, core: { known: {}, packs: {} }, xp: 0, days: {}, review: [], srs: {}, version: 1 };
+    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, body: {}, core: { known: {}, packs: {} }, stories: { chapters: {} }, xp: 0, days: {}, review: [], srs: {}, version: 1 };
   }
 
   var state = (function load() {
@@ -67,6 +68,7 @@
       var srs = {};
       var body = {};
       var core = { known: {}, packs: {} };
+      var stories = { chapters: {} };
       Object.keys(raw.lessons || {}).forEach(function (id) {
         var v = raw.lessons[id];
         if (v && typeof v === 'object') {
@@ -97,6 +99,14 @@
           if (v && typeof v === 'object') core.packs[id] = { best: Number(v.best) || 0, total: Number(v.total) || 0, at: Number(v.at) || 0 };
         });
       }
+      if (raw.stories && typeof raw.stories === 'object') {
+        Object.keys(raw.stories.chapters || {}).forEach(function (id) {
+          var v = raw.stories.chapters[id];
+          if (v && typeof v === 'object') {
+            stories.chapters[id] = { best: Number(v.best) || 0, total: Number(v.total) || 0, at: Number(v.at) || 0 };
+          }
+        });
+      }
       Object.keys(raw.srs || {}).forEach(function (sig) {
         var v = raw.srs[sig];
         if (v && typeof v === 'object') {
@@ -109,6 +119,7 @@
         dialogues: dialogues,
         body: body,
         core: core,
+        stories: stories,
         srs: srs,
         exams: raw.exams && typeof raw.exams === 'object' ? raw.exams : {},
         xp: Number(raw.xp) || 0,
@@ -1088,6 +1099,191 @@
   }
 
   /* =======================================================
+     Historien: Lucía i Oslo
+     ======================================================= */
+
+  function storyLive() {
+    return STORIES.chapters.filter(function (ch) { return !ch.soon; });
+  }
+
+  function storyExerciseCount() {
+    return storyLive().reduce(function (n, ch) { return n + ch.exercises.length; }, 0);
+  }
+
+  function storyCompletedCount() {
+    return storyLive().filter(function (ch) { return state.stories.chapters[ch.id]; }).length;
+  }
+
+  function storyById(id) {
+    return STORIES.chapters.find(function (ch) { return ch.id === id; }) || null;
+  }
+
+  function storyCard(ch) {
+    if (ch.soon) {
+      return '<div class="story-card soon">' +
+        '<div class="story-card-top"><span class="story-emoji">' + ch.emoji + '</span>' +
+        '<span class="story-num">' + esc(t('story.chapter', { n: ch.num })) + '</span></div>' +
+        '<h3>' + esc(ch.title) + '</h3>' +
+        '<p class="sub">' + esc(t('story.soon')) + '</p>' +
+        '<div class="foot"><span class="chip plain">' + esc(ch.level) + '</span></div></div>';
+    }
+    var st = state.stories.chapters[ch.id];
+    return '<a class="story-card" href="#/historien/' + ch.id + '">' +
+      '<div class="story-card-top"><span class="story-emoji">' + ch.emoji + '</span>' +
+      '<span class="story-num">' + esc(t('story.chapter', { n: ch.num })) + '</span></div>' +
+      '<h3>' + esc(ch.title) + '</h3>' +
+      '<p class="sub">' + esc(ch.subtitle) + '</p>' +
+      '<p class="story-place">📍 ' + esc(ch.place) + '</p>' +
+      '<div class="foot">' +
+      (st ? '<span class="chip done">✓ ' + st.best + '/' + st.total + '</span>' : '<span class="chip">' + esc(t('story.new')) + '</span>') +
+      '<span class="chip plain">' + esc(tp('story.paragraphs', ch.paragraphs.length)) + '</span>' +
+      '<span class="chip plain">' + esc(tp('lesson.exercises', ch.exercises.length)) + '</span>' +
+      '</div></a>';
+  }
+
+  function renderStories() {
+    var live = storyLive();
+    var done = storyCompletedCount();
+    var next = live.find(function (ch) { return !state.stories.chapters[ch.id]; }) || live[0];
+
+    app.innerHTML =
+      '<section class="colo-intro story-intro">' +
+      '  <span class="eyebrow">' + esc(t('story.eyebrow')) + '</span>' +
+      '  <h1>' + esc(t('story.title')) + '</h1>' +
+      '  <p>' + esc(t('story.intro', { n: live.length, total: STORIES.totalTarget })) + '</p>' +
+      '  <div class="story-progress"><span>' + esc(t('story.progress', { done: done, total: live.length })) + '</span>' +
+      '    <span class="meter"><i style="width:' + (live.length ? Math.round((done / live.length) * 100) : 0) + '%"></i></span></div>' +
+      '  <div class="fun-banner-actions story-actions">' +
+      '    <a class="btn primary" href="#/historien/' + next.id + '">' + esc(t('story.continue', { title: next.title })) + '</a>' +
+      '  </div>' +
+      '</section>' +
+      '<h2 class="section-title">' + esc(t('story.chaptersTitle')) + ' <span>' + esc(t('story.roadmap', { n: live.length, total: STORIES.totalTarget })) + '</span></h2>' +
+      '<div class="story-grid">' + STORIES.chapters.map(storyCard).join('') + '</div>' +
+      '<section class="card story-note"><div class="tip">📖 <b>' + esc(t('story.noteTitle')) + ':</b> ' + esc(t('story.note')) + '</div></section>';
+  }
+
+  function renderStory(ch) {
+    if (!ch || ch.soon) { renderStories(); return; }
+    var st = state.stories.chapters[ch.id];
+    var live = storyLive();
+    var pos = live.indexOf(ch);
+    var prev = pos > 0 ? live[pos - 1] : null;
+    var next = pos > -1 && pos < live.length - 1 ? live[pos + 1] : null;
+    var words = ch.paragraphs.reduce(function (n, p) { return n + p.no.split(/\s+/).length; }, 0);
+    var minutes = Math.max(1, Math.round(words / 90));
+    var seq = ch.paragraphs.map(function (p) { return p.no; }).join('|||');
+
+    app.innerHTML =
+      '<div class="crumbs"><a href="#/historien">' + esc(t('story.crumb')) + '</a> <span>›</span> <span>' + esc(ch.title) + '</span></div>' +
+
+      '<header class="lesson-head story-head">' +
+      '  <div class="lesson-copy">' +
+      '    <div class="kicker"><span class="emoji">' + ch.emoji + '</span>' +
+      '      <span class="chip">' + esc(t('story.chapter', { n: ch.num })) + '</span>' +
+      '      <span class="chip plain">' + esc(ch.level) + '</span>' +
+      '      <span class="chip plain">' + esc(tp('story.paragraphs', ch.paragraphs.length)) + '</span>' +
+      '      <span class="chip plain">' + esc(tp('lesson.exercises', ch.exercises.length)) + '</span></div>' +
+      '    <h1>' + esc(ch.title) + '</h1>' +
+      '    <p class="lead">' + esc(ch.subtitle) + '</p>' +
+      '    <p class="story-intro-text">' + esc(ch.intro) + '</p>' +
+      '    <p class="story-meta">📍 ' + esc(ch.place) + ' · ' + esc(t('story.readTime', { n: minutes })) + '</p>' +
+      '    <div class="places">' + ch.places.map(function (p) { return '<span class="place-chip">' + esc(p) + '</span>'; }).join('') + '</div>' +
+      '    <div class="fun-banner-actions story-actions">' +
+      '      <button class="btn primary" type="button" data-say-seq="' + esc(seq) + '">🔊 ' + esc(t('story.listenAll')) + '</button>' +
+      '    </div>' +
+      '  </div>' +
+      '  <div class="story-hero" aria-hidden="true"><span>' + ch.emoji + '</span><b>Lucía</b><small>Oslo</small></div>' +
+      '</header>' +
+
+      '<section class="card">' +
+      '  <div class="story-toolbar"><h2>' + esc(t('story.text')) + '</h2>' +
+      '    <button class="btn ghost small" id="toggle-story-tr" aria-expanded="false">' + esc(t('story.showTranslation')) + '</button></div>' +
+      '  <div class="story-text">' + ch.paragraphs.map(function (p, i) {
+        return '<div class="story-para">' +
+          '<div class="sp-no">' + say(p.no) + '<span>' + esc(p.no) + '</span></div>' +
+          '<div class="story-es" hidden>' + esc(p.es) + '</div>' +
+          '</div>';
+      }).join('') + '</div>' +
+      '</section>' +
+
+      '<section class="card"><h2>' + esc(t('story.vocab')) + '</h2><div class="vocab story-vocab">' +
+      ch.vocab.map(function (v) {
+        return '<div class="row">' + say(v.no) +
+          '<span class="txt"><span class="w">' + esc(v.no) + '</span>' +
+          '<span class="t">' + esc(v.es) + '</span>' +
+          (v.forms ? '<span class="story-forms">' + esc(v.forms) + '</span>' : '') +
+          '</span></div>';
+      }).join('') +
+      '</div></section>' +
+
+      '<section class="card"><h2>' + esc(t('story.grammar')) + '</h2>' +
+      '<h3 class="story-grammar-title">' + esc(ch.grammar.title) + '</h3>' +
+      '<p class="story-grammar-text">' + esc(ch.grammar.es) + '</p>' +
+      '<div class="phrases story-examples">' + ch.grammar.examples.map(function (g) {
+        return '<div class="phrase">' + say(g.no) +
+          '<span class="txt"><span class="no">' + esc(g.no) + '</span>' +
+          '<span class="es">' + esc(g.es) + '</span></span></div>';
+      }).join('') + '</div></section>' +
+
+      '<section class="card" id="story-practice"><h2>' + esc(t('story.practice')) + '</h2><div id="story-ex-mount"></div></section>' +
+
+      '<nav class="story-nav">' +
+      (prev ? '<a class="btn ghost" href="#/historien/' + prev.id + '">← ' + esc(t('story.prev', { title: prev.title })) + '</a>' : '<span></span>') +
+      '<a class="btn ghost" href="#/historien">' + esc(t('story.all')) + '</a>' +
+      (next ? '<a class="btn ghost" href="#/historien/' + next.id + '">' + esc(t('story.next', { title: next.title })) + ' →</a>'
+        : '<span class="story-more">' + esc(t('story.moreSoon')) + '</span>') +
+      '</nav>';
+
+    var toggle = document.getElementById('toggle-story-tr');
+    toggle.addEventListener('click', function () {
+      var show = toggle.getAttribute('aria-expanded') !== 'true';
+      app.querySelectorAll('.story-es').forEach(function (el) { el.hidden = !show; });
+      toggle.setAttribute('aria-expanded', show ? 'true' : 'false');
+      toggle.textContent = show ? t('story.hideTranslation') : t('story.showTranslation');
+    });
+
+    var mount = document.getElementById('story-ex-mount');
+    mount.innerHTML =
+      '<div class="actions">' +
+      '<button class="btn primary" id="start-story-ex">' + esc(t('story.start', { n: ch.exercises.length })) + '</button>' +
+      (st ? '<span class="ex-hint">' + esc(t('story.best', { best: st.best, total: st.total })) + '</span>' : '') +
+      '</div>';
+
+    document.getElementById('start-story-ex').addEventListener('click', function () {
+      document.getElementById('story-practice').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      runExercises(mount, ch.exercises, {
+        label: t('story.label', { title: ch.title }),
+        onDone: function (res) {
+          var prevSt = state.stories.chapters[ch.id];
+          state.stories.chapters[ch.id] = {
+            best: Math.max(prevSt ? prevSt.best : 0, res.correct),
+            total: res.total,
+            at: Date.now()
+          };
+          state.xp += res.correct * 10;
+          markDay();
+
+          var failedItems = res.failed;
+          ch.exercises.forEach(function (item, i) {
+            var sig = 'story#' + ch.id + '#' + i;
+            if (failedItems.indexOf(item) > -1) addReview(sig);
+            else removeReview(sig);
+          });
+
+          save();
+          refreshHud();
+
+          var box = mount.querySelector('.result');
+          if (box) {
+            box.insertAdjacentHTML('beforeend',
+              '<p class="ex-hint">' + esc(t('result.progress', { n: res.correct * 10 })) + '</p>');
+          }
+        }
+      });
+    });
+  }
+
+  /* =======================================================
      Meldinger: grupos de WhatsApp noruegos
      ======================================================= */
 
@@ -1125,7 +1321,7 @@
 
   function totalExerciseCount() {
     return LESSONS.reduce(function (n, l) { return n + l.exercises.length; }, 0) +
-      funExerciseCount() + dialogueExerciseCount() + (BODY.exercises ? BODY.exercises.length : 0);
+      funExerciseCount() + dialogueExerciseCount() + storyExerciseCount() + (BODY.exercises ? BODY.exercises.length : 0);
   }
 
   function allFunExercises() {
@@ -1809,6 +2005,17 @@
       '<div class="actions" style="margin-top:1rem"><a class="btn ghost" href="#/samtaler">' +
       esc(tp('home.seeDialogues', DIALOGUES.length)) + '</a></div>' +
 
+      '<section class="story-banner">' +
+      '  <div>' +
+      '    <span class="eyebrow">' + esc(t('home.storyEyebrow')) + '</span>' +
+      '    <h2>' + esc(t('home.storyTitle')) + '</h2>' +
+      '    <p>' + esc(t('home.storyText', { n: storyLive().length, total: STORIES.totalTarget })) + '</p>' +
+      '  </div>' +
+      '  <div class="fun-banner-actions">' +
+      '    <a class="btn primary" href="#/historien">' + esc(t('home.storyEnter')) + '</a>' +
+      '  </div>' +
+      '</section>' +
+
       '<section class="chat-banner">' +
       '  <div>' +
       '    <span class="eyebrow">' + esc(t('home.chatEyebrow')) + '</span>' +
@@ -2295,7 +2502,7 @@
 
   function exercisesDone() {
     var n = 0;
-    [state.lessons, state.fun, state.dialogues].forEach(function (group) {
+    [state.lessons, state.fun, state.dialogues, state.stories.chapters].forEach(function (group) {
       Object.keys(group).forEach(function (id) { n += Number(group[id].best) || 0; });
     });
     if (state.body && state.body.best) n += Number(state.body.best) || 0;
@@ -2385,6 +2592,7 @@
     var due = reviewEntries().length;
     var next = nextReviewDate();
     var done = completedCount();
+    var storyDone = storyCompletedCount();
     var ex = exercisesDone();
     var streak = currentStreak();
     var badges = achievements();
@@ -2420,6 +2628,11 @@
       '<a class="btn ghost small" href="#/repaso">' + esc(t('review.title')) + '</a></div>' +
       '<p class="prog-review">' + (due ? esc(t('prog.reviewDue', { n: due })) : esc(t('prog.reviewNone'))) + '</p>' +
       (next && !due ? '<p class="muted">' + esc(t('prog.reviewNext', { date: next })) + '</p>' : '') +
+      '</section>' +
+
+      '<section class="card"><div class="prog-card-head"><h2>' + esc(t('story.title')) + '</h2>' +
+      '<a class="btn ghost small" href="#/historien">' + esc(t('story.open')) + '</a></div>' +
+      '<p class="prog-review">' + esc(t('prog.story', { done: storyDone, total: storyLive().length })) + '</p>' +
       '</section>' +
 
       '<section class="card"><h2>' + esc(t('prog.practice')) + '</h2>' +
@@ -3125,6 +3338,14 @@
       var dlgItem = dialogue && dialogue.exercises[Number(parts[2])];
       if (dialogue && dlgItem) {
         return { sig: sig, item: dlgItem, title: dialogue.title, emoji: dialogue.emoji, label: t('dlg.reviewLabel', { level: dialogue.level }) };
+      }
+      return null;
+    }
+    if (parts[0] === 'story') {
+      var chapter = storyById(parts[1]);
+      var storyItem = chapter && !chapter.soon && chapter.exercises[Number(parts[2])];
+      if (chapter && storyItem) {
+        return { sig: sig, item: storyItem, title: chapter.title, emoji: chapter.emoji, label: t('story.reviewLabel', { n: chapter.num }) };
       }
       return null;
     }
@@ -3859,6 +4080,9 @@
       var dialogue = DIALOGUES.find(function (d) { return d.id === arg; });
       if (dialogue) renderDialogue(dialogue);
       else renderDialogues();
+    } else if (name === 'historien') {
+      if (arg) renderStory(storyById(arg));
+      else renderStories();
     } else if (name === 'coloquial') {
       renderColoquial();
     } else if (name === 'tull') {

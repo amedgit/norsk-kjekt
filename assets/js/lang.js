@@ -216,6 +216,10 @@
       'home.dialogueEnter': 'Ver las conversaciones',
       'home.seeDialogues.one': 'Ver la conversación →',
       'home.seeDialogues.many': 'Ver las {n} conversaciones →',
+      'home.storyEyebrow': 'Nueva · historia en noruego',
+      'home.storyTitle': 'Lucía i Oslo',
+      'home.storyText': 'Una historia por capítulos para leer y escuchar: {n} capítulos abiertos de {total}. Llegada, trabajo, gimnasio y amistades en el Oslo real.',
+      'home.storyEnter': 'Leer la historia',
       'home.chatEyebrow': 'Nuevo · A2–B1',
       'home.chatTitle': 'Mensajes: WhatsApp noruego de verdad',
       'home.chatText': '{n} grupos de chat para leer cómo escriben los noruegos entre sí: abreviaturas, emojis y préstamos del inglés. Vecinos, familia, amigos y trabajo.',
@@ -243,6 +247,7 @@
       'theme.toLight': 'Cambiar a modo claro',
       'theme.toDark': 'Cambiar a modo oscuro',
       'footer.progress': 'Mi progreso',
+      'footer.story': 'Historia',
       'footer.level': 'Test de nivel',
       'footer.trainer': 'Entrenador',
       'home.testChip': 'Test de nivel',
@@ -271,6 +276,7 @@
       'prog.reviewDue': 'Tienes {n} ejercicios para repasar hoy.',
       'prog.reviewNone': 'Nada pendiente hoy. Los fallos vuelven en 1, 3, 7, 15 o 30 días.',
       'prog.reviewNext': 'Próximo repaso programado: {date}.',
+      'prog.story': 'Has completado {done} de {total} capítulos.',
       'prog.practice': 'Sigue practicando',
       'prog.data': 'Tus datos',
       'prog.dataText': 'Exporta una copia para no perder la racha si cambias de móvil o borras el navegador.',
@@ -497,6 +503,39 @@
       'dlg.a2Sub': 'portal, café y tienda',
       'dlg.b1Title': 'B1 · con más soltura',
       'dlg.b1Sub': 'trabajo, médico y teléfono',
+
+      'story.eyebrow': 'Historia · A2–B1',
+      'story.title': 'Lucía i Oslo',
+      'story.intro': 'Una historia en noruego sencillo sobre Lucía, que llega a Oslo desde España y aprende a vivir allí: piso, trabajo, gimnasio y amistades. {n} capítulos abiertos de {total}.',
+      'story.progress': 'Has completado {done} de {total} capítulos.',
+      'story.chaptersTitle': 'Capítulos',
+      'story.roadmap': '{n} de {total} disponibles',
+      'story.chapter': 'Capítulo {n}',
+      'story.new': 'nuevo',
+      'story.soon': 'Próximamente',
+      'story.continue': 'Empezar · {title}',
+      'story.noteTitle': 'Ficción',
+      'story.note': 'Lucía y sus amigos son personajes ficticios. Los barrios, calles y lugares son reales, pero la historia no. Los horarios y precios cambian: comprueba siempre la información actual.',
+      'story.crumb': 'Historia',
+      'story.readTime': '≈ {n} min de lectura',
+      'story.listenAll': 'Escuchar el capítulo',
+      'story.text': 'Texto',
+      'story.showTranslation': 'Mostrar traducción',
+      'story.hideTranslation': 'Ocultar traducción',
+      'story.vocab': 'Vocabulario del capítulo',
+      'story.grammar': 'Gramática',
+      'story.practice': 'Practica',
+      'story.start': 'Hacer los {n} ejercicios',
+      'story.best': 'Mejor resultado: {best}/{total}',
+      'story.label': 'Historia · {title}',
+      'story.reviewLabel': 'Historia · capítulo {n}',
+      'story.paragraphs.one': '{n} párrafo',
+      'story.paragraphs.many': '{n} párrafos',
+      'story.prev': 'Anterior · {title}',
+      'story.next': 'Siguiente · {title}',
+      'story.all': 'Todos los capítulos',
+      'story.moreSoon': 'Más capítulos próximamente',
+      'story.open': 'Abrir la historia',
 
       'lesson.cardNum': 'Lección {n}',
       'lesson.new': 'nueva',
@@ -809,6 +848,10 @@
       'home.dialogueEnter': 'See the conversations',
       'home.seeDialogues.one': 'See the conversation →',
       'home.seeDialogues.many': 'See all {n} conversations →',
+      'home.storyEyebrow': 'New · story in Norwegian',
+      'home.storyTitle': 'Lucía i Oslo',
+      'home.storyText': 'A story in chapters to read and listen to: {n} chapters open out of {total}. Arrival, work, gym and friendship in the real Oslo.',
+      'home.storyEnter': 'Read the story',
       'home.chatEyebrow': 'New · A2–B1',
       'home.chatTitle': 'Messages: real Norwegian WhatsApp',
       'home.chatText': '{n} chat groups to read how Norwegians actually write to each other: abbreviations, emojis and English loanwords. Neighbours, family, friends and work.',
@@ -836,6 +879,7 @@
       'theme.toLight': 'Switch to light mode',
       'theme.toDark': 'Switch to dark mode',
       'footer.progress': 'My progress',
+      'footer.story': 'Story',
       'footer.level': 'Level test',
       'footer.trainer': 'Trainer',
       'home.testChip': 'Level test',
@@ -864,6 +908,7 @@
       'prog.reviewDue': 'You have {n} exercises to review today.',
       'prog.reviewNone': 'Nothing due today. Mistakes come back in 1, 3, 7, 15 or 30 days.',
       'prog.reviewNext': 'Next scheduled review: {date}.',
+      'prog.story': 'You have completed {done} of {total} chapters.',
       'prog.practice': 'Keep practising',
       'prog.data': 'Your data',
       'prog.dataText': 'Export a backup so you do not lose your streak if you change phones or clear the browser.',
@@ -1090,6 +1135,39 @@
       'dlg.a2Sub': 'stairwell, café and shop',
       'dlg.b1Title': 'B1 · more confidence',
       'dlg.b1Sub': 'work, doctor and phone',
+
+      'story.eyebrow': 'Story · A2–B1',
+      'story.title': 'Lucía i Oslo',
+      'story.intro': 'A story in easy Norwegian about Lucía, who arrives in Oslo from Spain and learns to live there: flat, work, gym and friendship. {n} chapters open out of {total}.',
+      'story.progress': 'You have completed {done} of {total} chapters.',
+      'story.chaptersTitle': 'Chapters',
+      'story.roadmap': '{n} of {total} available',
+      'story.chapter': 'Chapter {n}',
+      'story.new': 'new',
+      'story.soon': 'Coming soon',
+      'story.continue': 'Start · {title}',
+      'story.noteTitle': 'Fiction',
+      'story.note': 'Lucía and her friends are fictional characters. The neighbourhoods, streets and places are real, but the story is not. Opening hours and prices change: always check current information.',
+      'story.crumb': 'Story',
+      'story.readTime': '≈ {n} min read',
+      'story.listenAll': 'Listen to the chapter',
+      'story.text': 'Text',
+      'story.showTranslation': 'Show translation',
+      'story.hideTranslation': 'Hide translation',
+      'story.vocab': 'Chapter vocabulary',
+      'story.grammar': 'Grammar',
+      'story.practice': 'Practise',
+      'story.start': 'Do the {n} exercises',
+      'story.best': 'Best score: {best}/{total}',
+      'story.label': 'Story · {title}',
+      'story.reviewLabel': 'Story · chapter {n}',
+      'story.paragraphs.one': '{n} paragraph',
+      'story.paragraphs.many': '{n} paragraphs',
+      'story.prev': 'Previous · {title}',
+      'story.next': 'Next · {title}',
+      'story.all': 'All chapters',
+      'story.moreSoon': 'More chapters coming soon',
+      'story.open': 'Open the story',
 
       'lesson.cardNum': 'Lesson {n}',
       'lesson.new': 'new',
@@ -1397,6 +1475,10 @@
       'home.dialogueEnter': "دیدن گفت‌وگوها",
       'home.seeDialogues.one': "دیدن گفت‌وگو ←",
       'home.seeDialogues.many': "دیدن {n} گفت‌وگو ←",
+      'home.storyEyebrow': "جدید · داستان به نروژی",
+      'home.storyTitle': "Lucía i Oslo",
+      'home.storyText': "داستانی فصل‌به‌فصل برای خواندن و شنیدن: {n} فصل از {total} باز است. ورود، کار، باشگاه و دوستی در اسلو واقعی.",
+      'home.storyEnter': "خواندن داستان",
       'home.chatEyebrow': "جدید · A2–B1",
       'home.chatTitle': "پیام‌ها: واتساپ واقعی نروژی",
       'home.chatText': "{n} گروه چت برای خواندن نروژی‌ای که واقعاً می‌نویسند: مخفف‌ها، ایموجی و وام‌واژه‌های انگلیسی. همسایه‌ها، خانواده، دوستان و کار.",
@@ -1424,6 +1506,7 @@
       'theme.toLight': "تغییر به حالت روشن",
       'theme.toDark': "تغییر به حالت تاریک",
       'footer.progress': "پیشرفت من",
+      'footer.story': "داستان",
       'footer.level': "آزمون سطح",
       'footer.trainer': "تمرین‌گر",
       'home.testChip': "آزمون سطح",
@@ -1452,6 +1535,7 @@
       'prog.reviewDue': "امروز {n} تمرین برای مرور داری.",
       'prog.reviewNone': "امروز چیزی نیست. اشتباه‌ها پس از ۱، ۳، ۷، ۱۵ یا ۳۰ روز برمی‌گردند.",
       'prog.reviewNext': "مرور بعدی: {date}.",
+      'prog.story': "{done} از {total} فصل را کامل کرده‌ای.",
       'prog.practice': "ادامهٔ تمرین",
       'prog.data': "داده‌های تو",
       'prog.dataText': "یک نسخهٔ پشتیبان بگیر تا با عوض کردن گوشی یا پاک کردن مرورگر، زنجیره‌ات از دست نرود.",
@@ -1678,6 +1762,39 @@
       'dlg.a2Sub': "راه‌پله، کافه و فروشگاه",
       'dlg.b1Title': "B1 · روان‌تر",
       'dlg.b1Sub': "کار، پزشک و تلفن",
+
+      'story.eyebrow': "داستان · A2–B1",
+      'story.title': "Lucía i Oslo",
+      'story.intro': "داستانی به نروژی ساده دربارهٔ لوسیا که از اسپانیا به اسلو می‌آید و یاد می‌گیرد آنجا زندگی کند: خانه، کار، باشگاه و دوستی. {n} فصل از {total} باز است.",
+      'story.progress': "{done} از {total} فصل را کامل کرده‌ای.",
+      'story.chaptersTitle': "فصل‌ها",
+      'story.roadmap': "{n} از {total} موجود",
+      'story.chapter': "فصل {n}",
+      'story.new': "جدید",
+      'story.soon': "به‌زودی",
+      'story.continue': "شروع · {title}",
+      'story.noteTitle': "داستان تخیلی",
+      'story.note': "لوسیا و دوستانش شخصیت‌های خیالی‌اند. محله‌ها، خیابان‌ها و مکان‌ها واقعی‌اند، اما داستان واقعی نیست. ساعت‌ها و قیمت‌ها تغییر می‌کنند: همیشه اطلاعات روز را بررسی کن.",
+      'story.crumb': "داستان",
+      'story.readTime': "≈ {n} دقیقه مطالعه",
+      'story.listenAll': "شنیدن فصل",
+      'story.text': "متن",
+      'story.showTranslation': "نمایش ترجمه",
+      'story.hideTranslation': "پنهان کردن ترجمه",
+      'story.vocab': "واژه‌های فصل",
+      'story.grammar': "دستور زبان",
+      'story.practice': "تمرین",
+      'story.start': "انجام {n} تمرین",
+      'story.best': "بهترین نتیجه: {best}/{total}",
+      'story.label': "داستان · {title}",
+      'story.reviewLabel': "داستان · فصل {n}",
+      'story.paragraphs.one': "{n} پاراگراف",
+      'story.paragraphs.many': "{n} پاراگراف",
+      'story.prev': "قبلی · {title}",
+      'story.next': "بعدی · {title}",
+      'story.all': "همهٔ فصل‌ها",
+      'story.moreSoon': "فصل‌های بیشتر به‌زودی",
+      'story.open': "باز کردن داستان",
       'lesson.cardNum': "درس {n}",
       'lesson.new': "جدید",
       'lesson.exercises.one': "{n} تمرین",
@@ -1861,6 +1978,18 @@
       });
       C.body.exercises.forEach(addExercise);
     }
+    if (C.stories) {
+      C.stories.chapters.forEach(function (ch) {
+        if (ch.soon) return;
+        ch.paragraphs.forEach(function (p) { add(p.no); });
+        ch.vocab.forEach(function (v) {
+          add(v.no);
+          if (v.forms) add(v.forms);
+        });
+        ch.grammar.examples.forEach(function (g) { add(g.no); });
+        ch.exercises.forEach(addExercise);
+      });
+    }
     C.fun.packs.forEach(function (p) {
       add(p.level);
       p.exercises.forEach(addExercise);
@@ -1954,6 +2083,20 @@
       });
       C.body.tip = tf(C.body.tip);
       C.body.exercises.forEach(localizeExercise);
+    }
+
+    if (C.stories) {
+      C.stories.chapters.forEach(function (ch) {
+        if (ch.soon) return;
+        ch.subtitle = tf(ch.subtitle);
+        ch.intro = tf(ch.intro);
+        ch.paragraphs.forEach(function (p) { p.es = tf(p.es); });
+        ch.vocab.forEach(function (v) { v.es = tf(v.es); });
+        ch.grammar.title = tf(ch.grammar.title);
+        ch.grammar.es = tf(ch.grammar.es);
+        ch.grammar.examples.forEach(function (g) { g.es = tf(g.es); });
+        ch.exercises.forEach(localizeExercise);
+      });
     }
 
     C.colloquial.forEach(function (c) {

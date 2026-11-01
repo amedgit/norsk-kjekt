@@ -3238,6 +3238,281 @@ window.COURSE = {
   },
 
   /* -------------------------------------------------------------------- */
+  stories: {
+    totalTarget: 12,
+    chapters: [
+      {
+        id: '1',
+        num: 1,
+        level: 'A2',
+        emoji: '🧳',
+        title: 'Ankomst',
+        subtitle: 'La llegada a Oslo',
+        intro: 'Lucía llega a Oslo con dos maletas, un contrato de alquiler y muchas ganas. El primer día pone a prueba su noruego y su paciencia.',
+        place: 'Grünerløkka',
+        places: ['Oslo S', 'Grünerløkka', 'Thorvald Meyers gate', 'Akerselva', 'Rema 1000'],
+        paragraphs: [
+          { no: 'Lucía står på Oslo S med to tunge kofferter. Det regner ute, og hun føler seg trøtt og nervøs. Hun har reist fra Spania for å bo og jobbe i Norge. Rundt henne går folk fort forbi, og ingen ser på henne.', es: 'Lucía está en Oslo S con dos maletas pesadas. Fuera llueve, y se siente cansada y nerviosa. Ha viajado desde España para vivir y trabajar en Noruega. A su alrededor la gente pasa deprisa y nadie la mira.' },
+          { no: 'Hun tar trikken til Grünerløkka. Der har hun leid en liten leilighet i Thorvald Meyers gate. Utleieren venter utenfor bygningen med en nøkkel i hånden. Han heter Bjørn, og han sier «velkommen» på en rolig måte.', es: 'Coge el tranvía hasta Grünerløkka. Allí ha alquilado un pequeño piso en Thorvald Meyers gate. El casero la espera fuera del edificio con una llave en la mano. Se llama Bjørn y dice «bienvenida» con calma.' },
+          { no: 'Leiligheten er ikke stor, men den er lys. Det er et lite kjøkken, et bad og ett soverom. Møblene er enkle: en seng, et bord og en gammel stol. Lucía åpner vinduet og hører folk som snakker norsk på gaten.', es: 'El piso no es grande, pero es luminoso. Tiene una cocina pequeña, un baño y un dormitorio. Los muebles son sencillos: una cama, una mesa y una silla vieja. Lucía abre la ventana y oye a gente hablando noruego en la calle.' },
+          { no: 'Hun går til en Rema 1000 i nærheten for å kjøpe mat. Hun finner brød, melk, ost, egg og kaffe. I kassen sier hun «takk» og betaler med kort. Det er første gang hun gjør noe helt vanlig i den nye byen.', es: 'Va a un Rema 1000 cercano a comprar comida. Encuentra pan, leche, queso, huevos y café. En la caja dice «gracias» y paga con tarjeta. Es la primera vez que hace algo completamente normal en la nueva ciudad.' },
+          { no: 'På vei hjem møter hun Ingrid, som bor i leiligheten ved siden av. Ingrid sier «hei» og spør hvordan det går. Lucía svarer at alt er nytt, og at hun er litt sliten. Ingrid smiler og sier at det er helt normalt. De snakker litt om været og om butikken i gaten. Det er en liten samtale, men for Lucía føles den stor.', es: 'De camino a casa conoce a Ingrid, que vive en el piso de al lado. Ingrid le dice «hola» y le pregunta qué tal. Lucía responde que todo es nuevo y que está un poco cansada. Ingrid sonríe y le dice que es totalmente normal. Hablan un poco del tiempo y de la tienda de la calle. Es una conversación pequeña, pero para Lucía se siente enorme.' },
+          { no: 'Om kvelden sitter hun ved vinduet og ser på Akerselva. Vannet er mørkt, og lysene fra byen speiler seg i det. Hun savner familien og vennene sine. Hun tenker: «Hva har jeg gjort?»', es: 'Por la noche se sienta junto a la ventana y mira el Akerselva. El agua está oscura y las luces de la ciudad se reflejan en ella. Echa de menos a su familia y a sus amigos. Piensa: «¿Qué he hecho?».' },
+          { no: 'Men hun tenker også på jobben hun vil finne, og på menneskene hun vil møte. Hun puster dypt inn og sier til seg selv: «Nå begynner det.» Så lager hun en kopp te og skriver hjem: «Jeg er fremme. Alt er nytt, men jeg er okay.»', es: 'Pero también piensa en el trabajo que quiere encontrar y en las personas que quiere conocer. Respira hondo y se dice: «Ahora empieza.» Luego se hace una taza de té y escribe a casa: «Ya he llegado. Todo es nuevo, pero estoy bien.»' }
+        ],
+        vocab: [
+          { no: 'ankomme', es: 'llegar', forms: 'ankommer · ankom · har ankommet' },
+          { no: 'koffert', es: 'maleta', forms: 'en koffert, kofferter' },
+          { no: 'regne', es: 'llover', forms: 'regner · regnet · har regnet' },
+          { no: 'føle seg', es: 'sentirse', forms: 'føler seg · følte seg · har følt seg' },
+          { no: 'utleier', es: 'casero', forms: 'en utleier, utleiere' },
+          { no: 'nøkkel', es: 'llave', forms: 'en nøkkel, nøkler' },
+          { no: 'leilighet', es: 'piso, apartamento', forms: 'en leilighet, leiligheter' },
+          { no: 'kjøkken', es: 'cocina', forms: 'et kjøkken, kjøkken' },
+          { no: 'gate', es: 'calle', forms: 'en gate, gater' },
+          { no: 'i nærheten', es: 'cerca', chunk: true },
+          { no: 'kasse', es: 'caja', forms: 'en kasse, kasser' },
+          { no: 'betale', es: 'pagar', forms: 'betaler · betalte · har betalt' },
+          { no: 'savne', es: 'echar de menos', forms: 'savner · savnet · har savnet' },
+          { no: 'tenke', es: 'pensar', forms: 'tenker · tenkte · har tenkt' },
+          { no: 'puste', es: 'respirar', forms: 'puster · pustet · har pustet' }
+        ],
+        grammar: {
+          title: 'Presens: lo que pasa ahora',
+          es: 'Para contar lo que pasa ahora o cada día se usa el presente: hun bor, hun tar, hun kjøper. Muchos verbos terminan en -er, pero algunos son irregulares: hun tar, hun ser.',
+          examples: [
+            { no: 'Hun bor i Oslo.', es: 'Ella vive en Oslo.' },
+            { no: 'Hun tar trikken.', es: 'Ella coge el tranvía.' },
+            { no: 'Hun kjøper mat.', es: 'Ella compra comida.' }
+          ]
+        },
+        exercises: [
+          {
+            type: 'mcq',
+            prompt: '¿Dónde vive Lucía?',
+            options: ['En Grünerløkka', 'En Bergen', 'En Trondheim', 'En Stavanger'],
+            answer: 0,
+            explain: 'El texto dice que ha alquilado un piso en Thorvald Meyers gate, en Grünerløkka.'
+          },
+          {
+            type: 'gap',
+            prompt: 'Completa con el verbo correcto:',
+            sentence: 'Hun ___ seg trøtt og nervøs.',
+            answers: ['føler'],
+            bank: ['føler', 'har', 'tar'],
+            es: 'Se siente cansada y nerviosa.',
+            explain: '«Å føle seg» = sentirse. La forma es «hun føler seg».'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase:',
+            words: ['Lucía', 'tar', 'trikken', 'til', 'Grünerløkka.'],
+            es: 'Lucía coge el tranvía hasta Grünerløkka.',
+            explain: '«Å ta trikken» = coger el tranvía. El destino va con «til».'
+          },
+          {
+            type: 'listen',
+            audio: 'Hun savner familien og vennene sine.',
+            es: 'Echa de menos a su familia y a sus amigos.',
+            explain: '«Å savne» = echar de menos. «Familien og vennene sine» = su familia y sus amigos.'
+          },
+          {
+            type: 'match',
+            prompt: 'Empareja el vocabulario de la llegada:',
+            pairs: [
+              { a: 'koffert', b: 'maleta' },
+              { a: 'nøkkel', b: 'llave' },
+              { a: 'kjøkken', b: 'cocina' },
+              { a: 'kasse', b: 'caja' }
+            ],
+            explain: 'Cuatro palabras del primer día.'
+          }
+        ]
+      },
+      {
+        id: '2',
+        num: 2,
+        level: 'A2',
+        emoji: '💼',
+        title: 'Jobbsøking',
+        subtitle: 'Buscar trabajo en noruego',
+        intro: 'NAV, Finn.no, una CV y una entrevista. Lucía descubre que buscar trabajo también es aprender un idioma.',
+        place: 'Bjørvika',
+        places: ['NAV', 'Finn.no', 'Deichman Bjørvika', 'Bjørvika'],
+        paragraphs: [
+          { no: 'Tre dager senere går Lucía til NAV. Hun trenger hjelp til å forstå reglene og til å finne en jobb. Kontoret er fullt av mennesker, og hun må vente lenge. Hun kjenner at hun blir litt stresset.', es: 'Tres días después, Lucía va a NAV. Necesita ayuda para entender las reglas y encontrar trabajo. La oficina está llena de gente y tiene que esperar mucho. Nota que se pone un poco nerviosa.' },
+          { no: 'En ansatt forklarer at hun må lage en CV og en søknad. Lucía åpner Finn.no på telefonen og finner flere stillinger på kafeer og i butikker. Hun vet ikke helt hvor hun skal begynne, men hun noterer tre interessante jobber.', es: 'Una empleada le explica que tiene que hacer un currículum y una solicitud. Lucía abre Finn.no en el móvil y encuentra varios puestos en cafeterías y tiendas. No sabe muy bien por dónde empezar, pero apunta tres trabajos interesantes.' },
+          { no: 'Hun går til Deichman Bjørvika for å skrive ut CV-en. Biblioteket er stort og lyst, og hun finner en rolig plass ved vinduet. Der sitter hun i to timer og slår opp hvert ord. Det går sakte, men hun gir ikke opp.', es: 'Va a Deichman Bjørvika a imprimir el currículum. La biblioteca es grande y luminosa, y encuentra un sitio tranquilo junto a la ventana. Allí se sienta dos horas y busca cada palabra. Va despacio, pero no se rinde.' },
+          { no: 'På biblioteket møter hun Sofie, som også leter etter jobb. Sofie har bodd i Oslo i ett år og kjenner reglene bedre. Hun hjelper Lucía med å finne de riktige ordene, og de avtaler å øve på intervjuet sammen. «Du må ikke være redd for å gjøre feil,» sier Sofie. «Alle gjør feil. Det viktigste er å prøve.»', es: 'En la biblioteca conoce a Sofie, que también busca trabajo. Sofie lleva un año viviendo en Oslo y conoce mejor las reglas. Ayuda a Lucía a encontrar las palabras correctas, y quedan para practicar la entrevista juntas. «No tienes que tener miedo de equivocarte», dice Sofie. «Todo el mundo se equivoca. Lo importante es intentarlo.»' },
+          { no: 'Til slutt sender hun en kort søknad til en kafé i Bjørvika. Hun skriver at hun har erfaring fra service, at hun liker å møte mennesker, og at hun lærer norsk hver dag. Hun leser teksten tre ganger før hun trykker «send».', es: 'Por fin envía una solicitud corta a una cafetería de Bjørvika. Escribe que tiene experiencia en atención al cliente, que le gusta conocer gente y que aprende noruego cada día. Lee el texto tres veces antes de pulsar «enviar».' },
+          { no: 'Dagen etter ringer sjefen. «Kan du komme på intervju i morgen klokka ti?» Lucía sier ja, men hjertet banker fort. Hun forstår ikke alt på telefonen, men hun later som hun gjør det. Etterpå skriver hun ned alt hun husker.', es: 'Al día siguiente llama el jefe. «¿Puedes venir a una entrevista mañana a las diez?» Lucía dice que sí, pero el corazón le late deprisa. No entiende todo por teléfono, pero finge que sí. Después apunta todo lo que recuerda.' },
+          { no: 'På intervjuet spør sjefen om erfaring og om hvorfor hun vil jobbe der. Lucía forteller om kafeen i Spania. Hun gjør noen feil, men hun prøver å svare rolig og tydelig. Sjefen sier: «Vi ringer deg på fredag.» Lucía går ut i regnet, både glad og redd. På fredag får hun en prøvevakt, og hun gråter av lettelse.', es: 'En la entrevista, el jefe le pregunta por su experiencia y por qué quiere trabajar allí. Lucía habla de la cafetería de España. Comete algunos errores, pero intenta responder con calma y claridad. El jefe dice: «Te llamamos el viernes.» Lucía sale bajo la lluvia, contenta y asustada a la vez. El viernes le ofrecen un turno de prueba y llora de alivio.' }
+        ],
+        vocab: [
+          { no: 'ansatt', es: 'empleado', forms: 'en ansatt, ansatte' },
+          { no: 'forklare', es: 'explicar', forms: 'forklarer · forklarte · har forklart' },
+          { no: 'CV', es: 'currículum', forms: 'en CV, CV-er' },
+          { no: 'søknad', es: 'solicitud', forms: 'en søknad, søknader' },
+          { no: 'stilling', es: 'puesto de trabajo', forms: 'en stilling, stillinger' },
+          { no: 'intervju', es: 'entrevista', forms: 'et intervju, intervjuer' },
+          { no: 'erfaring', es: 'experiencia', forms: 'en erfaring, erfaringer' },
+          { no: 'prøvevakt', es: 'turno de prueba', forms: 'en prøvevakt, prøvevakter' },
+          { no: 'svare', es: 'responder', forms: 'svarer · svarte · har svart' },
+          { no: 'ringe', es: 'llamar', forms: 'ringer · ringte · har ringt' },
+          { no: 'melding', es: 'mensaje', forms: 'en melding, meldinger' },
+          { no: 'gråte', es: 'llorar', forms: 'gråter · gråt · har grått' },
+          { no: 'tårer', es: 'lágrimas', forms: 'tårer' },
+          { no: 'stolt', es: 'orgulloso' },
+          { no: 'vente', es: 'esperar', forms: 'venter · ventet · har ventet' }
+        ],
+        grammar: {
+          title: 'Modale verb: kan, må, vil',
+          es: 'Los verbos modales van seguidos de infinitivo sin «å»: hun kan komme, hun må vente, hun vil jobbe. El verbo principal no cambia.',
+          examples: [
+            { no: 'Hun kan komme i morgen.', es: 'Puede venir mañana.' },
+            { no: 'Hun må vente lenge.', es: 'Tiene que esperar mucho.' },
+            { no: 'Hun vil jobbe på en kafé.', es: 'Quiere trabajar en una cafetería.' }
+          ]
+        },
+        exercises: [
+          {
+            type: 'mcq',
+            prompt: '¿Qué necesita hacer Lucía para buscar trabajo?',
+            options: ['Una CV y una solicitud', 'Un pasaporte nuevo', 'Una casa más grande', 'Un curso de cocina'],
+            answer: 0,
+            explain: 'La empleada de NAV le explica que debe preparar una CV y una søknad.'
+          },
+          {
+            type: 'gap',
+            prompt: 'Completa la frase:',
+            sentence: 'Hun får en ___ på fredag.',
+            answers: ['prøvevakt'],
+            bank: ['prøvevakt', 'ferie', 'regning'],
+            es: 'Le dan un turno de prueba el viernes.',
+            explain: '«Prøvevakt» es el turno de prueba antes de conseguir el trabajo.'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase:',
+            words: ['Hun', 'søker', 'jobb', 'på', 'en', 'kafé', 'i', 'Bjørvika.'],
+            es: 'Busca trabajo en una cafetería de Bjørvika.',
+            explain: '«Å søke jobb» = buscar trabajo; «på en kafé» = en una cafetería.'
+          },
+          {
+            type: 'listen',
+            audio: 'Kan du komme på intervju i morgen?',
+            es: '¿Puedes venir a la entrevista mañana?',
+            explain: '«Å komme på intervju» = ir a la entrevista.'
+          },
+          {
+            type: 'cloze',
+            prompt: 'Completa la búsqueda de trabajo:',
+            text: 'Hun lager en ___ og en ___. Etter intervjuet får hun en ___.',
+            answers: ['CV', 'søknad', 'prøvevakt'],
+            bank: ['CV', 'søknad', 'prøvevakt', 'ferie', 'regning', 'melding'],
+            es: 'Hace un currículum y una solicitud. Después de la entrevista le dan un turno de prueba.',
+            explain: 'Las tres palabras clave del capítulo.'
+          }
+        ]
+      },
+      {
+        id: '3',
+        num: 3,
+        level: 'B1',
+        emoji: '🤝',
+        title: 'Nye venner',
+        subtitle: 'Gimnasio, idioma y amistad',
+        intro: 'Un gimnasio, una språkkafé y una caminata a Sognsvann. Poco a poco, Oslo empieza a parecerse a casa.',
+        place: 'Sognsvann',
+        places: ['Grünerløkka', 'Markveien', 'Deichman Bjørvika', 'Sognsvann'],
+        paragraphs: [
+          { no: 'To uker senere begynner Lucía på et treningssenter på Grünerløkka. Hun vil bli sterkere og få nye venner. Den første uken er hun sjenert og trener alene. Hun føler seg litt utenfor.', es: 'Dos semanas después, Lucía empieza en un gimnasio de Grünerløkka. Quiere ponerse más fuerte y hacer nuevos amigos. La primera semana es tímida y entrena sola. Se siente un poco fuera de lugar.' },
+          { no: 'En ettermiddag spør en jente om hun kan låne en manual. Jenta heter Mari, og hun er også ganske ny i byen. De begynner å snakke mens de trener. Etter treningen spør Mari om Lucía vil ta en kaffe.', es: 'Una tarde, una chica le pregunta si puede coger prestada una mancuerna. La chica se llama Mari y también es bastante nueva en la ciudad. Empiezan a hablar mientras entrenan. Después del entrenamiento, Mari le pregunta a Lucía si quiere tomar un café.' },
+          { no: 'De setter seg på en kafé i Markveien og snakker i to timer. Lucía forteller om Spania, og Mari forteller om familien sin. De oppdager at de begge savner noe fra hjemlandet, men at de også liker Oslo mer og mer.', es: 'Se sientan en una cafetería de Markveien y hablan durante dos horas. Lucía habla de España y Mari de su familia. Descubren que las dos echan de menos algo de su país, pero que también les gusta cada vez más Oslo.' },
+          { no: 'Mari forteller om en språkkafé på Deichman Bjørvika. Der møter Lucía folk fra mange land. De snakker norsk, gjør feil og ler sammen. Ingen bryr seg om feilene. For første gang føler Lucía at hun ikke trenger å være perfekt.', es: 'Mari le habla de un café de idiomas en Deichman Bjørvika. Allí Lucía conoce a gente de muchos países. Hablan noruego, cometen errores y se ríen juntos. A nadie le importan los errores. Por primera vez, Lucía siente que no necesita ser perfecta.' },
+          { no: 'På jobben i kafeen har Lucía nå faste vakter. Hun lærer navnene på kundene og husker hva de pleier å bestille. Noen ganger blir hun sliten, men hun liker å snakke med folk. Kollegene sier at hun har blitt tryggere på norsk. En kunde sier: «Du snakker bedre enn i forrige uke.» Lucía ler og sier takk. Hun vet at hun fortsatt gjør feil, men hun tør mer.', es: 'En el trabajo de la cafetería, Lucía ya tiene turnos fijos. Aprende los nombres de los clientes y recuerda qué suelen pedir. A veces se cansa, pero le gusta hablar con la gente. Los compañeros dicen que se ha vuelto más segura con el noruego. Un cliente le dice: «Hablas mejor que la semana pasada.» Lucía se ríe y da las gracias. Sabe que todavía comete errores, pero se atreve más.' },
+          { no: 'En lørdag går Lucía, Mari og to andre venner på tur til Sognsvann. Det er kaldt, men himmelen er blå. De har med kaffe og matpakke, og de går rundt vannet. Lucía tar bilder og sender dem hjem.', es: 'Un sábado, Lucía, Mari y otros dos amigos van de excursión a Sognsvann. Hace frío, pero el cielo está azul. Llevan café y comida, y dan la vuelta al lago. Lucía hace fotos y las envía a casa.' },
+          { no: 'Om kvelden tenker hun på den første natten i leiligheten. Hun var alene og redd. Nå har hun en jobb, venner og en by hun begynner å kjenne. Det er fortsatt vanskelig å snakke norsk, og hun savner Spania. Men hun vet at hun ikke er alene. Hun skriver hjem: «Jeg har fått venner. Vi skal på tur igjen neste helg.» Så sier hun høyt: «Vi sees i morgen.»', es: 'Por la noche piensa en la primera noche en el piso. Estaba sola y asustada. Ahora tiene un trabajo, amigos y una ciudad que empieza a conocer. Sigue siendo difícil hablar noruego y echa de menos España. Pero sabe que no está sola. Escribe a casa: «He hecho amigos. El próximo fin de semana volvemos de excursión.» Luego dice en voz alta: «Nos vemos mañana.»' }
+        ],
+        vocab: [
+          { no: 'treningssenter', es: 'gimnasio', forms: 'et treningssenter, treningssentre' },
+          { no: 'sterk', es: 'fuerte' },
+          { no: 'sjenert', es: 'tímido' },
+          { no: 'manual', es: 'mancuerna', forms: 'en manual, manualer' },
+          { no: 'låne', es: 'prestar, coger prestado', forms: 'låner · lånte · har lånt' },
+          { no: 'språkkafé', es: 'café de idiomas', forms: 'en språkkafé, språkkaféer' },
+          { no: 'land', es: 'país', forms: 'et land, land' },
+          { no: 'feil', es: 'error', forms: 'en feil, feil' },
+          { no: 'le', es: 'reír', forms: 'ler · lo · har ledd' },
+          { no: 'tur', es: 'excursión, vuelta', forms: 'en tur, turer' },
+          { no: 'himmel', es: 'cielo', forms: 'en himmel, himler' },
+          { no: 'hjemme', es: 'en casa' },
+          { no: 'kjenne', es: 'conocer, sentir', forms: 'kjenner · kjente · har kjent' },
+          { no: 'alene', es: 'solo, sola' },
+          { no: 'føle seg hjemme', es: 'sentirse en casa', chunk: true }
+        ],
+        grammar: {
+          title: 'Refleksive verb: føle seg, glede seg',
+          es: 'Algunos verbos llevan un pronombre reflexivo: hun føler seg hjemme, hun gleder seg til helgen. «Å bli kjent med» significa conocer a alguien.',
+          examples: [
+            { no: 'Hun føler seg hjemme.', es: 'Se siente en casa.' },
+            { no: 'Hun gleder seg til helgen.', es: 'Tiene ganas de que llegue el fin de semana.' },
+            { no: 'Hun blir kjent med Mari.', es: 'Conoce a Mari.' }
+          ]
+        },
+        exercises: [
+          {
+            type: 'mcq',
+            prompt: '¿Dónde conoce Lucía a Mari?',
+            options: ['En el gimnasio', 'En NAV', 'En el supermercado', 'En el médico'],
+            answer: 0,
+            explain: 'Se conocen en el treningssenter de Grünerløkka, cuando Mari le pide una mancuerna.'
+          },
+          {
+            type: 'gap',
+            prompt: 'Completa la frase:',
+            sentence: 'Lucía føler seg endelig litt ___.',
+            answers: ['hjemme'],
+            bank: ['hjemme', 'syk', 'sen'],
+            es: 'Lucía se siente por fin un poco en casa.',
+            explain: '«Å føle seg hjemme» = sentirse en casa.'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase:',
+            words: ['De', 'går', 'på', 'tur', 'til', 'Sognsvann', 'sammen.'],
+            es: 'Van juntos de excursión a Sognsvann.',
+            explain: '«Å gå på tur» = ir de excursión; «sammen» = juntos.'
+          },
+          {
+            type: 'listen',
+            audio: 'Det er fortsatt vanskelig å snakke norsk.',
+            es: 'Todavía es difícil hablar noruego.',
+            explain: '«Fortsett» = todavía; «vanskelig å ...» = difícil de...'
+          },
+          {
+            type: 'fix',
+            prompt: 'Toca la palabra equivocada:',
+            sentence: 'Hun blir kjent på Mari.',
+            wrong: 3,
+            correct: 'Hun blir kjent med Mari.',
+            es: 'Conoce a Mari.',
+            explain: 'La expresión es «å bli kjent med» alguien, no «på».'
+          }
+        ]
+      },
+      { id: '4', num: 4, level: 'B1', emoji: '💰', title: 'Første lønning', soon: true },
+      { id: '5', num: 5, level: 'B1', emoji: '❄️', title: 'Vinteren', soon: true },
+      { id: '6', num: 6, level: 'B1', emoji: '👨‍👩‍👧', title: 'Familien kommer', soon: true },
+      { id: '7', num: 7, level: 'B1', emoji: '📦', title: 'Flyttedag', soon: true },
+      { id: '8', num: 8, level: 'B1', emoji: '⚡', title: 'Konflikt på jobben', soon: true },
+      { id: '9', num: 9, level: 'B2', emoji: '☀️', title: 'Sommer i Oslo', soon: true },
+      { id: '10', num: 10, level: 'B2', emoji: '🤔', title: 'Et valg', soon: true },
+      { id: '11', num: 11, level: 'B2', emoji: '✈️', title: 'Hjemreise', soon: true },
+      { id: '12', num: 12, level: 'B2', emoji: '🏡', title: 'Hjemme', soon: true }
+    ]
+  },
+  /* -------------------------------------------------------------------- */
   body: {
     zones: ['hode', 'overkropp', 'rygg', 'arm', 'hånd', 'bein', 'fot'],
     parts: [
