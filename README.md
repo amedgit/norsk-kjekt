@@ -287,8 +287,9 @@ y `exercises` (los mismos tipos que las lecciones). La ruta de cada diálogo es
 ### Historien (Lucía i Oslo)
 
 La historia serializada vive en `stories` dentro de `data.js` y se abre en
-`#/historien`. El piloto tiene **3 capítulos** abiertos de los **12** previstos;
-los otros nueve aparecen como «próximamente».
+`#/historien`. El acceso está en el menú superior como **Historia**, además del
+banner de portada, el pie y «Mi progreso». El piloto tiene **3 capítulos**
+abiertos de los **12** previstos; los otros nueve aparecen como «próximamente».
 
 Cada capítulo tiene `id`, `num`, `level`, `emoji`, `title`, `subtitle`, `intro`,
 `place`, `places`, `paragraphs` (`no`, `es`), `vocab` (`no`, `es`, `forms`

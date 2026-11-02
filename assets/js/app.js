@@ -4034,6 +4034,7 @@
 
     var active = (name === 'lecciones' || name === 'leksjon') ? 'lessons'
       : name === 'kjerneord' ? 'core'
+        : name === 'historien' ? 'stories'
         : name === 'coloquial' ? 'coloquial'
       : name === 'repaso' ? 'review'
         : name === 'tull' ? 'fun'
