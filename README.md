@@ -298,7 +298,7 @@ tipos que las lecciones. La ruta es `#/historien/<id>`.
 
 - El botón **Escuchar el capítulo** reproduce los párrafos en orden con el audio
   pregrabado de cada uno.
-- El botón **Mostrar traducción** pliega o despliega todos los párrafos.
+- Cada párrafo tiene su propio botón **Mostrar traducción**, oculto por defecto.
 - El progreso vive en `state.stories.chapters` con la mejor puntuación.
 - Los fallos entran en el repaso con la firma `story#<id>#<índice>`.
 - Los capítulos 1–3 se llaman `Ankomst`, `Jobbsøking` y `Nye venner`.

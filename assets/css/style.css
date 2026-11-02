@@ -1194,6 +1194,13 @@ html[dir="rtl"] .exam-usertext {
 }
 .story-es[hidden] { display: none; }
 .story-es::before { content: "→ "; opacity: .6; }
+.story-tr-btn {
+  display: inline-block; margin-top: .5rem; padding: 0;
+  border: 0; background: transparent; cursor: pointer;
+  color: var(--blue); font: inherit; font-size: .78rem; font-weight: 700;
+  text-decoration: underline; text-underline-offset: 3px;
+}
+.story-tr-btn:hover { color: var(--red); }
 .story-forms { display: block; font-size: .72rem; color: var(--muted); margin-top: .1rem; }
 .story-grammar-title { font-size: 1rem; margin: .2rem 0 .35rem; }
 .story-grammar-text { color: var(--ink-soft); font-size: .9rem; line-height: 1.6; margin-bottom: .7rem; }

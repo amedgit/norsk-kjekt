@@ -1196,12 +1196,13 @@
       '</header>' +
 
       '<section class="card">' +
-      '  <div class="story-toolbar"><h2>' + esc(t('story.text')) + '</h2>' +
-      '    <button class="btn ghost small" id="toggle-story-tr" aria-expanded="false">' + esc(t('story.showTranslation')) + '</button></div>' +
+      '  <div class="story-toolbar"><h2>' + esc(t('story.text')) + '</h2></div>' +
       '  <div class="story-text">' + ch.paragraphs.map(function (p, i) {
         return '<div class="story-para">' +
           '<div class="sp-no">' + say(p.no) + '<span>' + esc(p.no) + '</span></div>' +
-          '<div class="story-es" hidden>' + esc(p.es) + '</div>' +
+          '<div class="story-es" id="story-tr-' + i + '" hidden>' + esc(p.es) + '</div>' +
+          '<button class="story-tr-btn" type="button" data-story-tr="' + i + '" aria-expanded="false" aria-controls="story-tr-' + i + '">' +
+          esc(t('story.showTranslation')) + '</button>' +
           '</div>';
       }).join('') + '</div>' +
       '</section>' +
@@ -1234,12 +1235,16 @@
         : '<span class="story-more">' + esc(t('story.moreSoon')) + '</span>') +
       '</nav>';
 
-    var toggle = document.getElementById('toggle-story-tr');
-    toggle.addEventListener('click', function () {
-      var show = toggle.getAttribute('aria-expanded') !== 'true';
-      app.querySelectorAll('.story-es').forEach(function (el) { el.hidden = !show; });
-      toggle.setAttribute('aria-expanded', show ? 'true' : 'false');
-      toggle.textContent = show ? t('story.hideTranslation') : t('story.showTranslation');
+    app.querySelectorAll('[data-story-tr]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var i = btn.getAttribute('data-story-tr');
+        var tr = document.getElementById('story-tr-' + i);
+        if (!tr) return;
+        var show = btn.getAttribute('aria-expanded') !== 'true';
+        tr.hidden = !show;
+        btn.setAttribute('aria-expanded', show ? 'true' : 'false');
+        btn.textContent = show ? t('story.hideTranslation') : t('story.showTranslation');
+      });
     });
 
     var mount = document.getElementById('story-ex-mount');
