@@ -1646,7 +1646,7 @@
   var corePackId = '1';
   var coreQuery = '';
   var coreFilter = 'all';
-  var CORE_CATS = ['greet', 'pron', 'q', 'verb1', 'verb2', 'time', 'place', 'food', 'health', 'link', 'home', 'objects', 'kitchen', 'shop', 'transport', 'directions', 'routine', 'actions', 'money', 'social', 'family', 'people', 'feelings', 'plans', 'freetime', 'future', 'socialfood', 'personality', 'communication', 'celebration', 'bodyparts', 'organs', 'symptoms', 'doctor', 'pharmacy', 'emergency', 'habits', 'mental', 'appointments', 'movement'];
+  var CORE_CATS = ['greet', 'pron', 'q', 'verb1', 'verb2', 'time', 'place', 'food', 'health', 'link', 'home', 'objects', 'kitchen', 'shop', 'routine', 'actions', 'money', 'social', 'family', 'people', 'feelings', 'plans', 'freetime', 'future', 'socialfood', 'personality', 'communication', 'celebration', 'bodyparts', 'organs', 'symptoms', 'doctor', 'pharmacy', 'emergency', 'habits', 'mental', 'appointments', 'movement', 'jobsearch', 'workplace', 'contract', 'salary', 'paperwork', 'authority', 'meetings', 'skills', 'jobtypes', 'worklife', 'city', 'travel', 'hotel', 'tourism', 'weather', 'nature', 'culture', 'abroad', 'transport', 'directions'];
 
   function corePack(id) {
     return CORE.packs.find(function (p) { return p.id === id; }) || null;
