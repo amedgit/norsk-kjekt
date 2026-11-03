@@ -89,7 +89,7 @@ cacheada.
 | Idioma | selector **ES / EN / فا** en la cabecera: traduce interfaz, explicaciones y tablas; el bokmål se queda intacto y el progreso se conserva. En persa la página cambia a dirección RTL |
 | Progreso | racha, XP, mapa de calor de 12 semanas, 8 logros, repaso espaciado (1/3/7/15/30 días) y exportación/importación del progreso en JSON |
 | Extras | modo oscuro, teclado noruego æ ø å en los ejercicios de escritura y PWA offline |
-| Velocidad | selector 0,7×–1,3× en la cabecera; empieza en 0,85×, se aplica al audio y se recuerda |
+| Velocidad | selector 0,5×–1,3× en la cabecera; empieza en 0,85×, se aplica al audio y se recuerda |
 | Audio | 1826 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
 | App | PWA instalable (offline) con icono propio, pantalla completa y funcionamiento sin conexión; el APK está retirado temporalmente |
 

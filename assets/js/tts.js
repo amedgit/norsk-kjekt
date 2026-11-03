@@ -4,7 +4,7 @@
       cualquier dispositivo, sin depender de las voces instaladas.
    2) Si no está, cae a speechSynthesis (nb-NO) cuando el navegador tiene voces.
 
-   La velocidad (0.7×–1.3×) se aplica a la reproducción y se recuerda en
+   La velocidad (0.5×–1.3×) se aplica a la reproducción y se recuerda en
    localStorage. Expone window.TTS = { speak, stop, setRate, getRate,
    supported, hasAudio } */
 
