@@ -28,9 +28,9 @@
   var rate = (function () {
     try {
       var v = parseFloat(window.localStorage.getItem(RATE_KEY));
-      return isFinite(v) && v >= MIN_RATE && v <= MAX_RATE ? v : 1;
+      return isFinite(v) && v >= MIN_RATE && v <= MAX_RATE ? v : 0.85;
     } catch (e) {
-      return 1;
+      return 0.85;
     }
   })();
 
