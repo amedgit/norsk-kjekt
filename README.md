@@ -87,6 +87,7 @@ cacheada.
 | Coloquial | 30 expresiones con registro (neutro → vulgar), diálogo de ejemplo y truco |
 | Simulacro | 4 exámenes completos (A1, A2, B1 y B2) estilo Norskprøven: lesing, lytting, skriving y muntlig, con cronómetro, informe por destreza y respuestas modelo |
 | Idioma | selector **ES / EN / فا** en la cabecera: traduce interfaz, explicaciones y tablas; el bokmål se queda intacto y el progreso se conserva. En persa la página cambia a dirección RTL |
+| Analítica | Cloudflare Web Analytics: visitas, países, referidos y dispositivos sin cookies; solo datos agregados |
 | Progreso | racha, XP, mapa de calor de 12 semanas, 8 logros, repaso espaciado (1/3/7/15/30 días) y exportación/importación del progreso en JSON |
 | Extras | modo oscuro, teclado noruego æ ø å en los ejercicios de escritura y PWA offline |
 | Velocidad | selector 0,5×–1,3× en la cabecera; empieza en 0,85×, se aplica al audio y se recuerda |
