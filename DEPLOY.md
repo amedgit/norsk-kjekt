@@ -83,7 +83,7 @@ dentro de la misma red (`http://TU_IP:8080`).
 ```bash
 cd ~/norsk
 rm -f ~/Descargas/norsk-kjekt.zip
-zip -r ~/Descargas/norsk-kjekt.zip index.html assets robots.txt .nojekyll
+zip -r ~/Descargas/norsk-kjekt.zip index.html assets robots.txt sitemap.xml CNAME .nojekyll
 ```
 
 ---
