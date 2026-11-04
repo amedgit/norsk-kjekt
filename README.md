@@ -1,6 +1,6 @@
 # Norsk Kjekt 🇳🇴
 
-**Publicado:** <https://amedgit.github.io/norsk-kjekt/>
+**Publicado:** <https://norskkjekt.com/>
 
 Portal para practicar noruego **bokmål** (A1–C2): textos cortos, ejercicios
 interactivos, una historia serializada en tres capítulos, seis conversaciones
@@ -31,7 +31,7 @@ cd ~/norsk
 La web se instala como app desde Chrome: icono propio, pantalla completa y uso
 sin conexión. No pasa por tiendas ni por APK.
 
-1. Abre <https://amedgit.github.io/norsk-kjekt/> en Chrome (Android).
+1. Abre <https://norskkjekt.com/> en Chrome (Android).
 2. Toca el botón **«Instalar app»** del banner, o el menú ⋮ → *Añadir a pantalla
    de inicio*.
 3. Queda en el cajón de aplicaciones y el service worker cachea el núcleo y los

@@ -98,8 +98,8 @@ zip -r ~/Descargas/norsk-kjekt.zip index.html assets robots.txt .nojekyll
       resuelven rutas relativas y la vista previa saldrá sin imagen.
 - [ ] Comprobar que el progreso persiste al recargar (es `localStorage`, va por
       origen: en `localhost` y en el dominio son datos distintos).
-- [ ] Opcional: dominio propio (Netlify: *Domain settings*; GitHub Pages:
-      fichero `CNAME`).
+- [ ] Dominio propio: `norskkjekt.com` configurado en GitHub Pages; el
+      fichero `CNAME` del repositorio debe contener `norskkjekt.com`.
 - [ ] Opcional: añadir analítica ligera y sin cookies si quieres saber qué
       lecciones se terminan.
 
@@ -109,5 +109,5 @@ zip -r ~/Descargas/norsk-kjekt.zip index.html assets robots.txt .nojekyll
 - No hay cuentas ni ranking. Si algún día los quieres, toca añadir backend
   (Supabase, PocketBase o un pequeño API).
 - El audio depende de las voces instaladas en el dispositivo del visitante
-  (`speechSynthesis`) **solo como respaldo**: las 534 frases del curso son MP3
+  (`speechSynthesis`) **solo como respaldo**: las 1826 frases del curso son MP3
   pregrabados con Piper y se sirven como ficheros estáticos.
