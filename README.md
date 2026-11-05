@@ -3,7 +3,7 @@
 **Publicado:** <https://norskkjekt.com/>
 
 Portal para practicar noruego **bokmål** (A1–C2): textos cortos, ejercicios
-interactivos, una historia serializada en tres capítulos, seis conversaciones
+interactivos, una historia serializada en cuatro capítulos, seis conversaciones
 cotidianas con audio, cuatro grupos de WhatsApp noruego, seis packs de humor,
 tablas de palabras y verbos, una sección de noruego coloquial y **cuatro
 simulacros de examen** estilo Norskprøven. HTML +
@@ -76,9 +76,9 @@ cacheada.
 | Parte | Contenido |
 |---|---|
 | Lecciones | 15 lecciones A1–C2 con página propia (`#/lecciones`): buscador, filtros por nivel, progreso y acceso directo a cada lección |
-| Práctica | 254 ejercicios en 10 formatos, test de nivel de 18 preguntas y entrenador de números, hora y preposiciones |
+| Práctica | 259 ejercicios en 10 formatos, test de nivel de 18 preguntas y entrenador de números, hora y preposiciones |
 | Samtaler | 6 conversaciones cotidianas (A2–B1: portal, cafetería, tienda, trabajo, médico y teléfono) con 52 réplicas, audio por línea, traducciones plegables, vocabulario, frases y 30 ejercicios |
-| Historia | «Lucía i Oslo»: 3 capítulos piloto (A2–B1) de la serie de 12, con 7 párrafos cada uno, audio por párrafo y del capítulo completo, traducción plegable, 15 palabras, gramática y 5 ejercicios por capítulo |
+| Historia | «Lucía i Oslo»: 4 capítulos piloto (A2–B1) de la serie de 12, con 7 párrafos cada uno, audio por párrafo y del capítulo completo, traducción plegable, 15 palabras, gramática y 5 ejercicios por capítulo |
 | Kjerneord | Núcleo de 1000 palabras y frases en 10 paquetes de 100; los paquetes 1 a 6 (600 palabras: supervivencia, vida diaria, personas y planes, salud y cuerpo, trabajo y trámites, ciudad y viajes) ya están disponibles con audio, filtros y test |
 | Meldinger | 4 grupos de WhatsApp (A2–B1: vecinos, familia, amigos y trabajo) con 48 mensajes en formato chat, audio por mensaje, traducción, glosario de abreviaturas y truco cultural |
 | Kroppen | Mapa corporal interactivo (34 partes), zoom de mano y pie, constructor de síntomas, 10 frases de consulta, 3 escenarios médicos y 8 ejercicios (A1–B1) |
@@ -91,7 +91,7 @@ cacheada.
 | Progreso | racha, XP, mapa de calor de 12 semanas, 8 logros, repaso espaciado (1/3/7/15/30 días) y exportación/importación del progreso en JSON |
 | Extras | modo oscuro, teclado noruego æ ø å en los ejercicios de escritura y PWA offline |
 | Velocidad | selector 0,5×–1,3× en la cabecera; empieza en 0,85×, se aplica al audio y se recuerda |
-| Audio | 1826 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
+| Audio | 1848 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
 | App | PWA instalable (offline) con icono propio, pantalla completa y funcionamiento sin conexión; el APK está retirado temporalmente |
 
 ## Interfaz en español, inglés o persa
@@ -101,7 +101,7 @@ El selector **ES / EN / فا** de la cabecera cambia todo lo que no es noruego:
 - textos de la interfaz, botones, filtros, avisos y resultados;
 - explicaciones, objetivos, trucos y notas culturales;
 - traducciones de textos, vocabulario, frases y diálogos;
-- prompts, opciones, pistas y explicaciones de los 254 ejercicios;
+- prompts, opciones, pistas y explicaciones de los 259 ejercicios;
 - instrucciones, explicaciones y rúbricas de autoevaluación del simulacro;
 - las tablas de palabras y verbos (la columna de significados).
 
@@ -162,7 +162,7 @@ norsk/
     ├── img/og.png       ← imagen para compartir en redes
     ├── img/lessons/*.svg ← una ilustración original por lección
     ├── img/dialogues/*.svg ← una ilustración por conversación
-    ├── audio/*.mp3      ← 1826 audios (≈20,8 MB), generados
+    ├── audio/*.mp3      ← 1848 audios (≈21,5 MB), generados
     └── js/
         ├── data.js          ← TODO el contenido del curso, Samtaler y los 4 simulacros
         ├── content-en.js    ← traducciones ES → EN del contenido
@@ -289,8 +289,8 @@ y `exercises` (los mismos tipos que las lecciones). La ruta de cada diálogo es
 
 La historia serializada vive en `stories` dentro de `data.js` y se abre en
 `#/historien`. El acceso está en el menú superior como **Historia**, además del
-banner de portada, el pie y «Mi progreso». El piloto tiene **3 capítulos**
-abiertos de los **12** previstos; los otros nueve aparecen como «próximamente».
+banner de portada, el pie y «Mi progreso». El piloto tiene **4 capítulos**
+abiertos de los **12** previstos; los otros ocho aparecen como «próximamente».
 
 Cada capítulo tiene `id`, `num`, `level`, `emoji`, `title`, `subtitle`, `intro`,
 `place`, `places`, `paragraphs` (`no`, `es`), `vocab` (`no`, `es`, `forms`
@@ -302,7 +302,7 @@ tipos que las lecciones. La ruta es `#/historien/<id>`.
 - Cada párrafo tiene su propio botón **Mostrar traducción**, oculto por defecto.
 - El progreso vive en `state.stories.chapters` con la mejor puntuación.
 - Los fallos entran en el repaso con la firma `story#<id>#<índice>`.
-- Los capítulos 1–3 se llaman `Ankomst`, `Jobbsøking` y `Nye venner`.
+- Los capítulos 1–4 se llaman `Ankomst`, `Jobbsøking`, `Nye venner` y `Første lønning`.
 - Los lugares son reales (Grünerløkka, Thorvald Meyers gate, Bjørvika,
   Sognsvann, etc.), pero los personajes son ficticios. Evita precios, horarios
   y direcciones privadas que caduquen.

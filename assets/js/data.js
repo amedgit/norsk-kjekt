@@ -3719,7 +3719,92 @@ window.COURSE = {
           }
         ]
       },
-      { id: '4', num: 4, level: 'B1', emoji: '💰', title: 'Første lønning', soon: true },
+      {
+        id: '4',
+        num: 4,
+        level: 'B1',
+        emoji: '💰',
+        title: 'Første lønning',
+        subtitle: 'El primer sueldo y una vida que empieza',
+        intro: 'El primer sueldo de Lucía llega con alivio, orgullo y una llamada a casa. También trae una pregunta nueva: ¿en qué quiere convertirse su vida en Oslo?',
+        place: 'Grünerløkka',
+        places: ['Bjørvika', 'Thorvald Meyers gate', 'Rema 1000', 'Markveien', 'Akerselva'],
+        paragraphs: [
+          { no: 'På jobben i Bjørvika er det en vanlig tirsdag. Lucía står bak disken og lager kaffe. Sjefen kommer bort til henne og sier: «Lønnen er på kontoen.» Lucía takker, men hun prøver å være rolig. Hun vil ikke vise hvor glad hun er.', es: 'En el trabajo en Bjørvika es un martes normal. Lucía está detrás del mostrador preparando café. El jefe se acerca y le dice: «El sueldo ya está en la cuenta.» Lucía da las gracias, pero intenta estar tranquila. No quiere mostrar lo contenta que está.' },
+          { no: 'Etter vakten åpner hun bankappen på telefonen. Der står det et tall som hun har ventet på i mange uker. Det er hennes første lønn i Norge. Hun ser på det en stund. Så smiler hun til ingen og sier stille: «Jeg klarte det.»', es: 'Después del turno abre la app del banco en el móvil. Allí aparece una cifra que ha esperado durante muchas semanas. Es su primer sueldo en Noruega. La mira un rato. Luego sonríe sin nadie y dice en voz baja: «Lo conseguí.»' },
+          { no: 'Hjemme i Thorvald Meyers gate betaler hun husleien til Bjørn. Hun overfører også penger til en konto hun har satt av til regninger. Det er ikke mye igjen, men det er nok. For første gang føler hun at hun ikke bare låner plass i byen. Hun betaler for den.', es: 'En casa, en Thorvald Meyers gate, paga el alquiler a Bjørn. También transfiere dinero a una cuenta que ha reservado para facturas. No queda mucho, pero es suficiente. Por primera vez siente que no solo está ocupando un sitio en la ciudad. Está pagando por él.' },
+          { no: 'Hun går til Rema 1000 og kjøper mat til uken. Denne gangen tar hun også med en liten plante og litt dyrere kaffe. Det er ikke en stor ting, men det kjennes stort. På vei hjem ringer hun moren sin. «Jeg har fått lønn,» sier hun. Moren blir stille, og så hører Lucía at hun gråter.', es: 'Va a Rema 1000 y compra comida para la semana. Esta vez también coge una planta pequeña y un café un poco más caro. No es una cosa importante, pero se siente importante. De camino a casa llama a su madre. «He cobrado», dice. Su madre se queda en silencio y luego Lucía la oye llorar.' },
+          { no: 'Om kvelden møter hun Mari på en kafé i Markveien. Lucía vil feire, men ikke bruke for mye penger. De bestiller kaffe og et stykke kake. Mari løfter koppen og sier: «Gratulerer med første lønn!» Lucía ler. Det er første gang hun føler seg som en ordentlig arbeidstaker i Oslo.', es: 'Por la noche queda con Mari en una cafetería de Markveien. Lucía quiere celebrarlo, pero sin gastar demasiado. Piden café y un trozo de tarta. Mari levanta la taza y dice: «¡Enhorabuena por tu primer sueldo!» Lucía se ríe. Es la primera vez que se siente una trabajadora de verdad en Oslo.' },
+          { no: 'De snakker om hva Lucía skal gjøre med pengene. Hun vil spare litt hver måned. Kanskje til en tur hjem, kanskje til et norskkurs. Mari sier at hun må unne seg noe også. Lucía tenker på den lille planten hjemme og blir glad. Hun har begynt å planlegge en framtid, ikke bare en uke.', es: 'Hablan de qué hará Lucía con el dinero. Quiere ahorrar un poco cada mes. Quizá para un viaje a casa, quizá para un curso de noruego. Mari dice que también tiene que darse un capricho. Lucía piensa en la planta pequeña de casa y se alegra. Ha empezado a planear un futuro, no solo una semana.' },
+          { no: 'Sent på kvelden sitter hun ved vinduet og hører på Akerselva. Hun er fortsatt trøtt, og norsken er fortsatt vanskelig. Men nå vet hun at hun kan klare mer enn hun trodde. Hun skriver i dagboken: «Første lønn. Jeg betalte husleie, kjøpte mat og feiret med en venn. Nå begynner livet mitt her.»', es: 'Ya tarde, se sienta junto a la ventana y escucha el Akerselva. Sigue cansada y el noruego sigue siendo difícil. Pero ahora sabe que puede conseguir más de lo que creía. Escribe en su diario: «Primer sueldo. Pagué el alquiler, compré comida y celebré con una amiga. Ahora empieza mi vida aquí.»' }
+        ],
+        vocab: [
+          { no: 'lønn', es: 'salario, sueldo', forms: 'en lønn, lønninger' },
+          { no: 'konto', es: 'cuenta', forms: 'en konto, kontoer' },
+          { no: 'overføre', es: 'transferir', forms: 'overfører · overførte · har overført' },
+          { no: 'husleie', es: 'alquiler', forms: 'en husleie, husleier' },
+          { no: 'regning', es: 'factura', forms: 'en regning, regninger' },
+          { no: 'unne seg', es: 'darse un capricho', chunk: true, forms: 'unner seg · unte seg · har unt seg' },
+          { no: 'feire', es: 'celebrar', forms: 'feirer · feiret · har feiret' },
+          { no: 'kake', es: 'tarta', forms: 'en kake, kaker' },
+          { no: 'arbeidstaker', es: 'trabajador, empleado', forms: 'en arbeidstaker, arbeidstakere' },
+          { no: 'spare', es: 'ahorrar', forms: 'sparer · sparte · har spart' },
+          { no: 'framtid', es: 'futuro', forms: 'en framtid, framtider' },
+          { no: 'planlegge', es: 'planear', forms: 'planlegger · planla · har planlagt' },
+          { no: 'dagbok', es: 'diario', forms: 'en dagbok, dagbøker' },
+          { no: 'stille', es: 'en voz baja' },
+          { no: 'klare', es: 'conseguir, lograr', forms: 'klarer · klarte · har klart' }
+        ],
+        grammar: {
+          title: 'Perfektum: har + participio',
+          es: 'El perfecto se forma con «har» + participio: hun har fått, hun har betalt, hun har kjøpt. Se usa para acciones pasadas que importan ahora. Algunos participios son irregulares: få → fått, betale → betalt, kjøpe → kjøpt.',
+          examples: [
+            { no: 'Hun har fått sin første lønn.', es: 'Ha recibido su primer sueldo.' },
+            { no: 'Hun har betalt husleien.', es: 'Ha pagado el alquiler.' },
+            { no: 'Hun har kjøpt mat til uken.', es: 'Ha comprado comida para la semana.' }
+          ]
+        },
+        exercises: [
+          {
+            type: 'mcq',
+            prompt: '¿Qué recibe Lucía en este capítulo?',
+            options: ['Su primer sueldo', 'Un billete de avión', 'Una bicicleta nueva', 'Una oferta de trabajo'],
+            answer: 0,
+            explain: 'El jefe le dice que el sueldo ya está en la cuenta.'
+          },
+          {
+            type: 'gap',
+            prompt: 'Completa con el participio correcto:',
+            sentence: 'Lucía har ___ husleien til Bjørn.',
+            answers: ['betalt'],
+            bank: ['betalt', 'kjøpt', 'spart'],
+            es: 'Lucía ha pagado el alquiler a Bjørn.',
+            explain: '«Å betale» → «har betalt».'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase:',
+            words: ['Hun', 'har', 'fått', 'sin', 'første', 'lønn', 'i', 'Norge.'],
+            es: 'Ha recibido su primer sueldo en Noruega.',
+            explain: '«Å få» → «har fått». El perfecto va con «har» + participio.'
+          },
+          {
+            type: 'listen',
+            audio: 'Jeg har fått lønn, og nå kan jeg betale husleien.',
+            es: 'He cobrado y ahora puedo pagar el alquiler.',
+            explain: '«Å få lønn» = cobrar el sueldo; «å betale husleien» = pagar el alquiler.'
+          },
+          {
+            type: 'cloze',
+            prompt: 'Completa el resumen del capítulo:',
+            text: 'Hun har ___ lønn. Hun har ___ husleien, og hun har ___ litt penger.',
+            answers: ['fått', 'betalt', 'spart'],
+            bank: ['fått', 'betalt', 'spart', 'kjøpt', 'glemt', 'reist'],
+            es: 'Ha cobrado el sueldo. Ha pagado el alquiler y ha ahorrado un poco de dinero.',
+            explain: 'Los tres participios clave: fått, betalt y spart.'
+          }
+        ]
+      },
       { id: '5', num: 5, level: 'B1', emoji: '❄️', title: 'Vinteren', soon: true },
       { id: '6', num: 6, level: 'B1', emoji: '👨‍👩‍👧', title: 'Familien kommer', soon: true },
       { id: '7', num: 7, level: 'B1', emoji: '📦', title: 'Flyttedag', soon: true },
