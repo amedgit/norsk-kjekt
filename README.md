@@ -87,7 +87,7 @@ cacheada.
 | Coloquial | 30 expresiones con registro (neutro → vulgar), diálogo de ejemplo y truco |
 | Simulacro | 4 exámenes completos (A1, A2, B1 y B2) estilo Norskprøven: lesing, lytting, skriving y muntlig, con cronómetro, informe por destreza y respuestas modelo |
 | Idioma | selector **ES / EN / فا** en la cabecera: traduce interfaz, explicaciones y tablas; el bokmål se queda intacto y el progreso se conserva. En persa la página cambia a dirección RTL |
-| Analítica | Cloudflare Web Analytics: visitas, países, referidos y dispositivos sin cookies; solo datos agregados |
+| Analítica | Cloudflare Web Analytics (sin cookies) y Google Analytics 4 con Consent Mode, banner de consentimiento y página de privacidad |
 | Progreso | racha, XP, mapa de calor de 12 semanas, 8 logros, repaso espaciado (1/3/7/15/30 días) y exportación/importación del progreso en JSON |
 | Extras | modo oscuro, teclado noruego æ ø å en los ejercicios de escritura y PWA offline |
 | Velocidad | selector 0,5×–1,3× en la cabecera; empieza en 0,85×, se aplica al audio y se recuerda |
@@ -347,6 +347,18 @@ El estado vive en `state.core`:
 - `packs`: mejor resultado de cada test.
 
 Al añadir un paquete, amplía `core.packs` en `data.js` con el mismo formato.
+
+### Analítica, cookies y privacidad
+
+- **Cloudflare Web Analytics**: visitas agregadas, países y referidos, sin cookies.
+- **Google Analytics 4**: se carga con `gtag.js` y el ID de medición
+  `G-W6XYF2YDXV`, solo con consentimiento. Se usa Consent Mode v2 y la elección
+  se guarda en `localStorage` con la clave `norsk-kjekt-consent`.
+- **Rutas `#`**: GA4 cuenta la visita inicial y los países, pero no separa
+  `#/historien` de `#/kjerneord`; para eso haría falta otro tipo de evento o
+  cambiar el enrutador.
+- **Privacidad**: la página `#/privacidad` explica el tratamiento y permite
+  reabrir el banner para cambiar la elección.
 
 ### Kroppen (el cuerpo y el dolor)
 

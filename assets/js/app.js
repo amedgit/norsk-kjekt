@@ -2673,6 +2673,32 @@
     }
   }
 
+  /* ---------------- Privacidad y cookies ---------------- */
+
+  function renderPrivacy() {
+    app.innerHTML =
+      '<div class="crumbs"><a href="#/">' + esc(t('crumb.home')) + '</a> <span>›</span> <span>' + esc(t('privacy.title')) + '</span></div>' +
+      '<section class="colo-intro privacy-intro">' +
+      '  <span class="eyebrow">' + esc(t('privacy.eyebrow')) + '</span>' +
+      '  <h1>' + esc(t('privacy.title')) + '</h1>' +
+      '  <p>' + esc(t('privacy.intro')) + '</p>' +
+      '</section>' +
+      '<section class="card privacy-card">' +
+      '  <h2>' + esc(t('privacy.title')) + '</h2>' +
+      '  <p>' + esc(t('privacy.cloudflare')) + '</p>' +
+      '  <p>' + esc(t('privacy.google')) + '</p>' +
+      '  <p>' + esc(t('privacy.local')) + '</p>' +
+      '  <p>' + esc(t('privacy.choice')) + '</p>' +
+      '  <p>' + esc(t('privacy.contact')) + '</p>' +
+      '  <p class="muted">' + esc(t('privacy.updated')) + '</p>' +
+      '  <div class="actions">' +
+      '    <button class="btn primary" type="button" data-consent-open>' + esc(t('privacy.cookies')) + '</button>' +
+      '    <a class="btn ghost" href="https://github.com/amedgit/norsk-kjekt/issues" target="_blank" rel="noopener">' + esc(t('privacy.repo')) + '</a>' +
+      '    <a class="btn ghost" href="#/">' + esc(t('privacy.back')) + '</a>' +
+      '  </div>' +
+      '</section>';
+  }
+
   /* ---------------- Test de nivel ---------------- */
 
   function placementItems() {
@@ -4090,6 +4116,8 @@
     } else if (name === 'historien') {
       if (arg) renderStory(storyById(arg));
       else renderStories();
+    } else if (name === 'privacidad') {
+      renderPrivacy();
     } else if (name === 'coloquial') {
       renderColoquial();
     } else if (name === 'tull') {
