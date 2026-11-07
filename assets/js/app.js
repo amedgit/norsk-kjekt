@@ -9,6 +9,7 @@
   var CORE = COURSE.core || { packs: [], totalTarget: 1000 };
   var BODY = COURSE.body || { zones: [], parts: [], sensations: [], intensities: [], durations: [], phrases: [], scenarios: [], exercises: [] };
   var STORIES = COURSE.stories || { totalTarget: 12, chapters: [] };
+  var A0 = COURSE.a0 || null;
   var I18N = window.I18N;
   var t = I18N.t;
   var tp = I18N.tp;
@@ -54,7 +55,7 @@
   var KEY = 'norsk-kjekt-v1';
 
   function defaults() {
-    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, body: {}, core: { known: {}, packs: {} }, stories: { chapters: {} }, xp: 0, days: {}, review: [], srs: {}, version: 1 };
+    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, body: {}, core: { known: {}, packs: {} }, stories: { chapters: {} }, a0: { best: 0, total: 0, at: 0 }, xp: 0, days: {}, review: [], srs: {}, version: 1 };
   }
 
   var state = (function load() {
@@ -69,6 +70,7 @@
       var body = {};
       var core = { known: {}, packs: {} };
       var stories = { chapters: {} };
+      var a0 = { best: 0, total: 0, at: 0 };
       Object.keys(raw.lessons || {}).forEach(function (id) {
         var v = raw.lessons[id];
         if (v && typeof v === 'object') {
@@ -107,6 +109,9 @@
           }
         });
       }
+      if (raw.a0 && typeof raw.a0 === 'object') {
+        a0 = { best: Number(raw.a0.best) || 0, total: Number(raw.a0.total) || 0, at: Number(raw.a0.at) || 0 };
+      }
       Object.keys(raw.srs || {}).forEach(function (sig) {
         var v = raw.srs[sig];
         if (v && typeof v === 'object') {
@@ -120,6 +125,7 @@
         body: body,
         core: core,
         stories: stories,
+        a0: a0,
         srs: srs,
         exams: raw.exams && typeof raw.exams === 'object' ? raw.exams : {},
         xp: Number(raw.xp) || 0,
@@ -1289,6 +1295,121 @@
   }
 
   /* =======================================================
+     A0: empezar desde cero
+     ======================================================= */
+
+  function renderA0() {
+    if (!A0) { renderHome(); return; }
+    var st = state.a0;
+
+    app.innerHTML =
+      '<div class="crumbs"><a href="#/">' + esc(t('crumb.home')) + '</a> <span>›</span> <span>A0</span></div>' +
+
+      '<section class="colo-intro a0-intro">' +
+      '  <span class="eyebrow">' + esc(t('a0.eyebrow')) + '</span>' +
+      '  <h1>' + esc(t('a0.title')) + '</h1>' +
+      '  <p class="lead">' + esc(A0.subtitle) + '</p>' +
+      '  <p class="a0-intro-text">' + esc(A0.intro) + '</p>' +
+      '  <div class="kicker a0-kicker">' +
+      '    <span class="chip">' + esc(t('a0.letters', { n: A0.alphabet.length })) + '</span>' +
+      '    <span class="chip plain">' + esc(t('a0.vowelCount', { n: A0.vowels.length })) + '</span>' +
+      '    <span class="chip plain">' + esc(tp('lesson.exercises', A0.exercises.length)) + '</span>' +
+      '  </div>' +
+      '</section>' +
+
+      '<div class="a0-language">' + A0.language.map(function (x) {
+        return '<div class="a0-language-card"><h2>' + esc(x.title) + '</h2><p>' + esc(x.text) + '</p></div>';
+      }).join('') + '</div>' +
+
+      '<section class="card a0-card"><h2>' + esc(t('a0.alphabetTitle')) + '</h2>' +
+      '<p class="a0-note">' + esc(t('a0.alphabetIntro')) + '</p>' +
+      '<div class="a0-alphabet">' + A0.alphabet.map(function (x) {
+        return '<div class="a0-letter">' +
+          '<span class="a0-char">' + esc(x.letter) + '</span>' +
+          '<span class="a0-word">' + esc(x.word) + '</span>' +
+          '<span class="a0-es">' + esc(x.es) + '</span>' +
+          say(x.word) +
+          '</div>';
+      }).join('') + '</div></section>' +
+
+      '<section class="card a0-card"><h2>' + esc(t('a0.vowelsTitle')) + '</h2>' +
+      '<p class="a0-note">' + esc(t('a0.vowelsIntro')) + '</p>' +
+      '<div class="a0-vowels">' + A0.vowels.map(function (v) {
+        return '<div class="a0-vowel">' +
+          '<span class="a0-vchar">' + esc(v.letter) + '</span>' +
+          '<div class="a0-vbody"><b>' + esc(v.sound) + '</b>' +
+          '<span class="a0-example">' + esc(v.example) + ' · ' + esc(v.exampleEs) + ' ' + say(v.example) + '</span>' +
+          '<span class="a0-vnote">' + esc(v.note) + '</span></div>' +
+          '</div>';
+      }).join('') + '</div>' +
+      '<h3 class="a0-subtitle">' + esc(t('a0.pairsTitle')) + '</h3>' +
+      '<div class="a0-pairs">' + A0.pairs.map(function (p) {
+        return '<div class="a0-pair">' +
+          '<div><span class="a0-pair-label">' + esc(t('a0.long')) + '</span><b>' + esc(p.long) + '</b> ' + say(p.long) + '<small>' + esc(p.longEs) + '</small></div>' +
+          '<div><span class="a0-pair-label">' + esc(t('a0.short')) + '</span><b>' + esc(p.short) + '</b> ' + say(p.short) + '<small>' + esc(p.shortEs) + '</small></div>' +
+          '<p>' + esc(p.note) + '</p>' +
+          '</div>';
+      }).join('') + '</div></section>' +
+
+      '<section class="card a0-card"><h2>' + esc(t('a0.consonantsTitle')) + '</h2>' +
+      '<div class="a0-rules">' + A0.consonants.map(function (c) {
+        return '<div class="a0-rule"><h3>' + esc(c.title) + '</h3><p>' + esc(c.text) + '</p>' +
+          '<div class="a0-rule-examples">' + c.examples.map(function (e) {
+            return '<span>' + say(e.no) + '<b>' + esc(e.no) + '</b> <small>' + esc(e.es) + '</small></span>';
+          }).join('') + '</div></div>';
+      }).join('') + '</div></section>' +
+
+      '<section class="card a0-card"><h2>' + esc(t('a0.phrasesTitle')) + '</h2>' +
+      '<p class="a0-note">' + esc(t('a0.phrasesIntro')) + '</p>' +
+      '<div class="phrases a0-phrases">' + A0.phrases.map(function (p) {
+        return '<div class="phrase">' + say(p.no) +
+          '<span class="txt"><span class="no">' + esc(p.no) + '</span>' +
+          '<span class="es">' + esc(p.es) + '</span></span></div>';
+      }).join('') + '</div></section>' +
+
+      '<section class="card a0-card" id="a0-practice"><h2>' + esc(t('a0.practice')) + '</h2>' +
+      '<div id="a0-ex-mount"></div></section>' +
+
+      '<div class="a0-next"><a class="btn primary" href="#/leksjon/1">' + esc(t('a0.nextLesson')) + '</a></div>';
+
+    var mount = document.getElementById('a0-ex-mount');
+    mount.innerHTML =
+      '<div class="actions">' +
+      '<button class="btn primary" id="start-a0-ex">' + esc(t('a0.start', { n: A0.exercises.length })) + '</button>' +
+      (st && st.total ? '<span class="ex-hint">' + esc(t('a0.best', { best: st.best, total: st.total })) + '</span>' : '') +
+      '</div>';
+
+    document.getElementById('start-a0-ex').addEventListener('click', function () {
+      document.getElementById('a0-practice').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      runExercises(mount, A0.exercises, {
+        label: t('a0.label'),
+        onDone: function (res) {
+          state.a0 = {
+            best: Math.max(st ? st.best : 0, res.correct),
+            total: res.total,
+            at: Date.now()
+          };
+          state.xp += res.correct * 10;
+          markDay();
+          var failedItems = res.failed;
+          A0.exercises.forEach(function (item, i) {
+            var sig = 'a0#' + i;
+            if (failedItems.indexOf(item) > -1) addReview(sig);
+            else removeReview(sig);
+          });
+          save();
+          refreshHud();
+          var box = mount.querySelector('.result');
+          if (box) {
+            box.insertAdjacentHTML('beforeend',
+              '<p class="ex-hint">' + esc(t('result.progress', { n: res.correct * 10 })) + '</p>');
+          }
+        }
+      });
+    });
+  }
+
+  /* =======================================================
      Meldinger: grupos de WhatsApp noruegos
      ======================================================= */
 
@@ -1326,7 +1447,7 @@
 
   function totalExerciseCount() {
     return LESSONS.reduce(function (n, l) { return n + l.exercises.length; }, 0) +
-      funExerciseCount() + dialogueExerciseCount() + storyExerciseCount() + (BODY.exercises ? BODY.exercises.length : 0);
+      funExerciseCount() + dialogueExerciseCount() + storyExerciseCount() + (A0 ? A0.exercises.length : 0) + (BODY.exercises ? BODY.exercises.length : 0);
   }
 
   function allFunExercises() {
@@ -1908,6 +2029,12 @@
       '    <a class="btn ghost" href="#/nivel">' + esc(t('lessons.test')) + '</a>' +
       '  </div>' +
       '</section>' +
+      '<section class="a0-strip">' +
+      '  <div><span class="eyebrow">' + esc(t('home.a0Eyebrow')) + '</span>' +
+      '    <h2>' + esc(t('home.a0Title')) + '</h2>' +
+      '    <p>' + esc(t('home.a0Text')) + '</p></div>' +
+      '  <a class="btn primary" href="#/a0">' + esc(t('home.a0Enter')) + '</a>' +
+      '</section>' +
       '<div class="lessons-toolbar">' +
       '  <input id="lesson-q" type="search" placeholder="' + esc(t('lessons.search')) + '" aria-label="' + esc(t('lessons.search')) + '">' +
       '  <div class="level-chips">' +
@@ -1987,6 +2114,15 @@
       '  <a class="practice-chip" href="#/kjerneord"><b>📚 ' + esc(t('home.coreChip')) + '</b><span>' + esc(t('home.coreChipSub')) + '</span></a>' +
       '  <a class="practice-chip" href="#/historien"><b>📖 ' + esc(t('home.storyChip')) + '</b><span>' + esc(t('home.storyChipSub')) + '</span></a>' +
       '</div>' +
+
+      '<section class="a0-banner">' +
+      '  <div>' +
+      '    <span class="eyebrow">' + esc(t('home.a0Eyebrow')) + '</span>' +
+      '    <h2>' + esc(t('home.a0Title')) + '</h2>' +
+      '    <p>' + esc(t('home.a0Text')) + '</p>' +
+      '  </div>' +
+      '  <a class="btn primary" href="#/a0">' + esc(t('home.a0Enter')) + '</a>' +
+      '</section>' +
 
       '<div class="lessons-home-head"><h2 class="section-title">' + esc(t('lessons.homeTitle')) + ' <span>' + esc(tp('lessons.count', LESSONS.length)) + '</span></h2>' +
       '<a class="btn ghost small" href="#/lecciones">' + esc(t('lessons.open')) + '</a></div>' +
@@ -2512,6 +2648,7 @@
       Object.keys(group).forEach(function (id) { n += Number(group[id].best) || 0; });
     });
     if (state.body && state.body.best) n += Number(state.body.best) || 0;
+    if (state.a0 && state.a0.best) n += Number(state.a0.best) || 0;
     return n;
   }
 
@@ -3381,6 +3518,13 @@
       }
       return null;
     }
+    if (parts[0] === 'a0' && A0) {
+      var a0Item = A0.exercises[Number(parts[1])];
+      if (a0Item) {
+        return { sig: sig, item: a0Item, title: t('a0.title'), emoji: '🔤', label: t('a0.reviewLabel') };
+      }
+      return null;
+    }
     var lesson = LESSONS.find(function (l) { return l.id === parts[0]; });
     var item = lesson && lesson.exercises[Number(parts[1])];
     if (lesson && item) {
@@ -4113,6 +4257,8 @@
       var dialogue = DIALOGUES.find(function (d) { return d.id === arg; });
       if (dialogue) renderDialogue(dialogue);
       else renderDialogues();
+    } else if (name === 'a0') {
+      renderA0();
     } else if (name === 'historien') {
       if (arg) renderStory(storyById(arg));
       else renderStories();

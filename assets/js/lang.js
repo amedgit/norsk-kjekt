@@ -221,6 +221,30 @@
       'home.storyTitle': 'Lucía i Oslo',
       'home.storyText': 'Una historia por capítulos para leer y escuchar: {n} capítulos abiertos de {total}. Llegada, trabajo, gimnasio y amistades en el Oslo real.',
       'home.storyEnter': 'Leer la historia',
+      'home.a0Eyebrow': 'A0 · Empieza aquí',
+      'home.a0Title': '¿Nunca has estudiado noruego?',
+      'home.a0Text': 'Alfabeto, vocales, pronunciación y primeras frases. Una introducción tranquila antes de la lección 1.',
+      'home.a0Enter': 'Empezar desde cero',
+      'a0.eyebrow': 'A0 · Empieza aquí',
+      'a0.title': 'A0 · Desde cero',
+      'a0.letters': '{n} letras',
+      'a0.vowelCount': '{n} vocales',
+      'a0.alphabetTitle': 'El alfabeto noruego',
+      'a0.alphabetIntro': 'El alfabeto tiene 29 letras: las 26 del latín más æ, ø y å. Pulsa el altavoz de cada palabra para oír el sonido.',
+      'a0.vowelsTitle': 'Las vocales',
+      'a0.vowelsIntro': 'El noruego distingue vocales largas y cortas. La doble consonante suele acortar la vocal anterior.',
+      'a0.pairsTitle': 'Larga y corta',
+      'a0.long': 'Larga',
+      'a0.short': 'Corta',
+      'a0.consonantsTitle': 'Consonantes y letras mudas',
+      'a0.phrasesTitle': 'Primeras frases',
+      'a0.phrasesIntro': 'Doce frases para sobrevivir el primer día. Escucha y repite.',
+      'a0.practice': 'Practica',
+      'a0.start': 'Hacer los {n} ejercicios',
+      'a0.best': 'Mejor resultado: {best}/{total}',
+      'a0.label': 'A0 · Desde cero',
+      'a0.reviewLabel': 'A0 · Desde cero',
+      'a0.nextLesson': 'Siguiente: Lección 1',
       'home.chatEyebrow': 'Nuevo · A2–B1',
       'home.chatTitle': 'Mensajes: WhatsApp noruego de verdad',
       'home.chatText': '{n} grupos de chat para leer cómo escriben los noruegos entre sí: abreviaturas, emojis y préstamos del inglés. Vecinos, familia, amigos y trabajo.',
@@ -250,6 +274,7 @@
       'footer.progress': 'Mi progreso',
       'footer.story': 'Historia',
       'footer.privacy': 'Privacidad',
+      'footer.a0': 'A0',
       'consent.title': 'Cookies y estadísticas',
       'consent.text': 'Usamos Google Analytics para saber cuántas personas visitan la web y desde dónde. Puedes aceptar o rechazar sin perder el progreso.',
       'consent.accept': 'Aceptar',
@@ -912,6 +937,30 @@
       'home.storyTitle': 'Lucía i Oslo',
       'home.storyText': 'A story in chapters to read and listen to: {n} chapters open out of {total}. Arrival, work, gym and friendship in the real Oslo.',
       'home.storyEnter': 'Read the story',
+      'home.a0Eyebrow': 'A0 · Start here',
+      'home.a0Title': 'Never studied Norwegian before?',
+      'home.a0Text': 'Alphabet, vowels, pronunciation and first phrases. A gentle introduction before lesson 1.',
+      'home.a0Enter': 'Start from scratch',
+      'a0.eyebrow': 'A0 · Start here',
+      'a0.title': 'A0 · From scratch',
+      'a0.letters': '{n} letters',
+      'a0.vowelCount': '{n} vowels',
+      'a0.alphabetTitle': 'The Norwegian alphabet',
+      'a0.alphabetIntro': 'The alphabet has 29 letters: the 26 Latin letters plus æ, ø and å. Press the speaker on each word to hear the sound.',
+      'a0.vowelsTitle': 'The vowels',
+      'a0.vowelsIntro': 'Norwegian distinguishes long and short vowels. A double consonant usually shortens the vowel before it.',
+      'a0.pairsTitle': 'Long and short',
+      'a0.long': 'Long',
+      'a0.short': 'Short',
+      'a0.consonantsTitle': 'Consonants and silent letters',
+      'a0.phrasesTitle': 'First phrases',
+      'a0.phrasesIntro': 'Twelve phrases to survive your first day. Listen and repeat.',
+      'a0.practice': 'Practise',
+      'a0.start': 'Do the {n} exercises',
+      'a0.best': 'Best score: {best}/{total}',
+      'a0.label': 'A0 · From scratch',
+      'a0.reviewLabel': 'A0 · From scratch',
+      'a0.nextLesson': 'Next: Lesson 1',
       'home.chatEyebrow': 'New · A2–B1',
       'home.chatTitle': 'Messages: real Norwegian WhatsApp',
       'home.chatText': '{n} chat groups to read how Norwegians actually write to each other: abbreviations, emojis and English loanwords. Neighbours, family, friends and work.',
@@ -941,6 +990,7 @@
       'footer.progress': 'My progress',
       'footer.story': 'Story',
       'footer.privacy': 'Privacy',
+      'footer.a0': 'A0',
       'consent.title': 'Cookies and statistics',
       'consent.text': 'We use Google Analytics to see how many people visit the site and where they come from. You can accept or reject without losing your progress.',
       'consent.accept': 'Accept',
@@ -1598,6 +1648,30 @@
       'home.storyTitle': "Lucía i Oslo",
       'home.storyText': "داستانی فصل‌به‌فصل برای خواندن و شنیدن: {n} فصل از {total} باز است. ورود، کار، باشگاه و دوستی در اسلو واقعی.",
       'home.storyEnter': "خواندن داستان",
+      'home.a0Eyebrow': "A0 · از اینجا شروع کن",
+      'home.a0Title': "هیچ‌وقت نروژی نخوانده‌ای؟",
+      'home.a0Text': "الفبا، مصوت‌ها، تلفظ و اولین جمله‌ها. یک مقدمهٔ آرام پیش از درس ۱.",
+      'home.a0Enter': "شروع از صفر",
+      'a0.eyebrow': "A0 · از اینجا شروع کن",
+      'a0.title': "A0 · از صفر",
+      'a0.letters': "{n} حرف",
+      'a0.vowelCount': "{n} مصوت",
+      'a0.alphabetTitle': "الفبای نروژی",
+      'a0.alphabetIntro': "الفبا ۲۹ حرف دارد: ۲۶ حرف لاتین به‌همراه æ، ø و å. برای شنیدن صدا، بلندگو کنار هر واژه را بزن.",
+      'a0.vowelsTitle': "مصوت‌ها",
+      'a0.vowelsIntro': "نروژی بین مصوت کوتاه و بلند فرق می‌گذارد. دو همخوان پشت سر هم معمولاً مصوت پیش از خود را کوتاه می‌کند.",
+      'a0.pairsTitle': "بلند و کوتاه",
+      'a0.long': "بلند",
+      'a0.short': "کوتاه",
+      'a0.consonantsTitle': "همخوان‌ها و حروف بی‌صدا",
+      'a0.phrasesTitle': "اولین جمله‌ها",
+      'a0.phrasesIntro': "دوازده جمله برای روز اول. گوش کن و تکرار کن.",
+      'a0.practice': "تمرین",
+      'a0.start': "انجام {n} تمرین",
+      'a0.best': "بهترین نتیجه: {best}/{total}",
+      'a0.label': "A0 · از صفر",
+      'a0.reviewLabel': "A0 · از صفر",
+      'a0.nextLesson': "بعدی: درس ۱",
       'home.chatEyebrow': "جدید · A2–B1",
       'home.chatTitle': "پیام‌ها: واتساپ واقعی نروژی",
       'home.chatText': "{n} گروه چت برای خواندن نروژی‌ای که واقعاً می‌نویسند: مخفف‌ها، ایموجی و وام‌واژه‌های انگلیسی. همسایه‌ها، خانواده، دوستان و کار.",
@@ -1627,6 +1701,7 @@
       'footer.progress': "پیشرفت من",
       'footer.story': "داستان",
       'footer.privacy': "حریم خصوصی",
+      'footer.a0': "A0",
       'consent.title': "کوکی‌ها و آمار",
       'consent.text': "ما از Google Analytics استفاده می‌کنیم تا بدانیم چند نفر از سایت بازدید می‌کنند و از کجا می‌آیند. می‌توانی بدون از دست دادن پیشرفتت بپذیری یا رد کنی.",
       'consent.accept': "پذیرفتن",
@@ -2167,6 +2242,16 @@
         ch.exercises.forEach(addExercise);
       });
     }
+    if (C.a0) {
+      C.a0.alphabet.forEach(function (x) { add(x.word); });
+      C.a0.vowels.forEach(function (v) { add(v.example); });
+      C.a0.pairs.forEach(function (p) { add(p.long); add(p.short); });
+      C.a0.consonants.forEach(function (c) {
+        c.examples.forEach(function (e) { add(e.no); });
+      });
+      C.a0.phrases.forEach(function (p) { add(p.no); });
+      C.a0.exercises.forEach(addExercise);
+    }
     C.fun.packs.forEach(function (p) {
       add(p.level);
       p.exercises.forEach(addExercise);
@@ -2274,6 +2359,31 @@
         ch.grammar.examples.forEach(function (g) { g.es = tf(g.es); });
         ch.exercises.forEach(localizeExercise);
       });
+    }
+    if (C.a0) {
+      C.a0.subtitle = tf(C.a0.subtitle);
+      C.a0.intro = tf(C.a0.intro);
+      C.a0.language.forEach(function (x) {
+        x.title = tf(x.title);
+        x.text = tf(x.text);
+      });
+      C.a0.alphabet.forEach(function (x) { x.es = tf(x.es); });
+      C.a0.vowels.forEach(function (v) {
+        v.sound = tf(v.sound);
+        v.exampleEs = tf(v.exampleEs);
+        v.note = tf(v.note);
+      });
+      C.a0.pairs.forEach(function (p) {
+        p.longEs = tf(p.longEs);
+        p.shortEs = tf(p.shortEs);
+        p.note = tf(p.note);
+      });
+      C.a0.consonants.forEach(function (c) {
+        c.text = tf(c.text);
+        c.examples.forEach(function (e) { e.es = tf(e.es); });
+      });
+      C.a0.phrases.forEach(function (p) { p.es = tf(p.es); });
+      C.a0.exercises.forEach(localizeExercise);
     }
 
     C.colloquial.forEach(function (c) {

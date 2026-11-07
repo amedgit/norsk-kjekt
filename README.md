@@ -3,7 +3,7 @@
 **Publicado:** <https://norskkjekt.com/>
 
 Portal para practicar noruego **bokmål** (A1–C2): textos cortos, ejercicios
-interactivos, una historia serializada en cuatro capítulos, seis conversaciones
+interactivos, una sección A0 para empezar desde cero, una historia serializada en cuatro capítulos, seis conversaciones
 cotidianas con audio, cuatro grupos de WhatsApp noruego, seis packs de humor,
 tablas de palabras y verbos, una sección de noruego coloquial y **cuatro
 simulacros de examen** estilo Norskprøven. HTML +
@@ -76,8 +76,9 @@ cacheada.
 | Parte | Contenido |
 |---|---|
 | Lecciones | 15 lecciones A1–C2 con página propia (`#/lecciones`): buscador, filtros por nivel, progreso y acceso directo a cada lección |
-| Práctica | 259 ejercicios en 10 formatos, test de nivel de 18 preguntas y entrenador de números, hora y preposiciones |
+| Práctica | 267 ejercicios en 10 formatos, test de nivel de 18 preguntas y entrenador de números, hora y preposiciones |
 | Samtaler | 6 conversaciones cotidianas (A2–B1: portal, cafetería, tienda, trabajo, médico y teléfono) con 52 réplicas, audio por línea, traducciones plegables, vocabulario, frases y 30 ejercicios |
+| A0 | Sección `#/a0` para empezar desde cero: alfabeto, vocales, consonantes, pronunciación, primeras frases y 8 ejercicios |
 | Historia | «Lucía i Oslo»: 4 capítulos piloto (A2–B1) de la serie de 12, con 7 párrafos cada uno, audio por párrafo y del capítulo completo, traducción plegable, 15 palabras, gramática y 5 ejercicios por capítulo |
 | Kjerneord | Núcleo de 1000 palabras y frases en 10 paquetes de 100; los paquetes 1 a 8 (800 palabras: supervivencia, vida diaria, personas y planes, salud y cuerpo, trabajo y trámites, ciudad y viajes, conectores y matices, opiniones y debate) ya están disponibles con audio, filtros y test |
 | Meldinger | 4 grupos de WhatsApp (A2–B1: vecinos, familia, amigos y trabajo) con 48 mensajes en formato chat, audio por mensaje, traducción, glosario de abreviaturas y truco cultural |
@@ -91,7 +92,7 @@ cacheada.
 | Progreso | racha, XP, mapa de calor de 12 semanas, 8 logros, repaso espaciado (1/3/7/15/30 días) y exportación/importación del progreso en JSON |
 | Extras | modo oscuro, teclado noruego æ ø å en los ejercicios de escritura y PWA offline |
 | Velocidad | selector 0,5×–1,3× en la cabecera; empieza en 0,85×, se aplica al audio y se recuerda |
-| Audio | 2025 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
+| Audio | 2057 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
 | App | PWA instalable (offline) con icono propio, pantalla completa y funcionamiento sin conexión; el APK está retirado temporalmente |
 
 ## Interfaz en español, inglés o persa
@@ -101,7 +102,7 @@ El selector **ES / EN / فا** de la cabecera cambia todo lo que no es noruego:
 - textos de la interfaz, botones, filtros, avisos y resultados;
 - explicaciones, objetivos, trucos y notas culturales;
 - traducciones de textos, vocabulario, frases y diálogos;
-- prompts, opciones, pistas y explicaciones de los 259 ejercicios;
+- prompts, opciones, pistas y explicaciones de los 267 ejercicios;
 - instrucciones, explicaciones y rúbricas de autoevaluación del simulacro;
 - las tablas de palabras y verbos (la columna de significados).
 
@@ -162,7 +163,7 @@ norsk/
     ├── img/og.png       ← imagen para compartir en redes
     ├── img/lessons/*.svg ← una ilustración original por lección
     ├── img/dialogues/*.svg ← una ilustración por conversación
-    ├── audio/*.mp3      ← 2025 audios (≈22,7 MB), generados
+    ├── audio/*.mp3      ← 2057 audios (≈22,9 MB), generados
     └── js/
         ├── data.js          ← TODO el contenido del curso, Samtaler y los 4 simulacros
         ├── content-en.js    ← traducciones ES → EN del contenido
@@ -284,6 +285,18 @@ y `exercises` (los mismos tipos que las lecciones). La ruta de cada diálogo es
 - Los fallos entran en el repaso con la firma `dlg#<id>#<índice>`.
 - Al añadir o cambiar textos, ejecuta `tools/generate-audio.mjs` para generar
   los MP3 y el manifiesto, y `tools/check-i18n.mjs` para comprobar EN y FA.
+
+### A0 (empezar desde cero)
+
+La sección `#/a0` está pensada para quien nunca ha estudiado noruego. Explica
+el bokmål y el nynorsk, los dialectos, el alfabeto de 29 letras, las vocales
+largas y cortas, las consonantes y letras mudas, y doce primeras frases.
+
+- Acceso desde el banner de portada, la página de Lecciones y el pie.
+- El alfabeto y los ejemplos tienen audio.
+- 8 ejercicios con progreso en `state.a0` y firmas de repaso `a0#<índice>`.
+- La pronunciación de referencia es la de Oslo/Este; se avisa de que hay
+  variación dialectal.
 
 ### Historien (Lucía i Oslo)
 

@@ -4034,6 +4034,160 @@ window.COURSE = {
     ]
   },
   /* -------------------------------------------------------------------- */
+  a0: {
+    subtitle: 'El alfabeto, los sonidos y las primeras palabras',
+    intro: 'Un punto de partida para quien nunca ha estudiado noruego: cómo funciona el idioma, cómo se leen sus letras y las primeras frases para presentarte.',
+    language: [
+      {
+        title: 'Dos formas escritas',
+        text: 'En Noruega se usan sobre todo el bokmål y el nynorsk. Este curso usa bokmål, la forma más común para quienes aprenden noruego.'
+      },
+      {
+        title: 'Muchos dialectos',
+        text: 'No hay una pronunciación única. Aquí usamos como referencia el noruego de Oslo y del este; en otras regiones sonará distinto.'
+      },
+      {
+        title: 'Escucha y repite',
+        text: 'Al principio no intentes pronunciar perfecto. Escucha el audio, repite en voz alta y fíjate en el ritmo.'
+      }
+    ],
+    alphabet: [
+      { letter: 'a', word: 'dag', es: 'día' },
+      { letter: 'b', word: 'bok', es: 'libro' },
+      { letter: 'c', word: 'café', es: 'café' },
+      { letter: 'd', word: 'dør', es: 'puerta' },
+      { letter: 'e', word: 'se', es: 'ver' },
+      { letter: 'f', word: 'fisk', es: 'pescado' },
+      { letter: 'g', word: 'gå', es: 'ir' },
+      { letter: 'h', word: 'hus', es: 'casa' },
+      { letter: 'i', word: 'bil', es: 'coche' },
+      { letter: 'j', word: 'jobb', es: 'trabajo' },
+      { letter: 'k', word: 'katt', es: 'gato' },
+      { letter: 'l', word: 'lys', es: 'luz' },
+      { letter: 'm', word: 'mat', es: 'comida' },
+      { letter: 'n', word: 'natt', es: 'noche' },
+      { letter: 'o', word: 'sol', es: 'sol' },
+      { letter: 'p', word: 'penn', es: 'bolígrafo' },
+      { letter: 'q', word: 'quiz', es: 'concurso' },
+      { letter: 'r', word: 'rød', es: 'rojo' },
+      { letter: 's', word: 'suppe', es: 'sopa' },
+      { letter: 't', word: 'tak', es: 'tejado' },
+      { letter: 'u', word: 'hund', es: 'perro' },
+      { letter: 'v', word: 'vann', es: 'agua' },
+      { letter: 'w', word: 'wok', es: 'wok' },
+      { letter: 'x', word: 'taxi', es: 'taxi' },
+      { letter: 'y', word: 'sykkel', es: 'bicicleta' },
+      { letter: 'z', word: 'zoo', es: 'zoo' },
+      { letter: 'æ', word: 'lære', es: 'aprender' },
+      { letter: 'ø', word: 'øl', es: 'cerveza' },
+      { letter: 'å', word: 'år', es: 'año' }
+    ],
+    vowels: [
+      { letter: 'a', sound: 'como la «a» española', example: 'tak', exampleEs: 'tejado', note: 'En «tak» es larga; en «takk», corta.' },
+      { letter: 'e', sound: 'como la «e» española, relajada al final', example: 'se', exampleEs: 'ver', note: 'En «se» es larga; en «sekk», corta.' },
+      { letter: 'i', sound: 'como la «i» española', example: 'fin', exampleEs: 'fino', note: 'En «fin» es larga; en «finn», corta.' },
+      { letter: 'o', sound: 'como la «o» española, con los labios más redondos', example: 'sol', exampleEs: 'sol', note: 'A veces suena más cerca de «å», sobre todo en palabras frecuentes.' },
+      { letter: 'u', sound: 'como la «u» española, con los labios muy redondos', example: 'hund', exampleEs: 'perro', note: 'No es la «u» relajada del inglés.' },
+      { letter: 'y', sound: 'no existe en español: di «i» con los labios redondos', example: 'sykkel', exampleEs: 'bicicleta', note: 'Es una vocal clave para sonar natural.' },
+      { letter: 'æ', sound: 'entre «a» y «e», como la «a» de «cat» en inglés', example: 'lære', exampleEs: 'aprender', note: 'Aparece en palabras como «lære».' },
+      { letter: 'ø', sound: 'como la «u» francesa de «tu» o la «eu» de «peu»', example: 'øl', exampleEs: 'cerveza', note: 'Aparece en «øl».' },
+      { letter: 'å', sound: 'como una «o» abierta, parecida a «aw» en inglés', example: 'år', exampleEs: 'año', note: 'Aparece en «år» y «gå».' }
+    ],
+    pairs: [
+      { long: 'tak', longEs: 'tejado', short: 'takk', shortEs: 'gracias', note: 'La vocal es larga en «tak» y corta en «takk».' },
+      { long: 'se', longEs: 'ver', short: 'sekk', shortEs: 'saco', note: 'La doble consonante acorta la vocal.' },
+      { long: 'fin', longEs: 'fino', short: 'finn', shortEs: 'finlandés', note: 'Escucha la diferencia de duración.' }
+    ],
+    consonants: [
+      { title: 'j', text: 'Suena como la «y» española de «ya».', examples: [{ no: 'jobb', es: 'trabajo' }, { no: 'jeg', es: 'yo' }] },
+      { title: 'kj / tj', text: 'Un sonido parecido a «ch», pero más palatal. No es la «ch» fuerte del español.', examples: [{ no: 'kjøpe', es: 'comprar' }, { no: 'tjue', es: 'veinte' }] },
+      { title: 'skj / sj', text: 'Suena como «sh» en inglés.', examples: [{ no: 'skje', es: 'cuchara' }, { no: 'sju', es: 'siete' }] },
+      { title: 'ng', text: 'Como la «ng» de «sing» en inglés, sin pronunciar una g separada.', examples: [{ no: 'sang', es: 'canción' }, { no: 'lang', es: 'largo' }] },
+      { title: 'Letras mudas', text: 'La h no se pronuncia en hv-, gj- y lj-. La d desaparece en -ld y -nd; la t de «det» también.', examples: [{ no: 'hva', es: 'qué' }, { no: 'gjøre', es: 'hacer' }, { no: 'land', es: 'país' }] },
+      { title: 'Palabras frecuentes', text: 'Algunas palabras no se pronuncian como se escriben. Escúchalas y memoriza el sonido.', examples: [{ no: 'jeg', es: 'yo' }, { no: 'det', es: 'eso' }, { no: 'og', es: 'y' }, { no: 'ikke', es: 'no' }] }
+    ],
+    phrases: [
+      { no: 'Hei!', es: '¡Hola!' },
+      { no: 'God morgen.', es: 'Buenos días.' },
+      { no: 'Takk.', es: 'Gracias.' },
+      { no: 'Unnskyld.', es: 'Perdón.' },
+      { no: 'Ja. / Nei.', es: 'Sí. / No.' },
+      { no: 'Jeg heter Lucía.', es: 'Me llamo Lucía.' },
+      { no: 'Jeg kommer fra Spania.', es: 'Soy de España.' },
+      { no: 'Jeg snakker litt norsk.', es: 'Hablo un poco de noruego.' },
+      { no: 'Jeg forstår ikke.', es: 'No entiendo.' },
+      { no: 'Kan du gjenta?', es: '¿Puedes repetirlo?' },
+      { no: 'Hva betyr det?', es: '¿Qué significa?' },
+      { no: 'Ha det bra!', es: '¡Que te vaya bien!' }
+    ],
+    exercises: [
+      {
+        type: 'mcq',
+        prompt: '¿Cuántas letras tiene el alfabeto noruego?',
+        options: ['26', '27', '28', '29'],
+        answer: 3,
+        explain: 'Tiene 29 letras: las 26 del alfabeto latino más æ, ø y å.'
+      },
+      {
+        type: 'mcq',
+        prompt: '¿Cuáles son las tres letras que no están en el alfabeto español?',
+        options: ['æ, ø, å', 'ä, ö, ü', 'å, ä, ö', 'æ, ø, ö'],
+        answer: 0,
+        explain: 'Las tres letras propias del noruego son æ, ø y å.'
+      },
+      {
+        type: 'mcq',
+        prompt: '¿En qué palabra la vocal es corta?',
+        options: ['takk', 'tak', 'bil', 'sol'],
+        answer: 0,
+        explain: 'La doble consonante de «takk» acorta la vocal. En «tak», la vocal es larga.'
+      },
+      {
+        type: 'gap',
+        prompt: 'Completa la presentación:',
+        sentence: 'Jeg ___ fra Spania.',
+        answers: ['kommer'],
+        bank: ['kommer', 'heter', 'snakker'],
+        es: 'Soy de España.',
+        explain: '«Å komme fra» = ser de / venir de. «Jeg kommer fra Spania».'
+      },
+      {
+        type: 'order',
+        prompt: 'Ordena la frase:',
+        words: ['Jeg', 'snakker', 'litt', 'norsk.'],
+        es: 'Hablo un poco de noruego.',
+        explain: '«Å snakke» = hablar; «litt» = un poco.'
+      },
+      {
+        type: 'listen',
+        audio: 'Kan du gjenta?',
+        es: '¿Puedes repetirlo?',
+        explain: '«Å gjenta» = repetir. Se usa cuando no has entendido algo.'
+      },
+      {
+        type: 'match',
+        prompt: 'Empareja las palabras con su significado:',
+        pairs: [
+          { a: 'jobb', b: 'trabajo' },
+          { a: 'kjøpe', b: 'comprar' },
+          { a: 'skje', b: 'cuchara' },
+          { a: 'sang', b: 'canción' }
+        ],
+        explain: 'Cuatro palabras para practicar j, kj, skj y ng.'
+      },
+      {
+        type: 'fix',
+        prompt: 'Toca la palabra que sobra:',
+        sentence: 'Jeg heter på Lucía.',
+        wrong: 2,
+        correct: 'Jeg heter Lucía.',
+        es: 'Me llamo Lucía.',
+        explain: '«Å hete» no lleva «på»: se dice «Jeg heter Lucía».'
+      }
+    ]
+  },
+
+  /* -------------------------------------------------------------------- */
   body: {
     zones: ['hode', 'overkropp', 'rygg', 'arm', 'hånd', 'bein', 'fot'],
     parts: [

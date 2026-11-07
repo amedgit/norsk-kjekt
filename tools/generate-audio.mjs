@@ -212,6 +212,28 @@ if (COURSE.stories) {
   }
 }
 
+/* A0: alfabeto, vocales, consonantes, frases y ejercicios */
+if (COURSE.a0) {
+  COURSE.a0.alphabet.forEach((x) => texts.add(x.word));
+  COURSE.a0.vowels.forEach((v) => texts.add(v.example));
+  COURSE.a0.pairs.forEach((p) => { texts.add(p.long); texts.add(p.short); });
+  COURSE.a0.consonants.forEach((c) => c.examples.forEach((e) => texts.add(e.no)));
+  COURSE.a0.phrases.forEach((p) => texts.add(p.no));
+  for (const e of COURSE.a0.exercises) {
+    if (e.type === 'gap') texts.add(e.sentence.replace('___', e.answers[0]));
+    if (e.type === 'order') texts.add(e.words.join(' '));
+    if (e.type === 'mcq' && e.audio) texts.add(e.audio);
+    if (e.type === 'listen') texts.add(e.audio);
+    if (e.type === 'fix') texts.add(e.correct);
+    if (e.type === 'match') {
+      e.pairs.forEach((p) => {
+        texts.add(p.a);
+        if (e.sayB) texts.add(p.b);
+      });
+    }
+  }
+}
+
 /* Tull & tøys: packs, tabla de palabras y tabla de verbos */
 if (COURSE.fun) {
   for (const pack of COURSE.fun.packs) {

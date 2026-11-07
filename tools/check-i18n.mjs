@@ -138,6 +138,40 @@ C.colloquial.forEach((c, i) => {
   });
 });
 
+if (C.a0) {
+  add('a0.subtitle', C.a0.subtitle);
+  add('a0.intro', C.a0.intro);
+  C.a0.language.forEach((x, i) => {
+    add(`a0.language[${i}].title`, x.title);
+    add(`a0.language[${i}].text`, x.text);
+  });
+  C.a0.alphabet.forEach((x, i) => add(`a0.alphabet[${i}].es`, x.es));
+  C.a0.vowels.forEach((v, i) => {
+    add(`a0.vowels[${i}].sound`, v.sound);
+    add(`a0.vowels[${i}].exampleEs`, v.exampleEs);
+    add(`a0.vowels[${i}].note`, v.note);
+  });
+  C.a0.pairs.forEach((p, i) => {
+    add(`a0.pairs[${i}].longEs`, p.longEs);
+    add(`a0.pairs[${i}].shortEs`, p.shortEs);
+    add(`a0.pairs[${i}].note`, p.note);
+  });
+  C.a0.consonants.forEach((c, i) => {
+    add(`a0.consonants[${i}].text`, c.text);
+    c.examples.forEach((e, j) => add(`a0.consonants[${i}].examples[${j}].es`, e.es));
+  });
+  C.a0.phrases.forEach((p, i) => add(`a0.phrases[${i}].es`, p.es));
+  C.a0.exercises.forEach((e, i) => {
+    const q = `a0.ex[${i}]`;
+    add(q + '.prompt', e.prompt);
+    e.options?.forEach((o, k) => add(q + `.options[${k}]`, o));
+    e.pairs?.forEach((q2, k) => add(q + `.pairs[${k}].b`, q2.b));
+    add(q + '.explain', e.explain);
+    add(q + '.es', e.es);
+    add(q + '.hint', e.hint);
+  });
+}
+
 add('fun.intro', C.fun.intro);
 C.fun.packs.forEach((p) => {
   const pp = `pack:${p.id}`;
@@ -232,6 +266,14 @@ if (C.stories) {
     ch.grammar.examples.forEach((g) => addNo(g.no));
     ch.exercises.forEach(addExerciseNo);
   });
+}
+if (C.a0) {
+  C.a0.alphabet.forEach((x) => addNo(x.word));
+  C.a0.vowels.forEach((v) => addNo(v.example));
+  C.a0.pairs.forEach((p) => { addNo(p.long); addNo(p.short); });
+  C.a0.consonants.forEach((c) => c.examples.forEach((e) => addNo(e.no)));
+  C.a0.phrases.forEach((p) => addNo(p.no));
+  C.a0.exercises.forEach(addExerciseNo);
 }
 for (const c of C.chats || []) {
   c.people.forEach((p) => addNo(p.name));
