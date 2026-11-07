@@ -12,6 +12,7 @@
   var A0 = COURSE.a0 || null;
   var GAMES = COURSE.games || { dagensOrd: { valid: [] } };
   var wordle = null;
+  var memoryGame = null;
   var I18N = window.I18N;
   var t = I18N.t;
   var tp = I18N.tp;
@@ -57,7 +58,7 @@
   var KEY = 'norsk-kjekt-v1';
 
   function defaults() {
-    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, body: {}, core: { known: {}, packs: {} }, stories: { chapters: {} }, a0: { best: 0, total: 0, at: 0 }, games: { dagensOrd: { date: '', guesses: [], status: 'playing', played: 0, wins: 0, streak: 0, best: 0, lastWin: '', distribution: [0, 0, 0, 0, 0, 0] } }, xp: 0, days: {}, review: [], srs: {}, version: 1 };
+    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, body: {}, core: { known: {}, packs: {} }, stories: { chapters: {} }, a0: { best: 0, total: 0, at: 0 }, games: { dagensOrd: { date: '', guesses: [], status: 'playing', played: 0, wins: 0, streak: 0, best: 0, lastWin: '', distribution: [0, 0, 0, 0, 0, 0] }, hukommelse: { easy: { played: 0, bestMoves: 0, bestTime: 0 }, medium: { played: 0, bestMoves: 0, bestTime: 0 }, hard: { played: 0, bestMoves: 0, bestTime: 0 } } }, xp: 0, days: {}, review: [], srs: {}, version: 1 };
   }
 
   var state = (function load() {
@@ -73,7 +74,7 @@
       var core = { known: {}, packs: {} };
       var stories = { chapters: {} };
       var a0 = { best: 0, total: 0, at: 0 };
-      var games = { dagensOrd: { date: '', guesses: [], status: 'playing', played: 0, wins: 0, streak: 0, best: 0, lastWin: '', distribution: [0, 0, 0, 0, 0, 0] } };
+      var games = { dagensOrd: { date: '', guesses: [], status: 'playing', played: 0, wins: 0, streak: 0, best: 0, lastWin: '', distribution: [0, 0, 0, 0, 0, 0] }, hukommelse: { easy: { played: 0, bestMoves: 0, bestTime: 0 }, medium: { played: 0, bestMoves: 0, bestTime: 0 }, hard: { played: 0, bestMoves: 0, bestTime: 0 } } };
       Object.keys(raw.lessons || {}).forEach(function (id) {
         var v = raw.lessons[id];
         if (v && typeof v === 'object') {
@@ -130,6 +131,18 @@
           lastWin: typeof gd.lastWin === 'string' ? gd.lastWin : '',
           distribution: dist
         };
+      }
+      if (raw.games && raw.games.hukommelse && typeof raw.games.hukommelse === 'object') {
+        ['easy', 'medium', 'hard'].forEach(function (lv) {
+          var v = raw.games.hukommelse[lv];
+          if (v && typeof v === 'object') {
+            games.hukommelse[lv] = {
+              played: Number(v.played) || 0,
+              bestMoves: Number(v.bestMoves) || 0,
+              bestTime: Number(v.bestTime) || 0
+            };
+          }
+        });
       }
       Object.keys(raw.srs || {}).forEach(function (sig) {
         var v = raw.srs[sig];
@@ -1725,8 +1738,11 @@
   }
 
   function renderGames() {
-    var g = state.games.dagensOrd;
-    var pct = g.played ? Math.round((g.wins / g.played) * 100) : 0;
+    var h = state.games.hukommelse;
+    var played = (h.easy.played || 0) + (h.medium.played || 0) + (h.hard.played || 0);
+    var best = h.easy.bestMoves || 0;
+    if (h.medium.bestMoves && (!best || h.medium.bestMoves < best)) best = h.medium.bestMoves;
+    if (h.hard.bestMoves && (!best || h.hard.bestMoves < best)) best = h.hard.bestMoves;
     app.innerHTML =
       '<div class="crumbs"><a href="#/">' + esc(t('crumb.home')) + '</a> <span>›</span> <span>' + esc(t('games.title')) + '</span></div>' +
       '<section class="colo-intro games-intro">' +
@@ -1735,12 +1751,13 @@
       '  <p>' + esc(t('games.intro')) + '</p>' +
       '</section>' +
       '<div class="games-grid">' +
-      '  <a class="game-card live" href="#/juegos/dagens-ord">' +
-      '    <span class="game-emoji">🟩</span>' +
+      '  <a class="game-card live" href="#/juegos/hukommelse">' +
+      '    <span class="game-emoji">🧠</span>' +
       '    <span class="chip done">' + esc(t('games.live')) + '</span>' +
-      '    <h2>' + esc(t('games.dailyTitle')) + '</h2>' +
-      '    <p>' + esc(t('games.dailyText')) + '</p>' +
-      '    <div class="game-card-stats"><span>' + g.played + ' ' + esc(t('wordle.played')) + '</span><span>' + pct + '% ' + esc(t('wordle.winPct')) + '</span></div>' +
+      '    <h2>' + esc(t('games.memoryTitle')) + '</h2>' +
+      '    <p>' + esc(t('games.memoryText')) + '</p>' +
+      '    <div class="game-card-stats"><span>' + played + ' ' + esc(t('memory.played')) + '</span>' +
+      (best ? '<span>' + esc(t('memory.best')) + ': ' + best + '</span>' : '') + '</div>' +
       '    <span class="btn primary">' + esc(t('games.play')) + '</span>' +
       '  </a>' +
       '  <div class="game-card soon"><span class="game-emoji">⚡</span><h2>' + esc(t('games.phraseTitle')) + '</h2><p>' + esc(t('games.soonText')) + '</p><span class="chip plain">' + esc(t('games.soon')) + '</span></div>' +
@@ -1783,6 +1800,230 @@
     });
     document.getElementById('wordle-daily').addEventListener('click', function () { renderDagensOrd('daily'); });
     document.getElementById('wordle-practice').addEventListener('click', function () { renderDagensOrd('practice'); });
+  }
+
+  /* =======================================================
+     Juegos: Hukommelse
+     ======================================================= */
+
+  function memoryPool(level) {
+    var maxPack = level === 'easy' ? 2 : level === 'medium' ? 4 : 6;
+    var seenNo = {};
+    var seenEs = {};
+    var out = [];
+    CORE.packs.slice(0, maxPack).forEach(function (p) {
+      (p.words || []).forEach(function (w) {
+        if (w.no.indexOf(' ') > -1 || w.no.length > 12 || !w.es || w.es.length > 26) return;
+        if (seenNo[w.no] || seenEs[w.es]) return;
+        seenNo[w.no] = true;
+        seenEs[w.es] = true;
+        out.push({ no: w.no, es: w.es });
+      });
+    });
+    return out;
+  }
+
+  function memoryFmt(sec) {
+    var m = Math.floor(sec / 60);
+    var s = sec % 60;
+    return m + ':' + (s < 10 ? '0' : '') + s;
+  }
+
+  function memoryInit(level) {
+    level = level === 'medium' || level === 'hard' ? level : 'easy';
+    var count = level === 'easy' ? 6 : level === 'medium' ? 8 : 10;
+    var pool = memoryPool(level);
+    var chosen = shuffle(pool).slice(0, Math.min(count, pool.length));
+    var cards = [];
+    chosen.forEach(function (pair, i) {
+      cards.push({ pair: i, text: pair.no, lang: 'no' });
+      cards.push({ pair: i, text: pair.es, lang: 'es' });
+    });
+    memoryGame = {
+      active: true,
+      level: level,
+      cards: shuffle(cards),
+      flipped: [],
+      matched: {},
+      moves: 0,
+      started: false,
+      startAt: 0,
+      elapsed: 0,
+      timer: null,
+      locked: false,
+      won: false,
+      newBest: false
+    };
+  }
+
+  function memoryStop() {
+    if (memoryGame && memoryGame.timer) {
+      clearInterval(memoryGame.timer);
+      memoryGame.timer = null;
+    }
+  }
+
+  function memoryElapsed() {
+    if (!memoryGame) return 0;
+    if (!memoryGame.started) return 0;
+    if (memoryGame.won) return memoryGame.elapsed;
+    return Math.max(0, Math.floor((Date.now() - memoryGame.startAt) / 1000));
+  }
+
+  function memoryStart() {
+    if (!memoryGame || memoryGame.started) return;
+    memoryGame.started = true;
+    memoryGame.startAt = Date.now();
+    memoryGame.timer = setInterval(function () {
+      var el = document.getElementById('memory-time');
+      if (el) el.textContent = memoryFmt(memoryElapsed());
+    }, 250);
+  }
+
+  function memoryMatchedCount() {
+    return Object.keys(memoryGame.matched).length / 2;
+  }
+
+  function memoryBestLine(level) {
+    var g = state.games.hukommelse[level];
+    if (!g || !g.bestMoves) return esc(t('memory.noRecord'));
+    return esc(t('memory.bestLine', {
+      moves: g.bestMoves,
+      time: memoryFmt(g.bestTime)
+    }));
+  }
+
+  function memoryStatsHTML() {
+    var total = memoryGame.cards.length / 2;
+    var done = memoryMatchedCount();
+    var g = state.games.hukommelse[memoryGame.level];
+    return '<div class="memory-stats">' +
+      '<div><b id="memory-moves">' + memoryGame.moves + '</b><span>' + esc(t('memory.moves')) + '</span></div>' +
+      '<div><b id="memory-time">' + memoryFmt(memoryElapsed()) + '</b><span>' + esc(t('memory.time')) + '</span></div>' +
+      '<div><b>' + done + '/' + total + '</b><span>' + esc(t('memory.pairs')) + '</span></div>' +
+      '<div><b>' + (g ? g.played : 0) + '</b><span>' + esc(t('memory.played')) + '</span></div>' +
+      '</div>' +
+      '<p class="memory-best">' + esc(t('memory.best')) + ': ' + memoryBestLine(memoryGame.level) + '</p>';
+  }
+
+  function memoryResultHTML() {
+    if (memoryGame.won) {
+      return '<div class="memory-result">' +
+        '<h2>' + esc(t('memory.win')) + '</h2>' +
+        '<p>' + esc(t('memory.result', { moves: memoryGame.moves, time: memoryFmt(memoryGame.elapsed) })) + '</p>' +
+        (memoryGame.newBest ? '<p class="memory-record">🏆 ' + esc(t('memory.newBest')) + '</p>' : '') +
+        '<div class="actions"><button class="btn primary" type="button" id="memory-new">' + esc(t('memory.new')) + '</button>' +
+        '<a class="btn ghost" href="#/juegos">' + esc(t('memory.back')) + '</a></div>' +
+        '</div>';
+    }
+    return '<p class="memory-help">' + (memoryGame.started ? esc(t('memory.finding')) : esc(t('memory.start'))) + '</p>';
+  }
+
+  function memoryPaint() {
+    if (!memoryGame) return;
+    var board = document.getElementById('memory-board');
+    var stats = document.getElementById('memory-stats');
+    var result = document.getElementById('memory-result');
+    if (board) {
+      board.innerHTML = memoryGame.cards.map(function (c, i) {
+        var open = memoryGame.flipped.indexOf(i) > -1 || memoryGame.matched[i];
+        var cls = 'hukommelse-card' + (open ? ' flipped' : '') + (memoryGame.matched[i] ? ' matched' : '');
+        return '<button class="' + cls + '" type="button" data-mem-i="' + i + '"' +
+          (memoryGame.matched[i] ? ' disabled' : '') + ' aria-label="' + esc(t('memory.card', { n: i + 1 })) + '">' +
+          '<span class="hukommelse-back">🇳🇴</span>' +
+          '<span class="hukommelse-front"' + (c.lang === 'no' ? ' dir="ltr"' : '') + '>' + esc(c.text) + '</span>' +
+          '</button>';
+      }).join('');
+    }
+    if (stats) stats.innerHTML = memoryStatsHTML();
+    if (result) result.innerHTML = memoryResultHTML();
+  }
+
+  function memoryWin() {
+    if (!memoryGame) return;
+    var elapsed = memoryElapsed();
+    memoryStop();
+    memoryGame.won = true;
+    memoryGame.elapsed = elapsed;
+    var g = state.games.hukommelse[memoryGame.level];
+    g.played += 1;
+    if (!g.bestMoves || memoryGame.moves < g.bestMoves || (memoryGame.moves === g.bestMoves && memoryGame.elapsed < g.bestTime)) {
+      g.bestMoves = memoryGame.moves;
+      g.bestTime = memoryGame.elapsed;
+      memoryGame.newBest = true;
+    }
+    save();
+    memoryPaint();
+  }
+
+  function memoryFlip(i) {
+    if (!memoryGame || memoryGame.won || memoryGame.locked) return;
+    if (memoryGame.matched[i] || memoryGame.flipped.indexOf(i) > -1) return;
+    memoryStart();
+    memoryGame.flipped.push(i);
+    var card = memoryGame.cards[i];
+    if (card.lang === 'no' && window.TTS) window.TTS.speak(card.text);
+    if (memoryGame.flipped.length === 2) {
+      memoryGame.moves += 1;
+      var a = memoryGame.cards[memoryGame.flipped[0]];
+      var b = memoryGame.cards[memoryGame.flipped[1]];
+      if (a.pair === b.pair) {
+        memoryGame.matched[memoryGame.flipped[0]] = true;
+        memoryGame.matched[memoryGame.flipped[1]] = true;
+        memoryGame.flipped = [];
+        var noCard = a.lang === 'no' ? a : b;
+        if (window.TTS) window.TTS.speak(noCard.text);
+        if (memoryMatchedCount() === memoryGame.cards.length / 2) memoryWin();
+      } else {
+        memoryGame.locked = true;
+        setTimeout(function () {
+          if (!memoryGame) return;
+          memoryGame.flipped = [];
+          memoryGame.locked = false;
+          memoryPaint();
+        }, 750);
+      }
+    }
+    memoryPaint();
+  }
+
+  function renderMemory(level) {
+    memoryInit(level || 'easy');
+    var cols = memoryGame.level === 'hard' ? 5 : 4;
+    app.innerHTML =
+      '<div class="crumbs"><a href="#/juegos">' + esc(t('games.title')) + '</a> <span>›</span> <span>' + esc(t('games.memoryTitle')) + '</span></div>' +
+      '<section class="game-hero">' +
+      '  <div><span class="eyebrow">' + esc(t('games.eyebrow')) + '</span>' +
+      '    <h1>' + esc(t('games.memoryTitle')) + '</h1>' +
+      '    <p>' + esc(t('memory.subtitle')) + '</p></div>' +
+      '  <button class="btn ghost small" type="button" id="memory-new">' + esc(t('memory.new')) + '</button>' +
+      '</section>' +
+      '<div class="memory-toolbar" id="memory-levels">' +
+      ['easy', 'medium', 'hard'].map(function (lv) {
+        return '<button type="button" class="' + (memoryGame.level === lv ? 'active' : '') + '" data-memory-level="' + lv + '">' + esc(t('memory.' + lv)) + '</button>';
+      }).join('') +
+      '</div>' +
+      '<div class="memory-layout">' +
+      '  <section class="memory-panel"><div class="hukommelse-grid" id="memory-board" style="--cols:' + cols + '"></div></section>' +
+      '  <aside class="memory-side">' +
+      '    <div class="wordle-side-card" id="memory-stats"></div>' +
+      '    <div class="wordle-side-card" id="memory-result"></div>' +
+      '  </aside>' +
+      '</div>';
+
+    memoryPaint();
+
+    document.getElementById('memory-board').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-mem-i]');
+      if (b) memoryFlip(Number(b.getAttribute('data-mem-i')));
+    });
+    document.getElementById('memory-levels').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-memory-level]');
+      if (b) {
+        memoryStop();
+        renderMemory(b.getAttribute('data-memory-level'));
+      }
+    });
   }
 
   /* =======================================================
@@ -4582,6 +4823,7 @@
 
     if (window.TTS) window.TTS.stop();
     if (wordle) wordle.active = false;
+    if (memoryGame) { memoryStop(); memoryGame.active = false; }
     clearExamTimer();
     window.scrollTo({ top: 0, behavior: 'auto' });
 
@@ -4636,7 +4878,7 @@
       if (dialogue) renderDialogue(dialogue);
       else renderDialogues();
     } else if (name === 'juegos') {
-      if (arg === 'dagens-ord') renderDagensOrd('daily');
+      if (arg === 'hukommelse') renderMemory('easy');
       else renderGames();
     } else if (name === 'a0') {
       renderA0();
@@ -4689,6 +4931,10 @@
     }
     if (e.target.closest('#wordle-new')) {
       renderDagensOrd('practice');
+      return;
+    }
+    if (e.target.closest('#memory-new')) {
+      renderMemory(memoryGame ? memoryGame.level : 'easy');
       return;
     }
     var install = e.target.closest('[data-install]');

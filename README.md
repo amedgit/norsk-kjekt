@@ -79,7 +79,7 @@ cacheada.
 | Práctica | 272 ejercicios en 10 formatos, test de nivel de 18 preguntas y entrenador de números, hora y preposiciones |
 | Samtaler | 7 conversaciones cotidianas (A2–B1: portal, cafetería, restaurante, tienda, trabajo, médico y teléfono) con 66 réplicas, audio por línea, traducciones plegables, vocabulario, frases y 35 ejercicios |
 | A0 | Sección `#/a0` para empezar desde cero: alfabeto, vocales, consonantes, pronunciación, primeras frases y 8 ejercicios |
-| Juegos | **Dagens ord**: puzle diario de palabras noruegas de 5 letras, 6 intentos, teclado æøå, audio, estadísticas y resultado compartible |
+| Juegos | **Hukommelse**: juego de memoria con parejas de palabras y traducciones, tres niveles, audio, contador de movimientos y tiempo |
 | Historia | «Lucía i Oslo»: 4 capítulos piloto (A2–B1) de la serie de 12, con 7 párrafos cada uno, audio por párrafo y del capítulo completo, traducción plegable, 15 palabras, gramática y 5 ejercicios por capítulo |
 | Kjerneord | Núcleo de 1000 palabras y frases en 10 paquetes de 100; los paquetes 1 a 8 (800 palabras: supervivencia, vida diaria, personas y planes, salud y cuerpo, trabajo y trámites, ciudad y viajes, conectores y matices, opiniones y debate) ya están disponibles con audio, filtros y test |
 | Meldinger | 4 grupos de WhatsApp (A2–B1: vecinos, familia, amigos y trabajo) con 48 mensajes en formato chat, audio por mensaje, traducción, glosario de abreviaturas y truco cultural |
@@ -287,19 +287,17 @@ y `exercises` (los mismos tipos que las lecciones). La ruta de cada diálogo es
 - Al añadir o cambiar textos, ejecuta `tools/generate-audio.mjs` para generar
   los MP3 y el manifiesto, y `tools/check-i18n.mjs` para comprobar EN y FA.
 
-### Juegos (Dagens ord)
+### Juegos (Hukommelse)
 
-`#/juegos` es el índice de juegos. La primera entrega es **Dagens ord**, un
-puzle diario tipo Wordle con palabras noruegas de 5 letras.
+`#/juegos` es el índice de juegos. La primera entrega es **Hukommelse**, un
+juego de memoria para relacionar palabras noruegas con su traducción.
 
-- Respuesta diaria determinista a partir de la fecha, sin servidor.
-- Seis intentos, teclado en pantalla con æ, ø y å, y teclado físico.
-- Colores verde/amarillo/gris y audio de la respuesta al terminar.
-- Estadísticas, racha y distribución en `state.games.dagensOrd`.
-- Modo práctica libre que no altera las estadísticas diarias.
-- Lista de conjeturas válidas en `games.dagensOrd.valid`; las respuestas se
-  derivan de las palabras de 5 letras del núcleo.
-- El resultado se puede copiar con emojis para compartirlo.
+- Tres niveles: fácil (6 parejas), medio (8) y difícil (10).
+- Audio de la palabra noruega al girar la carta.
+- Movimientos, tiempo, parejas encontradas y mejor marca.
+- Estadísticas por nivel en `state.games.hukommelse`.
+- Sin prisa: no hay límite de tiempo, solo un contador.
+- Funciona offline y en móvil.
 
 ### A0 (empezar desde cero)
 

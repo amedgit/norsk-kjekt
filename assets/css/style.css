@@ -1301,6 +1301,49 @@ html[dir="rtl"] .exam-usertext {
   .wordle-key.wide { max-width: none; }
 }
 
+/* ---------------- juego de memoria ---------------- */
+
+.memory-toolbar { display: flex; gap: .3rem; flex-wrap: wrap; margin-bottom: .8rem; }
+.memory-toolbar button {
+  border: 1px solid var(--line); background: var(--card); color: var(--muted);
+  border-radius: 999px; padding: .38rem .8rem; font: inherit; font-size: .8rem; font-weight: 700; cursor: pointer;
+}
+.memory-toolbar button.active { background: var(--ink); border-color: var(--ink); color: #fff; }
+.memory-layout { display: grid; gap: 1rem; grid-template-columns: minmax(0, 1.25fr) minmax(240px, .75fr); align-items: start; }
+.memory-panel { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem; }
+.hukommelse-grid { display: grid; grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr)); gap: .5rem; }
+.hukommelse-card {
+  position: relative; aspect-ratio: 1; min-width: 0; padding: .35rem;
+  display: grid; place-items: center; border: 2px solid var(--line);
+  border-radius: 12px; background: #eef1f7; cursor: pointer;
+  transition: transform .15s, background .15s, border-color .15s;
+}
+.hukommelse-card:hover:not([disabled]) { transform: translateY(-2px); border-color: var(--blue); }
+.hukommelse-card.flipped, .hukommelse-card.matched { background: var(--card); border-color: var(--blue); }
+.hukommelse-card.matched { border-color: var(--green); background: var(--green-soft); }
+.hukommelse-back { font-size: 1.25rem; }
+.hukommelse-front { display: none; font-size: clamp(.68rem, 2.1vw, .9rem); font-weight: 800; line-height: 1.15; text-align: center; overflow-wrap: anywhere; }
+.hukommelse-card.flipped .hukommelse-back { display: none; }
+.hukommelse-card.flipped .hukommelse-front { display: block; }
+.memory-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: .4rem; margin-bottom: .6rem; }
+.memory-stats > div { text-align: center; }
+.memory-stats b { display: block; font-size: 1.05rem; }
+.memory-stats span { display: block; font-size: .63rem; color: var(--muted); }
+.memory-best { font-size: .74rem !important; color: var(--ink-soft) !important; }
+.memory-help { font-size: .8rem !important; color: var(--muted) !important; }
+.memory-result h2 { font-size: 1rem; margin-bottom: .35rem; }
+.memory-result p { font-size: .82rem; color: var(--muted); margin-bottom: .4rem; }
+.memory-record { color: var(--green) !important; font-weight: 800; }
+.memory-result .actions { margin-top: .5rem; }
+
+@media (max-width: 800px) {
+  .memory-layout { grid-template-columns: 1fr; }
+}
+@media (max-width: 520px) {
+  .hukommelse-grid { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+  .hukommelse-front { font-size: .72rem; }
+}
+
 /* ---------------- A0: desde cero ---------------- */
 
 .a0-banner, .a0-strip {
@@ -1719,6 +1762,11 @@ html[data-theme="dark"] .wordle-tile.absent { background: #566070; border-color:
 html[data-theme="dark"] .wordle-key.correct { background: var(--green); color: #06281b; }
 html[data-theme="dark"] .wordle-key.present { background: #d9a441; color: #241700; }
 html[data-theme="dark"] .wordle-key.absent { background: #566070; color: #fff; }
+html[data-theme="dark"] .hukommelse-card { background: #1b2635; border-color: var(--line); }
+html[data-theme="dark"] .hukommelse-card.flipped { background: #1b2635; }
+html[data-theme="dark"] .hukommelse-card.matched { background: #123126; border-color: var(--green); }
+html[data-theme="dark"] .memory-toolbar button { background: #1b2635; }
+html[data-theme="dark"] .memory-toolbar button.active { background: var(--ink); color: #0d1420; }
 
 html[data-theme="dark"] .hm.l1 { background: #1f5c43; }
 html[data-theme="dark"] .hm.l2 { background: #27805c; }
