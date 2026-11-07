@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-labelledby="title">
+  <title id="title">Camarero tomando nota en un restaurante noruego</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fdf3e7"/>
+      <stop offset="1" stop-color="#efe1cb"/>
+    </linearGradient>
+    <clipPath id="round"><rect width="800" height="500" rx="36"/></clipPath>
+  </defs>
+  <g clip-path="url(#round)">
+    <rect width="800" height="500" fill="url(#bg)"/>
+
+    <rect x="44" y="56" width="712" height="334" rx="22" fill="#fffaf1" stroke="#12233f" stroke-opacity=".08"/>
+    <rect x="78" y="84" width="644" height="82" rx="10" fill="#0e2a47"/>
+    <text x="400" y="120" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="24" font-weight="800" fill="#f7f2e9" letter-spacing="3">RESTAURANT</text>
+    <text x="400" y="146" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" fill="#dceefb" opacity=".8">dagens rett · fisk · grønnsaker</text>
+
+    <rect x="92" y="196" width="250" height="150" rx="12" fill="#f7f2e9" stroke="#12233f" stroke-opacity=".1"/>
+    <text x="217" y="226" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="800" fill="#0e2a47" letter-spacing="2">MENY</text>
+    <rect x="118" y="244" width="198" height="7" rx="3.5" fill="#8aa0b5" opacity=".5"/>
+    <rect x="118" y="262" width="150" height="7" rx="3.5" fill="#8aa0b5" opacity=".4"/>
+    <rect x="118" y="288" width="174" height="7" rx="3.5" fill="#8aa0b5" opacity=".35"/>
+    <rect x="118" y="306" width="122" height="7" rx="3.5" fill="#8aa0b5" opacity=".3"/>
+
+    <rect x="392" y="196" width="320" height="234" rx="18" fill="#0e2a47" opacity=".06"/>
+    <rect x="164" y="342" width="472" height="26" rx="10" fill="#d9b98f"/>
+    <rect x="188" y="368" width="18" height="52" rx="6" fill="#b98e63"/>
+    <rect x="596" y="368" width="18" height="52" rx="6" fill="#b98e63"/>
+
+    <ellipse cx="286" cy="342" rx="60" ry="12" fill="#ffffff" opacity=".9"/>
+    <ellipse cx="286" cy="338" rx="44" ry="8" fill="#e8eef4"/>
+    <path d="M258 330 q26 -22 54 0" fill="none" stroke="#c8102e" stroke-width="4" opacity=".7"/>
+    <ellipse cx="486" cy="342" rx="60" ry="12" fill="#ffffff" opacity=".9"/>
+    <ellipse cx="486" cy="338" rx="44" ry="8" fill="#e8eef4"/>
+    <path d="M458 330 q26 -22 54 0" fill="none" stroke="#c8102e" stroke-width="4" opacity=".7"/>
+
+    <rect x="370" y="300" width="16" height="42" rx="6" fill="#ffffff"/>
+    <ellipse cx="378" cy="296" rx="8" ry="12" fill="#f0b64a"/>
+    <path d="M378 284 q7 -12 0 -20" fill="none" stroke="#f0b64a" stroke-width="4" stroke-linecap="round"/>
+
+    <g>
+      <circle cx="662" cy="214" r="28" fill="#f1c7a5"/>
+      <path d="M634 214 q0 -38 28 -38 q28 0 28 38" fill="#3b2a22"/>
+      <rect x="615" y="244" width="94" height="106" rx="32" fill="#0e2a47"/>
+      <rect x="625" y="258" width="74" height="10" rx="5" fill="#ffffff" opacity=".18"/>
+      <path d="M615 270 q-42 18 -54 54" fill="none" stroke="#f1c7a5" stroke-width="18" stroke-linecap="round"/>
+      <rect x="506" y="304" width="88" height="12" rx="6" fill="#b98e63"/>
+      <path d="M526 304 q22 -28 44 0" fill="#e8eef4" stroke="#0e2a47" stroke-opacity=".12"/>
+      <path d="M548 276 q10 -10 20 0" fill="none" stroke="#0e2a47" stroke-width="3" opacity=".25"/>
+    </g>
+
+    <g>
+      <circle cx="218" cy="238" r="25" fill="#e8b48d"/>
+      <path d="M193 238 q0 -34 25 -34 q25 0 25 34" fill="#6b3f2a"/>
+      <rect x="180" y="264" width="76" height="86" rx="28" fill="#c8102e"/>
+      <path d="M256 286 q28 12 36 40" fill="none" stroke="#e8b48d" stroke-width="14" stroke-linecap="round"/>
+      <rect x="286" y="326" width="34" height="24" rx="4" fill="#ffffff" transform="rotate(-8 286 326)"/>
+    </g>
+
+    <rect x="44" y="410" width="712" height="70" rx="18" fill="#0e2a47" opacity=".08"/>
+    <text x="400" y="452" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="700" fill="#0e2a47" opacity=".75">Kan vi få regningen?</text>
+  </g>
+</svg>

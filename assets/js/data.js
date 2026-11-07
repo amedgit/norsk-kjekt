@@ -2298,6 +2298,97 @@ window.COURSE = {
       ]
     },
     {
+      id: 'restauranten',
+      image: 'assets/img/dialogues/restauranten.svg',
+      imageAlt: 'Camarero tomando nota en un restaurante noruego',
+      emoji: '🍽️',
+      level: 'A2',
+      title: 'På restauranten',
+      subtitle: 'Pedir, preguntar y pagar sin agobios',
+      intro: 'Has reservado una mesa, el camarero llega y tienes dudas, alergias y una cuenta que pagar. Esta escena reúne lo que se dice antes, durante y después de comer en un restaurante noruego.',
+      lines: [
+        { who: 'Servitør', no: 'God kveld! Har dere reservert bord?', es: '¡Buenas noches! ¿Tienen mesa reservada?' },
+        { who: 'Du', no: 'Ja, vi har reservert bord til to personer klokka sju.', es: 'Sí, hemos reservado mesa para dos a las siete.' },
+        { who: 'Servitør', no: 'Hva heter dere?', es: '¿A nombre de quién?' },
+        { who: 'Du', no: 'Det er på navnet García.', es: 'Está a nombre de García.' },
+        { who: 'Servitør', no: 'Vær så god, her er menyen. Ønsker dere noe å drikke først?', es: 'Aquí tienen el menú. ¿Desean algo de beber primero?' },
+        { who: 'Du', no: 'Ja, to glass vann, takk. Og hva anbefaler du?', es: 'Sí, dos vasos de agua, gracias. ¿Y qué recomiendas?' },
+        { who: 'Servitør', no: 'Dagens rett er torsk med grønnsaker. Den er veldig god.', es: 'El plato del día es bacalao con verduras. Está muy bueno.' },
+        { who: 'Du', no: 'Jeg er allergisk mot nøtter. Er det nøtter i retten?', es: 'Soy alérgico a los frutos secos. ¿Lleva frutos secos el plato?' },
+        { who: 'Servitør', no: 'Nei, det er ikke nøtter i den. Men jeg skal sjekke med kjøkkenet.', es: 'No, no lleva. Pero lo comprobaré con la cocina.' },
+        { who: 'Du', no: 'Tusen takk. Vi tar to av dagens rett.', es: 'Muchas gracias. Tomaremos dos del plato del día.' },
+        { who: 'Servitør', no: 'Vil dere ha dessert?', es: '¿Quieren postre?' },
+        { who: 'Du', no: 'Nei takk, men vi vil gjerne ha regningen. Kan vi betale hver for oss?', es: 'No, gracias, pero quisiéramos la cuenta. ¿Podemos pagar por separado?' },
+        { who: 'Servitør', no: 'Selvfølgelig. Jeg tar kortet når dere er klare.', es: 'Por supuesto. Tomo la tarjeta cuando estén listos.' },
+        { who: 'Du', no: 'Takk for maten!', es: '¡Gracias por la comida!' }
+      ],
+      vocab: [
+        { no: 'reservere', es: 'reservar' },
+        { no: 'bord', es: 'mesa' },
+        { no: 'meny', es: 'menú' },
+        { no: 'servitør', es: 'camarero' },
+        { no: 'drikke', es: 'beber, bebida' },
+        { no: 'anbefale', es: 'recomendar' },
+        { no: 'dagens rett', es: 'plato del día' },
+        { no: 'allergisk mot', es: 'alérgico a' },
+        { no: 'nøtter', es: 'frutos secos' },
+        { no: 'kjøkken', es: 'cocina' },
+        { no: 'dessert', es: 'postre' },
+        { no: 'regning', es: 'cuenta' },
+        { no: 'hver for oss', es: 'por separado' },
+        { no: 'tips', es: 'propina' }
+      ],
+      phrases: [
+        { no: 'Har dere reservert bord?', es: '¿Tienen mesa reservada?' },
+        { no: 'Vi har reservert bord til to.', es: 'Hemos reservado mesa para dos.' },
+        { no: 'Hva anbefaler du?', es: '¿Qué recomiendas?' },
+        { no: 'Jeg er allergisk mot ...', es: 'Soy alérgico a ...' },
+        { no: 'Kan vi betale hver for oss?', es: '¿Podemos pagar por separado?' },
+        { no: 'Takk for maten!', es: '¡Gracias por la comida!' }
+      ],
+      tip: 'En Noruega lo normal es esperar a que te sienten, pedir en la mesa y pagar al final. El agua del grifo suele ser gratis; si quieres una botella, pídela. La propina no es obligatoria: si el servicio ha estado bien, puedes redondear o dejar un poco. Para alérgenos, di «Jeg er allergisk mot ...» y pregunta «Er det ... i retten?». Para pagar, «regningen» es la cuenta y «hver for oss» significa por separado. «Takk for maten» se dice al terminar, también en casas particulares.',
+      exercises: [
+        {
+          type: 'mcq',
+          prompt: '¿Qué piden para beber al principio?',
+          options: ['Dos vasos de agua', 'Dos cervezas', 'Una botella de vino', 'Dos cafés'],
+          answer: 0,
+          explain: 'El cliente dice «to glass vann, takk».'
+        },
+        {
+          type: 'gap',
+          prompt: 'Completa la frase:',
+          sentence: 'Jeg er allergisk ___ nøtter.',
+          answers: ['mot'],
+          bank: ['mot', 'på', 'av'],
+          es: 'Soy alérgico a los frutos secos.',
+          explain: 'La expresión fija es «allergisk mot».'
+        },
+        {
+          type: 'order',
+          prompt: 'Ordena la frase:',
+          words: ['Kan', 'vi', 'betale', 'hver', 'for', 'oss?'],
+          es: '¿Podemos pagar por separado?',
+          explain: '«Hver for oss» = cada uno por su lado; «betale hver for oss» = pagar por separado.'
+        },
+        {
+          type: 'listen',
+          audio: 'Hva anbefaler du?',
+          es: '¿Qué recomiendas?',
+          explain: '«Å anbefale» = recomendar. Es la pregunta perfecta si no conoces el menú.'
+        },
+        {
+          type: 'cloze',
+          prompt: 'Completa la escena:',
+          text: 'Vi har reservert ___ til to. Jeg er allergisk ___ nøtter. Kan vi få ___?',
+          answers: ['bord', 'mot', 'regningen'],
+          bank: ['bord', 'mot', 'regningen', 'meny', 'tips', 'kjøkkenet'],
+          es: 'Hemos reservado mesa para dos. Soy alérgico a los frutos secos. ¿Nos trae la cuenta?',
+          explain: 'Las tres palabras clave: «bord», «allergisk mot» y «regningen».'
+        }
+      ]
+    },
+    {
       id: 'butikken',
       image: 'assets/img/dialogues/butikken.svg',
       imageAlt: 'Cliente y dependienta en un supermercado noruego',
