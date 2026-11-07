@@ -10,6 +10,8 @@
   var BODY = COURSE.body || { zones: [], parts: [], sensations: [], intensities: [], durations: [], phrases: [], scenarios: [], exercises: [] };
   var STORIES = COURSE.stories || { totalTarget: 12, chapters: [] };
   var A0 = COURSE.a0 || null;
+  var GAMES = COURSE.games || { dagensOrd: { valid: [] } };
+  var wordle = null;
   var I18N = window.I18N;
   var t = I18N.t;
   var tp = I18N.tp;
@@ -55,7 +57,7 @@
   var KEY = 'norsk-kjekt-v1';
 
   function defaults() {
-    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, body: {}, core: { known: {}, packs: {} }, stories: { chapters: {} }, a0: { best: 0, total: 0, at: 0 }, xp: 0, days: {}, review: [], srs: {}, version: 1 };
+    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, body: {}, core: { known: {}, packs: {} }, stories: { chapters: {} }, a0: { best: 0, total: 0, at: 0 }, games: { dagensOrd: { date: '', guesses: [], status: 'playing', played: 0, wins: 0, streak: 0, best: 0, lastWin: '', distribution: [0, 0, 0, 0, 0, 0] } }, xp: 0, days: {}, review: [], srs: {}, version: 1 };
   }
 
   var state = (function load() {
@@ -71,6 +73,7 @@
       var core = { known: {}, packs: {} };
       var stories = { chapters: {} };
       var a0 = { best: 0, total: 0, at: 0 };
+      var games = { dagensOrd: { date: '', guesses: [], status: 'playing', played: 0, wins: 0, streak: 0, best: 0, lastWin: '', distribution: [0, 0, 0, 0, 0, 0] } };
       Object.keys(raw.lessons || {}).forEach(function (id) {
         var v = raw.lessons[id];
         if (v && typeof v === 'object') {
@@ -112,6 +115,22 @@
       if (raw.a0 && typeof raw.a0 === 'object') {
         a0 = { best: Number(raw.a0.best) || 0, total: Number(raw.a0.total) || 0, at: Number(raw.a0.at) || 0 };
       }
+      if (raw.games && raw.games.dagensOrd && typeof raw.games.dagensOrd === 'object') {
+        var gd = raw.games.dagensOrd;
+        var dist = Array.isArray(gd.distribution) ? gd.distribution.slice(0, 6).map(function (x) { return Number(x) || 0; }) : [];
+        while (dist.length < 6) dist.push(0);
+        games.dagensOrd = {
+          date: typeof gd.date === 'string' ? gd.date : '',
+          guesses: Array.isArray(gd.guesses) ? gd.guesses.filter(function (x) { return typeof x === 'string' && /^[a-zæøå]{5}$/.test(x); }).slice(0, 6) : [],
+          status: ['playing', 'won', 'lost'].indexOf(gd.status) > -1 ? gd.status : 'playing',
+          played: Number(gd.played) || 0,
+          wins: Number(gd.wins) || 0,
+          streak: Number(gd.streak) || 0,
+          best: Number(gd.best) || 0,
+          lastWin: typeof gd.lastWin === 'string' ? gd.lastWin : '',
+          distribution: dist
+        };
+      }
       Object.keys(raw.srs || {}).forEach(function (sig) {
         var v = raw.srs[sig];
         if (v && typeof v === 'object') {
@@ -126,6 +145,7 @@
         core: core,
         stories: stories,
         a0: a0,
+        games: games,
         srs: srs,
         exams: raw.exams && typeof raw.exams === 'object' ? raw.exams : {},
         xp: Number(raw.xp) || 0,
@@ -1410,6 +1430,362 @@
   }
 
   /* =======================================================
+     Juegos: Dagens ord
+     ======================================================= */
+
+  var WORDLE_VALID = null;
+
+  function wordleAnswers() {
+    var seen = {};
+    var out = [];
+    CORE.packs.forEach(function (p) {
+      (p.words || []).forEach(function (w) {
+        if (/^[a-zæøå]{5}$/.test(w.no) && !seen[w.no]) {
+          seen[w.no] = true;
+          out.push({ no: w.no, es: w.es });
+        }
+      });
+    });
+    return out;
+  }
+
+  function wordleIsValid(word) {
+    if (!WORDLE_VALID) {
+      WORDLE_VALID = {};
+      (GAMES.dagensOrd.valid || []).forEach(function (w) { WORDLE_VALID[w] = true; });
+      wordleAnswers().forEach(function (w) { WORDLE_VALID[w.no] = true; });
+    }
+    return !!WORDLE_VALID[word];
+  }
+
+  function wordleHash(str) {
+    var h = 0;
+    for (var i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) >>> 0;
+    return h;
+  }
+
+  function wordleYesterday() {
+    var d = new Date();
+    d.setDate(d.getDate() - 1);
+    return todayKey(d);
+  }
+
+  function wordleEvaluate(guess, answer) {
+    var result = [];
+    var left = answer.split('');
+    var i;
+    for (i = 0; i < 5; i++) {
+      if (guess[i] === answer[i]) {
+        result[i] = 'correct';
+        left[i] = null;
+      }
+    }
+    for (i = 0; i < 5; i++) {
+      if (result[i]) continue;
+      var j = left.indexOf(guess[i]);
+      if (j > -1) {
+        result[i] = 'present';
+        left[j] = null;
+      } else {
+        result[i] = 'absent';
+      }
+    }
+    return result;
+  }
+
+  function wordleKeys(guesses, answer) {
+    var rank = { absent: 1, present: 2, correct: 3 };
+    var map = {};
+    guesses.forEach(function (guess) {
+      var ev = wordleEvaluate(guess, answer);
+      guess.split('').forEach(function (ch, i) {
+        if (!map[ch] || rank[ev[i]] > rank[map[ch]]) map[ch] = ev[i];
+      });
+    });
+    return map;
+  }
+
+  function wordleInit(mode) {
+    var answers = wordleAnswers();
+    if (!answers.length) { wordle = null; return false; }
+    var g = state.games.dagensOrd;
+    var today = todayKey();
+    if (mode !== 'practice') {
+      if (g.date !== today) {
+        g.date = today;
+        g.guesses = [];
+        g.status = 'playing';
+        save();
+      }
+    }
+    var answer;
+    var guesses = [];
+    var status = 'playing';
+    if (mode === 'practice') {
+      answer = answers[Math.floor(Math.random() * answers.length)];
+    } else {
+      answer = answers[wordleHash(today) % answers.length];
+      guesses = g.guesses.slice();
+      status = g.status;
+    }
+    wordle = {
+      active: true,
+      mode: mode === 'practice' ? 'practice' : 'daily',
+      answer: answer,
+      guesses: guesses,
+      status: status,
+      current: '',
+      message: '',
+      copied: false
+    };
+    wordle.keyStates = wordleKeys(guesses, answer.no);
+    return true;
+  }
+
+  function wordleFinish(win) {
+    if (!wordle || wordle.mode !== 'daily') return;
+    var g = state.games.dagensOrd;
+    var today = todayKey();
+    g.status = win ? 'won' : 'lost';
+    g.guesses = wordle.guesses.slice();
+    if (win) {
+      g.played += 1;
+      g.wins += 1;
+      if (g.lastWin !== today) {
+        g.streak = g.lastWin === wordleYesterday() ? (g.streak || 0) + 1 : 1;
+        g.lastWin = today;
+      }
+      g.best = Math.max(g.best || 0, g.streak);
+      var idx = Math.min(5, Math.max(0, wordle.guesses.length - 1));
+      g.distribution[idx] = (g.distribution[idx] || 0) + 1;
+    } else {
+      g.played += 1;
+      g.streak = 0;
+    }
+    save();
+  }
+
+  function wordleStatsHTML() {
+    var g = state.games.dagensOrd;
+    var pct = g.played ? Math.round((g.wins / g.played) * 100) : 0;
+    var max = 1;
+    g.distribution.forEach(function (n) { if (n > max) max = n; });
+    return '<div class="wordle-stats">' +
+      '<div><b>' + g.played + '</b><span>' + esc(t('wordle.played')) + '</span></div>' +
+      '<div><b>' + pct + '%</b><span>' + esc(t('wordle.winPct')) + '</span></div>' +
+      '<div><b>' + g.streak + '</b><span>' + esc(t('wordle.streak')) + '</span></div>' +
+      '<div><b>' + g.best + '</b><span>' + esc(t('wordle.best')) + '</span></div>' +
+      '</div>' +
+      '<div class="wordle-dist"><h3>' + esc(t('wordle.distribution')) + '</h3>' +
+      g.distribution.map(function (n, i) {
+        return '<div class="wordle-dist-row"><span>' + (i + 1) + '</span>' +
+          '<i style="width:' + (n ? Math.max(4, Math.round((n / max) * 100)) : 0) + '%"></i>' +
+          '<b>' + n + '</b></div>';
+      }).join('') + '</div>';
+  }
+
+  function wordleBoardHTML() {
+    var rows = [];
+    for (var r = 0; r < 6; r++) {
+      var guess = r < wordle.guesses.length ? wordle.guesses[r] : (r === wordle.guesses.length ? wordle.current : '');
+      var ev = r < wordle.guesses.length ? wordleEvaluate(guess, wordle.answer.no) : [];
+      var cells = [];
+      for (var c = 0; c < 5; c++) {
+        var ch = guess[c] || '';
+        var cls = 'wordle-tile';
+        if (ch) cls += ' filled';
+        if (r < wordle.guesses.length) cls += ' ' + ev[c];
+        cells.push('<div class="' + cls + '">' + esc(ch) + '</div>');
+      }
+      rows.push('<div class="wordle-row' + (r === wordle.guesses.length && wordle.status === 'playing' ? ' current' : '') + '">' + cells.join('') + '</div>');
+    }
+    return rows.join('');
+  }
+
+  function wordleKeyboardHTML() {
+    var rows = ['qwertyuiopå', 'asdfghjkløæ', 'zxcvbnm'];
+    return rows.map(function (row, ri) {
+      var keys = row.split('').map(function (ch) {
+        var stateCls = wordle.keyStates[ch] || '';
+        return '<button class="wordle-key ' + stateCls + '" type="button" data-k="' + ch + '"' +
+          (wordle.status !== 'playing' ? ' disabled' : '') + '>' + esc(ch) + '</button>';
+      }).join('');
+      if (ri === 2) {
+        keys = '<button class="wordle-key wide" type="button" data-k="enter" aria-label="' + esc(t('wordle.enter')) + '"' +
+          (wordle.status !== 'playing' ? ' disabled' : '') + '>⏎</button>' + keys +
+          '<button class="wordle-key wide" type="button" data-k="delete" aria-label="' + esc(t('wordle.delete')) + '"' +
+          (wordle.status !== 'playing' ? ' disabled' : '') + '>⌫</button>';
+      }
+      return '<div class="wordle-keyrow">' + keys + '</div>';
+    }).join('');
+  }
+
+  function wordleStatusHTML() {
+    if (wordle.status === 'playing') {
+      return '<p class="wordle-help">' + esc(t('wordle.help')) + '</p>';
+    }
+    var won = wordle.status === 'won';
+    return '<div class="wordle-result ' + (won ? 'won' : 'lost') + '">' +
+      '<h2>' + esc(won ? t('wordle.win') : t('wordle.lose')) + '</h2>' +
+      '<p>' + esc(t('wordle.answer')) + ' <b dir="ltr">' + esc(wordle.answer.no) + '</b> ' + say(wordle.answer.no) + '</p>' +
+      '<p class="wordle-translation">' + esc(wordle.answer.es) + '</p>' +
+      (wordle.mode === 'daily' ? '<p class="wordle-tomorrow">' + esc(t('wordle.tomorrow')) + '</p>' : '') +
+      '<div class="actions">' +
+      (wordle.mode === 'daily' ? '<button class="btn primary" type="button" id="wordle-share">' + esc(wordle.copied ? t('wordle.copied') : t('wordle.share')) + '</button>' : '') +
+      '<button class="btn ghost" type="button" id="wordle-new">' + esc(wordle.mode === 'daily' ? t('wordle.tryPractice') : t('wordle.newPractice')) + '</button>' +
+      '</div></div>';
+  }
+
+  function paintWordle() {
+    if (!wordle) return;
+    var grid = document.getElementById('wordle-grid');
+    var keys = document.getElementById('wordle-keys');
+    var status = document.getElementById('wordle-status');
+    var msg = document.getElementById('wordle-message');
+    var stats = document.getElementById('wordle-stats');
+    if (grid) grid.innerHTML = wordleBoardHTML();
+    if (keys) keys.innerHTML = wordleKeyboardHTML();
+    if (status) status.innerHTML = wordleStatusHTML();
+    if (msg) msg.textContent = wordle.message || '';
+    if (stats) stats.innerHTML = wordleStatsHTML();
+  }
+
+  function wordleShare() {
+    if (!wordle || wordle.mode !== 'daily' || wordle.status === 'playing') return;
+    var rows = wordle.guesses.map(function (guess) {
+      return wordleEvaluate(guess, wordle.answer.no).map(function (x) {
+        return x === 'correct' ? '🟩' : x === 'present' ? '🟨' : '⬛';
+      }).join('');
+    }).join('\n');
+    var text = 'Norsk Kjekt · Dagens ord ' + todayKey() + '\n' + wordle.guesses.length + '/6\n' + rows;
+    function done() {
+      wordle.copied = true;
+      paintWordle();
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done).catch(function () {
+        wordle.message = text;
+        paintWordle();
+      });
+    } else {
+      wordle.message = text;
+      paintWordle();
+    }
+  }
+
+  function wordleSubmit() {
+    if (!wordle || wordle.status !== 'playing') return;
+    var guess = wordle.current;
+    if (guess.length < 5) {
+      wordle.message = t('wordle.notEnough');
+      paintWordle();
+      return;
+    }
+    if (!wordleIsValid(guess)) {
+      wordle.message = t('wordle.notInList');
+      paintWordle();
+      return;
+    }
+    if (wordle.guesses.indexOf(guess) > -1) {
+      wordle.message = t('wordle.already');
+      paintWordle();
+      return;
+    }
+    wordle.guesses.push(guess);
+    wordle.current = '';
+    wordle.message = '';
+    wordle.keyStates = wordleKeys(wordle.guesses, wordle.answer.no);
+    if (guess === wordle.answer.no) {
+      wordle.status = 'won';
+      wordleFinish(true);
+    } else if (wordle.guesses.length >= 6) {
+      wordle.status = 'lost';
+      wordleFinish(false);
+    } else if (wordle.mode === 'daily') {
+      save();
+    }
+    paintWordle();
+  }
+
+  function wordlePress(key) {
+    if (!wordle || wordle.status !== 'playing') return;
+    key = String(key).toLowerCase();
+    if (key === 'enter') { wordleSubmit(); return; }
+    if (key === 'delete' || key === 'backspace') {
+      wordle.current = wordle.current.slice(0, -1);
+      wordle.message = '';
+      paintWordle();
+      return;
+    }
+    if (/^[a-zæøå]$/.test(key) && wordle.current.length < 5) {
+      wordle.current += key;
+      wordle.message = '';
+      paintWordle();
+    }
+  }
+
+  function renderGames() {
+    var g = state.games.dagensOrd;
+    var pct = g.played ? Math.round((g.wins / g.played) * 100) : 0;
+    app.innerHTML =
+      '<div class="crumbs"><a href="#/">' + esc(t('crumb.home')) + '</a> <span>›</span> <span>' + esc(t('games.title')) + '</span></div>' +
+      '<section class="colo-intro games-intro">' +
+      '  <span class="eyebrow">' + esc(t('games.eyebrow')) + '</span>' +
+      '  <h1>' + esc(t('games.title')) + '</h1>' +
+      '  <p>' + esc(t('games.intro')) + '</p>' +
+      '</section>' +
+      '<div class="games-grid">' +
+      '  <a class="game-card live" href="#/juegos/dagens-ord">' +
+      '    <span class="game-emoji">🟩</span>' +
+      '    <span class="chip done">' + esc(t('games.live')) + '</span>' +
+      '    <h2>' + esc(t('games.dailyTitle')) + '</h2>' +
+      '    <p>' + esc(t('games.dailyText')) + '</p>' +
+      '    <div class="game-card-stats"><span>' + g.played + ' ' + esc(t('wordle.played')) + '</span><span>' + pct + '% ' + esc(t('wordle.winPct')) + '</span></div>' +
+      '    <span class="btn primary">' + esc(t('games.play')) + '</span>' +
+      '  </a>' +
+      '  <div class="game-card soon"><span class="game-emoji">⚡</span><h2>' + esc(t('games.phraseTitle')) + '</h2><p>' + esc(t('games.soonText')) + '</p><span class="chip plain">' + esc(t('games.soon')) + '</span></div>' +
+      '  <div class="game-card soon"><span class="game-emoji">🔍</span><h2>' + esc(t('games.errorTitle')) + '</h2><p>' + esc(t('games.soonText')) + '</p><span class="chip plain">' + esc(t('games.soon')) + '</span></div>' +
+      '</div>';
+  }
+
+  function renderDagensOrd(mode) {
+    if (!wordleInit(mode || 'daily')) { renderGames(); return; }
+    app.innerHTML =
+      '<div class="crumbs"><a href="#/juegos">' + esc(t('games.title')) + '</a> <span>›</span> <span>' + esc(t('games.dailyTitle')) + '</span></div>' +
+      '<section class="game-hero">' +
+      '  <div><span class="eyebrow">' + esc(t('games.eyebrow')) + '</span>' +
+      '    <h1>' + esc(t('games.dailyTitle')) + '</h1>' +
+      '    <p>' + esc(t('wordle.subtitle')) + '</p></div>' +
+      '  <div class="game-mode">' +
+      '    <button type="button" class="' + (wordle.mode === 'daily' ? 'active' : '') + '" id="wordle-daily">' + esc(t('wordle.daily')) + '</button>' +
+      '    <button type="button" class="' + (wordle.mode === 'practice' ? 'active' : '') + '" id="wordle-practice">' + esc(t('wordle.practice')) + '</button>' +
+      '  </div>' +
+      '</section>' +
+      '<div class="wordle-layout">' +
+      '  <section class="wordle-panel">' +
+      '    <div class="wordle-grid" id="wordle-grid" role="grid" aria-label="' + esc(t('games.dailyTitle')) + '"></div>' +
+      '    <p class="wordle-message" id="wordle-message" aria-live="polite"></p>' +
+      '    <div class="wordle-keyboard" id="wordle-keys"></div>' +
+      '  </section>' +
+      '  <aside class="wordle-side">' +
+      '    <div class="wordle-side-card"><h2>' + esc(t('games.dailyTitle')) + '</h2><p>' + esc(t('wordle.subtitle')) + '</p>' +
+      '      <p class="wordle-small">' + esc(t('wordle.rules')) + '</p></div>' +
+      '    <div class="wordle-side-card" id="wordle-status"></div>' +
+      '    <div class="wordle-side-card" id="wordle-stats"></div>' +
+      '  </aside>' +
+      '</div>';
+
+    paintWordle();
+
+    document.getElementById('wordle-keys').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-k]');
+      if (b) wordlePress(b.getAttribute('data-k'));
+    });
+    document.getElementById('wordle-daily').addEventListener('click', function () { renderDagensOrd('daily'); });
+    document.getElementById('wordle-practice').addEventListener('click', function () { renderDagensOrd('practice'); });
+  }
+
+  /* =======================================================
      Meldinger: grupos de WhatsApp noruegos
      ======================================================= */
 
@@ -2113,6 +2489,7 @@
       '  <a class="practice-chip" href="#/kroppen"><b>🧍 ' + esc(t('home.bodyChip')) + '</b><span>' + esc(t('home.bodyChipSub')) + '</span></a>' +
       '  <a class="practice-chip" href="#/kjerneord"><b>📚 ' + esc(t('home.coreChip')) + '</b><span>' + esc(t('home.coreChipSub')) + '</span></a>' +
       '  <a class="practice-chip" href="#/historien"><b>📖 ' + esc(t('home.storyChip')) + '</b><span>' + esc(t('home.storyChipSub')) + '</span></a>' +
+      '  <a class="practice-chip" href="#/juegos"><b>🎮 ' + esc(t('home.gamesChip')) + '</b><span>' + esc(t('home.gamesChipSub')) + '</span></a>' +
       '</div>' +
 
       '<section class="a0-banner">' +
@@ -4204,6 +4581,7 @@
     var arg = parts[1] || '';
 
     if (window.TTS) window.TTS.stop();
+    if (wordle) wordle.active = false;
     clearExamTimer();
     window.scrollTo({ top: 0, behavior: 'auto' });
 
@@ -4257,6 +4635,9 @@
       var dialogue = DIALOGUES.find(function (d) { return d.id === arg; });
       if (dialogue) renderDialogue(dialogue);
       else renderDialogues();
+    } else if (name === 'juegos') {
+      if (arg === 'dagens-ord') renderDagensOrd('daily');
+      else renderGames();
     } else if (name === 'a0') {
       renderA0();
     } else if (name === 'historien') {
@@ -4302,6 +4683,14 @@
       window.TTS.speakSequence(seqBtn.getAttribute('data-say-seq').split('|||'));
       return;
     }
+    if (e.target.closest('#wordle-share')) {
+      wordleShare();
+      return;
+    }
+    if (e.target.closest('#wordle-new')) {
+      renderDagensOrd('practice');
+      return;
+    }
     var install = e.target.closest('[data-install]');
     if (install) {
       if (!deferredInstallPrompt) return;
@@ -4311,6 +4700,26 @@
         refreshInstallUI();
       });
       return;
+    }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (!wordle || !wordle.active) return;
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      wordlePress('enter');
+      return;
+    }
+    if (e.key === 'Backspace') {
+      e.preventDefault();
+      wordlePress('delete');
+      return;
+    }
+    var k = String(e.key).toLowerCase();
+    if (/^[a-zæøå]$/.test(k)) {
+      e.preventDefault();
+      wordlePress(k);
     }
   });
 

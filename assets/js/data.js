@@ -4125,6 +4125,41 @@ window.COURSE = {
     ]
   },
   /* -------------------------------------------------------------------- */
+  games: {
+    dagensOrd: {
+      // Palabras válidas para las conjeturas (5 letras). Las respuestas se
+      // derivan de las palabras de 5 letras del núcleo.
+      valid: [
+      'aldri', 'alene', 'altså', 'andre', 'angst', 'ankel', 'annen', 'annet', 'april', 'bedre', 'begge', 'beste',
+      'besøk', 'betyr', 'bevis', 'bidra', 'bjørn', 'blant', 'blikk', 'blitt', 'boden', 'bonus', 'brann', 'bruke',
+      'bunke', 'bydel', 'bygge', 'bytte', 'dagen', 'dager', 'damen', 'danse', 'deler', 'denne', 'derav', 'dette',
+      'dusje', 'eldre', 'eller', 'endre', 'enkel', 'enkle', 'etikk', 'etter', 'faste', 'feber', 'feire', 'ferie',
+      'fersk', 'finne', 'fiske', 'fjell', 'fjord', 'flere', 'forbi', 'forby', 'fordi', 'frist', 'frukt', 'fullt',
+      'føler', 'føles', 'følge', 'først', 'gaten', 'gjest', 'gjort', 'gjøre', 'glass', 'glemt', 'godta', 'greit',
+      'grunn', 'gråte', 'guide', 'hadde', 'helst', 'henne', 'heter', 'hevde', 'hjelp', 'hobby', 'hodet', 'hofte',
+      'holde', 'hoste', 'hoven', 'hvert', 'hvile', 'hvitt', 'hylle', 'hytta', 'håper', 'hører', 'høyre', 'igjen',
+      'ingen', 'ironi', 'jenta', 'jente', 'jobbe', 'kaffe', 'kaldt', 'kassa', 'kasse', 'kaste', 'kjent', 'kjøpe',
+      'kjøpt', 'klage', 'klare', 'klart', 'knapt', 'komme', 'konto', 'koste', 'kryss', 'kunde', 'kunne', 'kvalm',
+      'kveld', 'lager', 'laget', 'langt', 'later', 'leder', 'ledig', 'legen', 'legge', 'leien', 'lenge', 'leser',
+      'leses', 'leter', 'lever', 'ligge', 'liker', 'lille', 'liten', 'liter', 'livet', 'lover', 'lukke', 'lunge',
+      'lunsj', 'lykke', 'lytte', 'låner', 'lærer', 'løfte', 'mange', 'maten', 'mener', 'moral', 'moren', 'motiv',
+      'mulig', 'måler', 'målet', 'måned', 'måtte', 'mørkt', 'møter', 'møtes', 'natur', 'neste', 'netto', 'nevnt',
+      'norsk', 'nyhet', 'osten', 'pakke', 'papir', 'pappa', 'passe', 'pause', 'peker', 'plass', 'plast', 'plikt',
+      'poeng', 'posen', 'prate', 'prøve', 'puste', 'påske', 'regel', 'regne', 'reise', 'reist', 'ringe', 'rolig',
+      'rolle', 'roper', 'runde', 'rundt', 'rydde', 'røyke', 'saken', 'sakte', 'salve', 'samle', 'samme', 'satte',
+      'savne', 'scene', 'sende', 'setet', 'sette', 'siden', 'siste', 'sitte', 'skade', 'skatt', 'skjer', 'skole',
+      'slutt', 'smake', 'snakk', 'snart', 'snill', 'snilt', 'sover', 'spare', 'spart', 'spise', 'sterk', 'stige',
+      'stolt', 'stopp', 'stort', 'strøm', 'stund', 'svake', 'svare', 'synes', 'synge', 'søker', 'tanke', 'tavle',
+      'tegne', 'tempo', 'tenke', 'tiden', 'timen', 'timer', 'tjene', 'tolke', 'tomme', 'torsk', 'trene', 'trikk',
+      'trist', 'tross', 'trygg', 'trygt', 'trøst', 'trøtt', 'tunge', 'tungt', 'turen', 'tusen', 'tvert', 'tvile',
+      'tyder', 'tårer', 'uenig', 'uklar', 'ulike', 'usunn', 'varer', 'vaske', 'velge', 'vente', 'verre', 'verst',
+      'ville', 'vindu', 'viser', 'visst', 'visum', 'vokse', 'vokst', 'vondt', 'været', 'åpner', 'åpnet', 'årene',
+      'årsak', 'ærlig', 'øvrig',
+      ]
+    }
+  },
+
+  /* -------------------------------------------------------------------- */
   a0: {
     subtitle: 'El alfabeto, los sonidos y las primeras palabras',
     intro: 'Un punto de partida para quien nunca ha estudiado noruego: cómo funciona el idioma, cómo se leen sus letras y las primeras frases para presentarte.',
