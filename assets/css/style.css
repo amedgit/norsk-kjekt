@@ -1241,6 +1241,14 @@ html[dir="rtl"] .exam-usertext {
 .verbos-intro { background: linear-gradient(135deg, #1e3f4a, #2e6b73); }
 .verbos-count { color: rgba(255, 255, 255, .82); font-size: .84rem; margin-top: .6rem; }
 .verbos-toolbar { display: flex; flex-direction: column; gap: .6rem; margin: 1rem 0 .8rem; }
+.verbos-test {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  flex-wrap: wrap; margin: 1rem 0 .8rem;
+}
+.verbos-test h2 { font-size: 1.05rem; margin-bottom: .25rem; }
+.verbos-test p { font-size: .82rem; }
+.verbos-test #verbos-test-mount { min-width: 220px; }
+
 .verbos-toolbar input {
   width: 100%; max-width: 420px; padding: .55rem .8rem;
   border: 1px solid var(--line); border-radius: 10px;

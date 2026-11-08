@@ -60,7 +60,7 @@
   var KEY = 'norsk-kjekt-v1';
 
   function defaults() {
-    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, body: {}, core: { known: {}, packs: {} }, stories: { chapters: {} }, a0: { best: 0, total: 0, at: 0 }, grammar: { topics: {} }, verbos: { known: {} }, games: { dagensOrd: { date: '', guesses: [], status: 'playing', played: 0, wins: 0, streak: 0, best: 0, lastWin: '', distribution: [0, 0, 0, 0, 0, 0] }, hukommelse: { easy: { played: 0, bestMoves: 0, bestTime: 0 }, medium: { played: 0, bestMoves: 0, bestTime: 0 }, hard: { played: 0, bestMoves: 0, bestTime: 0 } } }, xp: 0, days: {}, review: [], srs: {}, version: 1 };
+    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, body: {}, core: { known: {}, packs: {} }, stories: { chapters: {} }, a0: { best: 0, total: 0, at: 0 }, grammar: { topics: {} }, verbos: { known: {}, best: { best: 0, total: 0, at: 0 } }, games: { dagensOrd: { date: '', guesses: [], status: 'playing', played: 0, wins: 0, streak: 0, best: 0, lastWin: '', distribution: [0, 0, 0, 0, 0, 0] }, hukommelse: { easy: { played: 0, bestMoves: 0, bestTime: 0 }, medium: { played: 0, bestMoves: 0, bestTime: 0 }, hard: { played: 0, bestMoves: 0, bestTime: 0 } } }, xp: 0, days: {}, review: [], srs: {}, version: 1 };
   }
 
   var state = (function load() {
@@ -77,7 +77,7 @@
       var stories = { chapters: {} };
       var a0 = { best: 0, total: 0, at: 0 };
       var grammar = { topics: {} };
-      var verbos = { known: {} };
+      var verbos = { known: {}, best: { best: 0, total: 0, at: 0 } };
       var games = { dagensOrd: { date: '', guesses: [], status: 'playing', played: 0, wins: 0, streak: 0, best: 0, lastWin: '', distribution: [0, 0, 0, 0, 0, 0] }, hukommelse: { easy: { played: 0, bestMoves: 0, bestTime: 0 }, medium: { played: 0, bestMoves: 0, bestTime: 0 }, hard: { played: 0, bestMoves: 0, bestTime: 0 } } };
       Object.keys(raw.lessons || {}).forEach(function (id) {
         var v = raw.lessons[id];
@@ -132,6 +132,13 @@
         Object.keys(raw.verbos.known || {}).forEach(function (id) {
           if (raw.verbos.known[id]) verbos.known[id] = true;
         });
+        if (raw.verbos.best && typeof raw.verbos.best === 'object') {
+          verbos.best = {
+            best: Number(raw.verbos.best.best) || 0,
+            total: Number(raw.verbos.best.total) || 0,
+            at: Number(raw.verbos.best.at) || 0
+          };
+        }
       }
       if (raw.games && raw.games.dagensOrd && typeof raw.games.dagensOrd === 'object') {
         var gd = raw.games.dagensOrd;
@@ -1505,6 +1512,47 @@
     }).join('');
   }
 
+  function verbQuiz() {
+    var pool = shuffle(VERBOS.items).slice(0, 10);
+    return pool.map(function (v, i) {
+      if (i % 2 === 0) {
+        var seen = {};
+        seen[v.es] = true;
+        var others = [];
+        shuffle(VERBOS.items).forEach(function (x) {
+          if (others.length < 3 && !seen[x.es]) {
+            seen[x.es] = true;
+            others.push(x.es);
+          }
+        });
+        var mOpts = shuffle([v.es].concat(others));
+        return {
+          type: 'mcq',
+          prompt: t('verbos.quizMeaning', { inf: v.inf }),
+          options: mOpts,
+          answer: mOpts.indexOf(v.es),
+          audio: v.inf,
+          es: v.exampleEs
+        };
+      }
+      var forms = [
+        { key: 'present', label: t('verbos.present'), value: v.present },
+        { key: 'past', label: t('verbos.past'), value: v.past },
+        { key: 'perfect', label: t('verbos.perfect'), value: v.perfect }
+      ];
+      var picked = forms[Math.floor(Math.random() * forms.length)];
+      var fOpts = shuffle([v.present, v.past, v.perfect, v.inf]);
+      return {
+        type: 'mcq',
+        prompt: t('verbos.quizForm', { form: picked.label, inf: v.inf }),
+        options: fOpts,
+        answer: fOpts.indexOf(picked.value),
+        audio: picked.value,
+        es: v.exampleEs
+      };
+    });
+  }
+
   function paintVerbos() {
     var mount = document.getElementById('verbos-list');
     if (mount) mount.innerHTML = verbosListHTML();
@@ -1526,6 +1574,11 @@
       '  <p>' + esc(t('verbos.intro')) + '</p>' +
       '  <p class="verbos-count" id="verbos-count"></p>' +
       '</section>' +
+      '<section class="card verbos-test">' +
+      '  <div><h2>' + esc(t('verbos.testTitle')) + '</h2>' +
+      '    <p class="muted">' + esc(t('verbos.testText')) + '</p></div>' +
+      '  <div id="verbos-test-mount"></div>' +
+      '</section>' +
       '<div class="verbos-toolbar">' +
       '  <input id="verbos-q" type="search" placeholder="' + esc(t('verbos.search')) + '" aria-label="' + esc(t('verbos.search')) + '">' +
       '  <div class="fchips" id="verbos-themes">' +
@@ -1538,6 +1591,35 @@
       '<div id="verbos-list" class="verbos-list"></div>';
 
     paintVerbos();
+
+    var testMount = document.getElementById('verbos-test-mount');
+    var best = state.verbos.best;
+    testMount.innerHTML =
+      '<div class="actions"><button class="btn primary" id="start-verb-test">' + esc(t('verbos.testStart')) + '</button>' +
+      (best && best.total ? '<span class="ex-hint">' + esc(t('verbos.testBest', { best: best.best, total: best.total })) + '</span>' : '') +
+      '</div>';
+
+    document.getElementById('start-verb-test').addEventListener('click', function () {
+      runExercises(testMount, verbQuiz(), {
+        label: t('verbos.testLabel'),
+        onDone: function (res) {
+          state.verbos.best = {
+            best: Math.max(best ? best.best : 0, res.correct),
+            total: res.total,
+            at: Date.now()
+          };
+          state.xp += res.correct * 10;
+          markDay();
+          save();
+          refreshHud();
+          var box = testMount.querySelector('.result');
+          if (box) {
+            box.insertAdjacentHTML('beforeend',
+              '<p class="ex-hint">' + esc(t('result.progress', { n: res.correct * 10 })) + '</p>');
+          }
+        }
+      });
+    });
 
     var input = document.getElementById('verbos-q');
     input.addEventListener('input', function () {

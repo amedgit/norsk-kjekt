@@ -328,7 +328,7 @@ hay conjugación por persona, así que cada verbo muestra sus formas clave:
 - infinitivo, presente, pasado, perfecto e imperativo;
 - ejemplo con audio y traducción;
 - nivel, tema y marca de regular o irregular;
-- buscador, filtros por tema y botón **«La sé»**.
+- buscador, filtros por tema, botón **«La sé»** y test de 10 verbos.
 
 El progreso vive en `state.verbos.known`. El acceso está en el menú **Más**.
 ### Gramática (A0–A2)
