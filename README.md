@@ -299,6 +299,25 @@ juego de memoria para relacionar palabras noruegas con su traducción.
 - Sin prisa: no hay límite de tiempo, solo un contador.
 - Funciona offline y en móvil.
 
+### Guías SEO estáticas
+
+Las guías pensadas para buscadores son HTML estático, separado de la app:
+
+- `/noruego-desde-cero/`
+- `/alfabeto-noruego/`
+- `/vocabulario-noruego/`
+- `/historias-noruego/`
+- `/frases-basicas-noruego/`
+- `/noruego-para-camareros/`
+- `/ejercicios-noruego/`
+- `/bokmal-o-nynorsk/`
+- `/guias/` (índice)
+
+Cada una tiene su propio `title`, meta description, canonical, Open Graph,
+JSON-LD (`Article`, `BreadcrumbList` y `FAQPage`) y enlaces a la app. El
+`sitemap.xml` incluye la portada y todas las guías. Al añadir una guía nueva,
+actualiza el sitemap, enlázala desde `/guias/` y desde el pie de la app.
+
 ### A0 (empezar desde cero)
 
 La sección `#/a0` está pensada para quien nunca ha estudiado noruego. Explica

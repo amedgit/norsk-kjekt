@@ -27,7 +27,7 @@ jobs:
       - name: Preparar sitio estático
         run: |
           mkdir -p _site
-          cp -r index.html assets _site/
+          cp -r index.html assets noruego-desde-cero alfabeto-noruego vocabulario-noruego historias-noruego frases-basicas-noruego noruego-para-camareros ejercicios-noruego bokmal-o-nynorsk guias _site/
           cp robots.txt sitemap.xml CNAME .nojekyll manifest.webmanifest sw.js _site/ 2>/dev/null || true
 
       - name: Configurar Pages

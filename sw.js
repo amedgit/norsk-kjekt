@@ -5,7 +5,7 @@
    - navegación: red primero, con la app cacheada como respaldo offline.
    Sube CACHE_VERSION en cada despliegue para renovar los caches. */
 
-const CACHE_VERSION = 'v38';
+const CACHE_VERSION = 'v41';
 const CORE = `norsk-kjekt-core-${CACHE_VERSION}`;
 const RUNTIME = `norsk-kjekt-runtime-${CACHE_VERSION}`;
 
@@ -14,6 +14,16 @@ const PRECACHE = [
   'index.html',
   'manifest.webmanifest',
   'assets/css/style.css',
+  'assets/css/seo.css',
+  'guias/',
+  'noruego-desde-cero/',
+  'alfabeto-noruego/',
+  'vocabulario-noruego/',
+  'historias-noruego/',
+  'frases-basicas-noruego/',
+  'noruego-para-camareros/',
+  'ejercicios-noruego/',
+  'bokmal-o-nynorsk/',
   'assets/js/app.js',
   'assets/js/consent.js',
   'assets/js/data.js',
@@ -64,7 +74,7 @@ self.addEventListener('fetch', (event) => {
           caches.open(CORE).then((c) => c.put('index.html', copy));
           return res;
         })
-        .catch(() => caches.match('index.html'))
+        .catch(() => caches.match(request).then((hit) => hit || caches.match('index.html')))
     );
     return;
   }

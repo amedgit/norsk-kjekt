@@ -14,8 +14,8 @@
 
   var UI = {
     es: {
-      'meta.title': 'Norsk Kjekt — aprende noruego de verdad',
-      'meta.description': 'Curso de noruego bokmål A1–C2: 15 lecciones, 239 ejercicios, 6 conversaciones cotidianas, 4 grupos de WhatsApp, 6 packs de humor, tablas con audio y 4 simulacros de la Norskprøven.',
+      'meta.title': 'Norsk Kjekt — curso de noruego gratis A0–C2',
+      'meta.description': 'Curso de noruego bokmål A0–C2 gratis: 272 ejercicios, A0 desde cero, 800 palabras, historia con audio, 7 conversaciones y simulacros. Sin registro.',
       'meta.ogDescription': '15 lecciones de bokmål (A1–C2), 239 ejercicios, 6 conversaciones con audio, 4 grupos de WhatsApp, 6 packs de humor, 30 expresiones de la calle y 4 simulacros de examen. Sin registro y sin build.',
       'meta.ogAlt': 'Norsk Kjekt: portal de noruego con ejercicios interactivos',
       'skip': 'Saltar al contenido',
@@ -332,6 +332,7 @@
       'footer.progress': 'Mi progreso',
       'footer.story': 'Historia',
       'footer.privacy': 'Privacidad',
+      'footer.guides': 'Guías',
       'footer.a0': 'A0',
       'consent.title': 'Cookies y estadísticas',
       'consent.text': 'Usamos Google Analytics para saber cuántas personas visitan la web y desde dónde. Puedes aceptar o rechazar sin perder el progreso.',
@@ -788,8 +789,8 @@
     },
 
     en: {
-      'meta.title': 'Norsk Kjekt — learn Norwegian for real',
-      'meta.description': 'Norwegian bokmål course A1–C2: 15 lessons, 239 exercises, 6 everyday conversations, 4 WhatsApp groups, 6 humour packs, audio word tables and 4 Norskprøven mock exams.',
+      'meta.title': 'Norsk Kjekt — free Norwegian course A0–C2',
+      'meta.description': 'Free Norwegian bokmål course A0–C2: 272 exercises, A0 from scratch, 800 words, audio story, 7 conversations and mock exams. No sign-up.',
       'meta.ogDescription': '15 bokmål lessons (A1–C2), 239 interactive exercises, 6 conversations with audio, 4 WhatsApp groups, 6 humour packs, 30 street expressions and 4 mock exams. No sign-up, no build.',
       'meta.ogAlt': 'Norsk Kjekt: a Norwegian portal with interactive exercises',
       'skip': 'Skip to content',
@@ -1106,6 +1107,7 @@
       'footer.progress': 'My progress',
       'footer.story': 'Story',
       'footer.privacy': 'Privacy',
+      'footer.guides': 'Guides',
       'footer.a0': 'A0',
       'consent.title': 'Cookies and statistics',
       'consent.text': 'We use Google Analytics to see how many people visit the site and where they come from. You can accept or reject without losing your progress.',
@@ -1563,8 +1565,8 @@
 ,
 
     fa: {
-      'meta.title': "Norsk Kjekt — نروژی را واقعی یاد بگیر",
-      'meta.description': "دوره زبان نروژی بوکمول A1–C2: ۱۵ درس، ۲۳۹ تمرین، ۶ گفت‌وگوی روزمره، ۴ گروه واتساپ، ۶ بسته طنز، جدول‌های واژه با صدا و ۴ آزمون آزمایشی Norskprøven.",
+      'meta.title': "Norsk Kjekt — دورهٔ رایگان نروژی A0–C2",
+      'meta.description': "دورهٔ رایگان نروژی بوکمول A0–C2: ۲۷۲ تمرین، A0 از صفر، ۸۰۰ واژه، داستان با صدا، ۷ گفت‌وگو و آزمون آزمایشی. بدون ثبت‌نام.",
       'meta.ogDescription': "۱۵ درس بوکمول (A1–C2)، ۲۳۹ تمرین تعاملی، ۶ گفت‌وگو با صدا، ۴ گروه واتساپ، ۶ بسته طنز، ۳۰ اصطلاح خیابانی و ۴ آزمون آزمایشی. بدون ثبت‌نام و بدون build.",
       'meta.ogAlt': "Norsk Kjekt: پرتال نروژی با تمرین‌های تعاملی",
       'skip': "پرش به محتوا",
@@ -1875,6 +1877,7 @@
       'footer.progress': "پیشرفت من",
       'footer.story': "داستان",
       'footer.privacy': "حریم خصوصی",
+      'footer.guides': "راهنماها",
       'footer.a0': "A0",
       'consent.title': "کوکی‌ها و آمار",
       'consent.text': "ما از Google Analytics استفاده می‌کنیم تا بدانیم چند نفر از سایت بازدید می‌کنند و از کجا می‌آیند. می‌توانی بدون از دست دادن پیشرفتت بپذیری یا رد کنی.",

@@ -1,0 +1,67 @@
+/* Estilos de las páginas SEO estáticas. Se cargan después de style.css. */
+
+.seo-top {
+  max-width: 1080px; margin: 0 auto; padding: 1rem clamp(1rem, 4vw, 2.5rem);
+  display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+  border-bottom: 1px solid var(--line);
+}
+.seo-brand { text-decoration: none; color: var(--ink); font-size: 1.1rem; font-weight: 800; white-space: nowrap; }
+.seo-brand b { color: var(--red); }
+.seo-nav { display: flex; flex-wrap: wrap; gap: .15rem; margin-inline-start: auto; }
+.seo-nav a {
+  text-decoration: none; color: var(--ink-soft); font-size: .78rem; font-weight: 600;
+  padding: .35rem .55rem; border-radius: 999px;
+}
+.seo-nav a:hover { background: #eceff4; color: var(--ink); }
+
+.seo-main {
+  display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(240px, .7fr);
+  gap: 1.2rem; align-items: start;
+  max-width: 1080px; margin: 0 auto;
+  padding: 1.2rem clamp(1rem, 4vw, 2.5rem) 4rem;
+}
+.seo-article {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: clamp(1.2rem, 3vw, 2rem);
+  box-shadow: var(--shadow);
+}
+.seo-article h1 { font-size: clamp(1.7rem, 4vw, 2.4rem); line-height: 1.15; margin: .4rem 0 .6rem; }
+.seo-article h2 { font-size: 1.2rem; margin: 1.6rem 0 .5rem; }
+.seo-article h3 { font-size: 1rem; margin: 1.1rem 0 .35rem; }
+.seo-article p, .seo-article li { color: var(--ink-soft); font-size: .93rem; line-height: 1.7; }
+.seo-article ul, .seo-article ol { padding-inline-start: 1.2rem; margin: .5rem 0 .8rem; }
+.seo-article a { color: var(--blue); }
+.seo-lead { font-size: 1.02rem; color: var(--muted); }
+.seo-cta { display: flex; gap: .5rem; flex-wrap: wrap; margin: 1rem 0 1.2rem; }
+.seo-breadcrumb { font-size: .75rem; color: var(--muted); }
+.seo-breadcrumb a { color: var(--muted); text-decoration: none; }
+.seo-tag { display: inline-flex; padding: .18rem .5rem; background: var(--green-soft); color: #0b5c3f; border-radius: 999px; font-size: .7rem; font-weight: 700; }
+.seo-aside { position: sticky; top: 1rem; display: flex; flex-direction: column; gap: .8rem; }
+.seo-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1.1rem; }
+.seo-card h2 { font-size: .9rem; margin-bottom: .4rem; }
+.seo-card a {
+  display: block; text-decoration: none; color: var(--ink-soft); font-size: .82rem;
+  padding: .22rem 0; border-bottom: 1px dashed var(--line);
+}
+.seo-card a:last-child { border-bottom: 0; }
+.seo-card a:hover { color: var(--blue); }
+
+.seo-table { width: 100%; border-collapse: collapse; margin: .7rem 0 1rem; font-size: .85rem; }
+.seo-table th, .seo-table td { text-align: start; padding: .45rem .5rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+.seo-table th { font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.seo-table td[lang="no"] { direction: ltr; unicode-bidi: isolate; font-weight: 700; }
+.seo-faq details { border-top: 1px solid var(--line); padding: .7rem 0; }
+.seo-faq summary { font-weight: 700; cursor: pointer; }
+.seo-faq p { margin-top: .4rem; }
+
+.seo-foot {
+  max-width: 1080px; margin: 0 auto; padding: 1.5rem clamp(1rem, 4vw, 2.5rem) 3rem;
+  border-top: 1px solid var(--line); font-size: .78rem; color: var(--muted);
+}
+.seo-foot a { color: var(--ink-soft); }
+
+@media (max-width: 800px) {
+  .seo-main { grid-template-columns: 1fr; }
+  .seo-aside { position: static; }
+  .seo-nav { margin-inline-start: 0; }
+}
