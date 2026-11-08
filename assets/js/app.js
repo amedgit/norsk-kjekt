@@ -1563,6 +1563,35 @@
     });
   }
 
+  function startVerbTest(mount) {
+    var best = state.verbos.best;
+    runExercises(mount, verbQuiz(), {
+      label: t('verbos.testLabel'),
+      onDone: function (res) {
+        state.verbos.best = {
+          best: Math.max(best ? best.best : 0, res.correct),
+          total: res.total,
+          at: Date.now()
+        };
+        state.xp += res.correct * 10;
+        markDay();
+        save();
+        refreshHud();
+        var box = mount.querySelector('.result');
+        if (box) {
+          box.insertAdjacentHTML('beforeend',
+            '<p class="ex-hint">' + esc(t('result.progress', { n: res.correct * 10 })) + '</p>');
+          var again = document.createElement('button');
+          again.type = 'button';
+          again.className = 'btn ghost';
+          again.textContent = t('verbos.testAgain');
+          again.addEventListener('click', function () { startVerbTest(mount); });
+          box.appendChild(again);
+        }
+      }
+    });
+  }
+
   function renderVerbos() {
     verbosQuery = '';
     verbosTheme = 'all';
@@ -1600,25 +1629,7 @@
       '</div>';
 
     document.getElementById('start-verb-test').addEventListener('click', function () {
-      runExercises(testMount, verbQuiz(), {
-        label: t('verbos.testLabel'),
-        onDone: function (res) {
-          state.verbos.best = {
-            best: Math.max(best ? best.best : 0, res.correct),
-            total: res.total,
-            at: Date.now()
-          };
-          state.xp += res.correct * 10;
-          markDay();
-          save();
-          refreshHud();
-          var box = testMount.querySelector('.result');
-          if (box) {
-            box.insertAdjacentHTML('beforeend',
-              '<p class="ex-hint">' + esc(t('result.progress', { n: res.correct * 10 })) + '</p>');
-          }
-        }
-      });
+      startVerbTest(testMount);
     });
 
     var input = document.getElementById('verbos-q');
