@@ -4931,6 +4931,462 @@ window.COURSE = {
             explain: '«Som» une el sustantivo con la información que lo describe.'
           }
         ]
+      },
+      {
+        id: 'passiv',
+        num: 19,
+        level: 'B1',
+        emoji: '🔄',
+        title: 'La pasiva: bli y -s',
+        subtitle: 'Huset blir bygget / bygges',
+        intro: 'La pasiva se usa cuando el foco está en la acción o en el resultado, no en quien la realiza. En noruego hay dos formas frecuentes: «bli + participio» y la terminación «-s».',
+        notes: [
+          'Pasiva con «bli»: Huset blir bygget. El participio concuerda con el sujeto.',
+          'Pasiva con «-s»: Huset bygges. Es más frecuente en textos escritos y formales.',
+          'El agente se introduce con «av»: Boken ble skrevet av en forfatter.'
+        ],
+        examples: [
+          { no: 'Huset blir bygget i år.', es: 'La casa se construye este año.' },
+          { no: 'Brevet ble sendt i går.', es: 'La carta fue enviada ayer.' },
+          { no: 'Problemet diskuteres ofte.', es: 'El problema se discute a menudo.' }
+        ],
+        mistake: { wrong: 'Huset blir bygge i år.', right: 'Huset blir bygget i år.', why: 'Después de «bli» se usa el participio: bygget, no el infinitivo bygge.' },
+        exercises: [
+          {
+            type: 'gap',
+            prompt: 'Completa con el participio correcto.',
+            sentence: 'Huset blir ___ i år.',
+            answers: ['bygget'],
+            bank: ['bygget', 'bygge', 'bygger'],
+            es: 'La casa se construye este año.',
+            explain: 'La pasiva con «bli» pide el participio: blir bygget.'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase.',
+            words: ['Brevet', 'ble', 'sendt', 'i', 'går.'],
+            es: 'La carta fue enviada ayer.',
+            explain: '«Ble sendt» es la pasiva de «å sende» en pasado.'
+          }
+        ]
+      },
+      {
+        id: 'adjektiv-definit',
+        num: 20,
+        level: 'B1',
+        emoji: '🎨',
+        title: 'Adjetivo definido y doble definición',
+        subtitle: 'den store bilen',
+        intro: 'Cuando un adjetivo acompaña a un sustantivo definido, el noruego marca la definición dos veces: con el artículo delante y con el sufijo del sustantivo.',
+        notes: [
+          'Común: den store bilen. Neutro: det store huset. Plural: de store bilene.',
+          'El adjetivo definido suele terminar en -e.',
+          'La doble definición es obligatoria cuando hay adjetivo: den røde bilen.'
+        ],
+        examples: [
+          { no: 'Den røde bilen er min.', es: 'El coche rojo es mío.' },
+          { no: 'Det gamle huset er fint.', es: 'La casa vieja es bonita.' },
+          { no: 'De små barna leker ute.', es: 'Los niños pequeños juegan fuera.' }
+        ],
+        mistake: { wrong: 'den stor bilen', right: 'den store bilen', why: 'El adjetivo definido toma la forma en -e: den store bilen.' },
+        exercises: [
+          {
+            type: 'gap',
+            prompt: 'Completa con el adjetivo correcto.',
+            sentence: 'Det ___ huset er gammelt.',
+            answers: ['gamle'],
+            bank: ['gamle', 'gammel', 'gammelt'],
+            es: 'La casa vieja es antigua.',
+            explain: 'Con «det ... huset» el adjetivo definido es «gamle».'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase.',
+            words: ['Den', 'røde', 'bilen', 'er', 'min.'],
+            es: 'El coche rojo es mío.',
+            explain: 'Artículo + adjetivo en -e + sustantivo definido.'
+          }
+        ]
+      },
+      {
+        id: 'partikkelverb',
+        num: 21,
+        level: 'B1',
+        emoji: '🧲',
+        title: 'Verbos con partícula',
+        subtitle: 'komme tilbake, gi opp, finne ut',
+        intro: 'Muchos verbos noruegos cambian de significado cuando llevan una partícula. No siempre se traducen literalmente, así que conviene aprender el verbo completo.',
+        notes: [
+          'Ejemplos: komme tilbake (volver), gi opp (rendirse), finne ut (averiguar).',
+          'La partícula puede cambiar el significado: se (ver) / se etter (buscar).',
+          'La partícula suele ir después del verbo y antes del objeto: Jeg ser etter bilen.'
+        ],
+        examples: [
+          { no: 'Jeg kommer tilbake i morgen.', es: 'Vuelvo mañana.' },
+          { no: 'Hun ga opp etter en time.', es: 'Ella se rindió después de una hora.' },
+          { no: 'Vi må finne ut hva som skjedde.', es: 'Tenemos que averiguar qué pasó.' }
+        ],
+        mistake: { wrong: 'Jeg ser bilen etter.', right: 'Jeg ser etter bilen.', why: 'La partícula «etter» va antes del objeto.' },
+        exercises: [
+          {
+            type: 'gap',
+            prompt: 'Completa con el verbo correcto.',
+            sentence: 'Vi må ___ ut hva som skjedde.',
+            answers: ['finne'],
+            bank: ['finne', 'finner', 'fant'],
+            es: 'Tenemos que averiguar qué pasó.',
+            explain: 'Después de «må» va el infinitivo: finne ut.'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase.',
+            words: ['Jeg', 'kommer', 'tilbake', 'i', 'morgen.'],
+            es: 'Vuelvo mañana.',
+            explain: '«Komme tilbake» = volver.'
+          }
+        ]
+      },
+      {
+        id: 'kondisjonal',
+        num: 22,
+        level: 'B1',
+        emoji: '🌦️',
+        title: 'Condicionales',
+        subtitle: 'hvis, dersom, hadde, ville',
+        intro: 'Las condicionales reales usan presente; las hipotéticas usan pasado y «ville». La estructura es parecida al español, pero el orden cambia.',
+        notes: [
+          'Real: Hvis det regner, tar jeg bussen.',
+          'Hipotética: Hvis jeg hadde tid, ville jeg reise.',
+          '«Dersom» es una variante más formal de «hvis».'
+        ],
+        examples: [
+          { no: 'Hvis det regner, tar jeg bussen.', es: 'Si llueve, cojo el autobús.' },
+          { no: 'Hvis jeg hadde tid, ville jeg reise.', es: 'Si tuviera tiempo, viajaría.' },
+          { no: 'Dersom du trenger hjelp, kan du ringe.', es: 'Si necesitas ayuda, puedes llamar.' }
+        ],
+        mistake: { wrong: 'Hvis jeg hadde tid, jeg ville reise.', right: 'Hvis jeg hadde tid, ville jeg reise.', why: 'Después de la condicional, la frase principal invierte verbo y sujeto: ville jeg.' },
+        exercises: [
+          {
+            type: 'gap',
+            prompt: 'Completa la condicional.',
+            sentence: 'Hvis jeg ___ tid, ville jeg reise.',
+            answers: ['hadde'],
+            bank: ['hadde', 'har', 'ha'],
+            es: 'Si tuviera tiempo, viajaría.',
+            explain: 'La hipótesis irreal usa el pasado: hadde.'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase.',
+            words: ['Hvis', 'det', 'regner,', 'tar', 'jeg', 'bussen.'],
+            es: 'Si llueve, cojo el autobús.',
+            explain: 'La condicional real usa presente en las dos partes.'
+          }
+        ]
+      },
+      {
+        id: 'indirekte',
+        num: 23,
+        level: 'B1',
+        emoji: '🗣️',
+        title: 'Estilo indirecto',
+        subtitle: 'Hun sier at ...',
+        intro: 'Para contar lo que alguien dijo se usa «at» y se ajustan los pronombres y, a veces, los tiempos. También cambia el orden en la subordinada.',
+        notes: [
+          'Directo: «Jeg bor i Oslo». Indirecto: Hun sier at hun bor i Oslo.',
+          'Con verbo pasado: Han sa at han var syk.',
+          '«I morgen» puede pasar a «dagen etter» en el estilo indirecto.'
+        ],
+        examples: [
+          { no: 'Hun sier at hun bor i Oslo.', es: 'Ella dice que vive en Oslo.' },
+          { no: 'Han sa at han var syk.', es: 'Él dijo que estaba enfermo.' },
+          { no: 'De fortalte at de skulle reise dagen etter.', es: 'Contaron que viajarían al día siguiente.' }
+        ],
+        mistake: { wrong: 'Hun sier at hun er ikke hjemme.', right: 'Hun sier at hun ikke er hjemme.', why: 'En la subordinada «ikke» va antes del verbo: ikke er.' },
+        exercises: [
+          {
+            type: 'gap',
+            prompt: 'Completa el estilo indirecto.',
+            sentence: 'Hun sier at hun ___ i Oslo.',
+            answers: ['bor'],
+            bank: ['bor', 'bo', 'bode'],
+            es: 'Ella dice que vive en Oslo.',
+            explain: 'El verbo de la subordinada va en presente: bor.'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase.',
+            words: ['Han', 'sa', 'at', 'han', 'var', 'syk.'],
+            es: 'Él dijo que estaba enfermo.',
+            explain: '«Sa at» introduce el estilo indirecto en pasado.'
+          }
+        ]
+      },
+      {
+        id: 'leddsetning',
+        num: 24,
+        level: 'B1',
+        emoji: '🧱',
+        title: 'Orden de palabras en subordinadas',
+        subtitle: 'ikke antes del verbo',
+        intro: 'La regla V2 no se aplica dentro de la subordinada. Allí el sujeto va delante del verbo y «ikke» se coloca antes del verbo.',
+        notes: [
+          'Principal: Jeg vet at han ikke kommer.',
+          'Subordinada: sujeto + ikke + verbo + complemento.',
+          'Con adverbios: Hun sier at hun alltid tar bussen.'
+        ],
+        examples: [
+          { no: 'Jeg vet at han ikke kommer.', es: 'Sé que él no viene.' },
+          { no: 'Hun sier at hun alltid tar bussen.', es: 'Ella dice que siempre coge el autobús.' },
+          { no: 'Vi blir hjemme fordi det regner.', es: 'Nos quedamos en casa porque llueve.' }
+        ],
+        mistake: { wrong: 'Jeg vet at han kommer ikke.', right: 'Jeg vet at han ikke kommer.', why: 'En la subordinada «ikke» va antes del verbo.' },
+        exercises: [
+          {
+            type: 'gap',
+            prompt: 'Completa la subordinada.',
+            sentence: 'Jeg vet at han ikke ___ i dag.',
+            answers: ['kommer'],
+            bank: ['kommer', 'kom', 'komme'],
+            es: 'Sé que él no viene hoy.',
+            explain: 'Presente en la subordinada: kommer.'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase.',
+            words: ['Hun', 'sier', 'at', 'hun', 'alltid', 'tar', 'bussen.'],
+            es: 'Ella dice que siempre coge el autobús.',
+            explain: 'El adverbio «alltid» va antes del verbo en la subordinada.'
+          }
+        ]
+      },
+      {
+        id: 'substantivering',
+        num: 25,
+        level: 'B2',
+        emoji: '🧠',
+        title: 'Sustantivación',
+        subtitle: 'lesing, bygging, åpenhet',
+        intro: 'En noruego muchos verbos y adjetivos se convierten en sustantivos con sufijos como -ing, -het, -else o -skap. Es un recurso muy útil para escribir con precisión.',
+        notes: [
+          'Verbos: å lese → lesing; å bygge → bygging.',
+          'Adjetivos: åpen → åpenhet; viktig → viktighet.',
+          'No se pone «å» delante del sustantivo: Lesing er viktig.'
+        ],
+        examples: [
+          { no: 'Lesing er viktig for læring.', es: 'La lectura es importante para el aprendizaje.' },
+          { no: 'Byggingen av skolen tar tid.', es: 'La construcción de la escuela lleva tiempo.' },
+          { no: 'Vi trenger mer åpenhet.', es: 'Necesitamos más transparencia.' }
+        ],
+        mistake: { wrong: 'Å lesing er viktig.', right: 'Lesing er viktig.', why: '«Lesing» ya es un sustantivo; no lleva «å».' },
+        exercises: [
+          {
+            type: 'gap',
+            prompt: 'Completa con el sustantivo.',
+            sentence: '___ er viktig for læring.',
+            answers: ['Lesing'],
+            bank: ['Lesing', 'Lese', 'Leser'],
+            es: 'La lectura es importante para el aprendizaje.',
+            explain: 'El sustantivo derivado de «å lese» es «lesing».'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase.',
+            words: ['Byggingen', 'av', 'skolen', 'tar', 'tid.'],
+            es: 'La construcción de la escuela lleva tiempo.',
+            explain: '«Byggingen av skolen» = la construcción de la escuela.'
+          }
+        ]
+      },
+      {
+        id: 'avanserte-konnektorer',
+        num: 26,
+        level: 'B2',
+        emoji: '🔗',
+        title: 'Conectores avanzados',
+        subtitle: 'likevel, imidlertid, følgelig',
+        intro: 'Los conectores avanzados permiten organizar un texto y matizar la relación entre ideas. No todos tienen el mismo registro: algunos son más formales.',
+        notes: [
+          'Adición: i tillegg, dessuten, videre.',
+          'Contraste: imidlertid, likevel, på den annen side.',
+          'Consecuencia: derfor, følgelig, som et resultat.'
+        ],
+        examples: [
+          { no: 'Han var trøtt; likevel gikk han på jobb.', es: 'Estaba cansado; aun así fue al trabajo.' },
+          { no: 'I tillegg til norsk lærer hun engelsk.', es: 'Además de noruego, aprende inglés.' },
+          { no: 'Det regnet, derfor tok vi bussen.', es: 'Llovía, por eso cogimos el autobús.' }
+        ],
+        mistake: { wrong: 'I tillegg hun lærer engelsk.', right: 'I tillegg lærer hun engelsk.', why: 'Después de «i tillegg» se aplica la regla V2: verbo + sujeto.' },
+        exercises: [
+          {
+            type: 'gap',
+            prompt: 'Completa con el verbo correcto.',
+            sentence: 'I tillegg ___ hun engelsk.',
+            answers: ['lærer'],
+            bank: ['lærer', 'lære', 'lærte'],
+            es: 'Además, ella aprende inglés.',
+            explain: 'Después del conector inicial, el verbo va en segunda posición: lærer.'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase.',
+            words: ['Det', 'regnet,', 'derfor', 'tok', 'vi', 'bussen.'],
+            es: 'Llovía, por eso cogimos el autobús.',
+            explain: '«Derfor» introduce la consecuencia y provoca inversión.'
+          }
+        ]
+      },
+      {
+        id: 'kloyving',
+        num: 27,
+        level: 'B2',
+        emoji: '🔍',
+        title: 'Estructuras enfáticas',
+        subtitle: 'Det er ... som ...',
+        intro: 'Para destacar una información se usa la estructura «det er ... som ...» o se coloca el elemento importante al principio de la frase.',
+        notes: [
+          'Enfoque: Det er Lucía som bor her.',
+          'También: Det var i Oslo jeg møtte henne.',
+          'Colocación inicial: Den boken har jeg lest.'
+        ],
+        examples: [
+          { no: 'Det er Lucía som bor her.', es: 'Es Lucía quien vive aquí.' },
+          { no: 'Det var i Oslo jeg møtte henne.', es: 'Fue en Oslo donde la conocí.' },
+          { no: 'Den boken har jeg allerede lest.', es: 'Ese libro ya lo he leído.' }
+        ],
+        mistake: { wrong: 'Det er Lucía bor her.', right: 'Det er Lucía som bor her.', why: 'La estructura enfática necesita «som» antes de la subordinada.' },
+        exercises: [
+          {
+            type: 'gap',
+            prompt: 'Completa la estructura enfática.',
+            sentence: 'Det er Lucía ___ bor her.',
+            answers: ['som'],
+            bank: ['som', 'hvem', 'at'],
+            es: 'Es Lucía quien vive aquí.',
+            explain: '«Det er ... som ...» es la estructura de énfasis.'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase.',
+            words: ['Den', 'boken', 'har', 'jeg', 'lest.'],
+            es: 'Ese libro lo he leído.',
+            explain: 'El objeto se coloca al principio para enfatizarlo.'
+          }
+        ]
+      },
+      {
+        id: 'register',
+        num: 28,
+        level: 'B2',
+        emoji: '🎩',
+        title: 'Registro formal e informal',
+        subtitle: 'du, De, vennligst',
+        intro: 'El noruego es bastante informal, pero en correos, cartas y contextos profesionales se usan fórmulas más cuidadas. La diferencia no está solo en el vocabulario, también en la estructura.',
+        notes: [
+          'Informal: Kan du hjelpe meg?',
+          'Formal escrito: Vennligst send søknaden innen fredag.',
+          '«De» como tratamiento formal existe, pero es poco frecuente hoy.'
+        ],
+        examples: [
+          { no: 'Kan du hjelpe meg?', es: '¿Puedes ayudarme?' },
+          { no: 'Vennligst send søknaden innen fredag.', es: 'Por favor, envía la solicitud antes del viernes.' },
+          { no: 'Jeg ber om svar så snart som mulig.', es: 'Solicito una respuesta lo antes posible.' }
+        ],
+        mistake: { wrong: 'Jeg vil ha svar nå.', right: 'Jeg ber om svar så snart som mulig.', why: 'En un correo formal conviene usar una fórmula más cortés.' },
+        exercises: [
+          {
+            type: 'gap',
+            prompt: 'Completa la fórmula formal.',
+            sentence: 'Vennligst ___ søknaden innen fredag.',
+            answers: ['send'],
+            bank: ['send', 'sender', 'sendte'],
+            es: 'Por favor, envía la solicitud antes del viernes.',
+            explain: 'Después de «vennligst» se usa el imperativo: send.'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase.',
+            words: ['Kan', 'du', 'hjelpe', 'meg?'],
+            es: '¿Puedes ayudarme?',
+            explain: 'Pregunta informal con inversión verbo-sujeto.'
+          }
+        ]
+      },
+      {
+        id: 'idiomer',
+        num: 29,
+        level: 'B2',
+        emoji: '💡',
+        title: 'Expresiones idiomáticas',
+        subtitle: 'på bærtur, kaste inn håndkleet',
+        intro: 'Las expresiones idiomáticas no se traducen palabra por palabra. Aprenderlas como bloques ayuda a sonar natural y a entender conversaciones reales.',
+        notes: [
+          'Ha det bra = estar bien / que te vaya bien.',
+          'Være på bærtur = estar equivocado, ir desencaminado.',
+          'Kaste inn håndkleet = rendirse, tirar la toalla.'
+        ],
+        examples: [
+          { no: 'Nå er du helt på bærtur.', es: 'Ahora estás totalmente equivocado.' },
+          { no: 'Hun tok seg sammen og fortsatte.', es: 'Se recompuso y continuó.' },
+          { no: 'De kastet inn håndkleet.', es: 'Se rindieron.' }
+        ],
+        mistake: { wrong: 'Jeg har bra.', right: 'Jeg har det bra.', why: 'La expresión fija es «ha det bra»; necesita «det».' },
+        exercises: [
+          {
+            type: 'gap',
+            prompt: 'Completa la expresión.',
+            sentence: 'Jeg har ___ bra.',
+            answers: ['det'],
+            bank: ['det', 'den', 'de'],
+            es: 'Estoy bien.',
+            explain: 'La expresión es «ha det bra».'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase.',
+            words: ['Hun', 'tok', 'seg', 'sammen', 'og', 'fortsatte.'],
+            es: 'Se recompuso y continuó.',
+            explain: '«Ta seg sammen» = recomponerse.'
+          }
+        ]
+      },
+      {
+        id: 'kohesjon',
+        num: 30,
+        level: 'B2',
+        emoji: '🧵',
+        title: 'Cohesión y matices',
+        subtitle: 'riktignok, likevel, ikke bare ... men også',
+        intro: 'Un texto cohesionado evita repetir y conecta las ideas con pronombres, sinónimos y conectores. Los matices permiten decir lo mismo con más precisión.',
+        notes: [
+          'Conectores: dette, det, slik, derfor, likevel.',
+          'Matiz: riktignok ... men; ikke bare ... men også.',
+          'Evita repetir el sujeto cuando ya está claro: Hun er flink og tålmodig.'
+        ],
+        examples: [
+          { no: 'Riktignok regnet det, men vi gikk ut.', es: 'Cierto que llovía, pero salimos.' },
+          { no: 'Dette viser at språket endrer seg.', es: 'Esto muestra que la lengua cambia.' },
+          { no: 'Hun er ikke bare flink, men også tålmodig.', es: 'No solo es buena, sino también paciente.' }
+        ],
+        mistake: { wrong: 'Hun er ikke bare flink, men også hun er tålmodig.', right: 'Hun er ikke bare flink, men også tålmodig.', why: 'No se repite el sujeto en la segunda parte.' },
+        exercises: [
+          {
+            type: 'gap',
+            prompt: 'Completa el matiz.',
+            sentence: 'Hun er ikke bare flink, men også ___.',
+            answers: ['tålmodig'],
+            bank: ['tålmodig', 'tålmodighet', 'tålmodige'],
+            es: 'No solo es buena, sino también paciente.',
+            explain: 'El adjetivo predicativo es «tålmodig».'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase.',
+            words: ['Dette', 'viser', 'at', 'språket', 'endrer', 'seg.'],
+            es: 'Esto muestra que la lengua cambia.',
+            explain: '«Dette» retoma la idea anterior y da cohesión.'
+          }
+        ]
       }
     ]
   },
