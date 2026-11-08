@@ -4114,7 +4114,93 @@ window.COURSE = {
           }
         ]
       },
-      { id: '5', num: 5, level: 'B1', emoji: '❄️', title: 'Vinteren', soon: true },
+      {
+        id: '5',
+        num: 5,
+        level: 'B1',
+        emoji: '❄️',
+        title: 'Vinteren',
+        subtitle: 'El primer invierno en Oslo',
+        intro: 'La oscuridad, el primer hielo y la nieve ponen a prueba a Lucía. Pero el invierno también trae nuevas costumbres, amistades y pequeñas victorias.',
+        place: 'Grünerløkka',
+        places: ['Grünerløkka', 'Oslo City', 'Sognsvann', 'Holmenkollen', 'Akerselva'],
+        paragraphs: [
+          { no: 'Det er november, og Lucía har vært i Oslo i noen måneder. Når hun går fra jobben klokka fire, er det allerede mørkt. Gatene er fulle av folk som har det travelt. Hun føler seg trøtt, og hun savner lyset fra Spania.', es: 'Es noviembre y Lucía lleva unos meses en Oslo. Cuando sale del trabajo a las cuatro, ya está oscuro. Las calles están llenas de gente con prisa. Se siente cansada y echa de menos la luz de España.' },
+          { no: 'En morgen våkner hun og ser ut av vinduet. Alt er hvitt. Det har snødd om natten. Lucía blir glad, men da hun går ut, kjenner hun hvor kaldt det er. Hun har ikke gode sko, og det er glatt på veien.', es: 'Una mañana se despierta y mira por la ventana. Todo está blanco. Ha nevado durante la noche. Lucía se alegra, pero cuando sale, nota cuánto frío hace. No tiene buenos zapatos y la calle está resbaladiza.' },
+          { no: 'På jobben sier Mari at hun må kjøpe ordentlige vinterklær. Etter jobben går de til Oslo City. Lucía kjøper en varm jakke, en lue, votter, et skjerf og et par støvler. Det koster mer enn hun hadde trodd, men hun fryser ikke lenger.', es: 'En el trabajo, Mari le dice que tiene que comprar ropa de invierno de verdad. Después del trabajo van a Oslo City. Lucía compra una chaqueta cálida, un gorro, guantes, una bufanda y un par de botas. Cuesta más de lo que pensaba, pero ya no pasa frío.' },
+          { no: 'Om kvelden sitter de på en kafé i Grünerløkka. Mari forklarer at vinteren i Oslo er mørkere og kaldere enn i Spania, men at det også kan være koselig. De drikker varm kakao og ser på snøen som faller utenfor vinduet.', es: 'Por la noche se sientan en una cafetería de Grünerløkka. Mari le explica que el invierno en Oslo es más oscuro y más frío que en España, pero que también puede ser acogedor. Beben chocolate caliente y miran la nieve que cae fuera de la ventana.' },
+          { no: 'En søndag drar de til Sognsvann. Det er mange folk ute, noen går på ski og noen bare går tur. Lucía låner ski for første gang. Hun faller i snøen og ler. Mari hjelper henne opp, og de fortsetter sammen. Hun er sliten, men hun er også stolt.', es: 'Un domingo van a Sognsvann. Hay mucha gente fuera: algunos esquían y otros simplemente pasean. Lucía coge esquís prestados por primera vez. Se cae en la nieve y se ríe. Mari la ayuda a levantarse y siguen juntas. Está cansada, pero también orgullosa.' },
+          { no: 'Men ikke alle dager er like lette. Noen dager er det bare grått og vått, og Lucía føler seg alene. Hun ringer moren sin og sier at hun er sliten. Moren sier at det er normalt, og at hun må ta vare på seg selv.', es: 'Pero no todos los días son igual de fáciles. Algunos días solo hay gris y humedad, y Lucía se siente sola. Llama a su madre y le dice que está agotada. Su madre le dice que es normal y que tiene que cuidarse.' },
+          { no: 'Lucía begynner å tenne lys, gå på trening og møte venner selv når det er mørkt. Hun lærer at vinteren ikke bare er kald og vanskelig. Den er også stillhet, snø og varme stunder med mennesker hun liker. Våren kommer, men først skal hun klare vinteren.', es: 'Lucía empieza a encender velas, ir al gimnasio y quedar con amigos incluso cuando está oscuro. Aprende que el invierno no solo es frío y difícil. También es silencio, nieve y momentos cálidos con personas que quiere. La primavera llegará, pero primero tiene que superar el invierno.' }
+        ],
+        vocab: [
+          { no: 'vinter', es: 'invierno', forms: 'en vinter, vintre' },
+          { no: 'snø', es: 'nieve', forms: 'en snø' },
+          { no: 'kald', es: 'frío' },
+          { no: 'mørk', es: 'oscuro' },
+          { no: 'varm', es: 'cálido' },
+          { no: 'ull', es: 'lana', forms: 'en ull' },
+          { no: 'lue', es: 'gorro', forms: 'en lue, luer' },
+          { no: 'votter', es: 'guantes', forms: 'votter' },
+          { no: 'skjerf', es: 'bufanda', forms: 'et skjerf, skjerf' },
+          { no: 'jakke', es: 'chaqueta', forms: 'en jakke, jakker' },
+          { no: 'støvler', es: 'botas', forms: 'støvler' },
+          { no: 'glatt', es: 'resbaladizo' },
+          { no: 'falle', es: 'caer', forms: 'faller · falt · har falt' },
+          { no: 'ski', es: 'esquí', forms: 'en ski, ski' },
+          { no: 'koselig', es: 'acogedor' }
+        ],
+        grammar: {
+          title: 'Sammenligninger: kaldere, kaldest',
+          es: 'Para comparar se usa -ere + enn: kaldere enn, mørkere enn. El superlativo suele ser -est: kaldest, mørkest. Con adjetivos largos se usa mer/mest. «Like ... som» significa tan ... como.',
+          examples: [
+            { no: 'Oslo er kaldere enn Spania om vinteren.', es: 'Oslo es más frío que España en invierno.' },
+            { no: 'Desember er den mørkeste måneden.', es: 'Diciembre es el mes más oscuro.' },
+            { no: 'Vinteren er mer krevende enn sommeren.', es: 'El invierno es más exigente que el verano.' },
+            { no: 'Det er ikke like varmt som i Spania.', es: 'No hace tanto calor como en España.' }
+          ]
+        },
+        exercises: [
+          {
+            type: 'mcq',
+            prompt: '¿Qué compra Lucía para el invierno?',
+            options: ['Ropa de invierno', 'Un billete de avión', 'Unos esquís', 'Una lámpara'],
+            answer: 0,
+            explain: 'Compra una chaqueta, un gorro, guantes, una bufanda y botas.'
+          },
+          {
+            type: 'gap',
+            prompt: 'Completa la comparación:',
+            sentence: 'Oslo er ___ enn Spania om vinteren.',
+            answers: ['kaldere'],
+            bank: ['kaldere', 'kaldest', 'kald'],
+            es: 'Oslo es más frío que España en invierno.',
+            explain: 'El comparativo de «kald» es «kaldere», seguido de «enn».'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase:',
+            words: ['Vinteren', 'er', 'mørkere', 'enn', 'høsten.'],
+            es: 'El invierno es más oscuro que el otoño.',
+            explain: '«Mørkere enn» = más oscuro que. El comparativo va antes de «enn».'
+          },
+          {
+            type: 'listen',
+            audio: 'Det er glatt på veien om morgenen.',
+            es: 'La calle está resbaladiza por la mañana.',
+            explain: '«Glatt» = resbaladizo. «På veien» = en la calle/carretera.'
+          },
+          {
+            type: 'cloze',
+            prompt: 'Completa el resumen del capítulo:',
+            text: 'Om vinteren er det ___ og ___. Lucía kjøper en varm ___.',
+            answers: ['kaldt', 'mørkt', 'jakke'],
+            bank: ['kaldt', 'mørkt', 'jakke', 'snø', 'ski', 'votter'],
+            es: 'En invierno hace frío y está oscuro. Lucía compra una chaqueta cálida.',
+            explain: '«Kaldt» y «mørkt» describen el tiempo; «jakke» es la prenda que compra.'
+          }
+        ]
+      },
       { id: '6', num: 6, level: 'B1', emoji: '👨‍👩‍👧', title: 'Familien kommer', soon: true },
       { id: '7', num: 7, level: 'B1', emoji: '📦', title: 'Flyttedag', soon: true },
       { id: '8', num: 8, level: 'B1', emoji: '⚡', title: 'Konflikt på jobben', soon: true },
