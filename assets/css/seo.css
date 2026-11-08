@@ -60,6 +60,22 @@
 }
 .seo-foot a { color: var(--ink-soft); }
 
+/* Selector de idioma en las páginas SEO: son enlaces, no botones. */
+.lang-switch a {
+  text-decoration: none; line-height: 1;
+  font-size: .72rem; font-weight: 750; letter-spacing: .03em;
+  color: var(--muted); padding: .3rem .45rem; border-radius: 999px;
+}
+.lang-switch a:hover { background: var(--bg); color: var(--ink); }
+.lang-switch a[aria-current="page"] { background: var(--ink); color: #fff; }
+
+/* Páginas en persa (RTL). El resto del layout usa propiedades lógicas. */
+[dir="rtl"] {
+  font-family: "Vazirmatn", "Noto Naskh Arabic", "Segoe UI", Tahoma, system-ui, sans-serif;
+}
+[dir="rtl"] .seo-article p,
+[dir="rtl"] .seo-article li { line-height: 1.9; }
+
 @media (max-width: 800px) {
   .seo-main { grid-template-columns: 1fr; }
   .seo-aside { position: static; }
