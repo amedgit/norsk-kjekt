@@ -212,6 +212,27 @@ if (COURSE.stories) {
   }
 }
 
+/* Gramática: ejemplos, error corregido y ejercicios */
+if (COURSE.grammar) {
+  for (const t of COURSE.grammar.topics) {
+    t.examples.forEach((e) => texts.add(e.no));
+    texts.add(t.mistake.right);
+    for (const e of t.exercises) {
+      if (e.type === 'gap') texts.add(e.sentence.replace('___', e.answers[0]));
+      if (e.type === 'order') texts.add(e.words.join(' '));
+      if (e.type === 'mcq' && e.audio) texts.add(e.audio);
+      if (e.type === 'listen') texts.add(e.audio);
+      if (e.type === 'fix') texts.add(e.correct);
+      if (e.type === 'match') {
+        e.pairs.forEach((p) => {
+          texts.add(p.a);
+          if (e.sayB) texts.add(p.b);
+        });
+      }
+    }
+  }
+}
+
 /* A0: alfabeto, vocales, consonantes, frases y ejercicios */
 if (COURSE.a0) {
   COURSE.a0.alphabet.forEach((x) => texts.add(x.word));

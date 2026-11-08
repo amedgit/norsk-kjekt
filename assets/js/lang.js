@@ -245,6 +245,24 @@
       'a0.label': 'A0 · Desde cero',
       'a0.reviewLabel': 'A0 · Desde cero',
       'a0.nextLesson': 'Siguiente: Lección 1',
+      'grammar.title': 'Gramática',
+      'grammar.eyebrow': 'Gramática · A0–A2',
+      'grammar.intro': '{n} temas explicados desde el principio: pronombres, orden de la frase, tiempos verbales, negación, preposiciones y subordinadas.',
+      'grammar.progress': 'Has completado {done} de {total} temas.',
+      'grammar.levelSub': '{n} temas',
+      'grammar.new': 'nuevo',
+      'grammar.rule': 'La regla',
+      'grammar.examples': 'Ejemplos',
+      'grammar.mistake': 'Error típico',
+      'grammar.practice': 'Practica',
+      'grammar.start': 'Hacer los {n} ejercicios',
+      'grammar.best': 'Mejor resultado: {best}/{total}',
+      'grammar.label': 'Gramática · {title}',
+      'grammar.reviewLabel': 'Gramática · {level}',
+      'grammar.prev': 'Anterior · {title}',
+      'grammar.nextTopic': 'Siguiente · {title}',
+      'grammar.all': 'Todos los temas',
+      'grammar.end': 'Fin de A0–A2',
       'games.eyebrow': 'Juegos · A1–B2',
       'games.title': 'Juegos',
       'games.intro': 'Aprende jugando: memoria, frases contra reloj y retos cortos. Todo funciona sin conexión.',
@@ -333,6 +351,7 @@
       'footer.story': 'Historia',
       'footer.privacy': 'Privacidad',
       'footer.guides': 'Guías',
+      'footer.grammar': 'Gramática',
       'footer.a0': 'A0',
       'consent.title': 'Cookies y estadísticas',
       'consent.text': 'Usamos Google Analytics para saber cuántas personas visitan la web y desde dónde. Puedes aceptar o rechazar sin perder el progreso.',
@@ -1020,6 +1039,24 @@
       'a0.label': 'A0 · From scratch',
       'a0.reviewLabel': 'A0 · From scratch',
       'a0.nextLesson': 'Next: Lesson 1',
+      'grammar.title': 'Grammar',
+      'grammar.eyebrow': 'Grammar · A0–A2',
+      'grammar.intro': '{n} topics explained from the beginning: pronouns, word order, tenses, negation, prepositions and subordinate clauses.',
+      'grammar.progress': 'You have completed {done} of {total} topics.',
+      'grammar.levelSub': '{n} topics',
+      'grammar.new': 'new',
+      'grammar.rule': 'The rule',
+      'grammar.examples': 'Examples',
+      'grammar.mistake': 'Common mistake',
+      'grammar.practice': 'Practise',
+      'grammar.start': 'Do the {n} exercises',
+      'grammar.best': 'Best score: {best}/{total}',
+      'grammar.label': 'Grammar · {title}',
+      'grammar.reviewLabel': 'Grammar · {level}',
+      'grammar.prev': 'Previous · {title}',
+      'grammar.nextTopic': 'Next · {title}',
+      'grammar.all': 'All topics',
+      'grammar.end': 'End of A0–A2',
       'games.eyebrow': 'Games · A1–B2',
       'games.title': 'Games',
       'games.intro': 'Learn by playing: memory, timed sentences and short challenges. Everything works offline.',
@@ -1108,6 +1145,7 @@
       'footer.story': 'Story',
       'footer.privacy': 'Privacy',
       'footer.guides': 'Guides',
+      'footer.grammar': 'Grammar',
       'footer.a0': 'A0',
       'consent.title': 'Cookies and statistics',
       'consent.text': 'We use Google Analytics to see how many people visit the site and where they come from. You can accept or reject without losing your progress.',
@@ -1790,6 +1828,24 @@
       'a0.label': "A0 · از صفر",
       'a0.reviewLabel': "A0 · از صفر",
       'a0.nextLesson': "بعدی: درس ۱",
+      'grammar.title': "دستور زبان",
+      'grammar.eyebrow': "دستور زبان · A0–A2",
+      'grammar.intro': "{n} موضوع از ابتدا: ضمیرها، ترتیب جمله، زمان‌ها، منفی‌سازی، حروف اضافه و جمله‌های پیرو.",
+      'grammar.progress': "{done} از {total} موضوع را کامل کرده‌ای.",
+      'grammar.levelSub': "{n} موضوع",
+      'grammar.new': "جدید",
+      'grammar.rule': "قاعده",
+      'grammar.examples': "مثال‌ها",
+      'grammar.mistake': "اشتباه رایج",
+      'grammar.practice': "تمرین",
+      'grammar.start': "انجام {n} تمرین",
+      'grammar.best': "بهترین نتیجه: {best}/{total}",
+      'grammar.label': "دستور زبان · {title}",
+      'grammar.reviewLabel': "دستور زبان · {level}",
+      'grammar.prev': "قبلی · {title}",
+      'grammar.nextTopic': "بعدی · {title}",
+      'grammar.all': "همهٔ موضوع‌ها",
+      'grammar.end': "پایان A0–A2",
       'games.eyebrow': "بازی‌ها · A1–B2",
       'games.title': "بازی‌ها",
       'games.intro': "با بازی یاد بگیر: حافظه، جمله‌های زمان‌دار و چالش‌های کوتاه. همه بدون اینترنت کار می‌کند.",
@@ -1878,6 +1934,7 @@
       'footer.story': "داستان",
       'footer.privacy': "حریم خصوصی",
       'footer.guides': "راهنماها",
+      'footer.grammar': "دستور زبان",
       'footer.a0': "A0",
       'consent.title': "کوکی‌ها و آمار",
       'consent.text': "ما از Google Analytics استفاده می‌کنیم تا بدانیم چند نفر از سایت بازدید می‌کنند و از کجا می‌آیند. می‌توانی بدون از دست دادن پیشرفتت بپذیری یا رد کنی.",
@@ -2419,6 +2476,14 @@
         ch.exercises.forEach(addExercise);
       });
     }
+    if (C.grammar) {
+      C.grammar.topics.forEach(function (t) {
+        t.examples.forEach(function (e) { add(e.no); });
+        add(t.mistake.right);
+        add(t.mistake.wrong);
+        t.exercises.forEach(addExercise);
+      });
+    }
     if (C.a0) {
       C.a0.alphabet.forEach(function (x) { add(x.word); });
       C.a0.vowels.forEach(function (v) { add(v.example); });
@@ -2535,6 +2600,17 @@
         ch.grammar.es = tf(ch.grammar.es);
         ch.grammar.examples.forEach(function (g) { g.es = tf(g.es); });
         ch.exercises.forEach(localizeExercise);
+      });
+    }
+    if (C.grammar) {
+      C.grammar.topics.forEach(function (t) {
+        t.title = tf(t.title);
+        t.subtitle = tf(t.subtitle);
+        t.intro = tf(t.intro);
+        t.notes = t.notes.map(tf);
+        t.examples.forEach(function (e) { e.es = tf(e.es); });
+        t.mistake.why = tf(t.mistake.why);
+        t.exercises.forEach(localizeExercise);
       });
     }
     if (C.a0) {

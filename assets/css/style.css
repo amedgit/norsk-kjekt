@@ -1211,6 +1211,33 @@ html[dir="rtl"] .exam-usertext {
 .story-nav .btn { flex: 0 1 auto; }
 .story-more { color: var(--muted); font-size: .82rem; }
 
+/* ---------------- gramática ---------------- */
+
+.grammar-intro { background: linear-gradient(135deg, #2b2a55, #4a4785); }
+.grammar-grid { display: grid; gap: .8rem; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+.grammar-card {
+  display: flex; flex-direction: column; gap: .25rem;
+  text-decoration: none; color: var(--ink);
+  background: var(--card); border: 1px solid var(--line); border-top: 3px solid #6c6aa8;
+  border-radius: var(--radius); padding: .9rem 1rem;
+  transition: transform .15s, border-color .15s;
+}
+.grammar-card:hover { transform: translateY(-2px); border-color: #6c6aa8; }
+.grammar-card-top { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+.grammar-emoji { font-size: 1.5rem; line-height: 1; }
+.grammar-card h3 { font-size: 1rem; margin: .15rem 0 0; }
+.grammar-card p { color: var(--muted); font-size: .82rem; line-height: 1.45; }
+.grammar-card .foot { margin-top: auto; display: flex; flex-wrap: wrap; gap: .3rem; padding-top: .4rem; }
+.gra-head { margin: .3rem 0 .8rem; }
+.gra-head h1 { font-size: clamp(1.6rem, 3.6vw, 2.2rem); margin: .25rem 0; }
+.gra-head .lead { color: var(--muted); margin-top: .25rem; }
+.gra-intro { color: var(--ink-soft); font-size: .92rem; line-height: 1.65; margin-top: .55rem; max-width: 70ch; }
+.gra-card { margin-top: 1rem; }
+.gra-notes { margin: 0; padding-inline-start: 1.15rem; display: flex; flex-direction: column; gap: .45rem; color: var(--ink-soft); font-size: .9rem; line-height: 1.6; }
+.gra-mistake .gra-wrong { color: var(--red); font-size: .95rem; font-weight: 600; text-decoration: line-through; text-decoration-thickness: 1px; }
+.gra-mistake .gra-right { color: #0b5c3f; font-size: 1rem; font-weight: 800; }
+.gra-mistake .muted { font-size: .82rem; margin-top: .35rem; }
+
 /* ---------------- juegos ---------------- */
 
 .games-intro { background: linear-gradient(135deg, #173b2c, #2e6b4f); }

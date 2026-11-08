@@ -4246,6 +4246,696 @@ window.COURSE = {
   },
 
   /* -------------------------------------------------------------------- */
+  grammar: {
+    topics: [
+      {
+        id: 'pronomen',
+        num: 1,
+        level: 'A0',
+        emoji: '👤',
+        title: 'Pronombres personales',
+        subtitle: 'jeg, du, han, hun, vi, dere, de',
+        intro: 'Los pronombres de sujeto son la base de cualquier frase. En noruego no hay una forma formal separada para «usted»: «du» sirve para las dos.',
+        notes: [
+          'Sujeto: jeg, du, han, hun, det, vi, dere, de.',
+          '«Det» se usa para cosas y como sujeto impersonal: Det regner.',
+          'El pronombre va antes del verbo en una frase normal: Jeg bor i Oslo.'
+        ],
+        examples: [
+          { no: 'Jeg er fra Spania.', es: 'Yo soy de España.' },
+          { no: 'Hun bor i Oslo.', es: 'Ella vive en Oslo.' },
+          { no: 'Vi lærer norsk.', es: 'Nosotros aprendemos noruego.' }
+        ],
+        mistake: { wrong: 'Jeg heter er Lucía.', right: 'Jeg heter Lucía.', why: 'El verbo «å hete» no necesita «er»: significa «llamarse».' },
+        exercises: [
+          {
+            type: 'gap',
+            prompt: 'Completa la frase.',
+            sentence: '___ bor i Oslo.',
+            answers: ['Hun'],
+            bank: ['Hun', 'Han', 'Vi'],
+            es: 'Ella vive en Oslo.',
+            explain: '«Hun» = ella. «Han» = él; «vi» = nosotros.'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase.',
+            words: ['Jeg', 'er', 'fra', 'Spania.'],
+            es: 'Yo soy de España.',
+            explain: 'El orden normal es sujeto + verbo + complemento.'
+          }
+        ]
+      },
+      {
+        id: 'vaere-ha',
+        num: 2,
+        level: 'A0',
+        emoji: '🧩',
+        title: 'Presente de være y ha',
+        subtitle: 'er, har y sus usos',
+        intro: '«Å være» (ser/estar) y «å ha» (tener) son los dos verbos más frecuentes. Se conjugan igual con todas las personas.',
+        notes: [
+          'Være: jeg er, du er, han/hun er, vi er, dere er, de er.',
+          'Ha: jeg har, du har, han/hun har, vi har, dere har, de har.',
+          'La edad se dice con «er»: Jeg er 28 år.',
+        ],
+        examples: [
+          { no: 'Jeg er student.', es: 'Soy estudiante.' },
+          { no: 'Hun har en bil.', es: 'Ella tiene un coche.' },
+          { no: 'Vi er i Norge.', es: 'Estamos en Noruega.' }
+        ],
+        mistake: { wrong: 'Jeg har 28 år.', right: 'Jeg er 28 år.', why: 'En noruego la edad se expresa con «er», no con «har».' },
+        exercises: [
+          {
+            type: 'gap',
+            prompt: 'Completa la frase.',
+            sentence: 'Jeg ___ fra Norge.',
+            answers: ['er'],
+            bank: ['er', 'har', 'heter'],
+            es: 'Soy de Noruega.',
+            explain: '«Å være» = ser/estar. La forma es «er».'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase.',
+            words: ['Hun', 'har', 'en', 'bil.'],
+            es: 'Ella tiene un coche.',
+            explain: '«Har» es la forma de «å ha» para todas las personas.'
+          }
+        ]
+      },
+      {
+        id: 'ordstilling',
+        num: 3,
+        level: 'A0',
+        emoji: '🔀',
+        title: 'Orden básico y regla V2',
+        subtitle: 'El verbo en segunda posición',
+        intro: 'El noruego no usa el orden español en todo. La regla más importante es que el verbo conjugado ocupa la segunda posición de la frase principal.',
+        notes: [
+          'Orden normal: sujeto + verbo + objeto: Jeg leser en bok.',
+          'Si empiezas por otra palabra, el verbo va después y el sujeto detrás: I dag leser jeg.',
+          'Después de un modal, el verbo principal va en infinitivo sin «å».'
+        ],
+        examples: [
+          { no: 'I dag leser jeg en bok.', es: 'Hoy leo un libro.' },
+          { no: 'Nå bor hun i Oslo.', es: 'Ahora ella vive en Oslo.' },
+          { no: 'Kanskje kommer han senere.', es: 'Quizá venga más tarde.' }
+        ],
+        mistake: { wrong: 'I dag jeg leser en bok.', right: 'I dag leser jeg en bok.', why: 'Cuando la frase empieza por «i dag», el verbo pasa a la segunda posición y el sujeto va después.' },
+        exercises: [
+          {
+            type: 'gap',
+            prompt: 'Completa la frase.',
+            sentence: 'I dag ___ jeg hjemme.',
+            answers: ['er'],
+            bank: ['er', 'har', 'bor'],
+            es: 'Hoy estoy en casa.',
+            explain: '«I dag» ocupa la primera posición; el verbo «er» va en la segunda.'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase.',
+            words: ['Nå', 'bor', 'hun', 'i', 'Oslo.'],
+            es: 'Ahora ella vive en Oslo.',
+            explain: '«Nå» + verbo + sujeto. Es la regla V2 en acción.'
+          }
+        ]
+      },
+      {
+        id: 'sporsmal',
+        num: 4,
+        level: 'A0',
+        emoji: '❓',
+        title: 'Preguntas',
+        subtitle: 'Sí/no y palabras interrogativas',
+        intro: 'Para preguntar sí o no, se invierte el orden: verbo + sujeto. Para preguntar por información, se añade una palabra interrogativa delante.',
+        notes: [
+          'Sí/no: Bor du i Oslo? = ¿Vives en Oslo?',
+          'Palabras: hva, hvor, hvem, når, hvorfor, hvordan.',
+          'El verbo va antes del sujeto: Hvor bor du?',
+        ],
+        examples: [
+          { no: 'Bor du i Oslo?', es: '¿Vives en Oslo?' },
+          { no: 'Hva heter du?', es: '¿Cómo te llamas?' },
+          { no: 'Hvorfor lærer du norsk?', es: '¿Por qué aprendes noruego?' }
+        ],
+        mistake: { wrong: 'Hvor du bor?', right: 'Hvor bor du?', why: 'En las preguntas el verbo va antes del sujeto.' },
+        exercises: [
+          {
+            type: 'gap',
+            prompt: 'Completa la pregunta.',
+            sentence: '___ heter du?',
+            answers: ['Hva'],
+            bank: ['Hva', 'Hvor', 'Hvem'],
+            es: '¿Cómo te llamas?',
+            explain: '«Hva heter du?» es la fórmula fija para preguntar el nombre.'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la pregunta.',
+            words: ['Hvor', 'bor', 'du?'],
+            es: '¿Dónde vives?',
+            explain: 'Palabra interrogativa + verbo + sujeto.'
+          }
+        ]
+      },
+      {
+        id: 'negasjon',
+        num: 5,
+        level: 'A0',
+        emoji: '🚫',
+        title: 'La negación',
+        subtitle: 'ikke, ingen, aldri',
+        intro: '«Ikke» es la negación básica. Su posición cambia un poco en las subordinadas, así que conviene aprenderla desde el principio.',
+        notes: [
+          'En una frase normal, «ikke» va después del verbo: Jeg bor ikke i Oslo.',
+          'En una subordinada, «ikke» va antes del verbo: fordi jeg ikke bor der.',
+          'Otras negaciones: ingen (nadie/ningún), ingenting (nada), aldri (nunca).'
+        ],
+        examples: [
+          { no: 'Jeg bor ikke i Oslo.', es: 'No vivo en Oslo.' },
+          { no: 'Hun snakker ikke norsk.', es: 'Ella no habla noruego.' },
+          { no: 'Jeg har aldri vært der.', es: 'Nunca he estado allí.' }
+        ],
+        mistake: { wrong: 'Jeg ikke bor her.', right: 'Jeg bor ikke her.', why: 'En una frase principal «ikke» va después del verbo.' },
+        exercises: [
+          {
+            type: 'gap',
+            prompt: 'Completa la frase.',
+            sentence: 'Jeg ___ ikke norsk.',
+            answers: ['snakker'],
+            bank: ['snakker', 'snakke', 'snakket'],
+            es: 'No hablo noruego.',
+            explain: 'El verbo conjugado va antes de «ikke».'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase.',
+            words: ['Jeg', 'bor', 'ikke', 'her.'],
+            es: 'No vivo aquí.',
+            explain: 'Sujeto + verbo + ikke + complemento.'
+          }
+        ]
+      },
+      {
+        id: 'artikler',
+        num: 6,
+        level: 'A0',
+        emoji: '🏷️',
+        title: 'Artículos y género',
+        subtitle: 'en, et, ei y el sufijo definido',
+        intro: 'Cada sustantivo noruego tiene género. El artículo indefinido va delante, pero el definido se añade como sufijo al final de la palabra.',
+        notes: [
+          'Indefinido: en bil, et hus, ei bok.',
+          'Definido: bilen, huset, boka/boken.',
+          '«Ei» es opcional en bokmål; muchas personas usan «en» también para el femenino.'
+        ],
+        examples: [
+          { no: 'Jeg har en bil.', es: 'Tengo un coche.' },
+          { no: 'Huset er stort.', es: 'La casa es grande.' },
+          { no: 'Boken ligger på bordet.', es: 'El libro está sobre la mesa.' }
+        ],
+        mistake: { wrong: 'en hus', right: 'et hus', why: '«Hus» es neutro: et hus, huset.' },
+        exercises: [
+          {
+            type: 'gap',
+            prompt: 'Completa con el artículo correcto.',
+            sentence: 'Jeg har ___ bil.',
+            answers: ['en'],
+            bank: ['en', 'et', 'ei'],
+            es: 'Tengo un coche.',
+            explain: '«Bil» es de género común: en bil.'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase.',
+            words: ['Huset', 'er', 'stort.'],
+            es: 'La casa es grande.',
+            explain: '«Huset» es la forma definida de «et hus».'
+          }
+        ]
+      },
+      {
+        id: 'flertall',
+        num: 7,
+        level: 'A0',
+        emoji: '🔢',
+        title: 'El plural',
+        subtitle: 'biler, hus, barn',
+        intro: 'El plural no siempre se forma igual. La terminación más común es -er, pero los neutros suelen quedarse igual y algunos sustantivos son irregulares.',
+        notes: [
+          'Común: en bil → biler; en gutt → gutter.',
+          'Neutro: et hus → hus; et barn → barn.',
+          'Definido plural: bilene, husene; irregulares: menn, barn.'
+        ],
+        examples: [
+          { no: 'Jeg har to biler.', es: 'Tengo dos coches.' },
+          { no: 'Det er mange hus her.', es: 'Hay muchas casas aquí.' },
+          { no: 'Barna leker ute.', es: 'Los niños juegan fuera.' }
+        ],
+        mistake: { wrong: 'to bils', right: 'to biler', why: 'El plural de «bil» es «biler», no se añade una «s».' },
+        exercises: [
+          {
+            type: 'gap',
+            prompt: 'Completa el plural.',
+            sentence: 'Jeg har to ___.',
+            answers: ['biler'],
+            bank: ['biler', 'bil', 'bilen'],
+            es: 'Tengo dos coches.',
+            explain: '«En bil» hace el plural en «biler».'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase.',
+            words: ['Det', 'er', 'mange', 'hus', 'her.'],
+            es: 'Hay muchas casas aquí.',
+            explain: '«Hus» no cambia en plural: et hus, flere hus.'
+          }
+        ]
+      },
+      {
+        id: 'presens',
+        num: 8,
+        level: 'A1',
+        emoji: '⏱️',
+        title: 'El presente de los verbos',
+        subtitle: 'leser, bor, kjøper',
+        intro: 'El presente se usa para lo que pasa ahora, lo que pasa cada día y también para el futuro cercano. La misma forma sirve para todas las personas.',
+        notes: [
+          'Muchos verbos añaden -er: å lese → leser; å kjøpe → kjøper.',
+          'No cambia según la persona: jeg leser, du leser, han leser.',
+          'Irregulares frecuentes: være → er, ha → har, gjøre → gjør, se → ser.'
+        ],
+        examples: [
+          { no: 'Jeg leser en bok.', es: 'Leo un libro.' },
+          { no: 'Hun bor i Oslo.', es: 'Ella vive en Oslo.' },
+          { no: 'Vi kjøper mat.', es: 'Compramos comida.' }
+        ],
+        mistake: { wrong: 'Jeg er leser.', right: 'Jeg leser.', why: 'No se usa «er» delante del verbo principal en presente.' },
+        exercises: [
+          {
+            type: 'gap',
+            prompt: 'Completa con el presente.',
+            sentence: 'Hun ___ i Oslo.',
+            answers: ['bor'],
+            bank: ['bor', 'bode', 'bo'],
+            es: 'Ella vive en Oslo.',
+            explain: 'El presente de «å bo» es «bor».'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase.',
+            words: ['Vi', 'kjøper', 'mat', 'hver', 'dag.'],
+            es: 'Compramos comida cada día.',
+            explain: 'El presente también sirve para rutinas.'
+          }
+        ]
+      },
+      {
+        id: 'modaler',
+        num: 9,
+        level: 'A1',
+        emoji: '🔑',
+        title: 'Verbos modales',
+        subtitle: 'kan, må, vil, skal, bør',
+        intro: 'Los modales expresan posibilidad, obligación, voluntad o consejo. Van seguidos del infinitivo sin «å» y no cambian según la persona.',
+        notes: [
+          'Kan = poder; må = tener que; vil = querer; skal = ir a; bør = deberías.',
+          'Después del modal, el verbo principal va sin «å»: Jeg kan svømme.',
+          'No cambian por persona: jeg kan, du kan, han kan.'
+        ],
+        examples: [
+          { no: 'Jeg kan svømme.', es: 'Sé nadar.' },
+          { no: 'Du må vente.', es: 'Tienes que esperar.' },
+          { no: 'Vi skal reise i morgen.', es: 'Vamos a viajar mañana.' }
+        ],
+        mistake: { wrong: 'Jeg kan å svømme.', right: 'Jeg kan svømme.', why: 'Después de un modal no se pone «å» delante del infinitivo.' },
+        exercises: [
+          {
+            type: 'gap',
+            prompt: 'Completa con el modal correcto.',
+            sentence: 'Du ___ vente her.',
+            answers: ['må'],
+            bank: ['må', 'måtte', 'mått'],
+            es: 'Tienes que esperar aquí.',
+            explain: '«Må» = tener que. El pasado es «måtte».'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase.',
+            words: ['Jeg', 'kan', 'svømme.'],
+            es: 'Sé nadar.',
+            explain: 'Modal + infinitivo sin «å».'
+          }
+        ]
+      },
+      {
+        id: 'eiendomsord',
+        num: 10,
+        level: 'A1',
+        emoji: '🔗',
+        title: 'Posesivos',
+        subtitle: 'min, din, hans, hennes',
+        intro: 'Los posesivos concuerdan con el sustantivo poseído, no con el poseedor. Por eso hay formas para común, neutro y plural.',
+        notes: [
+          'Común: min bil, din bil, hans bil, hennes bil, vår bil, deres bil.',
+          'Neutro: mitt hus, ditt hus, hans hus...; plural: mine biler.',
+          'También se puede poner el poseedor detrás: bilen min.'
+        ],
+        examples: [
+          { no: 'Det er min bil.', es: 'Es mi coche.' },
+          { no: 'Huset mitt er gammelt.', es: 'Mi casa es vieja.' },
+          { no: 'Bøkene mine er nye.', es: 'Mis libros son nuevos.' }
+        ],
+        mistake: { wrong: 'min hus', right: 'mitt hus', why: '«Hus» es neutro, así que el posesivo es «mitt».' },
+        exercises: [
+          {
+            type: 'gap',
+            prompt: 'Completa con el posesivo correcto.',
+            sentence: 'Det er ___ bil.',
+            answers: ['min'],
+            bank: ['min', 'mitt', 'mine'],
+            es: 'Es mi coche.',
+            explain: '«Bil» es común: min bil.'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase.',
+            words: ['Huset', 'mitt', 'er', 'gammelt.'],
+            es: 'Mi casa es vieja.',
+            explain: 'El posesivo puede ir después del sustantivo definido: huset mitt.'
+          }
+        ]
+      },
+      {
+        id: 'preposisjoner',
+        num: 11,
+        level: 'A1',
+        emoji: '📍',
+        title: 'Preposiciones básicas',
+        subtitle: 'i, på, til, fra',
+        intro: 'Las preposiciones no siempre se traducen de forma directa. Muchas veces hay que aprender la combinación completa: i Norge, på jobb, til Oslo.',
+        notes: [
+          'I = dentro de; på = en/sobre; til = a/hacia; fra = de/desde.',
+          'Hay combinaciones fijas: på jobb, i skolen, til byen.',
+          'No traduzcas siempre del español: «en Oslo» es «i Oslo».'
+        ],
+        examples: [
+          { no: 'Jeg bor i Norge.', es: 'Vivo en Noruega.' },
+          { no: 'Hun går på jobb.', es: 'Ella va al trabajo.' },
+          { no: 'Vi reiser til Oslo.', es: 'Viajamos a Oslo.' }
+        ],
+        mistake: { wrong: 'Jeg bor på Norge.', right: 'Jeg bor i Norge.', why: 'Con países se usa normalmente «i»: i Norge, i Spania.' },
+        exercises: [
+          {
+            type: 'gap',
+            prompt: 'Completa con la preposición correcta.',
+            sentence: 'Jeg går ___ jobb.',
+            answers: ['til'],
+            bank: ['til', 'i', 'på'],
+            es: 'Voy al trabajo.',
+            explain: '«Til jobb» = al trabajo; «på jobb» = en el trabajo.'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase.',
+            words: ['Jeg', 'bor', 'i', 'Norge.'],
+            es: 'Vivo en Noruega.',
+            explain: 'Con países se usa «i».'
+          }
+        ]
+      },
+      {
+        id: 'preteritum',
+        num: 12,
+        level: 'A1',
+        emoji: '📜',
+        title: 'El pasado simple',
+        subtitle: 'jobbet, kjøpte, bodde',
+        intro: 'El pasado simple se usa para acciones terminadas. Los verbos regulares se dividen en grupos según la terminación; los irregulares hay que memorizarlos.',
+        notes: [
+          'Regulares: -et (jobbet), -te (kjøpte), -de (bodde).',
+          'Irregulares frecuentes: var, hadde, gikk, kom, så.',
+          'No cambia según la persona: jeg jobbet, du jobbet, han jobbet.'
+        ],
+        examples: [
+          { no: 'I går jobbet jeg hjemme.', es: 'Ayer trabajé en casa.' },
+          { no: 'Hun kjøpte en bok.', es: 'Ella compró un libro.' },
+          { no: 'Vi var i Oslo.', es: 'Estuvimos en Oslo.' }
+        ],
+        mistake: { wrong: 'Jeg gådde hjem.', right: 'Jeg gikk hjem.', why: '«Å gå» es irregular: gikk, no «gådde».' },
+        exercises: [
+          {
+            type: 'gap',
+            prompt: 'Completa con el pasado.',
+            sentence: 'I går ___ jeg hjemme.',
+            answers: ['var'],
+            bank: ['var', 'er', 'har'],
+            es: 'Ayer estuve en casa.',
+            explain: 'El pasado de «å være» es «var».'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase.',
+            words: ['Hun', 'kjøpte', 'en', 'bok', 'i', 'går.'],
+            es: 'Ella compró un libro ayer.',
+            explain: '«Kjøpte» es el pasado de «å kjøpe».'
+          }
+        ]
+      },
+      {
+        id: 'perfektum',
+        num: 13,
+        level: 'A1',
+        emoji: '✅',
+        title: 'El perfecto',
+        subtitle: 'har jobbet, har vært',
+        intro: 'El perfecto se forma con «har» + participio. Se usa para experiencias y para acciones pasadas que todavía importan en el presente.',
+        notes: [
+          'Regular: har jobbet, har kjøpt, har bodd.',
+          'Irregular: har vært, har hatt, har gått, har sett.',
+          'El participio no cambia según la persona.'
+        ],
+        examples: [
+          { no: 'Jeg har bodd i Norge i to år.', es: 'He vivido en Noruega durante dos años.' },
+          { no: 'Hun har kjøpt en ny jakke.', es: 'Ella ha comprado una chaqueta nueva.' },
+          { no: 'Vi har vært i Oslo.', es: 'Hemos estado en Oslo.' }
+        ],
+        mistake: { wrong: 'Jeg har gådd hjem.', right: 'Jeg har gått hjem.', why: 'El participio de «å gå» es «gått».' },
+        exercises: [
+          {
+            type: 'gap',
+            prompt: 'Completa con el participio.',
+            sentence: 'Jeg har ___ i Norge.',
+            answers: ['bodd'],
+            bank: ['bodd', 'bor', 'bo'],
+            es: 'He vivido en Noruega.',
+            explain: 'El perfecto de «å bo» es «har bodd».'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase.',
+            words: ['Vi', 'har', 'vært', 'i', 'Oslo.'],
+            es: 'Hemos estado en Oslo.',
+            explain: '«Har vært» es el perfecto de «å være».'
+          }
+        ]
+      },
+      {
+        id: 'futurum',
+        num: 14,
+        level: 'A2',
+        emoji: '🔮',
+        title: 'El futuro',
+        subtitle: 'skal, kommer til å, presente',
+        intro: 'No hay una sola forma de futuro. «Skal» expresa planes y decisiones; «kommer til å» se usa para predicciones; el presente sirve para un futuro cercano.',
+        notes: [
+          'Plan o decisión: Jeg skal reise i morgen.',
+          'Predicción: Det kommer til å regne.',
+          'Futuro cercano con presente: Jeg reiser i morgen.',
+        ],
+        examples: [
+          { no: 'Jeg skal begynne på norskkurs.', es: 'Voy a empezar un curso de noruego.' },
+          { no: 'Det kommer til å bli kaldt.', es: 'Va a hacer frío.' },
+          { no: 'Vi reiser på fredag.', es: 'Viajamos el viernes.' }
+        ],
+        mistake: { wrong: 'Jeg skal å reise.', right: 'Jeg skal reise.', why: 'Después de «skal» no se pone «å».' },
+        exercises: [
+          {
+            type: 'gap',
+            prompt: 'Completa con el futuro adecuado.',
+            sentence: 'Det ___ til å regne.',
+            answers: ['kommer'],
+            bank: ['kommer', 'skal', 'er'],
+            es: 'Va a llover.',
+            explain: '«Kommer til å» + infinitivo expresa una predicción.'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase.',
+            words: ['Jeg', 'skal', 'reise', 'i', 'morgen.'],
+            es: 'Voy a viajar mañana.',
+            explain: '«Skal» + infinitivo expresa un plan.'
+          }
+        ]
+      },
+      {
+        id: 'refleksiv',
+        num: 15,
+        level: 'A2',
+        emoji: '🪞',
+        title: 'Verbos reflexivos',
+        subtitle: 'føle seg, sette seg, glede seg',
+        intro: 'Algunos verbos noruegos llevan un pronombre reflexivo que cambia según la persona. Son muy frecuentes y conviene aprenderlos como una unidad.',
+        notes: [
+          'Pronombres: meg, deg, seg, oss, dere, seg.',
+          'Ejemplos: føle seg, sette seg, kle på seg, glede seg.',
+          'El pronombre va después del verbo: Hun føler seg hjemme.'
+        ],
+        examples: [
+          { no: 'Hun føler seg hjemme.', es: 'Ella se siente en casa.' },
+          { no: 'Jeg setter meg ned.', es: 'Me siento.' },
+          { no: 'Vi gleder oss til ferien.', es: 'Tenemos ganas de las vacaciones.' }
+        ],
+        mistake: { wrong: 'Hun føler hjemme.', right: 'Hun føler seg hjemme.', why: '«Å føle seg» necesita el pronombre reflexivo «seg».' },
+        exercises: [
+          {
+            type: 'gap',
+            prompt: 'Completa con el verbo correcto.',
+            sentence: 'Jeg ___ meg hjemme.',
+            answers: ['føler'],
+            bank: ['føler', 'føle', 'følte'],
+            es: 'Me siento en casa.',
+            explain: 'La forma de presente es «føler»; el reflexivo es «meg».'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase.',
+            words: ['Hun', 'føler', 'seg', 'hjemme.'],
+            es: 'Ella se siente en casa.',
+            explain: 'Verbo + pronombre reflexivo + complemento.'
+          }
+        ]
+      },
+      {
+        id: 'objektpronomen',
+        num: 16,
+        level: 'A2',
+        emoji: '🎯',
+        title: 'Pronombres objeto',
+        subtitle: 'meg, deg, ham, henne, dem',
+        intro: 'Cuando el pronombre es el objeto de la frase, cambia de forma. «Jeg» pasa a «meg», «han» a «ham», «hun» a «henne».',
+        notes: [
+          'Objeto: meg, deg, ham, henne, det, oss, dere, dem.',
+          'Va después del verbo: Jeg ser ham.',
+          'No confundas «han» (sujeto) con «ham» (objeto).'
+        ],
+        examples: [
+          { no: 'Jeg ser ham.', es: 'Lo veo a él.' },
+          { no: 'Hun hjelper meg.', es: 'Ella me ayuda.' },
+          { no: 'Vi kjenner dem.', es: 'Los conocemos.' }
+        ],
+        mistake: { wrong: 'Jeg ser han.', right: 'Jeg ser ham.', why: 'Como objeto se usa «ham», no «han».' },
+        exercises: [
+          {
+            type: 'gap',
+            prompt: 'Completa con el pronombre objeto.',
+            sentence: 'Jeg ringer ___ i morgen.',
+            answers: ['deg'],
+            bank: ['deg', 'du', 'din'],
+            es: 'Te llamo mañana.',
+            explain: '«Du» es sujeto; «deg» es objeto.'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase.',
+            words: ['Jeg', 'ser', 'ham.'],
+            es: 'Lo veo a él.',
+            explain: 'El pronombre objeto va después del verbo.'
+          }
+        ]
+      },
+      {
+        id: 'subordinater',
+        num: 17,
+        level: 'A2',
+        emoji: '🔗',
+        title: 'Subordinadas y conjunciones',
+        subtitle: 'at, fordi, når, hvis',
+        intro: 'Las conjunciones unen dos ideas. En la subordinada, el orden cambia: «ikke» va antes del verbo y el verbo no se mueve a la segunda posición.',
+        notes: [
+          'Conjunciones: at, fordi, når, hvis, selv om, mens.',
+          'En la subordinada: sujeto + ikke + verbo + complemento.',
+          'La frase principal mantiene la regla V2.'
+        ],
+        examples: [
+          { no: 'Jeg vet at han bor i Oslo.', es: 'Sé que él vive en Oslo.' },
+          { no: 'Jeg blir hjemme fordi jeg ikke er syk.', es: 'Me quedo en casa porque no estoy enfermo.' },
+          { no: 'Hvis det regner, tar jeg bussen.', es: 'Si llueve, cojo el autobús.' }
+        ],
+        mistake: { wrong: 'Fordi jeg er ikke hjemme.', right: 'Fordi jeg ikke er hjemme.', why: 'En la subordinada «ikke» va antes del verbo.' },
+        exercises: [
+          {
+            type: 'gap',
+            prompt: 'Completa la subordinada.',
+            sentence: 'Jeg vet at han ___ i Oslo.',
+            answers: ['bor'],
+            bank: ['bor', 'bo', 'bode'],
+            es: 'Sé que él vive en Oslo.',
+            explain: 'En la subordinada el verbo va en presente: «bor».'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase.',
+            words: ['Jeg', 'blir', 'hjemme', 'fordi', 'jeg', 'ikke', 'er', 'syk.'],
+            es: 'Me quedo en casa porque no estoy enfermo.',
+            explain: '«Fordi» introduce la subordinada; «ikke» va antes del verbo.'
+          }
+        ]
+      },
+      {
+        id: 'relativsetninger',
+        num: 18,
+        level: 'A2',
+        emoji: '🧷',
+        title: 'Oraciones de relativo con som',
+        subtitle: 'El hombre que vive aquí',
+        intro: '«Som» es el pronombre relativo más importante. Sirve para sujeto y objeto, y no cambia de forma.',
+        notes: [
+          'Persona o cosa: Mannen som bor der; boken som jeg leser.',
+          '«Som» puede omitirse cuando es objeto: boken jeg leser.',
+          'No se usa «hvem» como relativo.'
+        ],
+        examples: [
+          { no: 'Mannen som bor der, er lærer.', es: 'El hombre que vive allí es profesor.' },
+          { no: 'Boken som jeg leser, er god.', es: 'El libro que leo es bueno.' },
+          { no: 'Folk som lærer norsk, øver hver dag.', es: 'La gente que aprende noruego practica cada día.' }
+        ],
+        mistake: { wrong: 'Mannen hvem bor der.', right: 'Mannen som bor der.', why: 'El relativo es «som», no «hvem».' },
+        exercises: [
+          {
+            type: 'gap',
+            prompt: 'Completa con el relativo.',
+            sentence: 'Boken ___ jeg leser, er god.',
+            answers: ['som'],
+            bank: ['som', 'hvem', 'at'],
+            es: 'El libro que leo es bueno.',
+            explain: '«Som» introduce la oración de relativo.'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase.',
+            words: ['Mannen', 'som', 'bor', 'der,', 'er', 'lærer.'],
+            es: 'El hombre que vive allí es profesor.',
+            explain: '«Som» une el sustantivo con la información que lo describe.'
+          }
+        ]
+      }
+    ]
+  },
+
+  /* -------------------------------------------------------------------- */
   a0: {
     subtitle: 'El alfabeto, los sonidos y las primeras palabras',
     intro: 'Un punto de partida para quien nunca ha estudiado noruego: cómo funciona el idioma, cómo se leen sus letras y las primeras frases para presentarte.',

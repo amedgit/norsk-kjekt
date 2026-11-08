@@ -10,6 +10,7 @@
   var BODY = COURSE.body || { zones: [], parts: [], sensations: [], intensities: [], durations: [], phrases: [], scenarios: [], exercises: [] };
   var STORIES = COURSE.stories || { totalTarget: 12, chapters: [] };
   var A0 = COURSE.a0 || null;
+  var GRAMMAR = COURSE.grammar || { topics: [] };
   var GAMES = COURSE.games || { dagensOrd: { valid: [] } };
   var wordle = null;
   var memoryGame = null;
@@ -58,7 +59,7 @@
   var KEY = 'norsk-kjekt-v1';
 
   function defaults() {
-    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, body: {}, core: { known: {}, packs: {} }, stories: { chapters: {} }, a0: { best: 0, total: 0, at: 0 }, games: { dagensOrd: { date: '', guesses: [], status: 'playing', played: 0, wins: 0, streak: 0, best: 0, lastWin: '', distribution: [0, 0, 0, 0, 0, 0] }, hukommelse: { easy: { played: 0, bestMoves: 0, bestTime: 0 }, medium: { played: 0, bestMoves: 0, bestTime: 0 }, hard: { played: 0, bestMoves: 0, bestTime: 0 } } }, xp: 0, days: {}, review: [], srs: {}, version: 1 };
+    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, body: {}, core: { known: {}, packs: {} }, stories: { chapters: {} }, a0: { best: 0, total: 0, at: 0 }, grammar: { topics: {} }, games: { dagensOrd: { date: '', guesses: [], status: 'playing', played: 0, wins: 0, streak: 0, best: 0, lastWin: '', distribution: [0, 0, 0, 0, 0, 0] }, hukommelse: { easy: { played: 0, bestMoves: 0, bestTime: 0 }, medium: { played: 0, bestMoves: 0, bestTime: 0 }, hard: { played: 0, bestMoves: 0, bestTime: 0 } } }, xp: 0, days: {}, review: [], srs: {}, version: 1 };
   }
 
   var state = (function load() {
@@ -74,6 +75,7 @@
       var core = { known: {}, packs: {} };
       var stories = { chapters: {} };
       var a0 = { best: 0, total: 0, at: 0 };
+      var grammar = { topics: {} };
       var games = { dagensOrd: { date: '', guesses: [], status: 'playing', played: 0, wins: 0, streak: 0, best: 0, lastWin: '', distribution: [0, 0, 0, 0, 0, 0] }, hukommelse: { easy: { played: 0, bestMoves: 0, bestTime: 0 }, medium: { played: 0, bestMoves: 0, bestTime: 0 }, hard: { played: 0, bestMoves: 0, bestTime: 0 } } };
       Object.keys(raw.lessons || {}).forEach(function (id) {
         var v = raw.lessons[id];
@@ -115,6 +117,14 @@
       }
       if (raw.a0 && typeof raw.a0 === 'object') {
         a0 = { best: Number(raw.a0.best) || 0, total: Number(raw.a0.total) || 0, at: Number(raw.a0.at) || 0 };
+      }
+      if (raw.grammar && typeof raw.grammar === 'object') {
+        Object.keys(raw.grammar.topics || {}).forEach(function (id) {
+          var v = raw.grammar.topics[id];
+          if (v && typeof v === 'object') {
+            grammar.topics[id] = { best: Number(v.best) || 0, total: Number(v.total) || 0, at: Number(v.at) || 0 };
+          }
+        });
       }
       if (raw.games && raw.games.dagensOrd && typeof raw.games.dagensOrd === 'object') {
         var gd = raw.games.dagensOrd;
@@ -158,6 +168,7 @@
         core: core,
         stories: stories,
         a0: a0,
+        grammar: grammar,
         games: games,
         srs: srs,
         exams: raw.exams && typeof raw.exams === 'object' ? raw.exams : {},
@@ -1443,6 +1454,125 @@
   }
 
   /* =======================================================
+     Gramática: referencia A0–A2
+     ======================================================= */
+
+  function grammarTopic(id) {
+    return GRAMMAR.topics.find(function (t) { return t.id === id; }) || null;
+  }
+
+  function grammarCard(topic) {
+    var st = state.grammar.topics[topic.id];
+    return '<a class="grammar-card" href="#/gramatica/' + topic.id + '">' +
+      '<div class="grammar-card-top"><span class="grammar-emoji">' + topic.emoji + '</span>' +
+      '<span class="chip plain">' + esc(topic.level) + '</span></div>' +
+      '<h3>' + esc(topic.title) + '</h3>' +
+      '<p>' + esc(topic.subtitle) + '</p>' +
+      '<div class="foot">' +
+      (st ? '<span class="chip done">✓ ' + st.best + '/' + st.total + '</span>' : '<span class="chip">' + esc(t('grammar.new')) + '</span>') +
+      '<span class="chip plain">' + esc(tp('lesson.exercises', topic.exercises.length)) + '</span>' +
+      '</div></a>';
+  }
+
+  function renderGrammar() {
+    var levels = [];
+    GRAMMAR.topics.forEach(function (t) {
+      if (levels.indexOf(t.level) === -1) levels.push(t.level);
+    });
+    var done = GRAMMAR.topics.filter(function (t) { return state.grammar.topics[t.id]; }).length;
+    app.innerHTML =
+      '<div class="crumbs"><a href="#/">' + esc(t('crumb.home')) + '</a> <span>›</span> <span>' + esc(t('grammar.title')) + '</span></div>' +
+      '<section class="colo-intro grammar-intro">' +
+      '  <span class="eyebrow">' + esc(t('grammar.eyebrow')) + '</span>' +
+      '  <h1>' + esc(t('grammar.title')) + '</h1>' +
+      '  <p>' + esc(t('grammar.intro', { n: GRAMMAR.topics.length })) + '</p>' +
+      '  <div class="story-progress"><span>' + esc(t('grammar.progress', { done: done, total: GRAMMAR.topics.length })) + '</span>' +
+      '    <span class="meter"><i style="width:' + Math.round((done / GRAMMAR.topics.length) * 100) + '%"></i></span></div>' +
+      '</section>' +
+      levels.map(function (lv) {
+        var list = GRAMMAR.topics.filter(function (t) { return t.level === lv; });
+        return '<h2 class="section-title">' + esc(lv) + ' <span>' + esc(t('grammar.levelSub', { n: list.length })) + '</span></h2>' +
+          '<div class="grammar-grid">' + list.map(grammarCard).join('') + '</div>';
+      }).join('');
+  }
+
+  function renderGrammarTopic(topic) {
+    if (!topic) { renderGrammar(); return; }
+    var st = state.grammar.topics[topic.id];
+    var pos = GRAMMAR.topics.indexOf(topic);
+    var prev = pos > 0 ? GRAMMAR.topics[pos - 1] : null;
+    var next = pos > -1 && pos < GRAMMAR.topics.length - 1 ? GRAMMAR.topics[pos + 1] : null;
+
+    app.innerHTML =
+      '<div class="crumbs"><a href="#/gramatica">' + esc(t('grammar.title')) + '</a> <span>›</span> <span>' + esc(topic.title) + '</span></div>' +
+      '<header class="gra-head">' +
+      '  <div class="kicker"><span class="emoji">' + topic.emoji + '</span>' +
+      '    <span class="chip">' + esc(topic.level) + '</span>' +
+      '    <span class="chip plain">' + esc(tp('lesson.exercises', topic.exercises.length)) + '</span></div>' +
+      '  <h1>' + esc(topic.title) + '</h1>' +
+      '  <p class="lead">' + esc(topic.subtitle) + '</p>' +
+      '  <p class="gra-intro">' + esc(topic.intro) + '</p>' +
+      '</header>' +
+
+      '<section class="card gra-card"><h2>' + esc(t('grammar.rule')) + '</h2>' +
+      '<ul class="gra-notes">' + topic.notes.map(function (n) { return '<li>' + esc(n) + '</li>'; }).join('') + '</ul></section>' +
+
+      '<section class="card gra-card"><h2>' + esc(t('grammar.examples')) + '</h2>' +
+      '<div class="phrases gra-examples">' + topic.examples.map(function (e) {
+        return '<div class="phrase">' + say(e.no) +
+          '<span class="txt"><span class="no">' + esc(e.no) + '</span>' +
+          '<span class="es">' + esc(e.es) + '</span></span></div>';
+      }).join('') + '</div></section>' +
+
+      '<section class="card gra-card gra-mistake"><h2>' + esc(t('grammar.mistake')) + '</h2>' +
+      '<p class="gra-wrong">✗ ' + esc(topic.mistake.wrong) + '</p>' +
+      '<p class="gra-right">✓ ' + esc(topic.mistake.right) + ' ' + say(topic.mistake.right) + '</p>' +
+      '<p class="muted">' + esc(topic.mistake.why) + '</p></section>' +
+
+      '<section class="card gra-card" id="gra-practice"><h2>' + esc(t('grammar.practice')) + '</h2><div id="gra-ex-mount"></div></section>' +
+
+      '<nav class="story-nav">' +
+      (prev ? '<a class="btn ghost" href="#/gramatica/' + prev.id + '">← ' + esc(t('grammar.prev', { title: prev.title })) + '</a>' : '<span></span>') +
+      '<a class="btn ghost" href="#/gramatica">' + esc(t('grammar.all')) + '</a>' +
+      (next ? '<a class="btn ghost" href="#/gramatica/' + next.id + '">' + esc(t('grammar.nextTopic', { title: next.title })) + ' →</a>' : '<span class="story-more">' + esc(t('grammar.end')) + '</span>') +
+      '</nav>';
+
+    var mount = document.getElementById('gra-ex-mount');
+    mount.innerHTML =
+      '<div class="actions">' +
+      '<button class="btn primary" id="start-gra-ex">' + esc(t('grammar.start', { n: topic.exercises.length })) + '</button>' +
+      (st ? '<span class="ex-hint">' + esc(t('grammar.best', { best: st.best, total: st.total })) + '</span>' : '') +
+      '</div>';
+
+    document.getElementById('start-gra-ex').addEventListener('click', function () {
+      document.getElementById('gra-practice').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      runExercises(mount, topic.exercises, {
+        label: t('grammar.label', { title: topic.title }),
+        onDone: function (res) {
+          var prevSt = state.grammar.topics[topic.id];
+          state.grammar.topics[topic.id] = {
+            best: Math.max(prevSt ? prevSt.best : 0, res.correct),
+            total: res.total,
+            at: Date.now()
+          };
+          state.xp += res.correct * 10;
+          markDay();
+          topic.exercises.forEach(function (item, i) {
+            var sig = 'grammar#' + topic.id + '#' + i;
+            if (res.failed.indexOf(item) > -1) addReview(sig);
+            else removeReview(sig);
+          });
+          save();
+          refreshHud();
+          var box = mount.querySelector('.result');
+          if (box) box.insertAdjacentHTML('beforeend',
+            '<p class="ex-hint">' + esc(t('result.progress', { n: res.correct * 10 })) + '</p>');
+        }
+      });
+    });
+  }
+
+  /* =======================================================
      Juegos: Dagens ord
      ======================================================= */
 
@@ -2062,9 +2192,13 @@
     return COURSE.fun.packs.reduce(function (n, p) { return n + p.exercises.length; }, 0);
   }
 
+  function grammarExerciseCount() {
+    return GRAMMAR.topics.reduce(function (n, t) { return n + t.exercises.length; }, 0);
+  }
+
   function totalExerciseCount() {
     return LESSONS.reduce(function (n, l) { return n + l.exercises.length; }, 0) +
-      funExerciseCount() + dialogueExerciseCount() + storyExerciseCount() + (A0 ? A0.exercises.length : 0) + (BODY.exercises ? BODY.exercises.length : 0);
+      funExerciseCount() + dialogueExerciseCount() + storyExerciseCount() + (A0 ? A0.exercises.length : 0) + grammarExerciseCount() + (BODY.exercises ? BODY.exercises.length : 0);
   }
 
   function allFunExercises() {
@@ -2644,6 +2778,7 @@
       '  <div class="fun-banner-actions lessons-actions">' +
       '    <a class="btn primary" href="#/leksjon/' + next.id + '">' + esc(t('lessons.continue', { title: next.title })) + '</a>' +
       '    <a class="btn ghost" href="#/nivel">' + esc(t('lessons.test')) + '</a>' +
+      '    <a class="btn ghost" href="#/gramatica">' + esc(t('grammar.title')) + '</a>' +
       '  </div>' +
       '</section>' +
       '<section class="a0-strip">' +
@@ -3267,6 +3402,7 @@
     });
     if (state.body && state.body.best) n += Number(state.body.best) || 0;
     if (state.a0 && state.a0.best) n += Number(state.a0.best) || 0;
+    Object.keys(state.grammar.topics).forEach(function (id) { n += Number(state.grammar.topics[id].best) || 0; });
     return n;
   }
 
@@ -4136,6 +4272,14 @@
       }
       return null;
     }
+    if (parts[0] === 'grammar') {
+      var gTopic = grammarTopic(parts[1]);
+      var gItem = gTopic && gTopic.exercises[Number(parts[2])];
+      if (gTopic && gItem) {
+        return { sig: sig, item: gItem, title: gTopic.title, emoji: gTopic.emoji, label: t('grammar.reviewLabel', { level: gTopic.level }) };
+      }
+      return null;
+    }
     if (parts[0] === 'a0' && A0) {
       var a0Item = A0.exercises[Number(parts[1])];
       if (a0Item) {
@@ -4880,6 +5024,9 @@
     } else if (name === 'juegos') {
       if (arg === 'hukommelse') renderMemory('easy');
       else renderGames();
+    } else if (name === 'gramatica') {
+      if (arg) renderGrammarTopic(grammarTopic(arg));
+      else renderGrammar();
     } else if (name === 'a0') {
       renderA0();
     } else if (name === 'historien') {

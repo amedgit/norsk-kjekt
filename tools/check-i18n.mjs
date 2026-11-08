@@ -138,6 +138,27 @@ C.colloquial.forEach((c, i) => {
   });
 });
 
+if (C.grammar) {
+  C.grammar.topics.forEach((t, i) => {
+    const p = `grammar:${t.id}`;
+    add(p + '.title', t.title);
+    add(p + '.subtitle', t.subtitle);
+    add(p + '.intro', t.intro);
+    t.notes.forEach((n, j) => add(p + `.notes[${j}]`, n));
+    t.examples.forEach((e, j) => add(p + `.examples[${j}].es`, e.es));
+    add(p + '.mistake.why', t.mistake.why);
+    t.exercises.forEach((e, j) => {
+      const q = `${p}.ex[${j}]`;
+      add(q + '.prompt', e.prompt);
+      e.options?.forEach((o, k) => add(q + `.options[${k}]`, o));
+      e.pairs?.forEach((q2, k) => add(q + `.pairs[${k}].b`, q2.b));
+      add(q + '.explain', e.explain);
+      add(q + '.es', e.es);
+      add(q + '.hint', e.hint);
+    });
+  });
+}
+
 if (C.a0) {
   add('a0.subtitle', C.a0.subtitle);
   add('a0.intro', C.a0.intro);
@@ -265,6 +286,14 @@ if (C.stories) {
     });
     ch.grammar.examples.forEach((g) => addNo(g.no));
     ch.exercises.forEach(addExerciseNo);
+  });
+}
+if (C.grammar) {
+  C.grammar.topics.forEach((t) => {
+    t.examples.forEach((e) => addNo(e.no));
+    addNo(t.mistake.right);
+    addNo(t.mistake.wrong);
+    t.exercises.forEach(addExerciseNo);
   });
 }
 if (C.a0) {
