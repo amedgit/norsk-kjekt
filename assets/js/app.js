@@ -4973,7 +4973,10 @@
 
     var active = (name === 'lecciones' || name === 'leksjon') ? 'lessons'
       : name === 'kjerneord' ? 'core'
+        : name === 'gramatica' ? 'grammar'
         : name === 'historien' ? 'stories'
+        : name === 'a0' ? 'a0'
+        : name === 'juegos' ? 'games'
         : name === 'coloquial' ? 'coloquial'
       : name === 'repaso' ? 'review'
         : name === 'tull' ? 'fun'
@@ -4989,6 +4992,15 @@
     var activeLink = document.querySelector('.nav a.active');
     if (activeLink && activeLink.scrollIntoView) {
       activeLink.scrollIntoView({ block: 'nearest', inline: 'center' });
+    }
+    var moreToggle = document.querySelector('.nav-more-toggle');
+    if (moreToggle) {
+      moreToggle.classList.toggle('active', ['a0', 'body', 'fun', 'exam', 'colloquial', 'review', 'games'].indexOf(active) > -1);
+    }
+    var navMoreMenu = document.querySelector('.nav-more-menu');
+    if (navMoreMenu) {
+      navMoreMenu.hidden = true;
+      if (moreToggle) moreToggle.setAttribute('aria-expanded', 'false');
     }
 
     if (name === 'leksjon') {
@@ -5115,6 +5127,36 @@
       wordlePress(k);
     }
   });
+
+  /* ---------------- submenú del menú principal ---------------- */
+
+  var navMoreToggle = document.querySelector('.nav-more-toggle');
+  var navMoreMenu = document.querySelector('.nav-more-menu');
+  if (navMoreToggle && navMoreMenu) {
+    navMoreToggle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var open = navMoreToggle.getAttribute('aria-expanded') !== 'true';
+      navMoreToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      navMoreMenu.hidden = !open;
+    });
+    navMoreMenu.addEventListener('click', function (e) {
+      if (e.target.closest('a')) {
+        navMoreMenu.hidden = true;
+        navMoreToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+    document.addEventListener('click', function (e) {
+      if (e.target.closest('.nav-more')) return;
+      navMoreMenu.hidden = true;
+      navMoreToggle.setAttribute('aria-expanded', 'false');
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        navMoreMenu.hidden = true;
+        navMoreToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
 
   /* ---------------- velocidad del audio ---------------- */
 

@@ -79,6 +79,32 @@ button { font: inherit; }
 .nav a:hover { background: #eceff4; color: var(--ink); }
 .nav a.active { background: var(--ink); color: #fff; }
 
+.nav-more { position: relative; display: flex; align-items: center; }
+.nav-more-toggle {
+  border: 0; background: transparent; color: var(--ink-soft);
+  font: inherit; font-size: .85rem; font-weight: 550; line-height: 1.2;
+  padding: .4rem .4rem; border-radius: 999px; cursor: pointer;
+  display: inline-flex; align-items: center; gap: .18rem;
+}
+.nav-more-toggle::after { content: "▾"; font-size: .62rem; opacity: .7; }
+.nav-more-toggle:hover { background: #eceff4; color: var(--ink); }
+.nav-more-toggle.active { background: var(--ink); color: #fff; }
+.nav-more-menu {
+  position: absolute; z-index: 50; top: calc(100% + .35rem);
+  inset-inline-end: 0; min-width: 190px;
+  display: flex; flex-direction: column; gap: .05rem;
+  padding: .35rem; background: var(--card);
+  border: 1px solid var(--line); border-radius: 14px;
+  box-shadow: 0 18px 40px -18px rgba(16, 28, 51, .4);
+}
+.nav-more-menu[hidden] { display: none; }
+.nav-more-menu a {
+  display: block; text-decoration: none; color: var(--ink-soft);
+  font-size: .82rem; font-weight: 600; padding: .45rem .6rem; border-radius: 9px;
+}
+.nav-more-menu a:hover { background: #eceff4; color: var(--ink); }
+.nav-more-menu a.active { background: var(--ink); color: #fff; }
+
 .hud { display: flex; gap: .4rem; align-items: center; }
 .lang-switch {
   display: inline-flex; align-items: center; gap: 1px;
@@ -1513,6 +1539,9 @@ html[dir="rtl"] .exam-usertext {
   .hud { margin-inline-start: auto; }
   .nav { order: 3; width: 100%; flex-wrap: wrap; overflow: visible; row-gap: .15rem; }
   .nav a { padding: .34rem .55rem; font-size: .82rem; white-space: nowrap; }
+  .nav-more { width: 100%; flex-direction: column; align-items: stretch; }
+  .nav-more-toggle { width: 100%; justify-content: space-between; padding: .34rem .55rem; font-size: .82rem; }
+  .nav-more-menu { position: static; width: 100%; margin-top: .15rem; box-shadow: none; }
   .vocab { grid-template-columns: 1fr 1fr; }
   .result .score { font-size: 2.1rem; }
   .para .no { font-size: .98rem; }

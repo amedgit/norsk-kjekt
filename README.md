@@ -329,7 +329,7 @@ La referencia `#/gramatica` reúne 18 temas explicados desde cero:
 
 Cada tema tiene reglas, ejemplos con audio, un error típico corregido y dos
 ejercicios. El progreso vive en `state.grammar.topics`; los fallos usan la firma
-`grammar#<id>#<índice>`. El acceso está en el pie y en la página de Lecciones.
+`grammar#<id>#<índice>`. El acceso está en el menú superior como **Gramática**, además del pie y la página de Lecciones.
 
 ### A0 (empezar desde cero)
 
