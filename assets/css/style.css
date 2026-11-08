@@ -1236,6 +1236,51 @@ html[dir="rtl"] .exam-usertext {
 .story-nav .btn { flex: 0 1 auto; }
 .story-more { color: var(--muted); font-size: .82rem; }
 
+/* ---------------- verbos esenciales ---------------- */
+
+.verbos-intro { background: linear-gradient(135deg, #1e3f4a, #2e6b73); }
+.verbos-count { color: rgba(255, 255, 255, .82); font-size: .84rem; margin-top: .6rem; }
+.verbos-toolbar { display: flex; flex-direction: column; gap: .6rem; margin: 1rem 0 .8rem; }
+.verbos-toolbar input {
+  width: 100%; max-width: 420px; padding: .55rem .8rem;
+  border: 1px solid var(--line); border-radius: 10px;
+  background: var(--card); color: var(--ink); font: inherit; font-size: .9rem;
+}
+.verbos-list { display: grid; gap: .8rem; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); }
+.verb-card {
+  display: flex; flex-direction: column; gap: .55rem;
+  background: var(--card); border: 1px solid var(--line);
+  border-left: 3px solid #2e6b73; border-radius: var(--radius); padding: .9rem 1rem;
+}
+.verb-card.known { border-left-color: var(--green); background: linear-gradient(180deg, var(--green-soft), var(--card) 40%); }
+.verb-head { display: flex; align-items: flex-start; justify-content: space-between; gap: .6rem; }
+.verb-head h3 { font-size: 1.05rem; margin: 0; display: flex; align-items: center; gap: .25rem; flex-wrap: wrap; }
+.verb-es { color: var(--muted); font-size: .82rem; margin-top: .1rem; }
+.verb-tags { display: flex; gap: .25rem; flex-wrap: wrap; justify-content: flex-end; }
+.verb-forms { display: grid; grid-template-columns: 1fr 1fr; gap: .3rem .7rem; }
+.verb-form { display: flex; align-items: center; gap: .3rem; min-width: 0; font-size: .78rem; }
+.verb-form > span { color: var(--muted); font-size: .65rem; text-transform: uppercase; letter-spacing: .05em; }
+.verb-form b { font-weight: 700; direction: ltr; unicode-bidi: isolate; }
+.verb-form .say { width: 1.35rem; height: 1.35rem; font-size: .6rem; }
+.verb-example {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .3rem;
+  padding-top: .45rem; border-top: 1px dashed var(--line);
+  font-size: .82rem; color: var(--ink-soft);
+}
+.verb-example small { display: block; flex-basis: 100%; color: var(--muted); font-size: .74rem; padding-inline-start: 2.1rem; }
+.verb-know {
+  align-self: flex-start; margin-top: auto;
+  border: 1px solid var(--line); background: var(--card); color: var(--muted);
+  border-radius: 999px; padding: .3rem .7rem; font: inherit; font-size: .74rem; font-weight: 700; cursor: pointer;
+}
+.verb-know:hover { border-color: var(--green); color: var(--green); }
+.verb-know.on { background: var(--green-soft); border-color: var(--green); color: #0b5c3f; }
+
+@media (max-width: 700px) {
+  .verbos-list { grid-template-columns: 1fr; }
+  .verb-forms { grid-template-columns: 1fr 1fr; }
+}
+
 /* ---------------- gramática ---------------- */
 
 .grammar-intro { background: linear-gradient(135deg, #2b2a55, #4a4785); }
@@ -1817,6 +1862,10 @@ html[data-theme="dark"] .wordle-tile.absent { background: #566070; border-color:
 html[data-theme="dark"] .wordle-key.correct { background: var(--green); color: #06281b; }
 html[data-theme="dark"] .wordle-key.present { background: #d9a441; color: #241700; }
 html[data-theme="dark"] .wordle-key.absent { background: #566070; color: #fff; }
+html[data-theme="dark"] .verb-card { background: var(--card); }
+html[data-theme="dark"] .verb-card.known { background: linear-gradient(180deg, #123126, var(--card) 45%); }
+html[data-theme="dark"] .verb-know { background: #1b2635; }
+html[data-theme="dark"] .verbos-toolbar input { background: #1b2635; }
 html[data-theme="dark"] .hukommelse-card { background: #1b2635; border-color: var(--line); }
 html[data-theme="dark"] .hukommelse-card.flipped { background: #1b2635; }
 html[data-theme="dark"] .hukommelse-card.matched { background: #123126; border-color: var(--green); }

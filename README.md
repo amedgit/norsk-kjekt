@@ -3,7 +3,7 @@
 **Publicado:** <https://norskkjekt.com/>
 
 Portal para practicar noruego **bokmål** (A1–C2): textos cortos, ejercicios
-interactivos, una sección A0, una referencia de gramática A0–A2, una historia serializada en cinco capítulos, siete conversaciones
+interactivos, una sección A0, una referencia de gramática A0–B2, 100 verbos esenciales, una historia serializada en cinco capítulos, siete conversaciones
 cotidianas con audio, cuatro grupos de WhatsApp noruego, seis packs de humor,
 tablas de palabras y verbos, una sección de noruego coloquial y **cuatro
 simulacros de examen** estilo Norskprøven. HTML +
@@ -80,6 +80,7 @@ cacheada.
 | Samtaler | 7 conversaciones cotidianas (A2–B1: portal, cafetería, restaurante, tienda, trabajo, médico y teléfono) con 66 réplicas, audio por línea, traducciones plegables, vocabulario, frases y 35 ejercicios |
 | A0 | Sección `#/a0` para empezar desde cero: alfabeto, vocales, consonantes, pronunciación, primeras frases y 8 ejercicios |
 | Gramática | Referencia `#/gramatica` A0–B2: 30 temas con reglas, ejemplos con audio, errores típicos y 60 ejercicios |
+| Verbos | 100 verbos esenciales con presente, pasado, perfecto, imperativo, ejemplo, audio y progreso |
 | Juegos | **Hukommelse**: juego de memoria con parejas de palabras y traducciones, tres niveles, audio, contador de movimientos y tiempo |
 | Historia | «Lucía i Oslo»: 5 capítulos piloto (A2–B1) de la serie de 12, con 7 párrafos cada uno, audio por párrafo y del capítulo completo, traducción plegable, 15 palabras, gramática y 5 ejercicios por capítulo |
 | Kjerneord | Núcleo de 1000 palabras y frases en 10 paquetes de 100; los paquetes 1 a 9 (900 palabras: supervivencia, vida diaria, personas y planes, salud y cuerpo, trabajo y trámites, ciudad y viajes, conectores y matices, opiniones y debate, cultura y sociedad) ya están disponibles con audio, filtros y test |
@@ -94,7 +95,7 @@ cacheada.
 | Progreso | racha, XP, mapa de calor de 12 semanas, 8 logros, repaso espaciado (1/3/7/15/30 días) y exportación/importación del progreso en JSON |
 | Extras | modo oscuro, teclado noruego æ ø å en los ejercicios de escritura y PWA offline |
 | Velocidad | selector 0,5×–1,3× en la cabecera; empieza en 0,85×, se aplica al audio y se recuerda |
-| Audio | 2323 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
+| Audio | 2846 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
 | App | PWA instalable (offline) con icono propio, pantalla completa y funcionamiento sin conexión; el APK está retirado temporalmente |
 
 ## Interfaz en español, inglés o persa
@@ -165,7 +166,7 @@ norsk/
     ├── img/og.png       ← imagen para compartir en redes
     ├── img/lessons/*.svg ← una ilustración original por lección
     ├── img/dialogues/*.svg ← una ilustración por conversación
-    ├── audio/*.mp3      ← 2323 audios (≈25,6 MB), generados
+    ├── audio/*.mp3      ← 2846 audios (≈28,9 MB), generados
     └── js/
         ├── data.js          ← TODO el contenido del curso, Samtaler y los 4 simulacros
         ├── content-en.js    ← traducciones ES → EN del contenido
@@ -319,6 +320,17 @@ JSON-LD (`Article`, `BreadcrumbList` y `FAQPage`) y enlaces a la app. El
 `sitemap.xml` incluye la portada y todas las guías. Al añadir una guía nueva,
 actualiza el sitemap, enlázala desde `/guias/` y desde el pie de la app.
 
+### Verbos esenciales
+
+La sección `#/verbos` reúne 100 verbos de uso diario en 10 temas. En noruego no
+hay conjugación por persona, así que cada verbo muestra sus formas clave:
+
+- infinitivo, presente, pasado, perfecto e imperativo;
+- ejemplo con audio y traducción;
+- nivel, tema y marca de regular o irregular;
+- buscador, filtros por tema y botón **«La sé»**.
+
+El progreso vive en `state.verbos.known`. El acceso está en el menú **Más**.
 ### Gramática (A0–A2)
 
 La referencia `#/gramatica` reúne 30 temas explicados desde cero:

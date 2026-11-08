@@ -138,6 +138,13 @@ C.colloquial.forEach((c, i) => {
   });
 });
 
+if (C.verbos) {
+  C.verbos.items.forEach((v, i) => {
+    add(`verbos.items[${i}].es`, v.es);
+    add(`verbos.items[${i}].exampleEs`, v.exampleEs);
+  });
+}
+
 if (C.grammar) {
   C.grammar.topics.forEach((t, i) => {
     const p = `grammar:${t.id}`;
@@ -286,6 +293,16 @@ if (C.stories) {
     });
     ch.grammar.examples.forEach((g) => addNo(g.no));
     ch.exercises.forEach(addExerciseNo);
+  });
+}
+if (C.verbos) {
+  C.verbos.items.forEach((v) => {
+    addNo(v.inf);
+    addNo(v.present);
+    addNo(v.past);
+    addNo(v.perfect);
+    addNo(v.imperative);
+    addNo(v.example);
   });
 }
 if (C.grammar) {

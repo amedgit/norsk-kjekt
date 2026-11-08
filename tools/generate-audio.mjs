@@ -212,6 +212,18 @@ if (COURSE.stories) {
   }
 }
 
+/* Verbos esenciales: formas y ejemplos */
+if (COURSE.verbos) {
+  for (const v of COURSE.verbos.items) {
+    texts.add(v.inf);
+    texts.add(v.present);
+    texts.add(v.past);
+    texts.add(v.perfect);
+    texts.add(v.imperative);
+    texts.add(v.example);
+  }
+}
+
 /* Gramática: ejemplos, error corregido y ejercicios */
 if (COURSE.grammar) {
   for (const t of COURSE.grammar.topics) {

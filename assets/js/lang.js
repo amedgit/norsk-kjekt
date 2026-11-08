@@ -27,6 +27,7 @@
       'nav.more': 'Más',
       'nav.a0': 'A0 · Desde cero',
       'nav.games': 'Juegos',
+      'nav.verbos': 'Verbos',
       'nav.guides': 'Guías',
       'nav.story': 'Historia',
       'nav.dialogues': 'Diálogos',
@@ -268,6 +269,33 @@
       'grammar.nextTopic': 'Siguiente · {title}',
       'grammar.all': 'Todos los temas',
       'grammar.end': 'Fin de A0–B2',
+      'verbos.eyebrow': 'Verbos · A1–B2',
+      'verbos.title': '100 verbos esenciales',
+      'verbos.intro': 'Los verbos más útiles para el día a día, con presente, pasado, perfecto, imperativo y una frase de ejemplo. En noruego la misma forma sirve para todas las personas.',
+      'verbos.search': 'Buscar verbo...',
+      'verbos.all': 'Todos',
+      'verbos.learned': '{done} de {total} aprendidos',
+      'verbos.inf': 'Infinitivo',
+      'verbos.present': 'Presente',
+      'verbos.past': 'Pasado',
+      'verbos.perfect': 'Perfecto',
+      'verbos.imperative': 'Imperativo',
+      'verbos.example': 'Ejemplo',
+      'verbos.know': 'La sé',
+      'verbos.known': 'Aprendido',
+      'verbos.irregular': 'irregular',
+      'verbos.regular': 'regular',
+      'verbos.noResults': 'No hay verbos con ese filtro.',
+      'verbos.theme.basic': 'Básicos',
+      'verbos.theme.modal': 'Modales y auxiliares',
+      'verbos.theme.movement': 'Movimiento',
+      'verbos.theme.communication': 'Comunicación',
+      'verbos.theme.daily': 'Vida diaria',
+      'verbos.theme.work': 'Trabajo y estudio',
+      'verbos.theme.feelings': 'Emociones y relaciones',
+      'verbos.theme.thought': 'Pensamiento',
+      'verbos.theme.change': 'Cambio y acción',
+      'verbos.theme.body': 'Cuerpo y salud',
       'games.eyebrow': 'Juegos · A1–B2',
       'games.title': 'Juegos',
       'games.intro': 'Aprende jugando: memoria, frases contra reloj y retos cortos. Todo funciona sin conexión.',
@@ -357,6 +385,7 @@
       'footer.privacy': 'Privacidad',
       'footer.guides': 'Guías',
       'footer.grammar': 'Gramática',
+      'footer.verbos': 'Verbos',
       'footer.a0': 'A0',
       'consent.title': 'Cookies y estadísticas',
       'consent.text': 'Usamos Google Analytics para saber cuántas personas visitan la web y desde dónde. Puedes aceptar o rechazar sin perder el progreso.',
@@ -836,6 +865,7 @@
       'nav.more': 'More',
       'nav.a0': 'A0 · From scratch',
       'nav.games': 'Games',
+      'nav.verbos': 'Verbs',
       'nav.guides': 'Guides',
       'nav.story': 'Story',
       'nav.dialogues': 'Dialogues',
@@ -1077,6 +1107,33 @@
       'grammar.nextTopic': 'Next · {title}',
       'grammar.all': 'All topics',
       'grammar.end': 'End of A0–B2',
+      'verbos.eyebrow': 'Verbs · A1–B2',
+      'verbos.title': '100 essential verbs',
+      'verbos.intro': 'The most useful everyday verbs, with present, past, perfect, imperative and an example sentence. In Norwegian the same form works for all persons.',
+      'verbos.search': 'Search verbs...',
+      'verbos.all': 'All',
+      'verbos.learned': '{done} of {total} learned',
+      'verbos.inf': 'Infinitive',
+      'verbos.present': 'Present',
+      'verbos.past': 'Past',
+      'verbos.perfect': 'Perfect',
+      'verbos.imperative': 'Imperative',
+      'verbos.example': 'Example',
+      'verbos.know': 'I know it',
+      'verbos.known': 'Learned',
+      'verbos.irregular': 'irregular',
+      'verbos.regular': 'regular',
+      'verbos.noResults': 'No verbs match this filter.',
+      'verbos.theme.basic': 'Basics',
+      'verbos.theme.modal': 'Modals and auxiliaries',
+      'verbos.theme.movement': 'Movement',
+      'verbos.theme.communication': 'Communication',
+      'verbos.theme.daily': 'Daily life',
+      'verbos.theme.work': 'Work and study',
+      'verbos.theme.feelings': 'Feelings and relationships',
+      'verbos.theme.thought': 'Thought',
+      'verbos.theme.change': 'Change and action',
+      'verbos.theme.body': 'Body and health',
       'games.eyebrow': 'Games · A1–B2',
       'games.title': 'Games',
       'games.intro': 'Learn by playing: memory, timed sentences and short challenges. Everything works offline.',
@@ -1166,6 +1223,7 @@
       'footer.privacy': 'Privacy',
       'footer.guides': 'Guides',
       'footer.grammar': 'Grammar',
+      'footer.verbos': 'Verbs',
       'footer.a0': 'A0',
       'consent.title': 'Cookies and statistics',
       'consent.text': 'We use Google Analytics to see how many people visit the site and where they come from. You can accept or reject without losing your progress.',
@@ -1646,6 +1704,7 @@
       'nav.more': "بیشتر",
       'nav.a0': "A0 · از صفر",
       'nav.games': "بازی‌ها",
+      'nav.verbos': "فعل‌ها",
       'nav.guides': "راهنماها",
       'nav.story': "داستان",
       'nav.dialogues': "گفت‌وگوها",
@@ -1881,6 +1940,33 @@
       'grammar.nextTopic': "بعدی · {title}",
       'grammar.all': "همهٔ موضوع‌ها",
       'grammar.end': "پایان A0–B2",
+      'verbos.eyebrow': "فعل‌ها · A1–B2",
+      'verbos.title': "۱۰۰ فعل ضروری",
+      'verbos.intro': "پرکاربردترین فعل‌های روزمره با زمان حال، گذشته، کامل، امری و یک جملهٔ مثال. در نروژی یک شکل برای همهٔ شخص‌ها به کار می‌رود.",
+      'verbos.search': "جست‌وجوی فعل...",
+      'verbos.all': "همه",
+      'verbos.learned': "{done} از {total} یاد گرفته شده",
+      'verbos.inf': "مصدر",
+      'verbos.present': "حال",
+      'verbos.past': "گذشته",
+      'verbos.perfect': "کامل",
+      'verbos.imperative': "امری",
+      'verbos.example': "مثال",
+      'verbos.know': "می‌دانم",
+      'verbos.known': "یاد گرفته",
+      'verbos.irregular': "بی‌قاعده",
+      'verbos.regular': "باقاعده",
+      'verbos.noResults': "هیچ فعلی با این فیلتر پیدا نشد.",
+      'verbos.theme.basic': "پایه",
+      'verbos.theme.modal': "وجهی و کمکی",
+      'verbos.theme.movement': "حرکت",
+      'verbos.theme.communication': "ارتباط",
+      'verbos.theme.daily': "زندگی روزمره",
+      'verbos.theme.work': "کار و تحصیل",
+      'verbos.theme.feelings': "احساسات و روابط",
+      'verbos.theme.thought': "اندیشه",
+      'verbos.theme.change': "تغییر و عمل",
+      'verbos.theme.body': "بدن و سلامت",
       'games.eyebrow': "بازی‌ها · A1–B2",
       'games.title': "بازی‌ها",
       'games.intro': "با بازی یاد بگیر: حافظه، جمله‌های زمان‌دار و چالش‌های کوتاه. همه بدون اینترنت کار می‌کند.",
@@ -1970,6 +2056,7 @@
       'footer.privacy': "حریم خصوصی",
       'footer.guides': "راهنماها",
       'footer.grammar': "دستور زبان",
+      'footer.verbos': "فعل‌ها",
       'footer.a0': "A0",
       'consent.title': "کوکی‌ها و آمار",
       'consent.text': "ما از Google Analytics استفاده می‌کنیم تا بدانیم چند نفر از سایت بازدید می‌کنند و از کجا می‌آیند. می‌توانی بدون از دست دادن پیشرفتت بپذیری یا رد کنی.",
@@ -2521,6 +2608,16 @@
         ch.exercises.forEach(addExercise);
       });
     }
+    if (C.verbos) {
+      C.verbos.items.forEach(function (v) {
+        add(v.inf);
+        add(v.present);
+        add(v.past);
+        add(v.perfect);
+        add(v.imperative);
+        add(v.example);
+      });
+    }
     if (C.grammar) {
       C.grammar.topics.forEach(function (t) {
         t.examples.forEach(function (e) { add(e.no); });
@@ -2645,6 +2742,12 @@
         ch.grammar.es = tf(ch.grammar.es);
         ch.grammar.examples.forEach(function (g) { g.es = tf(g.es); });
         ch.exercises.forEach(localizeExercise);
+      });
+    }
+    if (C.verbos) {
+      C.verbos.items.forEach(function (v) {
+        v.es = tf(v.es);
+        v.exampleEs = tf(v.exampleEs);
       });
     }
     if (C.grammar) {
