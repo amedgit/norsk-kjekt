@@ -3,11 +3,12 @@
 **Publicado:** <https://norskkjekt.com/>
 
 Portal para practicar noruego **bokmål** (A1–C2): textos cortos, ejercicios
-interactivos, una sección A0, una referencia de gramática A0–B2, 100 verbos esenciales, una historia serializada en cinco capítulos, siete conversaciones
-cotidianas con audio, cuatro grupos de WhatsApp noruego, seis packs de humor,
+interactivos, una sección A0, una referencia de gramática A0–B2, 100 verbos
+esenciales, una historia serializada en cinco capítulos, Robinson Crusoe
+adaptado, siete conversaciones cotidianas con audio, cuatro grupos de WhatsApp noruego, seis packs de humor,
 tablas de palabras y verbos, una sección de noruego coloquial y **cuatro
 simulacros de examen** estilo Norskprøven. HTML +
-CSS + JS puro, sin build, sin dependencias y sin backend.
+CSS + JS puro, sin build y sin backend; Three.js se carga solo en la escena 3D.
 La interfaz y las explicaciones se pueden leer en **español, inglés o persa**
 (فارسی, de derecha a izquierda); el noruego del curso no se traduce.
 
@@ -76,11 +77,12 @@ cacheada.
 | Parte | Contenido |
 |---|---|
 | Lecciones | 15 lecciones A1–C2 con página propia (`#/lecciones`): buscador, filtros por nivel, progreso y acceso directo a cada lección |
-| Práctica | 337 ejercicios en 10 formatos, test de nivel de 18 preguntas y entrenador de números, hora y preposiciones |
+| Práctica | 342 ejercicios en 10 formatos, test de nivel de 18 preguntas y entrenador de números, hora y preposiciones |
 | Samtaler | 7 conversaciones cotidianas (A2–B1: portal, cafetería, restaurante, tienda, trabajo, médico y teléfono) con 66 réplicas, audio por línea, traducciones plegables, vocabulario, frases y 35 ejercicios |
 | A0 | Sección `#/a0` para empezar desde cero: alfabeto, vocales, consonantes, pronunciación, primeras frases y 8 ejercicios |
 | Gramática | Referencia `#/gramatica` A0–B2: 30 temas con reglas, ejemplos con audio, errores típicos y 60 ejercicios |
 | Verbos | 100 verbos esenciales con presente, pasado, perfecto, imperativo, ejemplo, audio y progreso |
+| Robinson | «Robinson Crusoe»: adaptación propia del clásico de 1719, capítulo 1 abierto con escena 3D interactiva, audio, vocabulario, gramática y 5 ejercicios |
 | Juegos | **Hukommelse**: juego de memoria con parejas de palabras y traducciones, tres niveles, audio, contador de movimientos y tiempo |
 | Historia | «Lucía i Oslo»: 5 capítulos piloto (A2–B1) de la serie de 12, con 7 párrafos cada uno, audio por párrafo y del capítulo completo, traducción plegable, 15 palabras, gramática y 5 ejercicios por capítulo |
 | Kjerneord | Núcleo de 1000 palabras y frases en 10 paquetes de 100; los paquetes 1 a 9 (900 palabras: supervivencia, vida diaria, personas y planes, salud y cuerpo, trabajo y trámites, ciudad y viajes, conectores y matices, opiniones y debate, cultura y sociedad) ya están disponibles con audio, filtros y test |
@@ -95,7 +97,7 @@ cacheada.
 | Progreso | racha, XP, mapa de calor de 12 semanas, 8 logros, repaso espaciado (1/3/7/15/30 días) y exportación/importación del progreso en JSON |
 | Extras | modo oscuro, teclado noruego æ ø å en los ejercicios de escritura y PWA offline |
 | Velocidad | selector 0,5×–1,3× en la cabecera; empieza en 0,85×, se aplica al audio y se recuerda |
-| Audio | 2846 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
+| Audio | 2879 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
 | App | PWA instalable (offline) con icono propio, pantalla completa y funcionamiento sin conexión; el APK está retirado temporalmente |
 
 ## Interfaz en español, inglés o persa
@@ -105,7 +107,7 @@ El selector **ES / EN / فا** de la cabecera cambia todo lo que no es noruego:
 - textos de la interfaz, botones, filtros, avisos y resultados;
 - explicaciones, objetivos, trucos y notas culturales;
 - traducciones de textos, vocabulario, frases y diálogos;
-- prompts, opciones, pistas y explicaciones de los 337 ejercicios;
+- prompts, opciones, pistas y explicaciones de los 342 ejercicios;
 - instrucciones, explicaciones y rúbricas de autoevaluación del simulacro;
 - las tablas de palabras y verbos (la columna de significados).
 
@@ -166,7 +168,8 @@ norsk/
     ├── img/og.png       ← imagen para compartir en redes
     ├── img/lessons/*.svg ← una ilustración original por lección
     ├── img/dialogues/*.svg ← una ilustración por conversación
-    ├── audio/*.mp3      ← 2846 audios (≈28,9 MB), generados
+    ├── audio/*.mp3      ← 2879 audios (≈29,6 MB), generados
+    ├── vendor/three.module.min.js ← Three.js r160 (MIT), solo para la escena 3D
     └── js/
         ├── data.js          ← TODO el contenido del curso, Samtaler y los 4 simulacros
         ├── content-en.js    ← traducciones ES → EN del contenido
@@ -174,6 +177,7 @@ norsk/
         ├── lang.js          ← idioma, textos de interfaz y localización del curso
         ├── audio-manifest.js ← texto → MP3 (generado, no editar)
         ├── tts.js           ← reproduce MP3; fallback a speechSynthesis
+        ├── robinson3d.js    ← escena 3D de York (se carga solo en #/robinson)
         └── app.js           ← router, progreso, ejercicios y motor del simulacro
 ```
 
@@ -331,6 +335,23 @@ hay conjugación por persona, así que cada verbo muestra sus formas clave:
 - buscador, filtros por tema, botón **«La sé»** y test de 10 verbos.
 
 El progreso vive en `state.verbos.known`. El acceso está en el menú **Más**.
+
+### Robinson Crusoe
+
+La sección `#/robinson` abre una adaptación propia y simplificada de la novela
+de Daniel Defoe (1719). No reproduce traducciones modernas: el texto se escribe
+de nuevo en bokmål A2–B1, con una nota de derechos y contexto.
+
+- Capítulo 1, **Drømmen om havet**, con 8 párrafos, audio y traducción plegable.
+- Escena 3D de York (Three.js) con cinco palabras clicables y audio.
+- 15 palabras, gramática del pretérito y 5 ejercicios.
+- 12 capítulos planificados; el resto aparece como «Próximamente».
+- Si WebGL falla, se muestra un fallback HTML con el mismo vocabulario.
+
+La escena vive en `assets/js/robinson3d.js` y se carga con `import()` dinámico
+solo en esa ruta. Three.js está en `assets/vendor/three.module.min.js` y se
+cachea tras la primera visita; no se precarga para no engordar la app.
+
 ### Gramática (A0–A2)
 
 La referencia `#/gramatica` reúne 30 temas explicados desde cero:

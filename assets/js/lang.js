@@ -750,6 +750,27 @@
       'story.all': 'Todos los capítulos',
       'story.moreSoon': 'Más capítulos próximamente',
       'story.open': 'Abrir la historia',
+      'nav.robinson': 'Robinson',
+      'robinson.eyebrow': 'Clásicos adaptados · A2–B1',
+      'robinson.title': 'Robinson Crusoe',
+      'robinson.intro': 'Adaptación propia y simplificada de la novela de Daniel Defoe (1719), capítulo a capítulo: texto, audio, vocabulario, gramática y ejercicios.',
+      'robinson.progress': 'Has completado {done} de {total} capítulos abiertos.',
+      'robinson.chaptersTitle': 'Capítulos',
+      'robinson.roadmap': '{n} de {total} disponibles',
+      'robinson.continue': 'Empezar · {title}',
+      'robinson.crumb': 'Robinson Crusoe',
+      'robinson.noteTitle': 'Adaptación propia',
+      'robinson.note': 'El texto original de 1719 está en dominio público. Esta versión es una adaptación propia al noruego moderno simplificado, no una traducción comercial. Los hechos y personajes pertenecen a la novela de Daniel Defoe.',
+      'robinson.sceneTitle': 'Explora la escena',
+      'robinson.sceneLabel': 'Escena interactiva',
+      'robinson.sceneIntro': 'Gira la escena con el dedo o el ratón y toca las palabras para oírlas.',
+      'robinson.sceneTask': 'Palabras encontradas: {done}/{total}',
+      'robinson.sceneDone': '¡Bien! Has encontrado todas las palabras.',
+      'robinson.sceneHint': 'Toca una palabra de la escena para oírla y ver su significado.',
+      'robinson.sceneFallback': 'Tu navegador no puede mostrar la escena 3D. Puedes practicar las mismas palabras aquí.',
+      'robinson.teaserTitle': 'Clásicos adaptados',
+      'robinson.teaserText': 'Robinson Crusoe, capítulo a capítulo, con audio, vocabulario y ejercicios.',
+      'robinson.teaserLink': 'Abrir Robinson Crusoe',
 
       'lesson.cardNum': 'Lección {n}',
       'lesson.new': 'nueva',
@@ -1596,6 +1617,27 @@
       'story.all': 'All chapters',
       'story.moreSoon': 'More chapters coming soon',
       'story.open': 'Open the story',
+      'nav.robinson': 'Robinson',
+      'robinson.eyebrow': 'Adapted classics · A2–B1',
+      'robinson.title': 'Robinson Crusoe',
+      'robinson.intro': 'An original, simplified adaptation of Daniel Defoe’s 1719 novel, chapter by chapter: text, audio, vocabulary, grammar and exercises.',
+      'robinson.progress': 'You have completed {done} of {total} open chapters.',
+      'robinson.chaptersTitle': 'Chapters',
+      'robinson.roadmap': '{n} of {total} available',
+      'robinson.continue': 'Start · {title}',
+      'robinson.crumb': 'Robinson Crusoe',
+      'robinson.noteTitle': 'Original adaptation',
+      'robinson.note': 'The original 1719 text is in the public domain. This version is our own adaptation into simplified modern Norwegian, not a commercial translation. The events and characters belong to Daniel Defoe’s novel.',
+      'robinson.sceneTitle': 'Explore the scene',
+      'robinson.sceneLabel': 'Interactive scene',
+      'robinson.sceneIntro': 'Rotate the scene with your finger or mouse and tap the words to hear them.',
+      'robinson.sceneTask': 'Words found: {done}/{total}',
+      'robinson.sceneDone': 'Great! You have found all the words.',
+      'robinson.sceneHint': 'Tap a word in the scene to hear it and see its meaning.',
+      'robinson.sceneFallback': 'Your browser cannot show the 3D scene. You can practise the same words here.',
+      'robinson.teaserTitle': 'Adapted classics',
+      'robinson.teaserText': 'Robinson Crusoe, chapter by chapter, with audio, vocabulary and exercises.',
+      'robinson.teaserLink': 'Open Robinson Crusoe',
 
       'lesson.cardNum': 'Lesson {n}',
       'lesson.new': 'new',
@@ -2437,6 +2479,27 @@
       'story.all': "همهٔ فصل‌ها",
       'story.moreSoon': "فصل‌های بیشتر به‌زودی",
       'story.open': "باز کردن داستان",
+      'nav.robinson': "رابینسون",
+      'robinson.eyebrow': "کلاسیک‌های بازنویسی‌شده · A2–B1",
+      'robinson.title': "رابینسون کروزوئه",
+      'robinson.intro': "بازنویسی ساده و اختصاصی از رمان دانیل دفو (۱۷۱۹)، فصل به فصل: متن، صدا، واژه‌ها، دستور زبان و تمرین.",
+      'robinson.progress': "از {total} فصل بازشده، {done} فصل را کامل کرده‌اید.",
+      'robinson.chaptersTitle': "فصل‌ها",
+      'robinson.roadmap': "{n} از {total} موجود",
+      'robinson.continue': "شروع · {title}",
+      'robinson.crumb': "رابینسون کروزوئه",
+      'robinson.noteTitle': "بازنویسی اختصاصی",
+      'robinson.note': "متن اصلی سال ۱۷۱۹ در مالکیت عمومی است. این نسخه بازنویسی اختصاصی ما به نروژی سادهٔ امروزی است، نه ترجمهٔ تجاری. رویدادها و شخصیت‌ها از رمان دانیل دفو گرفته شده‌اند.",
+      'robinson.sceneTitle': "صحنه را کاوش کن",
+      'robinson.sceneLabel': "صحنهٔ تعاملی",
+      'robinson.sceneIntro': "صحنه را با انگشت یا ماوس بچرخان و روی واژه‌ها بزن تا بشنوی.",
+      'robinson.sceneTask': "واژه‌های پیدا شده: {done}/{total}",
+      'robinson.sceneDone': "آفرین! همهٔ واژه‌ها را پیدا کردی.",
+      'robinson.sceneHint': "روی یک واژه در صحنه بزن تا آن را بشنوی و معنی‌اش را ببینی.",
+      'robinson.sceneFallback': "مرورگر تو نمی‌تواند صحنهٔ سه‌بعدی را نمایش دهد. می‌توانی همین واژه‌ها را اینجا تمرین کنی.",
+      'robinson.teaserTitle': "کلاسیک‌های بازنویسی‌شده",
+      'robinson.teaserText': "رابینسون کروزوئه، فصل به فصل، با صدا، واژه‌ها و تمرین.",
+      'robinson.teaserLink': "باز کردن رابینسون کروزوئه",
       'lesson.cardNum': "درس {n}",
       'lesson.new': "جدید",
       'lesson.exercises.one': "{n} تمرین",
@@ -2632,6 +2695,19 @@
         ch.exercises.forEach(addExercise);
       });
     }
+    if (C.robinson) {
+      C.robinson.chapters.forEach(function (ch) {
+        if (ch.soon) return;
+        ch.paragraphs.forEach(function (p) { add(p.no); });
+        ch.vocab.forEach(function (v) {
+          add(v.no);
+          if (v.forms) add(v.forms);
+        });
+        ch.grammar.examples.forEach(function (g) { add(g.no); });
+        ch.scene.hotspots.forEach(function (h) { add(h.no); });
+        ch.exercises.forEach(addExercise);
+      });
+    }
     if (C.verbos) {
       C.verbos.items.forEach(function (v) {
         add(v.inf);
@@ -2765,6 +2841,22 @@
         ch.grammar.title = tf(ch.grammar.title);
         ch.grammar.es = tf(ch.grammar.es);
         ch.grammar.examples.forEach(function (g) { g.es = tf(g.es); });
+        ch.exercises.forEach(localizeExercise);
+      });
+    }
+    if (C.robinson) {
+      C.robinson.chapters.forEach(function (ch) {
+        if (ch.soon) return;
+        ch.subtitle = tf(ch.subtitle);
+        ch.intro = tf(ch.intro);
+        ch.paragraphs.forEach(function (p) { p.es = tf(p.es); });
+        ch.vocab.forEach(function (v) { v.es = tf(v.es); });
+        ch.grammar.title = tf(ch.grammar.title);
+        ch.grammar.es = tf(ch.grammar.es);
+        ch.grammar.examples.forEach(function (g) { g.es = tf(g.es); });
+        ch.scene.title = tf(ch.scene.title);
+        ch.scene.intro = tf(ch.scene.intro);
+        ch.scene.hotspots.forEach(function (h) { h.es = tf(h.es); });
         ch.exercises.forEach(localizeExercise);
       });
     }

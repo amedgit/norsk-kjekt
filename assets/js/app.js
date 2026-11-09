@@ -9,6 +9,7 @@
   var CORE = COURSE.core || { packs: [], totalTarget: 1000 };
   var BODY = COURSE.body || { zones: [], parts: [], sensations: [], intensities: [], durations: [], phrases: [], scenarios: [], exercises: [] };
   var STORIES = COURSE.stories || { totalTarget: 12, chapters: [] };
+  var ROBINSON = COURSE.robinson || { totalTarget: 12, chapters: [] };
   var A0 = COURSE.a0 || null;
   var GRAMMAR = COURSE.grammar || { topics: [] };
   var VERBOS = COURSE.verbos || { themes: [], items: [] };
@@ -60,7 +61,7 @@
   var KEY = 'norsk-kjekt-v1';
 
   function defaults() {
-    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, body: {}, core: { known: {}, packs: {} }, stories: { chapters: {} }, a0: { best: 0, total: 0, at: 0 }, grammar: { topics: {} }, verbos: { known: {}, best: { best: 0, total: 0, at: 0 } }, games: { dagensOrd: { date: '', guesses: [], status: 'playing', played: 0, wins: 0, streak: 0, best: 0, lastWin: '', distribution: [0, 0, 0, 0, 0, 0] }, hukommelse: { easy: { played: 0, bestMoves: 0, bestTime: 0 }, medium: { played: 0, bestMoves: 0, bestTime: 0 }, hard: { played: 0, bestMoves: 0, bestTime: 0 } } }, xp: 0, days: {}, review: [], srs: {}, version: 1 };
+    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, body: {}, core: { known: {}, packs: {} }, stories: { chapters: {} }, robinson: { chapters: {} }, a0: { best: 0, total: 0, at: 0 }, grammar: { topics: {} }, verbos: { known: {}, best: { best: 0, total: 0, at: 0 } }, games: { dagensOrd: { date: '', guesses: [], status: 'playing', played: 0, wins: 0, streak: 0, best: 0, lastWin: '', distribution: [0, 0, 0, 0, 0, 0] }, hukommelse: { easy: { played: 0, bestMoves: 0, bestTime: 0 }, medium: { played: 0, bestMoves: 0, bestTime: 0 }, hard: { played: 0, bestMoves: 0, bestTime: 0 } } }, xp: 0, days: {}, review: [], srs: {}, version: 1 };
   }
 
   var state = (function load() {
@@ -75,6 +76,7 @@
       var body = {};
       var core = { known: {}, packs: {} };
       var stories = { chapters: {} };
+      var robinson = { chapters: {} };
       var a0 = { best: 0, total: 0, at: 0 };
       var grammar = { topics: {} };
       var verbos = { known: {}, best: { best: 0, total: 0, at: 0 } };
@@ -114,6 +116,14 @@
           var v = raw.stories.chapters[id];
           if (v && typeof v === 'object') {
             stories.chapters[id] = { best: Number(v.best) || 0, total: Number(v.total) || 0, at: Number(v.at) || 0 };
+          }
+        });
+      }
+      if (raw.robinson && typeof raw.robinson === 'object') {
+        Object.keys(raw.robinson.chapters || {}).forEach(function (id) {
+          var v = raw.robinson.chapters[id];
+          if (v && typeof v === 'object') {
+            robinson.chapters[id] = { best: Number(v.best) || 0, total: Number(v.total) || 0, at: Number(v.at) || 0 };
           }
         });
       }
@@ -181,6 +191,7 @@
         body: body,
         core: core,
         stories: stories,
+        robinson: robinson,
         a0: a0,
         grammar: grammar,
         verbos: verbos,
@@ -1224,7 +1235,13 @@
       '</section>' +
       '<h2 class="section-title">' + esc(t('story.chaptersTitle')) + ' <span>' + esc(t('story.roadmap', { n: live.length, total: STORIES.totalTarget })) + '</span></h2>' +
       '<div class="story-grid">' + STORIES.chapters.map(storyCard).join('') + '</div>' +
-      '<section class="card story-note"><div class="tip">📖 <b>' + esc(t('story.noteTitle')) + ':</b> ' + esc(t('story.note')) + '</div></section>';
+      '<section class="card story-note"><div class="tip">📖 <b>' + esc(t('story.noteTitle')) + ':</b> ' + esc(t('story.note')) + '</div></section>' +
+      '<section class="card robinson-teaser">' +
+      '  <div><span class="eyebrow">' + esc(t('robinson.eyebrow')) + '</span>' +
+      '  <h2>' + esc(t('robinson.teaserTitle')) + '</h2>' +
+      '  <p>' + esc(t('robinson.teaserText')) + '</p></div>' +
+      '  <a class="btn primary" href="#/robinson">' + esc(t('robinson.teaserLink')) + ' →</a>' +
+      '</section>';
   }
 
   function renderStory(ch) {
@@ -1336,6 +1353,240 @@
           var failedItems = res.failed;
           ch.exercises.forEach(function (item, i) {
             var sig = 'story#' + ch.id + '#' + i;
+            if (failedItems.indexOf(item) > -1) addReview(sig);
+            else removeReview(sig);
+          });
+
+          save();
+          refreshHud();
+
+          var box = mount.querySelector('.result');
+          if (box) {
+            box.insertAdjacentHTML('beforeend',
+              '<p class="ex-hint">' + esc(t('result.progress', { n: res.correct * 10 })) + '</p>');
+          }
+        }
+      });
+    });
+  }
+
+  /* =======================================================
+     Robinson Crusoe: clásicos adaptados
+     ======================================================= */
+
+  function robinsonLive() {
+    return ROBINSON.chapters.filter(function (ch) { return !ch.soon; });
+  }
+
+  function robinsonById(id) {
+    return ROBINSON.chapters.find(function (ch) { return ch.id === id; }) || null;
+  }
+
+  function robinsonCompletedCount() {
+    return robinsonLive().filter(function (ch) { return state.robinson.chapters[ch.id]; }).length;
+  }
+
+  function robinsonCard(ch) {
+    if (ch.soon) {
+      return '<div class="story-card robinson-card soon">' +
+        '<div class="story-card-top"><span class="story-emoji">' + ch.emoji + '</span>' +
+        '<span class="story-num">' + esc(t('story.chapter', { n: ch.num })) + '</span></div>' +
+        '<h3>' + esc(ch.title) + '</h3>' +
+        '<p class="sub">' + esc(t('story.soon')) + '</p>' +
+        '<div class="foot"><span class="chip plain">' + esc(ch.level) + '</span></div></div>';
+    }
+    var st = state.robinson.chapters[ch.id];
+    return '<a class="story-card robinson-card" href="#/robinson/' + ch.id + '">' +
+      '<div class="story-card-top"><span class="story-emoji">' + ch.emoji + '</span>' +
+      '<span class="story-num">' + esc(t('story.chapter', { n: ch.num })) + '</span></div>' +
+      '<h3>' + esc(ch.title) + '</h3>' +
+      '<p class="sub">' + esc(ch.subtitle) + '</p>' +
+      '<p class="story-place">📍 ' + esc(ch.place) + '</p>' +
+      '<div class="foot">' +
+      (st ? '<span class="chip done">✓ ' + st.best + '/' + st.total + '</span>' : '<span class="chip">' + esc(t('story.new')) + '</span>') +
+      '<span class="chip plain">' + esc(tp('story.paragraphs', ch.paragraphs.length)) + '</span>' +
+      '<span class="chip plain">' + esc(tp('lesson.exercises', ch.exercises.length)) + '</span>' +
+      '</div></a>';
+  }
+
+  function renderRobinson() {
+    var live = robinsonLive();
+    var done = robinsonCompletedCount();
+    var next = live.find(function (ch) { return !state.robinson.chapters[ch.id]; }) || live[0];
+
+    app.innerHTML =
+      '<section class="colo-intro robinson-intro">' +
+      '  <span class="eyebrow">' + esc(t('robinson.eyebrow')) + '</span>' +
+      '  <h1>' + esc(t('robinson.title')) + '</h1>' +
+      '  <p>' + esc(t('robinson.intro')) + '</p>' +
+      '  <div class="story-progress"><span>' + esc(t('robinson.progress', { done: done, total: live.length })) + '</span>' +
+      '    <span class="meter"><i style="width:' + (live.length ? Math.round((done / live.length) * 100) : 0) + '%"></i></span></div>' +
+      '  <div class="fun-banner-actions story-actions">' +
+      '    <a class="btn primary" href="#/robinson/' + next.id + '">' + esc(t('robinson.continue', { title: next.title })) + '</a>' +
+      '  </div>' +
+      '</section>' +
+      '<h2 class="section-title">' + esc(t('robinson.chaptersTitle')) + ' <span>' + esc(t('robinson.roadmap', { n: live.length, total: ROBINSON.totalTarget })) + '</span></h2>' +
+      '<div class="story-grid">' + ROBINSON.chapters.map(robinsonCard).join('') + '</div>' +
+      '<section class="card story-note"><div class="tip">📖 <b>' + esc(t('robinson.noteTitle')) + ':</b> ' + esc(t('robinson.note')) + '</div></section>';
+  }
+
+  function mountRobinsonScene(ch) {
+    var stage = document.getElementById('scene-stage');
+    var fallback = document.getElementById('scene-fallback');
+    if (!stage) return;
+    if (!window.WebGLRenderingContext) {
+      if (fallback) fallback.hidden = false;
+      return;
+    }
+    var url = new URL('assets/js/robinson3d.js', document.baseURI).href;
+    import(url).then(function (mod) {
+      if (!document.body.contains(stage)) return;
+      if (fallback) fallback.hidden = true;
+      window.__robinson3d = mod.mount(stage, {
+        hotspots: ch.scene.hotspots,
+        speak: function (text) { if (window.TTS) window.TTS.speak(text); },
+        taskText: function (done, total) { return t('robinson.sceneTask', { done: done, total: total }); },
+        doneText: t('robinson.sceneDone'),
+        hint: t('robinson.sceneHint'),
+        reduceMotion: !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches),
+        onProgress: function (done, total) {
+          var el = document.getElementById('scene-count');
+          if (el) el.textContent = t('robinson.sceneTask', { done: done, total: total });
+        }
+      });
+    }).catch(function () {
+      if (fallback) fallback.hidden = false;
+    });
+  }
+
+  function renderRobinsonChapter(ch) {
+    if (!ch || ch.soon) { renderRobinson(); return; }
+    var st = state.robinson.chapters[ch.id];
+    var live = robinsonLive();
+    var pos = live.indexOf(ch);
+    var prev = pos > 0 ? live[pos - 1] : null;
+    var next = pos > -1 && pos < live.length - 1 ? live[pos + 1] : null;
+    var words = ch.paragraphs.reduce(function (n, p) { return n + p.no.split(/\s+/).length; }, 0);
+    var minutes = Math.max(1, Math.round(words / 90));
+    var seq = ch.paragraphs.map(function (p) { return p.no; }).join('|||');
+
+    app.innerHTML =
+      '<div class="crumbs"><a href="#/robinson">' + esc(t('robinson.crumb')) + '</a> <span>›</span> <span>' + esc(ch.title) + '</span></div>' +
+
+      '<header class="lesson-head story-head robinson-head">' +
+      '  <div class="lesson-copy">' +
+      '    <div class="kicker"><span class="emoji">' + ch.emoji + '</span>' +
+      '      <span class="chip">' + esc(t('story.chapter', { n: ch.num })) + '</span>' +
+      '      <span class="chip plain">' + esc(ch.level) + '</span>' +
+      '      <span class="chip plain">' + esc(tp('story.paragraphs', ch.paragraphs.length)) + '</span>' +
+      '      <span class="chip plain">' + esc(tp('lesson.exercises', ch.exercises.length)) + '</span></div>' +
+      '    <h1>' + esc(ch.title) + '</h1>' +
+      '    <p class="lead">' + esc(ch.subtitle) + '</p>' +
+      '    <p class="story-intro-text">' + esc(ch.intro) + '</p>' +
+      '    <p class="story-meta">📍 ' + esc(ch.place) + ' · ' + esc(t('story.readTime', { n: minutes })) + '</p>' +
+      '    <div class="places">' + ch.places.map(function (p) { return '<span class="place-chip">' + esc(p) + '</span>'; }).join('') + '</div>' +
+      '    <div class="fun-banner-actions story-actions">' +
+      '      <button class="btn primary" type="button" data-say-seq="' + esc(seq) + '">🔊 ' + esc(t('story.listenAll')) + '</button>' +
+      '    </div>' +
+      '  </div>' +
+      '  <div class="story-hero robinson-hero" aria-hidden="true"><span>' + ch.emoji + '</span><b>Robinson</b><small>York · 1651</small></div>' +
+      '</header>' +
+
+      '<section class="card scene-card">' +
+      '  <div class="scene-head">' +
+      '    <div><span class="eyebrow">' + esc(t('robinson.sceneLabel')) + '</span>' +
+      '    <h2>' + esc(ch.scene.title) + '</h2>' +
+      '    <p class="muted">' + esc(ch.scene.intro) + '</p></div>' +
+      '    <span class="scene-count" id="scene-count">' + esc(t('robinson.sceneTask', { done: 0, total: ch.scene.hotspots.length })) + '</span>' +
+      '  </div>' +
+      '  <div class="scene-stage" id="scene-stage">' +
+      '    <div class="scene-fallback" id="scene-fallback" hidden>' +
+      '      <p>' + esc(t('robinson.sceneFallback')) + '</p>' +
+      '      <div class="scene-fallback-words">' + ch.scene.hotspots.map(function (h) {
+        return '<button type="button" class="scene-word" data-say="' + esc(h.no) + '"><b dir="ltr">' + esc(h.no) + '</b><span>' + esc(h.es) + '</span></button>';
+      }).join('') + '</div>' +
+      '    </div>' +
+      '  </div>' +
+      '</section>' +
+
+      '<section class="card">' +
+      '  <div class="story-toolbar"><h2>' + esc(t('story.text')) + '</h2></div>' +
+      '  <div class="story-text">' + ch.paragraphs.map(function (p, i) {
+        return '<div class="story-para">' +
+          '<div class="sp-no">' + say(p.no) + '<span>' + esc(p.no) + '</span></div>' +
+          '<div class="story-es" id="story-tr-' + i + '" hidden>' + esc(p.es) + '</div>' +
+          '<button class="story-tr-btn" type="button" data-story-tr="' + i + '" aria-expanded="false" aria-controls="story-tr-' + i + '">' +
+          esc(t('story.showTranslation')) + '</button>' +
+          '</div>';
+      }).join('') + '</div>' +
+      '</section>' +
+
+      '<section class="card"><h2>' + esc(t('story.vocab')) + '</h2><div class="vocab story-vocab">' +
+      ch.vocab.map(function (v) {
+        return '<div class="row">' + say(v.no) +
+          '<span class="txt"><span class="w">' + esc(v.no) + '</span>' +
+          '<span class="t">' + esc(v.es) + '</span>' +
+          (v.forms ? '<span class="story-forms">' + esc(v.forms) + '</span>' : '') +
+          '</span></div>';
+      }).join('') +
+      '</div></section>' +
+
+      '<section class="card"><h2>' + esc(t('story.grammar')) + '</h2>' +
+      '<h3 class="story-grammar-title">' + esc(ch.grammar.title) + '</h3>' +
+      '<p class="story-grammar-text">' + esc(ch.grammar.es) + '</p>' +
+      '<div class="phrases story-examples">' + ch.grammar.examples.map(function (g) {
+        return '<div class="phrase">' + say(g.no) +
+          '<span class="txt"><span class="no">' + esc(g.no) + '</span>' +
+          '<span class="es">' + esc(g.es) + '</span></span></div>';
+      }).join('') + '</div></section>' +
+
+      '<section class="card" id="story-practice"><h2>' + esc(t('story.practice')) + '</h2><div id="story-ex-mount"></div></section>' +
+
+      '<nav class="story-nav">' +
+      (prev ? '<a class="btn ghost" href="#/robinson/' + prev.id + '">← ' + esc(t('story.prev', { title: prev.title })) + '</a>' : '<span></span>') +
+      '<a class="btn ghost" href="#/robinson">' + esc(t('story.all')) + '</a>' +
+      (next ? '<a class="btn ghost" href="#/robinson/' + next.id + '">' + esc(t('story.next', { title: next.title })) + ' →</a>'
+        : '<span class="story-more">' + esc(t('story.moreSoon')) + '</span>') +
+      '</nav>';
+
+    app.querySelectorAll('[data-story-tr]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var i = btn.getAttribute('data-story-tr');
+        var tr = document.getElementById('story-tr-' + i);
+        if (!tr) return;
+        var show = btn.getAttribute('aria-expanded') !== 'true';
+        tr.hidden = !show;
+        btn.setAttribute('aria-expanded', show ? 'true' : 'false');
+        btn.textContent = show ? t('story.hideTranslation') : t('story.showTranslation');
+      });
+    });
+
+    mountRobinsonScene(ch);
+
+    var mount = document.getElementById('story-ex-mount');
+    mount.innerHTML =
+      '<div class="actions">' +
+      '<button class="btn primary" id="start-story-ex">' + esc(t('story.start', { n: ch.exercises.length })) + '</button>' +
+      (st ? '<span class="ex-hint">' + esc(t('story.best', { best: st.best, total: st.total })) + '</span>' : '') +
+      '</div>';
+
+    document.getElementById('start-story-ex').addEventListener('click', function () {
+      document.getElementById('story-practice').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      runExercises(mount, ch.exercises, {
+        label: t('story.label', { title: ch.title }),
+        onDone: function (res) {
+          var prevSt = state.robinson.chapters[ch.id];
+          state.robinson.chapters[ch.id] = {
+            best: Math.max(prevSt ? prevSt.best : 0, res.correct),
+            total: res.total,
+            at: Date.now()
+          };
+          state.xp += res.correct * 10;
+          markDay();
+
+          var failedItems = res.failed;
+          ch.exercises.forEach(function (item, i) {
+            var sig = 'robinson#' + ch.id + '#' + i;
             if (failedItems.indexOf(item) > -1) addReview(sig);
             else removeReview(sig);
           });
@@ -4467,6 +4718,14 @@
       }
       return null;
     }
+    if (parts[0] === 'robinson') {
+      var rChapter = robinsonById(parts[1]);
+      var rItem = rChapter && !rChapter.soon && rChapter.exercises[Number(parts[2])];
+      if (rChapter && rItem) {
+        return { sig: sig, item: rItem, title: rChapter.title, emoji: rChapter.emoji, label: t('story.reviewLabel', { n: rChapter.num }) };
+      }
+      return null;
+    }
     if (parts[0] === 'grammar') {
       var gTopic = grammarTopic(parts[1]);
       var gItem = gTopic && gTopic.exercises[Number(parts[2])];
@@ -5161,6 +5420,7 @@
     var arg = parts[1] || '';
 
     if (window.TTS) window.TTS.stop();
+    if (window.__robinson3d) { try { window.__robinson3d(); } catch (e) { /* ya destruido */ } window.__robinson3d = null; }
     if (wordle) wordle.active = false;
     if (memoryGame) { memoryStop(); memoryGame.active = false; }
     clearExamTimer();
@@ -5171,6 +5431,7 @@
         : name === 'gramatica' ? 'grammar'
         : name === 'verbos' ? 'verbos'
         : name === 'historien' ? 'stories'
+        : name === 'robinson' ? 'robinson'
         : name === 'a0' ? 'a0'
         : name === 'juegos' ? 'games'
         : name === 'coloquial' ? 'coloquial'
@@ -5191,7 +5452,7 @@
     }
     var moreToggle = document.querySelector('.nav-more-toggle');
     if (moreToggle) {
-      moreToggle.classList.toggle('active', ['a0', 'body', 'fun', 'exam', 'colloquial', 'review', 'games', 'verbos'].indexOf(active) > -1);
+      moreToggle.classList.toggle('active', ['a0', 'body', 'fun', 'exam', 'colloquial', 'review', 'games', 'verbos', 'robinson'].indexOf(active) > -1);
     }
     var navMoreMenu = document.querySelector('.nav-more-menu');
     if (navMoreMenu) {
@@ -5242,6 +5503,9 @@
     } else if (name === 'historien') {
       if (arg) renderStory(storyById(arg));
       else renderStories();
+    } else if (name === 'robinson') {
+      if (arg) renderRobinsonChapter(robinsonById(arg));
+      else renderRobinson();
     } else if (name === 'privacidad') {
       renderPrivacy();
     } else if (name === 'coloquial') {

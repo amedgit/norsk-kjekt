@@ -138,6 +138,32 @@ C.colloquial.forEach((c, i) => {
   });
 });
 
+if (C.robinson) {
+  C.robinson.chapters.forEach((ch) => {
+    if (ch.soon) return;
+    const p = `robinson:${ch.id}`;
+    add(p + '.subtitle', ch.subtitle);
+    add(p + '.intro', ch.intro);
+    ch.paragraphs.forEach((x, j) => add(p + `.p[${j}].es`, x.es));
+    ch.vocab.forEach((v, j) => add(p + `.vocab[${j}].es`, v.es));
+    add(p + '.grammar.title', ch.grammar.title);
+    add(p + '.grammar.es', ch.grammar.es);
+    ch.grammar.examples.forEach((g, j) => add(p + `.grammar.examples[${j}].es`, g.es));
+    add(p + '.scene.title', ch.scene.title);
+    add(p + '.scene.intro', ch.scene.intro);
+    ch.scene.hotspots.forEach((h, j) => add(p + `.scene.hotspots[${j}].es`, h.es));
+    ch.exercises.forEach((e, j) => {
+      const q = `${p}.ex[${j}]`;
+      add(q + '.prompt', e.prompt);
+      e.options?.forEach((o, k) => add(q + `.options[${k}]`, o));
+      e.pairs?.forEach((q2, k) => add(q + `.pairs[${k}].b`, q2.b));
+      add(q + '.explain', e.explain);
+      add(q + '.es', e.es);
+      add(q + '.hint', e.hint);
+    });
+  });
+}
+
 if (C.verbos) {
   C.verbos.items.forEach((v, i) => {
     add(`verbos.items[${i}].es`, v.es);

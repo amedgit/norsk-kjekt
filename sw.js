@@ -5,7 +5,7 @@
    - navegación: red primero, con la app cacheada como respaldo offline.
    Sube CACHE_VERSION en cada despliegue para renovar los caches. */
 
-const CACHE_VERSION = 'v50';
+const CACHE_VERSION = 'v51';
 const CORE = `norsk-kjekt-core-${CACHE_VERSION}`;
 const RUNTIME = `norsk-kjekt-runtime-${CACHE_VERSION}`;
 
@@ -25,6 +25,7 @@ const PRECACHE = [
   'ejercicios-noruego/',
   'bokmal-o-nynorsk/',
   'assets/js/app.js',
+  'assets/js/robinson3d.js',
   'assets/js/consent.js',
   'assets/js/data.js',
   'assets/js/lang.js',

@@ -3869,7 +3869,7 @@ window.COURSE = {
           { id: 'p9-100', cat: 'civic', no: 'samarbeid', es: 'cooperación', forms: 'et samarbeid, samarbeid' }
         ]
       },
-      { id: '10', num: 10, level: 'B1–B2', emoji: '🏁', title: 'Repaso y fluidez', subtitle: 'Las palabras que cierran el círculo.', soon: true }
+      { id: '10', num: 10, level: 'B1–B2', emoji: '🏁', title: 'Repaso y fluidez', soon: true }
     ]
   },
 
@@ -4319,6 +4319,126 @@ window.COURSE = {
       { id: '12', num: 12, level: 'B2', emoji: '🏡', title: 'Hjemme', soon: true }
     ]
   },
+  /* -------------------------------------------------------------------- */
+  robinson: {
+    totalTarget: 12,
+    chapters: [
+      {
+        id: '1',
+        num: 1,
+        level: 'A2',
+        emoji: '⛵',
+        title: 'Drømmen om havet',
+        subtitle: 'La familia, el padre y el primer viaje',
+        intro: 'Robinson Crusoe vive con su familia en York. Su padre quiere que estudie derecho; él solo piensa en el mar. Un día sube a un barco sin avisar a sus padres.',
+        place: 'York · Hull · London (1651)',
+        places: ['York', 'Hull', 'London'],
+        paragraphs: [
+          { no: 'Jeg heter Robinson Crusoe. Jeg ble født i York i England i 1632. Faren min var kjøpmann, og familien vår hadde det godt. Jeg hadde to brødre. Moren min var glad i meg, og faren min ønsket at jeg skulle studere jus og bli en rolig mann.', es: 'Me llamo Robinson Crusoe. Nací en York, en Inglaterra, en 1632. Mi padre era comerciante y nuestra familia vivía bien. Yo tenía dos hermanos. Mi madre me quería, y mi padre deseaba que yo estudiara derecho y fuera un hombre tranquilo.' },
+          { no: 'Men jeg ville noe annet. Jeg ville se verden. Hver gang jeg hørte om skip som seilte til fjerne land, kjente jeg et sterkt ønske om å dra. Jeg ville ikke sitte på et kontor hele livet.', es: 'Pero yo quería otra cosa. Quería ver el mundo. Cada vez que oía hablar de barcos que navegaban a tierras lejanas, sentía un deseo fuerte de marcharme. No quería pasar toda la vida en una oficina.' },
+          { no: 'Faren min snakket lenge med meg. Han sa at det beste livet var et vanlig liv: ikke for rikt og ikke for fattig. Et liv på havet var farlig, sa han. Mange unge menn kom aldri hjem. Han ba meg tenke på moren min.', es: 'Mi padre habló mucho conmigo. Me dijo que la mejor vida era una vida normal: ni demasiado rica ni demasiado pobre. Una vida en el mar era peligrosa, decía. Muchos jóvenes nunca volvían a casa. Me pidió que pensara en mi madre.' },
+          { no: 'Moren min gråt da jeg snakket om havet. Hun sa at jeg måtte høre på faren min. Jeg lovte å bli, men jeg visste at jeg ikke kunne holde det løftet.', es: 'Mi madre lloró cuando hablé del mar. Me dijo que tenía que escuchar a mi padre. Le prometí que me quedaría, pero sabía que no podría cumplir esa promesa.' },
+          { no: 'En dag i 1651 reiste jeg til Hull. Der møtte jeg en venn som skulle til London med et skip. Han sa at reisen var kort og trygg. Jeg tenkte: «Dette er min sjanse.» Jeg gikk om bord uten å fortelle det til foreldrene mine.', es: 'Un día de 1651 viajé a Hull. Allí me encontré con un amigo que iba a Londres en barco. Me dijo que el viaje era corto y seguro. Pensé: «Esta es mi oportunidad.» Subí a bordo sin decírselo a mis padres.' },
+          { no: 'Den første dagen var himmelen blå, og vinden var god. Jeg sto på dekk og følte meg fri. Jeg tenkte at havet var det vakreste jeg hadde sett.', es: 'El primer día el cielo estaba azul y el viento era favorable. Estaba en la cubierta y me sentía libre. Pensé que el mar era lo más hermoso que había visto.' },
+          { no: 'Om kvelden kom stormen. Bølgene ble høye, og skipet rullet fra side til side. Jeg holdt meg fast i masten og var sikker på at jeg skulle dø. Jeg lovte Gud at jeg skulle reise hjem hvis jeg overlevde.', es: 'Por la noche llegó la tormenta. Las olas se hicieron altas y el barco se balanceaba de un lado a otro. Me agarré al mástil, seguro de que iba a morir. Le prometí a Dios que volvería a casa si sobrevivía.' },
+          { no: 'Om morgenen var havet rolig igjen. Skipet kom trygt til London. Jeg gikk i land med skjelvende bein. Etter tre dager hadde jeg glemt løftet mitt. Havet kalte på meg igjen.', es: 'Por la mañana el mar volvió a estar tranquilo. El barco llegó sano y salvo a Londres. Bajé a tierra con las piernas temblando. Tres días después había olvidado mi promesa. El mar volvía a llamarme.' }
+        ],
+        vocab: [
+          { no: 'født', es: 'nacido', forms: 'ble født · har blitt født' },
+          { no: 'kjøpmann', es: 'comerciante', forms: 'en kjøpmann, kjøpmenn' },
+          { no: 'jus', es: 'derecho (estudios)', forms: 'en jus' },
+          { no: 'ønske', es: 'deseo, ganas', forms: 'et ønske, ønsker · å ønske' },
+          { no: 'farlig', es: 'peligroso' },
+          { no: 'rik', es: 'rico' },
+          { no: 'fattig', es: 'pobre' },
+          { no: 'løfte', es: 'promesa', forms: 'et løfte, løfter · å love' },
+          { no: 'om bord', es: 'a bordo', chunk: true },
+          { no: 'dekk', es: 'cubierta (del barco)', forms: 'et dekk, dekk' },
+          { no: 'bølge', es: 'ola', forms: 'en bølge, bølger' },
+          { no: 'storm', es: 'tormenta', forms: 'en storm, stormer' },
+          { no: 'mast', es: 'mástil', forms: 'en mast, master' },
+          { no: 'overleve', es: 'sobrevivir', forms: 'overlever · overlevde · har overlevd' },
+          { no: 'glemme', es: 'olvidar', forms: 'glemmer · glemte · har glemt' }
+        ],
+        grammar: {
+          title: 'Preteritum: contar en pasado',
+          es: 'Para narrar se usa el pretérito (preteritum). Los verbos regulares añaden -et, -te o -de al tema: snakke → snakket, reise → reiste, leve → levde. Muchos verbos frecuentes son irregulares: være → var, gå → gikk, komme → kom, bli → ble.',
+          examples: [
+            { no: 'Jeg ble født i York.', es: 'Nací en York.' },
+            { no: 'Faren min snakket lenge med meg.', es: 'Mi padre habló mucho conmigo.' },
+            { no: 'Skipet kom til London.', es: 'El barco llegó a Londres.' }
+          ]
+        },
+        scene: {
+          title: 'York havn, 1651',
+          intro: 'Explora el puerto desde donde Robinson quería hacerse a la mar.',
+          hotspots: [
+            { id: 'hus', no: 'huset', es: 'la casa', spot: 'house' },
+            { id: 'skip', no: 'skipet', es: 'el barco', spot: 'ship' },
+            { id: 'mast', no: 'masten', es: 'el mástil', spot: 'mast' },
+            { id: 'hav', no: 'havet', es: 'el mar', spot: 'sea' },
+            { id: 'storm', no: 'stormen', es: 'la tormenta', spot: 'storm' }
+          ]
+        },
+        exercises: [
+          {
+            type: 'mcq',
+            prompt: '¿Dónde nació Robinson?',
+            options: ['En York', 'En Londres', 'En Hull', 'En Bremen'],
+            answer: 0,
+            audio: 'Jeg ble født i York.',
+            explain: 'El texto dice: «Jeg ble født i York».'
+          },
+          {
+            type: 'gap',
+            prompt: 'Completa la frase:',
+            sentence: 'Jeg gikk ___ bord uten å fortelle det til foreldrene mine.',
+            answers: ['om'],
+            bank: ['om', 'på', 'til'],
+            es: 'Subí a bordo sin decírselo a mis padres.',
+            explain: '«Å gå om bord» = subir a bordo.'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase:',
+            words: ['Faren', 'min', 'ville', 'at', 'jeg', 'skulle', 'studere', 'jus.'],
+            es: 'Mi padre quería que yo estudiara derecho.',
+            explain: '«Å ville at» + pasado: quería que... El verbo va al final de la subordinada.'
+          },
+          {
+            type: 'listen',
+            audio: 'Jeg lovte Gud at jeg skulle reise hjem.',
+            es: 'Le prometí a Dios que volvería a casa.',
+            explain: '«Å love» = prometer. «Skulle reise hjem» = volvería a casa.'
+          },
+          {
+            type: 'match',
+            prompt: 'Empareja el vocabulario del capítulo:',
+            pairs: [
+              { a: 'kjøpmann', b: 'comerciante' },
+              { a: 'løfte', b: 'promesa' },
+              { a: 'bølge', b: 'ola' },
+              { a: 'mast', b: 'mástil' },
+              { a: 'overleve', b: 'sobrevivir' }
+            ],
+            explain: 'Cinco palabras clave del primer capítulo.'
+          }
+        ]
+      },
+      { id: '2', num: 2, level: 'A2', emoji: '⛓️', title: 'Fanget i Sallee', soon: true },
+      { id: '3', num: 3, level: 'B1', emoji: '🌱', title: 'Plantasjen i Brasil', soon: true },
+      { id: '4', num: 4, level: 'B1', emoji: '🌊', title: 'Skipet og stormen', soon: true },
+      { id: '5', num: 5, level: 'B1', emoji: '🏝️', title: 'Alene på øya', soon: true },
+      { id: '6', num: 6, level: 'B1', emoji: '🪓', title: 'Det første året', soon: true },
+      { id: '7', num: 7, level: 'B1', emoji: '🛖', title: 'Huset ved havet', soon: true },
+      { id: '8', num: 8, level: 'B1', emoji: '🐐', title: 'Geiter og korn', soon: true },
+      { id: '9', num: 9, level: 'B1', emoji: '👣', title: 'Fotspor i sanden', soon: true },
+      { id: '10', num: 10, level: 'B1', emoji: '🧭', title: 'Fredag', soon: true },
+      { id: '11', num: 11, level: 'B1', emoji: '🚢', title: 'Skipet som kommer', soon: true },
+      { id: '12', num: 12, level: 'B1', emoji: '🏠', title: 'Hjemreise', soon: true }
+    ]
+  },
+
   /* -------------------------------------------------------------------- */
   games: {
     dagensOrd: {
