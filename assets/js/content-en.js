@@ -3827,7 +3827,7 @@ window.EN_STRINGS = {
   "El padre de Robinson le aconseja junto a una ventana.": "Robinson's father gives him advice by a window.",
   "La madre de Robinson llora mientras él le promete quedarse.": "Robinson's mother cries while he promises to stay.",
   "Robinson sube a un barco en el puerto de Hull.": "Robinson boards a ship in the port of Hull.",
-  "El barco navega con el mar en calma y el cielo azul.": "The ship sails on a calm sea under a blue sky.",
+  "El barco espera en un mar en calma bajo la luna.": "The ship waits on a calm sea under the moon.",
   "Una tormenta sacude el barco entre olas enormes.": "A storm shakes the ship among huge waves.",
   "Robinson llega a Londres con las piernas temblorosas.": "Robinson arrives in London with trembling legs.",
 };
