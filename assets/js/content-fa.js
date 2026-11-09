@@ -3822,4 +3822,12 @@ window.FA_STRINGS = {
   "Le prometí a Dios que volvería a casa.": "به خدا قول دادم که به خانه برگردم.",
   "Empareja el vocabulario del capítulo:": "واژه‌های فصل را جفت کن:",
   "Cinco palabras clave del primer capítulo.": "پنج واژهٔ کلیدی فصل اول.",
+  "La familia de Robinson delante de su casa en York.": "خانوادهٔ رابینسون جلوی خانه‌شان در یورک.",
+  "Robinson mira desde una colina los barcos que salen al mar.": "رابینسون از تپه به کشتی‌هایی نگاه می‌کند که به دریا می‌روند.",
+  "El padre de Robinson le aconseja junto a una ventana.": "پدر رابینسون کنار پنجره به او نصیحت می‌کند.",
+  "La madre de Robinson llora mientras él le promete quedarse.": "مادر رابینسون گریه می‌کند و او قول می‌دهد بماند.",
+  "Robinson sube a un barco en el puerto de Hull.": "رابینسون در بندر هال سوار کشتی می‌شود.",
+  "El barco navega con el mar en calma y el cielo azul.": "کشتی در دریای آرام و زیر آسمان آبی حرکت می‌کند.",
+  "Una tormenta sacude el barco entre olas enormes.": "طوفان کشتی را میان موج‌های عظیم تکان می‌دهد.",
+  "Robinson llega a Londres con las piernas temblorosas.": "رابینسون با پاهای لرزان به لندن می‌رسد.",
 };

@@ -1517,8 +1517,12 @@
       '<section class="card">' +
       '  <div class="story-toolbar"><h2>' + esc(t('story.text')) + '</h2></div>' +
       '  <div class="story-text">' + ch.paragraphs.map(function (p, i) {
-        return '<div class="story-para">' +
+        var art = p.image
+          ? '<figure class="para-art"><img src="' + esc(p.image) + '" alt="' + esc(p.imageAlt || '') + '" width="600" height="400" loading="lazy" decoding="async"></figure>'
+          : '';
+        return '<div class="story-para' + (p.image ? ' has-art' : '') + '">' +
           '<div class="sp-no">' + say(p.no) + '<span>' + esc(p.no) + '</span></div>' +
+          art +
           '<div class="story-es" id="story-tr-' + i + '" hidden>' + esc(p.es) + '</div>' +
           '<button class="story-tr-btn" type="button" data-story-tr="' + i + '" aria-expanded="false" aria-controls="story-tr-' + i + '">' +
           esc(t('story.showTranslation')) + '</button>' +

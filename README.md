@@ -162,12 +162,14 @@ norsk/
 │   ├── generate-audio.mjs       ← sintetiza los MP3 y el manifiesto
 │   ├── generate-lesson-art.mjs  ← dibuja las 15 ilustraciones SVG de las lecciones
 │   ├── generate-dialogue-art.mjs ← dibuja las 6 ilustraciones de Samtaler
+│   ├── generate-robinson-art.mjs ← dibuja las 8 ilustraciones de Robinson
 │   └── check-i18n.mjs           ← comprueba que todo el contenido tiene traducción EN y FA
 └── assets/
     ├── css/style.css
     ├── img/og.png       ← imagen para compartir en redes
     ├── img/lessons/*.svg ← una ilustración original por lección
     ├── img/dialogues/*.svg ← una ilustración por conversación
+    ├── img/robinson/*.svg ← una ilustración por párrafo de Robinson
     ├── audio/*.mp3      ← 2879 audios (≈29,6 MB), generados
     ├── vendor/three.module.min.js ← Three.js r160 (MIT), solo para la escena 3D
     └── js/
@@ -342,12 +344,14 @@ La sección `#/robinson` abre una adaptación propia y simplificada de la novela
 de Daniel Defoe (1719). No reproduce traducciones modernas: el texto se escribe
 de nuevo en bokmål A2–B1, con una nota de derechos y contexto.
 
-- Capítulo 1, **Drømmen om havet**, con 8 párrafos, audio y traducción plegable.
+- Capítulo 1, **Drømmen om havet**, con 8 párrafos, una ilustración por párrafo, audio y traducción plegable.
 - Escena 3D de York (Three.js) con cinco palabras clicables y audio.
 - 15 palabras, gramática del pretérito y 5 ejercicios.
 - 12 capítulos planificados; el resto aparece como «Próximamente».
 - Si WebGL falla, se muestra un fallback HTML con el mismo vocabulario.
 
+Las ilustraciones se generan con `tools/generate-robinson-art.mjs` en
+`assets/img/robinson/` y se precargan para que el capítulo funcione offline.
 La escena vive en `assets/js/robinson3d.js` y se carga con `import()` dinámico
 solo en esa ruta. Three.js está en `assets/vendor/three.module.min.js` y el
 service worker lo precarga con el núcleo para que la escena funcione offline

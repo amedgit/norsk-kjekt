@@ -5,7 +5,7 @@
    - navegación: red primero, con la app cacheada como respaldo offline.
    Sube CACHE_VERSION en cada despliegue para renovar los caches. */
 
-const CACHE_VERSION = 'v52';
+const CACHE_VERSION = 'v53';
 const CORE = `norsk-kjekt-core-${CACHE_VERSION}`;
 const RUNTIME = `norsk-kjekt-runtime-${CACHE_VERSION}`;
 
@@ -27,6 +27,14 @@ const PRECACHE = [
   'assets/js/app.js',
   'assets/js/robinson3d.js',
   'assets/vendor/three.module.min.js',
+  'assets/img/robinson/01-familie.svg',
+  'assets/img/robinson/02-drommen.svg',
+  'assets/img/robinson/03-radet.svg',
+  'assets/img/robinson/04-moren.svg',
+  'assets/img/robinson/05-hull.svg',
+  'assets/img/robinson/06-rolig-sjo.svg',
+  'assets/img/robinson/07-stormen.svg',
+  'assets/img/robinson/08-london.svg',
   'assets/js/consent.js',
   'assets/js/data.js',
   'assets/js/lang.js',

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" role="img" aria-labelledby="title">
+  <title id="title">Una tormenta sacude el barco entre olas enormes</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#355166"/>
+      <stop offset="1" stop-color="#0b1c2b"/>
+    </linearGradient>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2f7f9d"/>
+      <stop offset="1" stop-color="#1d5c74"/>
+    </linearGradient>
+    <clipPath id="round"><rect width="600" height="400" rx="30"/></clipPath>
+  </defs>
+  <g clip-path="url(#round)">
+    <rect width="600" height="400" fill="url(#bg)"/>
+
+  <circle cx="84" cy="74" r="58" fill="#1a3245" opacity=".8"/>
+  <circle cx="150" cy="62" r="68" fill="#1a3245" opacity=".9"/>
+  <circle cx="235" cy="76" r="54" fill="#1a3245" opacity=".85"/>
+  <circle cx="500" cy="62" r="70" fill="#1a3245" opacity=".9"/>
+  <circle cx="566" cy="86" r="52" fill="#1a3245" opacity=".8"/>
+  <path d="M118 84 L84 154 L120 150 L92 222 L158 138 L120 144 L150 84 Z" fill="#e0a43a" opacity=".95"/>
+  <g stroke="#dceefb" stroke-width="2" opacity=".28">
+    <path d="M24 96 l-8 30"/><path d="M56 114 l-8 30"/><path d="M88 132 l-8 30"/><path d="M120 96 l-8 30"/><path d="M152 114 l-8 30"/><path d="M184 132 l-8 30"/><path d="M216 96 l-8 30"/><path d="M248 114 l-8 30"/><path d="M280 132 l-8 30"/><path d="M312 96 l-8 30"/><path d="M344 114 l-8 30"/><path d="M376 132 l-8 30"/><path d="M408 96 l-8 30"/><path d="M440 114 l-8 30"/><path d="M472 132 l-8 30"/><path d="M504 96 l-8 30"/><path d="M536 114 l-8 30"/><path d="M568 132 l-8 30"/>
+  </g>
+  <path d="M0 294 q40 -54 86 -4 q38 -50 84 0 q46 -56 94 -2 q42 -46 88 0 q44 -54 92 -4 q36 -44 76 0 q40 -46 80 0 v116 H0 Z" fill="#1d5c74"/>
+  <path d="M0 322 q40 -40 86 -2 q38 -38 84 0 q46 -42 94 -2 q42 -36 88 0 q44 -42 92 -2 q36 -34 76 0 q40 -36 80 0 v84 H0 Z" fill="#2f7f9d" opacity=".9"/>
+  <path d="M0 358 q50 -30 100 0 t100 0 t100 0 t100 0 t100 0 t100 0 v42 H0 Z" fill="#0b1c2b" opacity=".55"/>
+  <g transform="translate(330 326) scale(1.08) rotate(-13)">
+    <path d="M-95 0 L95 0 L72 38 L-72 38 Z" fill="#6b3f22"/>
+    <path d="M-95 0 L95 0 L82 10 L-82 10 Z" fill="#8a5a33"/>
+    <rect x="-88" y="-14" width="176" height="14" rx="4" fill="#8a5a33"/>
+    <rect x="-6" y="-142" width="8" height="142" fill="#0e2a47"/>
+    <rect x="-62" y="-122" width="5" height="96" fill="#0e2a47"/>
+    <path d="M2 -128 L2 -18 L62 -18 L48 -46 L58 -62 L40 -78 L52 -96 L30 -110 Z" fill="#f7f2e9"/><path d="M-4 -118 L-4 -30 L-54 -30 Z" fill="#eadfc9"/>
+    <path d="M-56 -122 L-56 -34 L-92 -34" fill="none" stroke="#0e2a47" stroke-width="4"/>
+    <path d="M4 -142 L42 -134 L4 -124 Z" fill="#c8102e"/>
+    <path d="M6 -140 Q50 -78 80 -10" fill="none" stroke="#0e2a47" stroke-width="2" opacity=".5"/>
+    <path d="M-6 -140 Q-48 -78 -84 -12" fill="none" stroke="#0e2a47" stroke-width="2" opacity=".5"/>
+  </g>
+  <path d="M430 190 q10 -10 20 0 q10 -10 20 0" fill="none" stroke="#dceefb" stroke-width="2.4000000000000004" stroke-linecap="round" opacity=".65"/>
+
+  </g>
+</svg>

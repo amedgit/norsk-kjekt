@@ -3822,4 +3822,12 @@ window.EN_STRINGS = {
   "Le prometí a Dios que volvería a casa.": "I promised God that I would go home.",
   "Empareja el vocabulario del capítulo:": "Match the vocabulary from the chapter:",
   "Cinco palabras clave del primer capítulo.": "Five key words from the first chapter.",
+  "La familia de Robinson delante de su casa en York.": "Robinson's family in front of their house in York.",
+  "Robinson mira desde una colina los barcos que salen al mar.": "Robinson looks from a hill at the ships heading out to sea.",
+  "El padre de Robinson le aconseja junto a una ventana.": "Robinson's father gives him advice by a window.",
+  "La madre de Robinson llora mientras él le promete quedarse.": "Robinson's mother cries while he promises to stay.",
+  "Robinson sube a un barco en el puerto de Hull.": "Robinson boards a ship in the port of Hull.",
+  "El barco navega con el mar en calma y el cielo azul.": "The ship sails on a calm sea under a blue sky.",
+  "Una tormenta sacude el barco entre olas enormes.": "A storm shakes the ship among huge waves.",
+  "Robinson llega a Londres con las piernas temblorosas.": "Robinson arrives in London with trembling legs.",
 };

@@ -2849,7 +2849,7 @@
         if (ch.soon) return;
         ch.subtitle = tf(ch.subtitle);
         ch.intro = tf(ch.intro);
-        ch.paragraphs.forEach(function (p) { p.es = tf(p.es); });
+        ch.paragraphs.forEach(function (p) { p.es = tf(p.es); if (p.imageAlt) p.imageAlt = tf(p.imageAlt); });
         ch.vocab.forEach(function (v) { v.es = tf(v.es); });
         ch.grammar.title = tf(ch.grammar.title);
         ch.grammar.es = tf(ch.grammar.es);

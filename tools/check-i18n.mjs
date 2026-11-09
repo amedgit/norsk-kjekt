@@ -145,6 +145,7 @@ if (C.robinson) {
     add(p + '.subtitle', ch.subtitle);
     add(p + '.intro', ch.intro);
     ch.paragraphs.forEach((x, j) => add(p + `.p[${j}].es`, x.es));
+    ch.paragraphs.forEach((x, j) => add(p + `.p[${j}].alt`, x.imageAlt));
     ch.vocab.forEach((v, j) => add(p + `.vocab[${j}].es`, v.es));
     add(p + '.grammar.title', ch.grammar.title);
     add(p + '.grammar.es', ch.grammar.es);
