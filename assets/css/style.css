@@ -1220,9 +1220,8 @@ html[dir="rtl"] .exam-usertext {
 .story-para.has-art .story-tr-btn { justify-self: start; }
 .para-art img {
   display: block; width: 100%; height: auto;
-  border-radius: 12px; border: 1px solid rgba(196, 176, 138, .42);
+  border-radius: 12px; border: 1px solid var(--line);
   background: var(--card);
-  box-shadow: 0 8px 18px rgba(5, 11, 16, .22);
 }
 .sp-no {
   display: flex; align-items: flex-start; gap: .45rem;
@@ -2270,8 +2269,4 @@ html[dir="rtl"] .scene-hotspot, html[dir="rtl"] .scene-word b { direction: ltr; 
 
 html[data-theme="dark"] .robinson-teaser { background: linear-gradient(120deg, rgba(46, 125, 143, .22), transparent 70%); }
 html[data-theme="dark"] .scene-card { border-color: #1d4d63; }
-html[data-theme="dark"] .para-art img {
-  border-color: rgba(224, 180, 90, .42);
-  box-shadow: 0 0 0 1px rgba(224, 180, 90, .08), 0 8px 18px rgba(0, 0, 0, .5);
-  filter: brightness(1.12) contrast(1.02);
-}
+html[data-theme="dark"] .para-art img { border-color: rgba(255, 255, 255, .14); }

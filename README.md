@@ -82,7 +82,7 @@ cacheada.
 | A0 | Sección `#/a0` para empezar desde cero: alfabeto, vocales, consonantes, pronunciación, primeras frases y 8 ejercicios |
 | Gramática | Referencia `#/gramatica` A0–B2: 30 temas con reglas, ejemplos con audio, errores típicos y 60 ejercicios |
 | Verbos | 100 verbos esenciales con presente, pasado, perfecto, imperativo, ejemplo, audio y progreso |
-| Robinson | «Robinson Crusoe»: adaptación propia del clásico de 1719, capítulo 1 abierto con escena 3D interactiva, ilustraciones de aventura oscura, audio, vocabulario, gramática y 5 ejercicios |
+| Robinson | «Robinson Crusoe»: adaptación propia del clásico de 1719, capítulo 1 abierto con escena 3D interactiva, audio, vocabulario, gramática y 5 ejercicios |
 | Juegos | **Hukommelse**: juego de memoria con parejas de palabras y traducciones, tres niveles, audio, contador de movimientos y tiempo |
 | Historia | «Lucía i Oslo»: 5 capítulos piloto (A2–B1) de la serie de 12, con 7 párrafos cada uno, audio por párrafo y del capítulo completo, traducción plegable, 15 palabras, gramática y 5 ejercicios por capítulo |
 | Kjerneord | Núcleo de 1000 palabras y frases en 10 paquetes de 100; los paquetes 1 a 9 (900 palabras: supervivencia, vida diaria, personas y planes, salud y cuerpo, trabajo y trámites, ciudad y viajes, conectores y matices, opiniones y debate, cultura y sociedad) ya están disponibles con audio, filtros y test |
@@ -344,16 +344,14 @@ La sección `#/robinson` abre una adaptación propia y simplificada de la novela
 de Daniel Defoe (1719). No reproduce traducciones modernas: el texto se escribe
 de nuevo en bokmål A2–B1, con una nota de derechos y contexto.
 
-- Capítulo 1, **Drømmen om havet**, con 8 párrafos, una ilustración de aventura oscura por párrafo, audio y traducción plegable.
+- Capítulo 1, **Drømmen om havet**, con 8 párrafos, una ilustración por párrafo, audio y traducción plegable.
 - Escena 3D de York (Three.js) con cinco palabras clicables y audio.
 - 15 palabras, gramática del pretérito y 5 ejercicios.
 - 12 capítulos planificados; el resto aparece como «Próximamente».
 - Si WebGL falla, se muestra un fallback HTML con el mismo vocabulario.
 
 Las ilustraciones se generan con `tools/generate-robinson-art.mjs` en
-`assets/img/robinson/`. Usan un estilo de aventura gótica —noche, niebla,
-siluetas, velas y tormenta— y se precargan para que el capítulo funcione
-offline.
+`assets/img/robinson/` y se precargan para que el capítulo funcione offline.
 La escena vive en `assets/js/robinson3d.js` y se carga con `import()` dinámico
 solo en esa ruta. Three.js está en `assets/vendor/three.module.min.js` y el
 service worker lo precarga con el núcleo para que la escena funcione offline

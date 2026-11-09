@@ -3827,7 +3827,7 @@ window.FA_STRINGS = {
   "El padre de Robinson le aconseja junto a una ventana.": "پدر رابینسون کنار پنجره به او نصیحت می‌کند.",
   "La madre de Robinson llora mientras él le promete quedarse.": "مادر رابینسون گریه می‌کند و او قول می‌دهد بماند.",
   "Robinson sube a un barco en el puerto de Hull.": "رابینسون در بندر هال سوار کشتی می‌شود.",
-  "El barco espera en un mar en calma bajo la luna.": "کشتی در دریای آرام زیر نور ماه منتظر است.",
+  "El barco navega con el mar en calma y el cielo azul.": "کشتی در دریای آرام و زیر آسمان آبی حرکت می‌کند.",
   "Una tormenta sacude el barco entre olas enormes.": "طوفان کشتی را میان موج‌های عظیم تکان می‌دهد.",
   "Robinson llega a Londres con las piernas temblorosas.": "رابینسون با پاهای لرزان به لندن می‌رسد.",
 };
