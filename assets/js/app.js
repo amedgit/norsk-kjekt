@@ -1439,7 +1439,11 @@
       return;
     }
     var url = new URL('assets/js/robinson3d.js', document.baseURI).href;
+    var timer = setTimeout(function () {
+      if (fallback) fallback.hidden = false;
+    }, 7000);
     import(url).then(function (mod) {
+      clearTimeout(timer);
       if (!document.body.contains(stage)) return;
       if (fallback) fallback.hidden = true;
       window.__robinson3d = mod.mount(stage, {
@@ -1455,6 +1459,7 @@
         }
       });
     }).catch(function () {
+      clearTimeout(timer);
       if (fallback) fallback.hidden = false;
     });
   }

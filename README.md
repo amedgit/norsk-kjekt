@@ -349,8 +349,9 @@ de nuevo en bokmål A2–B1, con una nota de derechos y contexto.
 - Si WebGL falla, se muestra un fallback HTML con el mismo vocabulario.
 
 La escena vive en `assets/js/robinson3d.js` y se carga con `import()` dinámico
-solo en esa ruta. Three.js está en `assets/vendor/three.module.min.js` y se
-cachea tras la primera visita; no se precarga para no engordar la app.
+solo en esa ruta. Three.js está en `assets/vendor/three.module.min.js` y el
+service worker lo precarga con el núcleo para que la escena funcione offline
+desde la primera instalación.
 
 ### Gramática (A0–A2)
 
