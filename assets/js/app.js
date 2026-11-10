@@ -1447,6 +1447,7 @@
       if (!document.body.contains(stage)) return;
       if (fallback) fallback.hidden = true;
       window.__robinson3d = mod.mount(stage, {
+        sceneId: ch.scene.id || 'york',
         hotspots: ch.scene.hotspots,
         speak: function (text) { if (window.TTS) window.TTS.speak(text); },
         taskText: function (done, total) { return t('robinson.sceneTask', { done: done, total: total }); },
@@ -1494,7 +1495,7 @@
       '      <button class="btn primary" type="button" data-say-seq="' + esc(seq) + '">🔊 ' + esc(t('story.listenAll')) + '</button>' +
       '    </div>' +
       '  </div>' +
-      '  <div class="story-hero robinson-hero" aria-hidden="true"><span>' + ch.emoji + '</span><b>Robinson</b><small>York · 1651</small></div>' +
+      '  <div class="story-hero robinson-hero" aria-hidden="true"><span>' + ch.emoji + '</span><b>Robinson</b><small>' + esc(ch.scene.title) + '</small></div>' +
       '</header>' +
 
       '<section class="card scene-card">' +

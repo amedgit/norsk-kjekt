@@ -1,4 +1,4 @@
-/* Escena 3D de Robinson Crusoe (York, 1651).
+/* Escenas 3D de Robinson Crusoe: York (1651) y el Atlántico (1657).
    Se carga solo en la ruta #/robinson con import() dinámico. Three.js vive en
    assets/vendor y se cachea en el service worker tras la primera visita.
    Si WebGL no está disponible, quien llama muestra el fallback HTML. */
@@ -20,6 +20,43 @@ const SPOT_OFFSETS = {
   mast: [16, -10],
   sea: [16, 0],
   storm: [0, -8]
+};
+
+const SEA_ANCHORS = {
+  boat: [0, 1.3, 0],
+  oars: [1.9, 0.7, 0.2],
+  sea: [-6, 0.35, 6.5],
+  moon: [-9, 8.5, -17],
+  coast: [-7, 2.2, -15]
+};
+
+const SEA_OFFSETS = {
+  boat: [-4, 18],
+  oars: [26, 12],
+  sea: [12, 0],
+  moon: [0, 0],
+  coast: [0, -8]
+};
+
+const SCENES = {
+  york: {
+    anchors: SPOT_ANCHORS,
+    offsets: SPOT_OFFSETS,
+    background: 0x93c9df,
+    fog: [28, 58],
+    camera: [10.5, 6.1, 14.2],
+    lookAt: [0, 2.4, 0],
+    build: buildHarbour
+  },
+  sea: {
+    anchors: SEA_ANCHORS,
+    offsets: SEA_OFFSETS,
+    background: 0x0a1a26,
+    fog: [30, 72],
+    camera: [8.4, 5.2, 13.2],
+    lookAt: [0, 1.7, -2.2],
+    build: buildSea
+  }
 };
 
 function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
@@ -202,6 +239,139 @@ function buildHarbour(world) {
   return { sea, seaBase, ship, boat, clouds };
 }
 
+
+function buildSea(world) {
+  const seaGeo = new THREE.PlaneGeometry(80, 80, 38, 38);
+  seaGeo.rotateX(-Math.PI / 2);
+  const sea = new THREE.Mesh(seaGeo, mat(0x123c4a, { roughness: 0.45, metalness: 0.22 }));
+  world.add(sea);
+  const seaBase = Float32Array.from(seaGeo.attributes.position.array);
+
+  // Reflejo de luna sobre el agua
+  const reflection = new THREE.Mesh(
+    new THREE.PlaneGeometry(2.2, 36),
+    new THREE.MeshBasicMaterial({ color: 0xd9e2df, transparent: true, opacity: 0.07, depthWrite: false })
+  );
+  reflection.rotation.x = -Math.PI / 2;
+  reflection.position.set(-9, 0.03, -2);
+  world.add(reflection);
+
+  // Costa africana al fondo
+  addBox(world, 48, 1.5, 7, 0x2a4034, -5, 0.2, -16.5);
+  addBox(world, 34, 0.8, 5, 0x35503d, -8, 0.6, -17.5);
+  const hillMat = mat(0x1c3028);
+  [[-18, 3.2, -20, 4.6], [-9.5, 2.4, -19, 3.4], [1.5, 2.8, -20, 3.8], [9, 1.9, -19, 2.8]].forEach((h) => {
+    const hill = new THREE.Mesh(new THREE.ConeGeometry(h[3], h[3] * 1.35, 5), hillMat);
+    hill.position.set(h[0], h[1], h[2]);
+    world.add(hill);
+  });
+  // Palmeras lejanas en silueta
+  [-12, -6, 3].forEach((x, i) => {
+    const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.1, 2.4 + i * 0.3, 5), mat(0x2b2118));
+    trunk.position.set(x, 2.2, -15.6);
+    world.add(trunk);
+    const top = new THREE.Mesh(new THREE.ConeGeometry(0.9, 0.7, 6), mat(0x24402f));
+    top.position.set(x, 3.5 + i * 0.15, -15.6);
+    world.add(top);
+  });
+
+  // Estrellas
+  const starPos = [];
+  for (let i = 0; i < 190; i++) {
+    const a = Math.random() * Math.PI * 2;
+    const r = 12 + Math.random() * 26;
+    starPos.push(Math.cos(a) * r, 5 + Math.random() * 18, -12 - Math.random() * 20);
+  }
+  const starGeo = new THREE.BufferGeometry();
+  starGeo.setAttribute('position', new THREE.Float32BufferAttribute(starPos, 3));
+  const stars = new THREE.Points(starGeo, new THREE.PointsMaterial({
+    color: 0xf2ead8,
+    size: 0.16,
+    transparent: true,
+    opacity: 0.8,
+    depthWrite: false
+  }));
+  world.add(stars);
+
+  // Luna
+  const moon = new THREE.Mesh(new THREE.SphereGeometry(1.55, 20, 16), new THREE.MeshBasicMaterial({ color: 0xf2ead8 }));
+  moon.position.set(-9, 8.5, -17);
+  world.add(moon);
+  const glow = new THREE.Mesh(
+    new THREE.SphereGeometry(2.7, 20, 16),
+    new THREE.MeshBasicMaterial({ color: 0xf2ead8, transparent: true, opacity: 0.16, blending: THREE.AdditiveBlending, depthWrite: false })
+  );
+  glow.position.copy(moon.position);
+  world.add(glow);
+
+  // Bote de la fuga
+  const boat = new THREE.Group();
+  addBox(boat, 3.1, 0.72, 1.15, 0x6b3f22, 0, 0.55, 0);
+  const bow = new THREE.Mesh(new THREE.ConeGeometry(0.6, 1.25, 4), mat(0x6b3f22));
+  bow.rotation.z = -Math.PI / 2;
+  bow.rotation.y = Math.PI / 4;
+  bow.position.set(1.95, 0.58, 0);
+  boat.add(bow);
+  addBox(boat, 3.25, 0.12, 1.25, 0x8a5a33, 0, 0.98, 0);
+  addBox(boat, 0.7, 0.18, 1.2, 0x5d351c, -1.5, 1.05, 0);
+
+  const mast = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.055, 2.6, 6), mat(0x4a2f1b));
+  mast.position.set(0.15, 2.3, 0);
+  boat.add(mast);
+  const yard = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, 1.8, 5), mat(0x4a2f1b));
+  yard.rotation.z = Math.PI / 2;
+  yard.position.set(0.15, 2.85, 0);
+  boat.add(yard);
+  const sail = new THREE.Mesh(
+    new THREE.PlaneGeometry(1.75, 1.55),
+    new THREE.MeshStandardMaterial({ color: 0xf2ead8, roughness: 0.95, side: THREE.DoubleSide })
+  );
+  sail.position.set(0.15, 2.15, 0.02);
+  boat.add(sail);
+
+  // Dos figuras: Robinson y Xury
+  function sailor(x, shirt, skin, hair, scale) {
+    const g = new THREE.Group();
+    const body = addBox(g, 0.44 * scale, 0.78 * scale, 0.3 * scale, shirt, 0, 0.38 * scale, 0);
+    body.rotation.y = 0.15;
+    const head = new THREE.Mesh(new THREE.SphereGeometry(0.17 * scale, 10, 8), mat(skin));
+    head.position.set(0, 0.92 * scale, 0);
+    g.add(head);
+    const hairMesh = new THREE.Mesh(new THREE.SphereGeometry(0.175 * scale, 10, 8), mat(hair));
+    hairMesh.position.set(0, 0.98 * scale, -0.01);
+    hairMesh.scale.set(1, 0.55, 1);
+    g.add(hairMesh);
+    g.position.set(x, 1.0, 0);
+    boat.add(g);
+    return g;
+  }
+  const robinson = sailor(-0.55, 0x1f4e79, 0xf2c9a8, 0x7a4d2d, 1);
+  const xury = sailor(0.52, 0xe0a43a, 0x6f4634, 0x2b211c, 0.82);
+
+  // Remos
+  [-1, 1].forEach((side) => {
+    const oar = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 2.5, 5), mat(0x5a3a20));
+    oar.rotation.z = Math.PI / 2;
+    oar.rotation.y = side * 0.18;
+    oar.position.set(side * 1.75, 0.72, 0.28);
+    boat.add(oar);
+    const blade = addBox(boat, 0.38, 0.04, 0.16, 0x8a5a33, side * 2.95, 0.72, 0.34);
+    blade.rotation.y = side * 0.18;
+  });
+
+  // Farol
+  const lamp = new THREE.PointLight(0xffb347, 1.5, 9);
+  lamp.position.set(-1.15, 1.45, 0.5);
+  boat.add(lamp);
+  const flame = new THREE.Mesh(new THREE.SphereGeometry(0.09, 8, 6), new THREE.MeshBasicMaterial({ color: 0xffc36b }));
+  flame.position.set(-1.15, 1.42, 0.5);
+  boat.add(flame);
+
+  world.add(boat);
+
+  return { sea, seaBase, boat, moon, glow, stars, robinson, xury, reflection };
+}
+
 export function mount(stage, options) {
   const opts = options || {};
   const hotspots = Array.isArray(opts.hotspots) ? opts.hotspots : [];
@@ -210,13 +380,14 @@ export function mount(stage, options) {
   const taskText = typeof opts.taskText === 'function' ? opts.taskText : function () { return ''; };
   const doneText = opts.doneText || '';
 
+  const cfg = SCENES[opts.sceneId] || SCENES.york;
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x93c9df);
-  scene.fog = new THREE.Fog(0x93c9df, 28, 58);
+  scene.background = new THREE.Color(cfg.background);
+  scene.fog = new THREE.Fog(cfg.background, cfg.fog[0], cfg.fog[1]);
 
   const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 120);
-  camera.position.set(10.5, 6.1, 14.2);
-  camera.lookAt(0, 2.4, 0);
+  camera.position.set(cfg.camera[0], cfg.camera[1], cfg.camera[2]);
+  camera.lookAt(cfg.lookAt[0], cfg.lookAt[1], cfg.lookAt[2]);
 
   const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'low-power' });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -240,15 +411,23 @@ export function mount(stage, options) {
   caption.appendChild(hint);
   stage.appendChild(caption);
 
-  scene.add(new THREE.HemisphereLight(0xd8ecff, 0x3d4a30, 1.5));
-  const sun = new THREE.DirectionalLight(0xfff1cf, 2.1);
-  sun.position.set(10, 16, 8);
-  scene.add(sun);
-  scene.add(new THREE.AmbientLight(0xffffff, 0.22));
+  if (opts.sceneId === 'sea') {
+    scene.add(new THREE.HemisphereLight(0x7fa6b2, 0x0a141a, 0.95));
+    const moonLight = new THREE.DirectionalLight(0xbfd4e6, 1.35);
+    moonLight.position.set(-10, 14, -8);
+    scene.add(moonLight);
+    scene.add(new THREE.AmbientLight(0x8fb0c0, 0.26));
+  } else {
+    scene.add(new THREE.HemisphereLight(0xd8ecff, 0x3d4a30, 1.5));
+    const sun = new THREE.DirectionalLight(0xfff1cf, 2.1);
+    sun.position.set(10, 16, 8);
+    scene.add(sun);
+    scene.add(new THREE.AmbientLight(0xffffff, 0.22));
+  }
 
   const world = new THREE.Group();
   scene.add(world);
-  const parts = buildHarbour(world);
+  const parts = cfg.build(world);
 
   const found = new Set();
   const buttons = [];
@@ -279,7 +458,7 @@ export function mount(stage, options) {
   }
 
   hotspots.forEach((h) => {
-    const anchor = SPOT_ANCHORS[h.spot] || [0, 2, 0];
+    const anchor = cfg.anchors[h.spot] || [0, 2, 0];
     const el = document.createElement('button');
     el.type = 'button';
     el.className = 'scene-hotspot';
@@ -307,7 +486,7 @@ export function mount(stage, options) {
       progress();
     });
     overlay.appendChild(el);
-    buttons.push({ el, anchor: new THREE.Vector3(anchor[0], anchor[1], anchor[2]), offset: SPOT_OFFSETS[h.spot] || [0, 0] });
+    buttons.push({ el, anchor: new THREE.Vector3(anchor[0], anchor[1], anchor[2]), offset: cfg.offsets[h.spot] || [0, 0] });
   });
 
   progress();
@@ -391,12 +570,17 @@ export function mount(stage, options) {
     const dt = Math.min(clock.getDelta(), 0.05);
     const time = clock.elapsedTime;
 
-    const goal = reduce ? 0 : Math.sin(time * 0.9) * 0.018;
-    parts.ship.position.y = goal;
-    parts.ship.rotation.x = reduce ? 0 : Math.cos(time * 0.7) * 0.012;
-    parts.ship.rotation.z = reduce ? 0.0 : Math.sin(time * 0.55) * 0.015;
-    parts.boat.position.y = reduce ? 0 : Math.sin(time * 1.1 + 1) * 0.025;
-    if (!reduce) {
+    if (parts.ship) {
+      const goal = reduce ? 0 : Math.sin(time * 0.9) * 0.018;
+      parts.ship.position.y = goal;
+      parts.ship.rotation.x = reduce ? 0 : Math.cos(time * 0.7) * 0.012;
+      parts.ship.rotation.z = reduce ? 0.0 : Math.sin(time * 0.55) * 0.015;
+    }
+    if (parts.boat) {
+      parts.boat.position.y = reduce ? 0 : Math.sin(time * 1.1 + 1) * 0.04;
+      parts.boat.rotation.z = reduce ? 0 : Math.sin(time * 0.6) * 0.012;
+    }
+    if (!reduce && parts.sea) {
       const pos = parts.sea.geometry.attributes.position;
       for (let i = 0; i < pos.count; i++) {
         const x = parts.seaBase[i * 3];
@@ -404,8 +588,8 @@ export function mount(stage, options) {
         pos.array[i * 3 + 1] = Math.sin(x * 0.38 + time * 0.9) * 0.075 + Math.cos(z * 0.45 + time * 1.15) * 0.055;
       }
       pos.needsUpdate = true;
-      parts.clouds.position.x = Math.sin(time * 0.08) * 0.6;
     }
+    if (!reduce && parts.clouds) parts.clouds.position.x = Math.sin(time * 0.08) * 0.6;
 
     yaw += (targetYaw - yaw) * 0.12;
     world.rotation.y = yaw;

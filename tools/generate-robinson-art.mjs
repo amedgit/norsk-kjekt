@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Genera las 8 ilustraciones SVG del capítulo 1 de Robinson Crusoe.
+ * Genera las 16 ilustraciones SVG de los capítulos 1 y 2 de Robinson Crusoe.
  * Estilo plano, sin texto y sin imágenes externas.
  *
  * Uso: node tools/generate-robinson-art.mjs
@@ -137,9 +137,11 @@ function tree(x, y, s = 1) {
 function ship(x, y, s = 1, opts = {}) {
   const tilt = opts.tilt || 0;
   const torn = opts.torn;
+  const sailColor = opts.sailColor || C.cream;
+  const flagColor = opts.flagColor || C.red;
   const sail = torn
-    ? `<path d="M2 -128 L2 -18 L62 -18 L48 -46 L58 -62 L40 -78 L52 -96 L30 -110 Z" fill="${C.cream}"/>`
-    : `<path d="M2 -128 L2 -18 L68 -18 Z" fill="${C.cream}"/>`;
+    ? `<path d="M2 -128 L2 -18 L62 -18 L48 -46 L58 -62 L40 -78 L52 -96 L30 -110 Z" fill="${sailColor}"/>`
+    : `<path d="M2 -128 L2 -18 L68 -18 Z" fill="${sailColor}"/>`;
   const fore = `<path d="M-4 -118 L-4 -30 L-54 -30 Z" fill="${C.sand}"/>`;
   return `<g transform="translate(${x} ${y}) scale(${s}) rotate(${tilt})">
     <path d="M-95 0 L95 0 L72 38 L-72 38 Z" fill="${C.brown}"/>
@@ -149,7 +151,7 @@ function ship(x, y, s = 1, opts = {}) {
     <rect x="-62" y="-122" width="5" height="96" fill="${C.navy}"/>
     ${sail}${fore}
     <path d="M-56 -122 L-56 -34 L-92 -34" fill="none" stroke="${C.navy}" stroke-width="4"/>
-    <path d="M4 -142 L42 -134 L4 -124 Z" fill="${C.red}"/>
+    <path d="M4 -142 L42 -134 L4 -124 Z" fill="${flagColor}"/>
     <path d="M6 -140 Q50 -78 80 -10" fill="none" stroke="${C.navy}" stroke-width="2" opacity=".5"/>
     <path d="M-6 -140 Q-48 -78 -84 -12" fill="none" stroke="${C.navy}" stroke-width="2" opacity=".5"/>
   </g>`;
@@ -158,6 +160,86 @@ function ship(x, y, s = 1, opts = {}) {
 function waves(y, color = C.white, opacity = 0.5) {
   return `<path d="M0 ${y} q25 -12 50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0"
     fill="none" stroke="${color}" stroke-width="4" stroke-linecap="round" opacity="${opacity}"/>`;
+}
+
+
+function palm(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <path d="M0 0 q-8 -46 10 -92" fill="none" stroke="${C.brown2}" stroke-width="9" stroke-linecap="round"/>
+    <path d="M10 -92 q-44 -20 -66 -4 q34 2 62 14" fill="${C.green}"/>
+    <path d="M10 -92 q-30 -36 -58 -34 q28 14 50 42" fill="${C.green}" opacity=".9"/>
+    <path d="M10 -92 q34 -30 62 -16 q-32 2 -54 24" fill="${C.green}"/>
+    <path d="M10 -92 q44 -8 58 18 q-30 -12 -56 -8" fill="${C.green}" opacity=".9"/>
+    <path d="M10 -92 q-6 -44 12 -60 q4 28 0 62" fill="${C.green}" opacity=".8"/>
+    <circle cx="4" cy="-84" r="7" fill="${C.brown}"/>
+    <circle cx="14" cy="-80" r="6" fill="${C.brown}"/>
+  </g>`;
+}
+
+function fort(x, y, w, h) {
+  return `<g>
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${C.sand}"/>
+    <rect x="${x - 8}" y="${y + 10}" width="${w + 16}" height="10" fill="${C.cream}"/>
+    ${Array.from({ length: 6 }, (_, i) => `<rect x="${x + 6 + i * (w / 6)}" y="${y - 10}" width="${w / 12}" height="18" fill="${C.sand}"/>`).join('')}
+    <path d="M${x + w / 2 - 18} ${y + h} v-40 q18 -22 36 0 v40 Z" fill="${C.navy}" opacity=".8"/>
+    <rect x="${x + w * .18}" y="${y + 34}" width="18" height="24" rx="3" fill="${C.sky2}"/>
+    <rect x="${x + w * .62}" y="${y + 34}" width="18" height="24" rx="3" fill="${C.sky2}"/>
+  </g>`;
+}
+
+function smallBoat(x, y, s = 1, opts = {}) {
+  const sail = opts.sail
+    ? `<rect x="-3" y="-78" width="6" height="78" fill="${C.navy}"/>
+       <path d="M3 -76 L3 -8 L48 -8 Z" fill="${C.cream}"/>
+       <path d="M-3 -68 L-3 -16 L-38 -16 Z" fill="${C.sand}"/>`
+    : '';
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <path d="M-72 0 L72 0 L52 28 L-52 28 Z" fill="${C.brown}"/>
+    <path d="M-72 0 L72 0 L62 9 L-62 9 Z" fill="${C.brown2}"/>
+    <path d="M-56 4 L-88 -4" stroke="${C.brown2}" stroke-width="5" stroke-linecap="round"/>
+    <path d="M56 4 L88 -4" stroke="${C.brown2}" stroke-width="5" stroke-linecap="round"/>
+    ${sail}
+  </g>`;
+}
+
+function moon(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <circle r="42" fill="${C.amber}" opacity=".12"/>
+    <circle r="26" fill="${C.cream}"/>
+    <circle cx="-8" cy="-4" r="5" fill="${C.sand}" opacity=".7"/>
+    <circle cx="9" cy="8" r="4" fill="${C.sand}" opacity=".6"/>
+  </g>`;
+}
+
+function stars(points, color = C.cream) {
+  return points.map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${color}" opacity=".75"/>`).join('');
+}
+
+function lion(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})" fill="${C.amber}">
+    <ellipse cx="0" cy="-18" rx="30" ry="15"/>
+    <circle cx="28" cy="-34" r="12"/>
+    <path d="M30 -44 l4 -8 l4 8 l8 2 l-6 6 l2 8 l-8 -4 l-8 4 l2 -8 l-6 -6 Z" fill="${C.brown2}"/>
+    <rect x="-22" y="-8" width="7" height="18" rx="3"/>
+    <rect x="8" y="-8" width="7" height="18" rx="3"/>
+    <path d="M-30 -20 q-18 -4 -20 -18 q12 4 22 14" fill="${C.brown2}"/>
+  </g>`;
+}
+
+function plants(x, y, rows, cols) {
+  const out = [];
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const px = x + c * 38 + (r % 2) * 14;
+      const py = y + r * 30;
+      out.push(`<g transform="translate(${px} ${py})">
+        <path d="M0 0 q-8 -18 0 -30 q8 12 0 30" fill="${C.green}"/>
+        <path d="M0 0 q-14 -12 -16 -24 q14 4 16 24" fill="${C.green}" opacity=".8"/>
+        <path d="M0 0 q14 -12 16 -24 q-14 4 -16 24" fill="${C.green}" opacity=".8"/>
+      </g>`);
+    }
+  }
+  return out.join('');
 }
 
 /* ---------------------------------------------------------------- 1 */
@@ -334,6 +416,152 @@ const london = svg('Robinson llega a Londres con las piernas temblorosas', ['#f7
   ${gull(320, 120, .9)}
 `);
 
+
+/* ---------------------------------------------------------------- 9 */
+const attack = svg('Un barco corsario se acerca al barco de Robinson', ['#cfe8f7', '#f7f2e9'], `
+  ${sun(512, 62, .8)}
+  ${cloud(78, 74, .7)}
+  <rect x="0" y="218" width="600" height="182" fill="url(#sea)"/>
+  ${waves(236, C.white, .28)}
+  ${waves(276, C.white, .18)}
+  ${ship(168, 302, .76)}
+  ${ship(452, 306, .9, { sailColor: '#7a2b2b', flagColor: C.red })}
+  ${cloud(314, 208, .9, C.grey)}
+  ${cloud(342, 226, .65, C.grey)}
+  <path d="M368 244 q-26 -16 -56 -8" fill="none" stroke="${C.cream}" stroke-width="5" opacity=".6"/>
+  ${gull(320, 110, .9)}
+  ${gull(352, 128, .7)}
+`);
+
+/* ---------------------------------------------------------------- 10 */
+const sale = svg('Robinson trabaja en el jardín de una casa de Salé', ['#fdf3e7', '#efdfca'], `
+  ${sun(512, 60, .9)}
+  ${cloud(80, 74, .7)}
+  <rect x="0" y="188" width="600" height="44" fill="${C.sea}" opacity=".8"/>
+  <path d="M0 232 q60 -8 120 0 t120 0 t120 0 t120 0 t120 0" fill="none" stroke="${C.white}" stroke-width="3" opacity=".3"/>
+  <rect x="0" y="226" width="600" height="174" fill="${C.sand}"/>
+  ${fort(34, 142, 164, 116)}
+  ${house(232, 168, 138, 92, C.cream, C.red)}
+  ${house(392, 184, 108, 76, C.white, C.amber)}
+  ${palm(566, 336, .9)}
+  ${plants(74, 330, 3, 5)}
+  ${person(272, 352, .95, { shirt: C.blue, hair: C.hair2 })}
+  <path d="M286 300 l26 -36" stroke="${C.brown2}" stroke-width="5" stroke-linecap="round"/>
+  <path d="M308 268 l12 -8" stroke="${C.grey}" stroke-width="6" stroke-linecap="round"/>
+  <rect x="196" y="322" width="34" height="22" rx="6" fill="${C.brown2}"/>
+  <path d="M196 328 q17 -18 34 0" fill="none" stroke="${C.amber}" stroke-width="4"/>
+  ${gull(470, 110, .8)}
+`);
+
+/* ---------------------------------------------------------------- 11 */
+const xury = svg('Robinson y Xury hablan junto a un bote de pesca', ['#dceefb', '#f7f2e9'], `
+  ${sun(508, 62, .85)}
+  ${cloud(82, 76, .7)}
+  <rect x="0" y="210" width="600" height="190" fill="url(#sea)"/>
+  ${waves(228, C.white, .25)}
+  <rect x="0" y="286" width="250" height="114" fill="${C.sand}"/>
+  <rect x="0" y="278" width="250" height="14" fill="${C.brown2}"/>
+  <rect x="34" y="294" width="14" height="82" rx="4" fill="${C.brown}"/>
+  <rect x="142" y="294" width="14" height="82" rx="4" fill="${C.brown}"/>
+  ${house(268, 176, 108, 78, C.cream, C.red)}
+  ${house(392, 194, 92, 60, C.white, C.amber)}
+  ${smallBoat(454, 306, .9, { sail: true })}
+  ${person(160, 340, .95, { shirt: C.blue, hair: C.hair2 })}
+  ${person(232, 342, .78, { shirt: C.amber, skin: C.skin3, hair: C.hair })}
+  <path d="M106 326 q30 -24 62 -2" fill="none" stroke="${C.brown2}" stroke-width="4" opacity=".7"/>
+  <circle cx="106" cy="328" r="12" fill="none" stroke="${C.brown2}" stroke-width="4"/>
+  ${gull(340, 106, .8)}
+`);
+
+/* ---------------------------------------------------------------- 12 */
+const escape = svg('Robinson y Xury escapan de Salé en un pequeño bote', ['#f6c78f', '#2f4f6f'], `
+  ${moon(500, 76, .9)}
+  ${stars([[60, 54, 1.4], [140, 88, 1], [220, 46, 1.2], [300, 76, .9], [390, 40, 1.1], [560, 116, .8]])}
+  <rect x="0" y="216" width="600" height="184" fill="url(#sea)"/>
+  ${waves(234, C.white, .24)}
+  ${waves(272, C.white, .16)}
+  <g fill="${C.navy}" opacity=".55">
+    <rect x="0" y="168" width="150" height="48"/>
+    <rect x="22" y="140" width="28" height="76"/>
+    <rect x="58" y="154" width="36" height="62"/>
+    <path d="M104 168 q18 -24 36 0 v48 h-36 Z"/>
+  </g>
+  ${smallBoat(312, 312, 1, { sail: true })}
+  ${person(288, 300, .42, { shirt: C.blue, hair: C.hair2 })}
+  ${person(336, 302, .38, { shirt: C.amber, skin: C.skin3, hair: C.hair, flip: true })}
+  ${gull(210, 130, .8, C.cream)}
+`);
+
+/* ---------------------------------------------------------------- 13 */
+const coast = svg('El bote navega junto a una costa seca con animales al fondo', ['#bfe3f4', '#f7f2e9'], `
+  ${sun(506, 64, .9)}
+  ${cloud(80, 72, .65)}
+  <rect x="0" y="208" width="600" height="192" fill="url(#sea)"/>
+  ${waves(226, C.white, .26)}
+  <path d="M0 336 q80 -18 160 -8 t160 2 t160 -6 t120 4 v72 H0 Z" fill="${C.sand}"/>
+  <path d="M0 366 q90 -14 180 -4 t180 2 t240 -6 v42 H0 Z" fill="${C.amber}" opacity=".28"/>
+  ${palm(86, 336, .8)}
+  ${palm(132, 342, .65)}
+  ${lion(430, 336, .8)}
+  ${lion(492, 344, .55)}
+  ${smallBoat(250, 310, .9, { sail: true })}
+  ${person(230, 298, .4, { shirt: C.blue, hair: C.hair2 })}
+  ${person(272, 300, .36, { shirt: C.amber, skin: C.skin3, hair: C.hair, flip: true })}
+  ${gull(540, 120, .75)}
+`);
+
+/* ---------------------------------------------------------------- 14 */
+const portuguese = svg('Un barco portugués recoge a Robinson y Xury', ['#dceefb', '#f7f2e9'], `
+  ${sun(512, 62, .9)}
+  ${cloud(78, 74, .7)}
+  <rect x="0" y="214" width="600" height="186" fill="url(#sea)"/>
+  ${waves(232, C.white, .28)}
+  ${waves(272, C.white, .16)}
+  ${ship(214, 306, 1.02, { flagColor: C.green })}
+  ${smallBoat(470, 316, .72)}
+  ${person(452, 306, .38, { shirt: C.blue, hair: C.hair2, wave: true })}
+  ${person(488, 308, .34, { shirt: C.amber, skin: C.skin3, hair: C.hair, wave: true, flip: true })}
+  ${gull(340, 112, .9)}
+  ${gull(372, 130, .7)}
+`);
+
+/* ---------------------------------------------------------------- 15 */
+const captain = svg('El capitán portugués habla con Robinson y Xury en la cubierta', ['#cfe8f7', '#f7f2e9'], `
+  ${sun(510, 58, .85)}
+  ${cloud(80, 70, .65)}
+  <rect x="0" y="180" width="600" height="220" fill="url(#sea)" opacity=".55"/>
+  <rect x="0" y="286" width="600" height="114" fill="${C.brown2}"/>
+  <rect x="0" y="276" width="600" height="14" fill="${C.brown}"/>
+  ${Array.from({ length: 7 }, (_, i) => `<rect x="${i * 88 + 18}" y="290" width="62" height="6" rx="3" fill="${C.brown}" opacity=".5"/>`).join('')}
+  <rect x="0" y="222" width="600" height="10" fill="${C.navy}" opacity=".55"/>
+  ${Array.from({ length: 10 }, (_, i) => `<rect x="${i * 62 + 18}" y="222" width="8" height="46" rx="4" fill="${C.navy}" opacity=".4"/>`).join('')}
+  ${person(408, 340, 1, { shirt: C.navy, pants: C.navy, hair: C.grey, point: true, flip: true })}
+  ${person(250, 342, .92, { shirt: C.blue, hair: C.hair2 })}
+  ${person(320, 344, .74, { shirt: C.amber, skin: C.skin3, hair: C.hair })}
+  <rect x="496" y="298" width="46" height="38" rx="7" fill="${C.brown}"/>
+  <rect x="490" y="294" width="58" height="8" rx="4" fill="${C.brown2}"/>
+  <path d="M508 306 q14 -10 28 0 v18 q-14 10 -28 0 Z" fill="${C.cream}"/>
+  <path d="M522 306 v18 M508 315 h28" stroke="${C.red}" stroke-width="2" opacity=".7"/>
+  ${gull(330, 110, .8)}
+`);
+
+/* ---------------------------------------------------------------- 16 */
+const brazil = svg('Robinson llega a una costa verde de Brasil con su plantación', ['#dceefb', '#f7f2e9'], `
+  ${sun(506, 60, .95)}
+  ${cloud(80, 72, .7)}
+  <rect x="0" y="196" width="600" height="204" fill="url(#sea)" opacity=".75"/>
+  ${waves(216, C.white, .25)}
+  <path d="M0 258 q120 -36 240 -8 t240 -4 t120 8 v146 H0 Z" fill="${C.green}" opacity=".8"/>
+  <path d="M0 306 q140 -28 280 -4 t240 -6 t80 6 v98 H0 Z" fill="${C.mint}"/>
+  ${house(394, 196, 128, 92, C.cream, C.red)}
+  ${palm(548, 336, .85)}
+  ${plants(54, 338, 3, 5)}
+  ${person(250, 352, .98, { shirt: C.blue, hair: C.hair2 })}
+  <path d="M264 300 l30 -40" stroke="${C.brown2}" stroke-width="5" stroke-linecap="round"/>
+  <path d="M292 260 l14 -6" stroke="${C.grey}" stroke-width="7" stroke-linecap="round"/>
+  ${gull(330, 118, .85)}
+`);
+
 const files = [
   ['01-familie.svg', family],
   ['02-drommen.svg', dream],
@@ -342,7 +570,15 @@ const files = [
   ['05-hull.svg', hull],
   ['06-rolig-sjo.svg', calm],
   ['07-stormen.svg', storm],
-  ['08-london.svg', london]
+  ['08-london.svg', london],
+  ['ch2-01-angrep.svg', attack],
+  ['ch2-02-sale.svg', sale],
+  ['ch2-03-xury.svg', xury],
+  ['ch2-04-flukt.svg', escape],
+  ['ch2-05-kysten.svg', coast],
+  ['ch2-06-skipet.svg', portuguese],
+  ['ch2-07-kaptein.svg', captain],
+  ['ch2-08-brasil.svg', brazil]
 ];
 
 for (const [name, content] of files) {

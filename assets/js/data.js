@@ -4425,7 +4425,109 @@ window.COURSE = {
           }
         ]
       },
-      { id: '2', num: 2, level: 'A2', emoji: '⛓️', title: 'Fanget i Sallee', soon: true },
+      {
+        id: '2',
+        num: 2,
+        level: 'A2',
+        emoji: '⛓️',
+        title: 'Fanget i Salé',
+        subtitle: 'Cautiverio y fuga por la costa de África',
+        intro: 'Tras su primer viaje, Robinson vuelve al mar. Cerca de África, los corsarios de Salé atacan su barco. Dos años de cautiverio y una fuga en un pequeño bote cambiarán su vida.',
+        place: 'Salé · costa de África · Brasil (1655–1657)',
+        places: ['Salé', 'Marokko', 'Atlanterhavet', 'Brasil'],
+        paragraphs: [
+          { no: 'Etter London reiste jeg tilbake til havet. I 1655 var jeg på et skip som skulle til Guinea for å handle. Utenfor Afrika kom det en korsar fra Salé. Skipet vårt var lite, og korsarene hadde mange kanoner. De tok skipet og tok meg til fange.', es: 'Después de Londres volví al mar. En 1655 estaba en un barco que iba a Guinea a comerciar. Cerca de África apareció un corsario de Salé. Nuestro barco era pequeño y los corsarios tenían muchos cañones. Tomaron el barco y me hicieron prisionero.', image: 'assets/img/robinson/ch2-01-angrep.svg', imageAlt: 'Un barco corsario se acerca al barco de Robinson en alta mar.' },
+          { no: 'Salé var en stor by ved kysten av Marokko. Der ble jeg solgt som fange. Jeg måtte arbeide i huset og hagen til en rik mann. Om kvelden sov jeg i et lite rom ved kjøkkenet. Jeg lærte noen ord på arabisk, men jeg drømte bare om å reise hjem.', es: 'Salé era una gran ciudad en la costa de Marruecos. Allí me vendieron como cautivo. Tenía que trabajar en la casa y el jardín de un hombre rico. Por la noche dormía en una habitación pequeña junto a la cocina. Aprendí algunas palabras en árabe, pero solo soñaba con volver a casa.', image: 'assets/img/robinson/ch2-02-sale.svg', imageAlt: 'Robinson trabaja en el jardín de una casa de Salé.' },
+          { no: 'To år gikk. Jeg ble kjent med en ung gutt som het Xury. Han var også fange, og han arbeidet på en liten fiskebåt. Vi snakket om å rømme. Vi samlet vann, brød og tørket frukt. Om natten så vi på stjernene og planla reisen.', es: 'Pasaron dos años. Conocí a un joven llamado Xury. También era cautivo y trabajaba en un pequeño bote de pesca. Hablábamos de escapar. Reunimos agua, pan y fruta seca. Por la noche mirábamos las estrellas y planeábamos el viaje.', image: 'assets/img/robinson/ch2-03-xury.svg', imageAlt: 'Robinson y Xury hablan junto a un pequeño bote de pesca.' },
+          { no: 'En morgen sendte herren min oss ut for å fiske. Vi tok en liten båt med to årer og en seilduk. Da vi var langt fra land, ventet vi til det ble mørkt. Så snudde vi båten mot sør og seilte bort fra Salé.', es: 'Una mañana mi amo nos envió a pescar. Cogimos un pequeño bote con dos remos y una vela de tela. Cuando estuvimos lejos de la costa, esperamos a que oscureciera. Luego giramos el bote hacia el sur y navegamos lejos de Salé.', image: 'assets/img/robinson/ch2-04-flukt.svg', imageAlt: 'Robinson y Xury escapan de Salé en un pequeño bote al anochecer.' },
+          { no: 'Vi seilte langs kysten i mange dager. Noen ganger var vi redde for å bli sett. Om dagen fisket vi, og om natten sov vi i båten. Kysten var tørr og gul, og bak den lå ørkenen. Vi så dyr på stranden, men vi gikk aldri i land.', es: 'Navegamos a lo largo de la costa durante muchos días. A veces teníamos miedo de que nos vieran. De día pescábamos y de noche dormíamos en el bote. La costa era seca y amarilla, y detrás estaba el desierto. Vimos animales en la playa, pero nunca bajamos a tierra.', image: 'assets/img/robinson/ch2-05-kysten.svg', imageAlt: 'El bote navega junto a una costa seca y amarilla con animales al fondo.' },
+          { no: 'Etter flere uker fikk vi se et skip. Det var et portugisisk skip som seilte mot Brasil. Vi viftet med et tøystykke og ropte. Kapteinen så oss og sendte en liten båt. Da vi kom om bord, gråt jeg av lettelse.', es: 'Después de varias semanas vimos un barco. Era un barco portugués que navegaba hacia Brasil. Agitamos un trozo de tela y gritamos. El capitán nos vio y envió un bote. Cuando subimos a bordo, lloré de alivio.', image: 'assets/img/robinson/ch2-06-skipet.svg', imageAlt: 'Un barco portugués recoge a Robinson y Xury en alta mar.' },
+          { no: 'Kapteinen var snill. Han forsto at vi hadde rømt, og han lovte at Xury skulle få arbeide for ham og senere bli fri. Jeg fortalte ham at jeg ville til Brasil. Han sa at jeg kunne reise med skipet hans, og at jeg kunne betale senere.', es: 'El capitán era amable. Entendió que habíamos escapado y prometió que Xury trabajaría para él y después sería libre. Le dije que quería ir a Brasil. Me dijo que podía viajar en su barco y pagarle más tarde.', image: 'assets/img/robinson/ch2-07-kaptein.svg', imageAlt: 'El capitán portugués habla con Robinson y Xury en la cubierta.' },
+          { no: 'I 1657 kom vi til Brasil. Landet var grønt og varmt, og luften luktet av jord og regn. Jeg kjøpte et lite stykke land og begynte å dyrke tobakk. For første gang på mange år følte jeg meg trygg. Men havet var aldri langt borte.', es: 'En 1657 llegamos a Brasil. El país era verde y cálido, y el aire olía a tierra y lluvia. Compré un pequeño terreno y empecé a cultivar tabaco. Por primera vez en muchos años me sentí seguro. Pero el mar nunca estaba lejos.', image: 'assets/img/robinson/ch2-08-brasil.svg', imageAlt: 'Robinson llega a una costa verde de Brasil con su plantación.' }
+        ],
+        vocab: [
+          { no: 'korsar', es: 'corsario', forms: 'en korsar, korsarer' },
+          { no: 'fangenskap', es: 'cautiverio', forms: 'et fangenskap' },
+          { no: 'rømme', es: 'escapar, huir', forms: 'rømmer · rømte · har rømt' },
+          { no: 'båt', es: 'bote', forms: 'en båt, båter' },
+          { no: 'åre', es: 'remo', forms: 'en åre, årer' },
+          { no: 'kyst', es: 'costa', forms: 'en kyst, kyster' },
+          { no: 'ørken', es: 'desierto', forms: 'en ørken, ørkener' },
+          { no: 'sult', es: 'hambre', forms: 'en sult' },
+          { no: 'tørst', es: 'sed', forms: 'en tørst' },
+          { no: 'redde', es: 'rescatar, salvar', forms: 'redder · reddet · har reddet' },
+          { no: 'kaptein', es: 'capitán', forms: 'en kaptein, kapteiner' },
+          { no: 'fri', es: 'libre', forms: 'fri · fritt · frie' },
+          { no: 'plantasje', es: 'plantación', forms: 'en plantasje, plantasjer' },
+          { no: 'seile', es: 'navegar', forms: 'seiler · seilte · har seilt' },
+          { no: 'stjerne', es: 'estrella', forms: 'en stjerne, stjerner' }
+        ],
+        grammar: {
+          title: 'Sterke verb i preteritum',
+          es: 'Muchos verbos frecuentes no añaden -et, -te o -de en pasado, sino que cambian la raíz: bli → ble, få → fikk, ta → tok, se → så, gi → ga, finne → fant, komme → kom, gå → gikk, stå → sto, holde → holdt. Hay que aprenderlos de memoria; el resto de la frase no cambia.',
+          examples: [
+            { no: 'Skipet ble tatt av korsarene.', es: 'El barco fue capturado por los corsarios.' },
+            { no: 'Vi fikk en liten båt.', es: 'Conseguimos un pequeño bote.' },
+            { no: 'Kapteinen tok oss om bord.', es: 'El capitán nos subió a bordo.' }
+          ]
+        },
+        scene: {
+          id: 'sea',
+          title: 'Atlanterhavet, 1657',
+          intro: 'Explora la noche de la fuga: un bote, dos remos y la costa de África.',
+          hotspots: [
+            { id: 'bat', no: 'båten', es: 'el bote', spot: 'boat' },
+            { id: 'arene', no: 'årene', es: 'los remos', spot: 'oars' },
+            { id: 'sjoen', no: 'sjøen', es: 'el mar', spot: 'sea' },
+            { id: 'manen', no: 'månen', es: 'la luna', spot: 'moon' },
+            { id: 'kysten', no: 'kysten', es: 'la costa', spot: 'coast' }
+          ]
+        },
+        exercises: [
+          {
+            type: 'mcq',
+            prompt: '¿Quiénes atacaron el barco de Robinson?',
+            options: ['Corsarios de Salé', 'Pescadores de Brasil', 'Soldados de York', 'Marineros de Londres'],
+            answer: 0,
+            audio: 'Korsarene fra Salé tok skipet.',
+            explain: 'El texto dice que un korsar fra Salé atacó el barco.'
+          },
+          {
+            type: 'gap',
+            prompt: 'Completa la frase:',
+            sentence: 'Robinson og Xury ___ om natten.',
+            answers: ['rømte'],
+            bank: ['rømte', 'rømmer', 'rømme'],
+            es: 'Robinson y Xury escaparon por la noche.',
+            explain: 'El pasado de «å rømme» es «rømte».'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase:',
+            words: ['Kapteinen', 'tok', 'dem', 'om', 'bord', 'i', 'skipet.'],
+            es: 'El capitán los subió a bordo del barco.',
+            explain: '«Å ta noen om bord» = subir a alguien a bordo. El pasado de «ta» es «tok».'
+          },
+          {
+            type: 'listen',
+            audio: 'Vi seilte langs kysten i mange dager.',
+            es: 'Navegamos a lo largo de la costa durante muchos días.',
+            explain: '«Langs kysten» = a lo largo de la costa. «Seilte» es el pasado de «seile».'
+          },
+          {
+            type: 'match',
+            prompt: 'Empareja el vocabulario del capítulo:',
+            pairs: [
+              { a: 'korsar', b: 'corsario' },
+              { a: 'fangenskap', b: 'cautiverio' },
+              { a: 'åre', b: 'remo' },
+              { a: 'kyst', b: 'costa' },
+              { a: 'redde', b: 'rescatar' }
+            ],
+            explain: 'Cinco palabras clave del segundo capítulo.'
+          }
+        ]
+      },
       { id: '3', num: 3, level: 'B1', emoji: '🌱', title: 'Plantasjen i Brasil', soon: true },
       { id: '4', num: 4, level: 'B1', emoji: '🌊', title: 'Skipet og stormen', soon: true },
       { id: '5', num: 5, level: 'B1', emoji: '🏝️', title: 'Alene på øya', soon: true },
