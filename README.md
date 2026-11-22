@@ -95,7 +95,7 @@ cacheada.
 | Verbos | 200 verbos esenciales con presente, pasado, perfecto, imperativo, ejemplo, audio y progreso |
 | Flashcards | Mazos de vocabulario por tema con audio, dos direcciones, repaso espaciado (1/3/7/15/30 días) y progreso |
 | Robinson | «Robinson Crusoe»: adaptación propia del clásico de 1719, tres capítulos abiertos con escenas 3D, ilustraciones, audio, vocabulario, gramática y 5 ejercicios cada uno |
-| Juegos | **Hukommelse**: parejas de palabras y traducciones, tres niveles, audio y tiempos. **Crucigrama**: vocabulario noruego generado, pistas, comprobación, pista y nuevo puzzle |
+| Juegos | **Norsk Sprint**: 9 niveles de 10 preguntas, combo, estrellas, reto diario, sonidos y confeti. **Hukommelse**: parejas de palabras y traducciones, tres niveles, audio y tiempos. **Crucigrama**: vocabulario noruego generado, pistas, comprobación, pista y nuevo puzzle |
 | Historia | «Lucía i Oslo»: 6 capítulos piloto (A2–B1) de la serie de 12, con 7 párrafos cada uno, audio por párrafo y del capítulo completo, traducción plegable, 15 palabras, gramática y 5 ejercicios por capítulo |
 | Kjerneord | Núcleo de 1000 palabras y frases en 10 paquetes de 100; los paquetes 1 a 9 (900 palabras: supervivencia, vida diaria, personas y planes, salud y cuerpo, trabajo y trámites, ciudad y viajes, conectores y matices, opiniones y debate, cultura y sociedad) ya están disponibles con audio, filtros y test |
 | Meldinger | 4 grupos de WhatsApp (A2–B1: vecinos, familia, amigos y trabajo) con 48 mensajes en formato chat, audio por mensaje, traducción, glosario de abreviaturas y truco cultural |
@@ -343,6 +343,29 @@ del vocabulario del curso.
 - Comprobar, revelar una letra, borrar y generar un crucigrama nuevo.
 - Navegación con teclado y avance automático al escribir.
 - Al completarlo suma XP y cuenta en `state.games.kryssord.solved`.
+
+### Norsk Sprint
+
+`#/juegos/sprint` es un juego rápido inspirado en la idea de sesiones cortas y
+progresión visual, sin copiar la marca ni el diseño de Duolingo.
+
+- **9 niveles** generados a partir de los paquetes de Kjerneord, de A1 a B2.
+- Cada ronda tiene **10 preguntas** de tres tipos: noruego → significado,
+  significado → noruego y escuchar → elegir.
+- **Sin vidas ni castigos**: al fallar se muestra la respuesta correcta y se
+  puede seguir. Los aciertos seguidos suben el **combo** y el XP.
+- Al terminar se calculan de 1 a 3 estrellas. La primera vez que se supera un
+  nivel se abre el siguiente y se entrega un bonus de XP.
+- **Reto diario** (`#/juegos/sprint/diario`) mezcla palabras de todo el curso,
+  usa una semilla basada en la fecha y da un bonus la primera vez del día.
+- **Efectos**: sonidos sintetizados con Web Audio (acierto, fallo, combo y
+  final), vibración corta en móvil y confeti. Se pueden desactivar con el botón
+  de efectos; la preferencia se guarda en `norsk-kjekt-sfx`.
+- El progreso vive en `state.sprint.stars`, `state.sprint.best`,
+  `state.sprint.played` y `state.sprint.daily`.
+- La ruta del nivel es `#/juegos/sprint/<packId>`; el reto diario es
+  `#/juegos/sprint/diario`.
+
 - Funciona offline y en móvil.
 
 ### Guías SEO estáticas

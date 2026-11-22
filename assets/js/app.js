@@ -63,7 +63,7 @@
   var KEY = 'norsk-kjekt-v1';
 
   function defaults() {
-    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, body: {}, core: { known: {}, packs: {} }, stories: { chapters: {} }, robinson: { chapters: {} }, a0: { best: 0, total: 0, at: 0 }, grammar: { topics: {} }, verbos: { known: {}, best: { best: 0, total: 0, at: 0 }, packs: {} }, games: { dagensOrd: { date: '', guesses: [], status: 'playing', played: 0, wins: 0, streak: 0, best: 0, lastWin: '', distribution: [0, 0, 0, 0, 0, 0] }, hukommelse: { easy: { played: 0, bestMoves: 0, bestTime: 0 }, medium: { played: 0, bestMoves: 0, bestTime: 0 }, hard: { played: 0, bestMoves: 0, bestTime: 0 } }, kryssord: { solved: 0 } }, daily: { date: '', xp: 0, goal: 100 }, weekly: { week: '', xp: 0, cards: 0, claimed: {} }, pron: { best: {}, rewarded: {} }, xp: 0, days: {}, review: [], srs: {}, version: 1 };
+    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, body: {}, core: { known: {}, packs: {} }, stories: { chapters: {} }, robinson: { chapters: {} }, a0: { best: 0, total: 0, at: 0 }, grammar: { topics: {} }, verbos: { known: {}, best: { best: 0, total: 0, at: 0 }, packs: {} }, games: { dagensOrd: { date: '', guesses: [], status: 'playing', played: 0, wins: 0, streak: 0, best: 0, lastWin: '', distribution: [0, 0, 0, 0, 0, 0] }, hukommelse: { easy: { played: 0, bestMoves: 0, bestTime: 0 }, medium: { played: 0, bestMoves: 0, bestTime: 0 }, hard: { played: 0, bestMoves: 0, bestTime: 0 } }, kryssord: { solved: 0 } }, daily: { date: '', xp: 0, goal: 100 }, weekly: { week: '', xp: 0, cards: 0, claimed: {} }, pron: { best: {}, rewarded: {} }, sprint: { stars: {}, best: {}, played: 0, daily: { date: '', best: 0, done: false } }, xp: 0, days: {}, review: [], srs: {}, version: 1 };
   }
 
   var state = (function load() {
@@ -213,6 +213,7 @@
         daily: raw.daily && typeof raw.daily === 'object' ? raw.daily : d.daily,
         weekly: raw.weekly && typeof raw.weekly === 'object' ? raw.weekly : d.weekly,
         pron: raw.pron && typeof raw.pron === 'object' ? raw.pron : d.pron,
+        sprint: raw.sprint && typeof raw.sprint === 'object' ? raw.sprint : d.sprint,
         days: raw.days && typeof raw.days === 'object' ? raw.days : d.days,
         review: Array.isArray(raw.review) ? raw.review.filter(function (s) { return typeof s === 'string'; }) : d.review,
         version: 1
@@ -225,6 +226,7 @@
   ensureDaily();
   ensureWeekly();
   ensurePron();
+  ensureSprint();
 
   function save() {
     try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* modo privado */ }
@@ -274,6 +276,17 @@
     state.pron = state.pron && typeof state.pron === 'object' ? state.pron : { best: {}, rewarded: {} };
     state.pron.best = state.pron.best && typeof state.pron.best === 'object' ? state.pron.best : {};
     state.pron.rewarded = state.pron.rewarded && typeof state.pron.rewarded === 'object' ? state.pron.rewarded : {};
+  }
+
+  function ensureSprint() {
+    state.sprint = state.sprint && typeof state.sprint === 'object' ? state.sprint : { stars: {}, best: {}, played: 0, daily: { date: '', best: 0, done: false } };
+    state.sprint.stars = state.sprint.stars && typeof state.sprint.stars === 'object' ? state.sprint.stars : {};
+    state.sprint.best = state.sprint.best && typeof state.sprint.best === 'object' ? state.sprint.best : {};
+    state.sprint.played = Number(state.sprint.played) || 0;
+    var today = todayKey();
+    if (!state.sprint.daily || state.sprint.daily.date !== today) {
+      state.sprint.daily = { date: today, best: 0, done: false };
+    }
   }
 
   function addXp(n) {
@@ -2706,6 +2719,660 @@
     }
   }
 
+  /* =======================================================
+     Norsk Sprint: juego rápido con combo, sonidos y estrellas
+     ======================================================= */
+
+  var SPRINT_TYPES = ['no-es', 'es-no', 'listen'];
+  var sprintRun = null;
+  var sprintKeyHandler = null;
+  var sprintAudioCtx = null;
+  var sprintSfxOn = true;
+  try { sprintSfxOn = localStorage.getItem('norsk-kjekt-sfx') !== 'off'; } catch (e) { /* modo privado */ }
+
+  function sprintStages() {
+    return (CORE.packs || []).filter(function (p) {
+      return p && !p.soon && p.words && p.words.length;
+    }).map(function (p, i) {
+      return { id: String(p.id), num: i + 1, title: p.title, level: p.level || '', pack: p };
+    });
+  }
+
+  function sprintPool(pack) {
+    var seen = {};
+    return (pack.words || []).filter(function (w) {
+      var no = String(w.no || '').trim();
+      var es = String(w.es || '').trim();
+      if (!no || !es || no.length > 34 || es.length > 90) return false;
+      var key = pronNorm(no) + '|' + pronNorm(es);
+      if (seen[key]) return false;
+      seen[key] = 1;
+      return true;
+    });
+  }
+
+  function sprintAllWords() {
+    var out = [];
+    sprintStages().forEach(function (stage) {
+      sprintPool(stage.pack).forEach(function (word) {
+        out.push({ word: word, stage: stage });
+      });
+    });
+    return out;
+  }
+
+  function sprintStageById(id) {
+    return sprintStages().find(function (s) { return s.id === String(id); }) || null;
+  }
+
+  function sprintUnlocked(index, stages) {
+    if (index <= 0) return true;
+    var prev = stages[index - 1];
+    return prev ? (Number(state.sprint.stars[prev.id]) || 0) > 0 : false;
+  }
+
+  function sprintTotalStars() {
+    return Object.keys(state.sprint.stars).reduce(function (n, id) {
+      return n + (Number(state.sprint.stars[id]) || 0);
+    }, 0);
+  }
+
+  function sprintStars(n) {
+    var out = '';
+    for (var i = 1; i <= 3; i++) out += i <= n ? '★' : '☆';
+    return out;
+  }
+
+  function sprintHash(str) {
+    var h = 2166136261;
+    for (var i = 0; i < str.length; i++) {
+      h ^= str.charCodeAt(i);
+      h = Math.imul(h, 16777619);
+    }
+    return h >>> 0;
+  }
+
+  function sprintRng(seed) {
+    var s = seed >>> 0;
+    return function () {
+      s = (Math.imul(s, 1664525) + 1013904223) >>> 0;
+      return s / 4294967296;
+    };
+  }
+
+  function sprintShuffle(arr, rng) {
+    var a = arr.slice();
+    var r = rng || Math.random;
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(r() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  function sprintUnique(arr) {
+    var seen = {};
+    return arr.filter(function (v) {
+      if (seen[v]) return false;
+      seen[v] = true;
+      return true;
+    });
+  }
+
+  function sprintBuildQuestion(item, pool, type, rng) {
+    var word = item.word;
+    var key = type === 'no-es' ? 'es' : 'no';
+    var answer = String(word[key] || '');
+    var candidates = [];
+    pool.forEach(function (it) {
+      var v = String(it.word[key] || '');
+      if (v && v !== answer) candidates.push(v);
+    });
+    if (candidates.length < 3) {
+      sprintAllWords().forEach(function (it) {
+        var v = String(it.word[key] || '');
+        if (v && v !== answer) candidates.push(v);
+      });
+    }
+    candidates = sprintUnique(candidates);
+    candidates = sprintShuffle(candidates, rng).slice(0, 3);
+    var options = sprintShuffle([answer].concat(candidates), rng);
+    return {
+      type: type,
+      word: word,
+      stage: item.stage,
+      prompt: type === 'no-es' ? String(word.no) : type === 'es-no' ? String(word.es) : '',
+      audio: String(word.no),
+      answer: answer,
+      options: options
+    };
+  }
+
+  function sprintBuildRun(stage, daily) {
+    var rng = daily ? sprintRng(sprintHash(todayKey() + '|sprint')) : Math.random;
+    var items = [];
+    if (daily) {
+      var all = sprintAllWords();
+      var used = {};
+      sprintStages().forEach(function (st) {
+        var pool = sprintPool(st.pack);
+        if (!pool.length) return;
+        var pick = pool[Math.floor(rng() * pool.length)];
+        var key = String(pick.id || pick.no);
+        if (!used[key]) {
+          used[key] = true;
+          items.push({ word: pick, stage: st });
+        }
+      });
+      var guard = 0;
+      while (items.length < 10 && all.length && guard < 200) {
+        guard++;
+        var it = all[Math.floor(rng() * all.length)];
+        var k = String(it.word.id || it.word.no);
+        if (used[k]) continue;
+        used[k] = true;
+        items.push(it);
+      }
+    } else {
+      var pool = sprintPool(stage.pack);
+      var picks = sprintShuffle(pool, rng).slice(0, 10);
+      items = picks.map(function (w) { return { word: w, stage: stage }; });
+    }
+    var questions = items.map(function (item, i) {
+      var type = SPRINT_TYPES[(i + Math.floor(rng() * 3)) % SPRINT_TYPES.length];
+      return sprintBuildQuestion(item, items, type, rng);
+    });
+    return {
+      mode: daily ? 'daily' : 'stage',
+      stage: stage || null,
+      stageId: daily ? 'diario' : stage.id,
+      title: daily ? t('sprint.dailyTitle') : stage.title,
+      questions: questions,
+      total: questions.length,
+      index: 0,
+      correct: 0,
+      combo: 0,
+      bestCombo: 0,
+      chosen: -1,
+      answered: false,
+      wasCorrect: false,
+      lastGain: 0,
+      xpEarned: 0,
+      bonus: 0,
+      wrong: [],
+      marked: false,
+      done: false,
+      stars: 0,
+      newRecord: false,
+      unlockedNext: false,
+      nextStage: null
+    };
+  }
+
+  function sprintSoundButtonHTML() {
+    return '<button type="button" class="sprint-sound" data-sprint-sound aria-pressed="' +
+      (sprintSfxOn ? 'true' : 'false') + '" title="' + esc(t(sprintSfxOn ? 'sprint.soundOn' : 'sprint.soundOff')) + '">' +
+      (sprintSfxOn ? '🔊' : '🔇') + ' <span>' + esc(t('sprint.sfx')) + '</span></button>';
+  }
+
+  function sprintToggleSound() {
+    sprintSfxOn = !sprintSfxOn;
+    try { localStorage.setItem('norsk-kjekt-sfx', sprintSfxOn ? 'on' : 'off'); } catch (e) { /* modo privado */ }
+    document.querySelectorAll('[data-sprint-sound]').forEach(function (btn) {
+      btn.textContent = (sprintSfxOn ? '🔊 ' : '🔇 ') + t('sprint.sfx');
+      btn.setAttribute('aria-pressed', sprintSfxOn ? 'true' : 'false');
+      btn.title = t(sprintSfxOn ? 'sprint.soundOn' : 'sprint.soundOff');
+    });
+    if (sprintSfxOn) sprintSfx('click');
+  }
+
+  function sprintTone(ctx, freq, start, duration, type, volume) {
+    var osc = ctx.createOscillator();
+    var gain = ctx.createGain();
+    osc.type = type || 'sine';
+    osc.frequency.setValueAtTime(freq, start);
+    gain.gain.setValueAtTime(0.0001, start);
+    gain.gain.exponentialRampToValueAtTime(volume, start + 0.012);
+    gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(start);
+    osc.stop(start + duration + 0.03);
+  }
+
+  function sprintSfx(kind, combo) {
+    if (!sprintSfxOn) return;
+    try {
+      var Ctx = window.AudioContext || window.webkitAudioContext;
+      if (!Ctx) return;
+      if (!sprintAudioCtx) sprintAudioCtx = new Ctx();
+      if (sprintAudioCtx.state === 'suspended') sprintAudioCtx.resume();
+      var t0 = sprintAudioCtx.currentTime + 0.01;
+      if (kind === 'correct') {
+        sprintTone(sprintAudioCtx, 660, t0, 0.11, 'sine', 0.07);
+        sprintTone(sprintAudioCtx, 990, t0 + 0.08, 0.13, 'sine', 0.06);
+        if (combo > 1) sprintTone(sprintAudioCtx, 990 + Math.min(combo, 8) * 35, t0 + 0.17, 0.1, 'triangle', 0.04);
+      } else if (kind === 'wrong') {
+        var osc = sprintAudioCtx.createOscillator();
+        var gain = sprintAudioCtx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(180, t0);
+        osc.frequency.exponentialRampToValueAtTime(110, t0 + 0.2);
+        gain.gain.setValueAtTime(0.0001, t0);
+        gain.gain.exponentialRampToValueAtTime(0.045, t0 + 0.01);
+        gain.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.22);
+        osc.connect(gain); gain.connect(sprintAudioCtx.destination);
+        osc.start(t0); osc.stop(t0 + 0.25);
+      } else if (kind === 'finish') {
+        [523, 659, 784, 1046].forEach(function (f, i) {
+          sprintTone(sprintAudioCtx, f, t0 + i * 0.1, 0.17, 'triangle', 0.06);
+        });
+      } else if (kind === 'star') {
+        sprintTone(sprintAudioCtx, 1200, t0, 0.1, 'sine', 0.05);
+        sprintTone(sprintAudioCtx, 1600, t0 + 0.07, 0.12, 'sine', 0.04);
+      } else {
+        sprintTone(sprintAudioCtx, 520, t0, 0.05, 'triangle', 0.035);
+      }
+    } catch (e) { /* audio bloqueado */ }
+  }
+
+  function sprintVibrate(pattern) {
+    try { if (navigator.vibrate) navigator.vibrate(pattern); } catch (e) { /* no soportado */ }
+  }
+
+  function sprintConfetti(big) {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var host = document.getElementById('sprint-confetti');
+    if (!host) return;
+    var colors = ['#38d6e6', '#7cf0d0', '#ffd166', '#ff4d6a', '#8db4ff'];
+    var count = big ? 46 : 8;
+    for (var i = 0; i < count; i++) {
+      var p = document.createElement('i');
+      p.style.setProperty('--x', Math.random() * 100 + '%');
+      p.style.setProperty('--d', (big ? 1.1 + Math.random() * 0.8 : 0.55 + Math.random() * 0.35) + 's');
+      p.style.setProperty('--r', Math.random() * 360 + 'deg');
+      p.style.setProperty('--c', colors[i % colors.length]);
+      p.style.left = Math.random() * 100 + '%';
+      host.appendChild(p);
+      (function (el) { setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 2200); })(p);
+    }
+  }
+
+  function sprintSoundHTML() {
+    return sprintSoundButtonHTML();
+  }
+
+  function sprintPaintHub() {
+    ensureSprint();
+    var stages = sprintStages();
+    var totalStars = sprintTotalStars();
+    var maxStars = stages.length * 3;
+    var daily = state.sprint.daily;
+    var dailyDone = daily.date === todayKey() && daily.done;
+    var dailyBest = daily.date === todayKey() ? daily.best : 0;
+    app.innerHTML =
+      '<div class="crumbs"><a href="#/">' + esc(t('crumb.home')) + '</a> <span>›</span> <a href="#/juegos">' + esc(t('games.title')) + '</a> <span>›</span> <span>Norsk Sprint</span></div>' +
+      '<section class="sprint-hero">' +
+      '  <div class="sprint-hero-copy">' +
+      '    <span class="eyebrow">' + esc(t('sprint.eyebrow')) + '</span>' +
+      '    <h1>' + esc(t('sprint.title')) + '</h1>' +
+      '    <p>' + esc(t('sprint.intro')) + '</p>' +
+      '    <div class="sprint-hero-badges">' +
+      '      <span>🔥 ' + esc(t('sprint.noHearts')) + '</span>' +
+      '      <span>★ ' + totalStars + '/' + maxStars + '</span>' +
+      '      <span>' + esc(t('sprint.played', { n: state.sprint.played })) + '</span>' +
+      '    </div>' +
+      '  </div>' +
+      '  <div class="sprint-hero-side">' + sprintSoundHTML() + '</div>' +
+      '</section>' +
+      '<section class="sprint-daily">' +
+      '  <div class="sprint-daily-icon" aria-hidden="true">🎯</div>' +
+      '  <div class="sprint-daily-copy">' +
+      '    <span class="eyebrow">' + esc(t('sprint.today')) + '</span>' +
+      '    <h2>' + esc(t('sprint.dailyTitle')) + '</h2>' +
+      '    <p>' + esc(t('sprint.dailyText')) + '</p>' +
+      '    <span class="sprint-daily-best">' + esc(dailyDone ? t('sprint.dailyDone', { n: dailyBest }) : t('sprint.dailyBest', { n: dailyBest })) + '</span>' +
+      '  </div>' +
+      '  <a class="btn primary" href="#/juegos/sprint/diario">' + esc(dailyDone ? t('sprint.replay') : t('sprint.dailyPlay')) + '</a>' +
+      '</section>' +
+      '<h2 class="section-title">' + esc(t('sprint.pathTitle')) + ' <span>' + esc(t('sprint.pathIntro')) + '</span></h2>' +
+      '<div class="sprint-levels">' +
+      stages.map(function (stage, i) {
+        var unlocked = sprintUnlocked(i, stages);
+        var stars = Number(state.sprint.stars[stage.id]) || 0;
+        var best = Number(state.sprint.best[stage.id]) || 0;
+        if (!unlocked) {
+          return '<div class="sprint-level locked" aria-disabled="true">' +
+            '<span class="sprint-node">' + (i + 1) + '</span>' +
+            '<span class="sprint-level-main"><small>' + esc(t('sprint.level', { n: i + 1 })) + ' · ' + esc(stage.level) + '</small>' +
+            '<b>' + esc(stage.title) + '</b><span class="sprint-stars">☆ ☆ ☆</span>' +
+            '<small class="sprint-best">🔒 ' + esc(t('sprint.locked')) + '</small></span></div>';
+        }
+        return '<a class="sprint-level' + (stars ? ' done' : '') + '" href="#/juegos/sprint/' + esc(stage.id) + '">' +
+          '<span class="sprint-node">' + (i + 1) + '</span>' +
+          '<span class="sprint-level-main"><small>' + esc(t('sprint.level', { n: i + 1 })) + ' · ' + esc(stage.level) + '</small>' +
+          '<b>' + esc(stage.title) + '</b><span class="sprint-stars">' + sprintStars(stars) + '</span>' +
+          '<small class="sprint-best">' + esc(t('sprint.best', { n: best })) + '</small></span>' +
+          '<span class="sprint-level-go">' + (stars ? '↻' : '→') + '</span></a>';
+      }).join('') +
+      '</div>' +
+      '<section class="card sprint-how">' +
+      '  <h2>' + esc(t('sprint.howTitle')) + '</h2>' +
+      '  <div class="sprint-how-grid">' +
+      '    <p>⚡ ' + esc(t('sprint.tip1')) + '</p>' +
+      '    <p>🛡️ ' + esc(t('sprint.tip2')) + '</p>' +
+      '    <p>⭐ ' + esc(t('sprint.tip3')) + '</p>' +
+      '  </div>' +
+      '</section>';
+  }
+
+  function sprintHomeBanner() {
+    ensureSprint();
+    var total = sprintTotalStars();
+    var max = sprintStages().length * 3;
+    var daily = state.sprint.daily;
+    var done = daily.date === todayKey() && daily.done;
+    return '<section class="sprint-banner">' +
+      '<div class="sprint-banner-icon" aria-hidden="true">⚡</div>' +
+      '<div class="sprint-banner-copy">' +
+      '  <span class="eyebrow">' + esc(t('sprint.eyebrow')) + '</span>' +
+      '  <h2>' + esc(t('sprint.title')) + '</h2>' +
+      '  <p>' + esc(t('sprint.homeText')) + '</p>' +
+      '</div>' +
+      '<div class="sprint-banner-side">' +
+      '  <span class="sprint-banner-stars">★ ' + total + '/' + max + '</span>' +
+      '  <span class="sprint-banner-daily">' + esc(done ? t('sprint.todayDone') : t('sprint.todayOpen')) + '</span>' +
+      '  <a class="btn primary" href="#/juegos/sprint">' + esc(t('sprint.playNow')) + '</a>' +
+      '</div>' +
+      '</section>';
+  }
+
+  function renderSprintHub() {
+    sprintRun = null;
+    sprintPaintHub();
+  }
+
+  function sprintPaintQuestion() {
+    if (!sprintRun) return;
+    var run = sprintRun;
+    var q = run.questions[run.index];
+    if (!q) return;
+    var answered = run.answered;
+    var chosen = run.chosen;
+    var pct = Math.round(((run.index + (answered ? 1 : 0)) / run.total) * 100);
+    var typeLabel = q.type === 'listen' ? t('sprint.listenType')
+      : q.type === 'es-no' ? t('sprint.esNoType') : t('sprint.noEsType');
+    var prompt = '';
+    if (q.type === 'listen') {
+      prompt = '<button type="button" class="sprint-audio" data-say="' + esc(q.audio) + '">🔊 ' + esc(t('sprint.listen')) + '</button>';
+    } else if (q.type === 'es-no') {
+      prompt = '<p class="sprint-word" dir="auto">' + esc(q.prompt) + '</p>';
+    } else {
+      prompt = '<p class="sprint-word" lang="nb" dir="ltr">' + esc(q.prompt) + '</p>' +
+        '<div class="sprint-word-audio">' + say(q.audio) + '</div>';
+    }
+    var options = q.options.map(function (opt, i) {
+      var cls = 'sprint-opt';
+      if (answered) {
+        if (opt === q.answer) cls += ' correct';
+        else if (i === chosen) cls += ' wrong';
+      }
+      return '<button type="button" class="' + cls + '" data-sprint-option="' + i + '"' + (answered ? ' disabled' : '') + '>' +
+        '<span class="sprint-key">' + (i + 1) + '</span>' +
+        '<span class="sprint-opt-text" ' + (q.type === 'no-es' ? 'dir="auto"' : 'lang="nb" dir="ltr"') + '>' + esc(opt) + '</span>' +
+        '</button>';
+    }).join('');
+    var feedback = '';
+    if (answered) {
+      var ok = run.wasCorrect;
+      feedback = '<div class="sprint-feedback ' + (ok ? 'ok' : 'bad') + '" role="status" aria-live="polite">' +
+        '<div class="sprint-feedback-copy">' +
+        '  <b>' + esc(ok ? t('sprint.correct') : t('sprint.wrong')) + '</b>' +
+        '  <span>' + esc(t('sprint.answerWas')) + ' <b lang="nb" dir="ltr">' + esc(q.word.no) + '</b> · ' + esc(q.word.es) + '</span>' +
+        '</div>' +
+        (ok ? '<span class="sprint-gain">+' + run.lastGain + ' XP</span>' : '') +
+        '<button type="button" class="sprint-next" data-sprint-next>' +
+        esc(run.index + 1 >= run.total ? t('sprint.seeResult') : t('sprint.next')) + ' →</button>' +
+        '</div>';
+    }
+    var game = document.getElementById('sprint-game');
+    if (!game) return;
+    game.innerHTML =
+      '<div class="sprint-game-top">' +
+      '  <span class="sprint-question-count">' + esc(t('sprint.question', { n: run.index + 1, total: run.total })) + '</span>' +
+      '  <span class="sprint-combo' + (run.combo > 1 ? ' hot' : '') + '">🔥 ' + esc(t('sprint.combo', { n: run.combo })) + '</span>' +
+      '  <span class="sprint-score">✓ ' + run.correct + '/' + run.total + '</span>' +
+      '</div>' +
+      '<div class="sprint-progress"><i style="width:' + pct + '%"></i></div>' +
+      '<div class="sprint-question">' +
+      '  <span class="sprint-type">' + esc(typeLabel) + '</span>' +
+      prompt +
+      '</div>' +
+      '<div class="sprint-options">' + options + '</div>' +
+      feedback;
+  }
+
+  function sprintPaintResults() {
+    if (!sprintRun) return;
+    var run = sprintRun;
+    var isDaily = run.mode === 'daily';
+    var stars = run.stars;
+    var review = run.wrong.length ? '<ul class="sprint-review">' + run.wrong.map(function (q) {
+      return '<li>' + say(q.word.no) + '<b lang="nb" dir="ltr">' + esc(q.word.no) + '</b><span>' + esc(q.word.es) + '</span></li>';
+    }).join('') + '</ul>' : '<p class="muted">' + esc(t('sprint.reviewEmpty')) + '</p>';
+    var next = run.nextStage;
+    var canNext = !!(next && (run.unlockedNext || (Number(state.sprint.stars[run.stageId]) || 0) > 0));
+    var game = document.getElementById('sprint-game');
+    if (!game) return;
+    game.innerHTML =
+      '<div class="sprint-results">' +
+      '  <div class="sprint-results-stars">' +
+      [0, 1, 2].map(function (i) {
+        return '<span class="sprint-star' + (i < stars ? ' on' : '') + '" style="--i:' + i + '">★</span>';
+      }).join('') +
+      '  </div>' +
+      '  <span class="eyebrow">' + esc(t('sprint.finishEyebrow')) + '</span>' +
+      '  <h2>' + esc(isDaily ? t('sprint.dailyTitle') : t('sprint.finishTitle')) + '</h2>' +
+      '  <p>' + esc(t('sprint.finishText', { correct: run.correct, total: run.total })) + '</p>' +
+      '  <div class="sprint-result-stats">' +
+      '    <div><b>' + run.correct + '/' + run.total + '</b><small>' + esc(t('sprint.hits')) + '</small></div>' +
+      '    <div><b>x' + run.bestCombo + '</b><small>' + esc(t('sprint.bestCombo')) + '</small></div>' +
+      '    <div><b>+' + run.xpEarned + '</b><small>XP</small></div>' +
+      '  </div>' +
+      (run.newRecord ? '<p class="sprint-new">✨ ' + esc(t('sprint.newRecord')) + '</p>' : '') +
+      (run.unlockedNext && next ? '<p class="sprint-new">🔓 ' + esc(t('sprint.levelUnlocked', { n: next.num })) + '</p>' : '') +
+      '  <div class="sprint-result-actions">' +
+      '    <button type="button" class="btn primary" data-sprint-again>' + esc(t('sprint.replay')) + '</button>' +
+      (canNext ? '<a class="btn ghost" href="#/juegos/sprint/' + esc(next.id) + '">' + esc(t('sprint.nextLevel')) + '</a>' : '') +
+      '    <a class="btn ghost" href="#/juegos/sprint">' + esc(t('sprint.map')) + '</a>' +
+      '  </div>' +
+      '  <div class="sprint-review-box"><h3>' + esc(t('sprint.reviewTitle')) + '</h3>' + review + '</div>' +
+      '</div>';
+    sprintConfetti(true);
+    sprintSfx('finish');
+  }
+
+  function sprintPaint() {
+    if (!sprintRun) return;
+    if (sprintRun.done) sprintPaintResults();
+    else sprintPaintQuestion();
+  }
+
+  function sprintFinish() {
+    if (!sprintRun || sprintRun.done) return;
+    var run = sprintRun;
+    var stars = run.correct >= 9 ? 3 : run.correct >= 7 ? 2 : run.correct >= 5 ? 1 : 0;
+    var next = null;
+    var unlocked = false;
+    if (run.mode === 'stage') {
+      var stages = sprintStages();
+      var pos = stages.findIndex(function (s) { return s.id === run.stageId; });
+      next = pos > -1 ? stages[pos + 1] || null : null;
+      var prevStars = Number(state.sprint.stars[run.stageId]) || 0;
+      var prevBest = Number(state.sprint.best[run.stageId]) || 0;
+      run.newRecord = run.correct > prevBest;
+      unlocked = !!(next && stars > 0 && prevStars === 0);
+      state.sprint.stars[run.stageId] = Math.max(prevStars, stars);
+      state.sprint.best[run.stageId] = Math.max(prevBest, run.correct);
+      if (stars > prevStars) {
+        run.bonus = stars === 3 ? 60 : stars === 2 ? 40 : 20;
+        addXp(run.bonus);
+        run.xpEarned += run.bonus;
+      }
+    } else {
+      var daily = state.sprint.daily;
+      var first = !daily.done || daily.date !== todayKey();
+      run.newRecord = run.correct > (Number(daily.best) || 0);
+      daily.date = todayKey();
+      daily.best = Math.max(Number(daily.best) || 0, run.correct);
+      daily.done = true;
+      if (first) {
+        run.bonus = 40;
+        addXp(run.bonus);
+        run.xpEarned += run.bonus;
+      }
+    }
+    state.sprint.played += 1;
+    markDay();
+    save();
+    refreshHud();
+    run.stars = stars;
+    run.nextStage = next;
+    run.unlockedNext = unlocked;
+    run.done = true;
+    sprintPaint();
+  }
+
+  function sprintAnswer(i) {
+    if (!sprintRun || sprintRun.done || sprintRun.answered) return;
+    var run = sprintRun;
+    var q = run.questions[run.index];
+    if (!q || q.options[i] === undefined) return;
+    if (window.TTS) window.TTS.stop();
+    run.chosen = i;
+    run.answered = true;
+    run.wasCorrect = q.options[i] === q.answer;
+    if (run.wasCorrect) {
+      run.correct += 1;
+      run.combo += 1;
+      if (run.combo > run.bestCombo) run.bestCombo = run.combo;
+      run.lastGain = 5 + Math.min(5, Math.max(0, run.combo - 1));
+      run.xpEarned += run.lastGain;
+      addXp(run.lastGain);
+      sprintSfx('correct', run.combo);
+      sprintVibrate(10);
+    } else {
+      run.combo = 0;
+      run.lastGain = 0;
+      run.wrong.push(q);
+      sprintSfx('wrong');
+      sprintVibrate(30);
+    }
+    if (!run.marked) { markDay(); run.marked = true; }
+    save();
+    refreshHud();
+    sprintPaint();
+    if (run.wasCorrect) sprintConfetti(false);
+  }
+
+  function sprintNext() {
+    if (!sprintRun || sprintRun.done || !sprintRun.answered) return;
+    if (sprintRun.index + 1 >= sprintRun.total) {
+      sprintFinish();
+      return;
+    }
+    sprintRun.index += 1;
+    sprintRun.answered = false;
+    sprintRun.chosen = -1;
+    sprintRun.wasCorrect = false;
+    sprintRun.lastGain = 0;
+    sprintPaint();
+  }
+
+  function sprintAgain() {
+    if (!sprintRun) return;
+    var id = sprintRun.stageId;
+    sprintStart(id);
+  }
+
+  function sprintStart(stageId) {
+    ensureSprint();
+    var daily = stageId === 'diario';
+    var stage = daily ? null : sprintStageById(stageId);
+    if (!daily && !stage) return;
+    if (!daily) {
+      var stages = sprintStages();
+      var pos = stages.findIndex(function (s) { return s.id === stage.id; });
+      if (!sprintUnlocked(pos, stages)) return;
+    }
+    sprintRun = sprintBuildRun(stage, daily);
+    sprintBindKeys();
+    sprintPaint();
+  }
+
+  function sprintKeyDown(e) {
+    if (!sprintRun || sprintRun.done) return;
+    if (!sprintRun.answered && /^[1-4]$/.test(e.key)) {
+      e.preventDefault();
+      sprintAnswer(Number(e.key) - 1);
+    } else if (sprintRun.answered && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      sprintNext();
+    }
+  }
+
+  function sprintBindKeys() {
+    if (sprintKeyHandler) document.removeEventListener('keydown', sprintKeyHandler);
+    sprintKeyHandler = sprintKeyDown;
+    document.addEventListener('keydown', sprintKeyHandler);
+  }
+
+  function sprintStop() {
+    sprintRun = null;
+    if (sprintKeyHandler) {
+      document.removeEventListener('keydown', sprintKeyHandler);
+      sprintKeyHandler = null;
+    }
+  }
+
+  function renderSprintGame(stageId) {
+    ensureSprint();
+    var daily = stageId === 'diario';
+    var stage = daily ? null : sprintStageById(stageId);
+    if (!daily && !stage) { renderSprintHub(); return; }
+    if (!daily) {
+      var stages = sprintStages();
+      var pos = stages.findIndex(function (s) { return s.id === stage.id; });
+      if (!sprintUnlocked(pos, stages)) {
+        app.innerHTML = '<div class="crumbs"><a href="#/">' + esc(t('crumb.home')) + '</a> <span>›</span> <a href="#/juegos">' + esc(t('games.title')) + '</a> <span>›</span> <a href="#/juegos/sprint">Norsk Sprint</a></div>' +
+          '<section class="card sprint-locked"><div class="sprint-lock-icon" aria-hidden="true">🔒</div><h1>' + esc(t('sprint.lockedTitle')) + '</h1><p>' + esc(t('sprint.lockedText')) + '</p><a class="btn primary" href="#/juegos/sprint">' + esc(t('sprint.backGames')) + '</a></section>';
+        return;
+      }
+    }
+    var title = daily ? t('sprint.dailyTitle') : stage.title;
+    app.innerHTML =
+      '<div class="crumbs"><a href="#/">' + esc(t('crumb.home')) + '</a> <span>›</span> <a href="#/juegos">' + esc(t('games.title')) + '</a> <span>›</span> <a href="#/juegos/sprint">Norsk Sprint</a> <span>›</span> <span>' + esc(title) + '</span></div>' +
+      '<div class="sprint-play-head">' +
+      '  <a class="sprint-exit" href="#/juegos/sprint">← ' + esc(t('sprint.exit')) + '</a>' +
+      '  <span class="sprint-play-title">' + esc(title) + '</span>' +
+      '  ' + sprintSoundHTML() +
+      '</div>' +
+      '<section class="sprint-shell">' +
+      '  <div id="sprint-game"></div>' +
+      '  <div class="sprint-confetti" id="sprint-confetti" aria-hidden="true"></div>' +
+      '</section>';
+    var board = document.getElementById('sprint-game');
+    if (board) {
+      board.addEventListener('click', function (e) {
+        var opt = e.target.closest('[data-sprint-option]');
+        if (opt) { sprintAnswer(Number(opt.getAttribute('data-sprint-option'))); return; }
+        if (e.target.closest('[data-sprint-next]')) { sprintNext(); return; }
+        if (e.target.closest('[data-sprint-again]')) { sprintAgain(); return; }
+      });
+    }
+    sprintStart(stageId);
+  }
+
   function renderGames() {
     var h = state.games.hukommelse;
     var played = (h.easy.played || 0) + (h.medium.played || 0) + (h.hard.played || 0);
@@ -2737,7 +3404,14 @@
       '    <div class="game-card-stats"><span>' + (state.games.kryssord.solved || 0) + ' ' + esc(tp('crossword.solvedCount', state.games.kryssord.solved || 0)) + '</span></div>' +
       '    <span class="btn primary">' + esc(t('games.play')) + '</span>' +
       '  </a>' +
-      '  <div class="game-card soon"><span class="game-emoji">⚡</span><h2>' + esc(t('games.phraseTitle')) + '</h2><p>' + esc(t('games.soonText')) + '</p><span class="chip plain">' + esc(t('games.soon')) + '</span></div>' +
+      '  <a class="game-card live" href="#/juegos/sprint">' +
+      '    <span class="game-emoji">⚡</span>' +
+      '    <span class="chip done">' + esc(t('games.live')) + '</span>' +
+      '    <h2>' + esc(t('games.sprintTitle')) + '</h2>' +
+      '    <p>' + esc(t('games.sprintText')) + '</p>' +
+      '    <div class="game-card-stats"><span>★ ' + sprintTotalStars() + '/' + (sprintStages().length * 3) + '</span><span>' + esc(t('sprint.played', { n: state.sprint.played })) + '</span></div>' +
+      '    <span class="btn primary">' + esc(t('games.play')) + '</span>' +
+      '  </a>' +
       '  <div class="game-card soon"><span class="game-emoji">🔍</span><h2>' + esc(t('games.errorTitle')) + '</h2><p>' + esc(t('games.soonText')) + '</p><span class="chip plain">' + esc(t('games.soon')) + '</span></div>' +
       '</div>';
   }
@@ -4836,6 +5510,7 @@
       '</section>' +
       dailyPlanHTML() +
       weeklyMissionsHTML() +
+      sprintHomeBanner() +
 
       '<div class="practice-strip">' +
       '  <a class="practice-chip" href="#/nivel"><b>🎯 ' + esc(t('home.testChip')) + '</b><span>' + esc(t('home.testChipSub')) + '</span></a>' +
@@ -6962,6 +7637,7 @@
 
     if (window.TTS) window.TTS.stop();
     pronStopRecognition();
+    sprintStop();
     if (window.__robinson3d) { try { window.__robinson3d(); } catch (e) { /* ya destruido */ } window.__robinson3d = null; }
     if (wordle) wordle.active = false;
     if (memoryGame) { memoryStop(); memoryGame.active = false; }
@@ -7037,6 +7713,10 @@
     } else if (name === 'juegos') {
       if (arg === 'hukommelse') renderMemory('easy');
       else if (arg === 'kryssord') renderCrossword();
+      else if (arg === 'sprint') {
+        if (parts[2]) renderSprintGame(parts[2]);
+        else renderSprintHub();
+      }
       else renderGames();
     } else if (name === 'gramatica') {
       if (arg) renderGrammarTopic(grammarTopic(arg));
@@ -7081,6 +7761,11 @@
      ======================================================= */
 
   document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-sprint-sound]')) {
+      e.preventDefault();
+      sprintToggleSound();
+      return;
+    }
     if (e.target.closest('[data-skip]')) {
       e.preventDefault();
       app.focus();
