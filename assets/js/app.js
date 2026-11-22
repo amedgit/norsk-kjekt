@@ -4073,35 +4073,44 @@
     var pct = Math.round((done / total) * 100);
     var nl = nextLesson();
     var w = wordOfDay();
+    var coreTotal = CORE.packs.reduce(function (n, p) { return n + (p.words ? p.words.length : 0); }, 0);
 
     app.innerHTML =
-      '<section class="hero">' +
+      '<section class="hero hero-v2">' +
       '  <div class="hero-text">' +
       '    <span class="eyebrow">' + esc(t('home.eyebrow')) + '</span>' +
       '    <h1>' + t('home.title') + '</h1>' +
       '    <p>' + esc(t('home.intro', {
         lessons: LESSONS.length,
         exercises: totalExerciseCount(),
-        packs: COURSE.fun.packs.length,
-        words: COURSE.wordbank.length
+        core: coreTotal,
+        verbs: VERBOS.items.length
       })) + '</p>' +
       '    <div class="hero-actions">' +
       '      <a class="btn primary" href="#/leksjon/' + nl.id + '">' + esc(done ? t('home.continue') : t('home.start')) + ' · ' + esc(nl.title) + '</a>' +
       '      <a class="btn ghost" href="#/samtaler">' + esc(t('nav.dialogues')) + '</a>' +
       '      <a class="btn ghost" href="#/app">' + esc(t('home.appButton')) + '</a>' +
-      '      <a class="btn ghost" href="#/tull">' + esc(t('nav.fun')) + '</a>' +
-      '      <a class="btn ghost" href="#/coloquial">' + esc(t('home.street')) + '</a>' +
       '    </div>' +
+      '    <div class="hero-chips">' +
+      '      <a href="#/lecciones">' + esc(t('nav.lessons')) + '</a>' +
+      '      <a href="#/kjerneord">' + esc(t('nav.core')) + '</a>' +
+      '      <a href="#/historien">' + esc(t('nav.story')) + '</a>' +
+      '      <a href="#/verbos">' + esc(t('nav.verbos')) + '</a>' +
+      '      <a href="#/flashcards">' + esc(t('nav.flashcards')) + '</a>' +
+      '    </div>' +
+      '    <p class="hero-trust">✓ ' + esc(t('home.heroTrust')) + '</p>' +
       '  </div>' +
       '  <aside class="hero-card">' +
       '    <div><h3>' + esc(t('home.streak')) + '</h3><div class="big-num">' + currentStreak() + ' <small>' + esc(tp('home.days', currentStreak())) + '</small></div></div>' +
       '    <div><h3>' + esc(t('home.lessons')) + '</h3><div class="big-num">' + done + ' <small>' + esc(t('home.of', { n: total })) + '</small></div>' +
       '      <div class="meter" style="margin-top:.5rem"><i style="width:' + pct + '%"></i></div></div>' +
+      '    <div><h3>' + esc(t('home.coreStat')) + '</h3><div class="big-num">' + coreTotal + ' <small>' + esc(t('home.coreStatSub')) + '</small></div></div>' +
       '    <div class="wotd">' +
       '      <div class="w-label">' + esc(t('home.wordOfDay')) + '</div>' +
       '      <div class="w-no">' + esc(w.no) + ' ' + say(w.no) + '</div>' +
       '      <div class="w-es">' + esc(w.es) + '</div>' +
       '    </div>' +
+      '    <a class="hero-card-link" href="#/flashcards">' + esc(t('flash.studyPack')) + ' →</a>' +
       '  </aside>' +
       '</section>' +
 
