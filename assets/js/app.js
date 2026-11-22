@@ -63,7 +63,7 @@
   var KEY = 'norsk-kjekt-v1';
 
   function defaults() {
-    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, body: {}, core: { known: {}, packs: {} }, stories: { chapters: {} }, robinson: { chapters: {} }, a0: { best: 0, total: 0, at: 0 }, grammar: { topics: {} }, verbos: { known: {}, best: { best: 0, total: 0, at: 0 }, packs: {} }, games: { dagensOrd: { date: '', guesses: [], status: 'playing', played: 0, wins: 0, streak: 0, best: 0, lastWin: '', distribution: [0, 0, 0, 0, 0, 0] }, hukommelse: { easy: { played: 0, bestMoves: 0, bestTime: 0 }, medium: { played: 0, bestMoves: 0, bestTime: 0 }, hard: { played: 0, bestMoves: 0, bestTime: 0 } }, kryssord: { solved: 0 } }, xp: 0, days: {}, review: [], srs: {}, version: 1 };
+    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, body: {}, core: { known: {}, packs: {} }, stories: { chapters: {} }, robinson: { chapters: {} }, a0: { best: 0, total: 0, at: 0 }, grammar: { topics: {} }, verbos: { known: {}, best: { best: 0, total: 0, at: 0 }, packs: {} }, games: { dagensOrd: { date: '', guesses: [], status: 'playing', played: 0, wins: 0, streak: 0, best: 0, lastWin: '', distribution: [0, 0, 0, 0, 0, 0] }, hukommelse: { easy: { played: 0, bestMoves: 0, bestTime: 0 }, medium: { played: 0, bestMoves: 0, bestTime: 0 }, hard: { played: 0, bestMoves: 0, bestTime: 0 } }, kryssord: { solved: 0 } }, daily: { date: '', xp: 0, goal: 100 }, xp: 0, days: {}, review: [], srs: {}, version: 1 };
   }
 
   var state = (function load() {
@@ -210,6 +210,7 @@
         srs: srs,
         exams: raw.exams && typeof raw.exams === 'object' ? raw.exams : {},
         xp: Number(raw.xp) || 0,
+        daily: raw.daily && typeof raw.daily === 'object' ? raw.daily : d.daily,
         days: raw.days && typeof raw.days === 'object' ? raw.days : d.days,
         review: Array.isArray(raw.review) ? raw.review.filter(function (s) { return typeof s === 'string'; }) : d.review,
         version: 1
@@ -218,6 +219,8 @@
       return defaults();
     }
   })();
+
+  ensureDaily();
 
   function save() {
     try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* modo privado */ }
@@ -232,6 +235,22 @@
     var k = todayKey();
     var v = state.days[k];
     state.days[k] = typeof v === 'number' ? v + 1 : (v ? 2 : 1);
+  }
+
+  function ensureDaily() {
+    var today = todayKey();
+    var goal = state.daily && [50, 100, 150].indexOf(Number(state.daily.goal)) > -1 ? Number(state.daily.goal) : 100;
+    if (!state.daily || state.daily.date !== today) {
+      state.daily = { date: today, xp: 0, goal: goal };
+    } else {
+      state.daily.goal = goal;
+    }
+  }
+
+  function addXp(n) {
+    ensureDaily();
+    state.xp += Number(n) || 0;
+    state.daily.xp += Number(n) || 0;
   }
 
   function currentStreak() {
@@ -1358,7 +1377,7 @@
             total: res.total,
             at: Date.now()
           };
-          state.xp += res.correct * 10;
+          addXp(res.correct * 10);
           markDay();
 
           var failedItems = res.failed;
@@ -1602,7 +1621,7 @@
             total: res.total,
             at: Date.now()
           };
-          state.xp += res.correct * 10;
+          addXp(res.correct * 10);
           markDay();
 
           var failedItems = res.failed;
@@ -1720,7 +1739,7 @@
             total: res.total,
             at: Date.now()
           };
-          state.xp += res.correct * 10;
+          addXp(res.correct * 10);
           markDay();
           var failedItems = res.failed;
           A0.exercises.forEach(function (item, i) {
@@ -1878,7 +1897,7 @@
         };
         if (all) state.verbos.best = result;
         else state.verbos.packs[scope] = result;
-        state.xp += res.correct * 10;
+        addXp(res.correct * 10);
         markDay();
         save();
         refreshHud();
@@ -2199,13 +2218,13 @@
       e.due = addDays(30);
       state.core.known[w.id] = true;
       s.known++;
-      state.xp += 5;
+      addXp(5);
     } else {
       var days = SRS_DAYS[Math.min(e.step, SRS_DAYS.length - 1)];
       e.step = Math.min(e.step + 1, SRS_DAYS.length - 1);
       e.due = addDays(days);
       s.good++;
-      state.xp += 5;
+      addXp(5);
       if (e.step >= 3) state.core.known[w.id] = true;
     }
     state.srs[sig] = e;
@@ -2336,7 +2355,7 @@
             total: res.total,
             at: Date.now()
           };
-          state.xp += res.correct * 10;
+          addXp(res.correct * 10);
           markDay();
           topic.exercises.forEach(function (item, i) {
             var sig = 'grammar#' + topic.id + '#' + i;
@@ -2942,7 +2961,7 @@
       if (!crosswordGame.solved) {
         crosswordGame.solved = true;
         state.games.kryssord.solved = (state.games.kryssord.solved || 0) + 1;
-        state.xp += 50;
+        addXp(50);
         markDay();
         save();
         refreshHud();
@@ -3736,7 +3755,7 @@
             total: res.total,
             at: Date.now()
           };
-          state.xp += res.correct * 10;
+          addXp(res.correct * 10);
           markDay();
 
           if (!isMix) {
@@ -3892,7 +3911,7 @@
           total: 10,
           at: Date.now()
         };
-        state.xp += res.correct * 10;
+        addXp(res.correct * 10);
         markDay();
         save();
         refreshHud();
@@ -4067,6 +4086,82 @@
     });
   }
 
+
+  function planDayIndex() {
+    var d = new Date();
+    var start = new Date(d.getFullYear(), 0, 0);
+    return Math.floor((d - start) / 86400000);
+  }
+
+  function dailyPlanHTML() {
+    ensureDaily();
+    var day = planDayIndex();
+    var goal = state.daily.goal;
+    var xp = state.daily.xp;
+    var pct = Math.min(100, Math.round((xp / goal) * 100));
+    var topics = GRAMMAR.topics || [];
+    var stories = storyLive();
+    var packs = flashPacks();
+    var g = topics.length ? topics[day % topics.length] : null;
+    var st = stories.length ? stories[day % stories.length] : null;
+    var pk = packs.length ? packs[day % packs.length] : null;
+    var done = xp >= goal;
+    function planCard(href, icon, title, text) {
+      return '<a class="plan-card" href="' + href + '">' +
+        '<span class="plan-icon">' + icon + '</span>' +
+        '<span class="plan-body"><b>' + esc(title) + '</b><small>' + esc(text) + '</small></span>' +
+        '<span class="plan-arrow">→</span></a>';
+    }
+    return '<section class="card daily-plan">' +
+      '<div class="daily-ring' + (done ? ' done' : '') + '" id="daily-ring" dir="ltr" role="progressbar" aria-valuemin="0" aria-valuemax="' + goal + '" aria-valuenow="' + xp + '" aria-label="' + esc(t('plan.title')) + '" style="--pct:' + pct + '">' +
+      '  <span><b id="daily-xp">' + xp + '</b><small id="daily-goal">/ ' + goal + ' XP</small></span></div>' +
+      '<div class="daily-copy">' +
+      '  <span class="eyebrow">' + esc(t('plan.eyebrow')) + '</span>' +
+      '  <h2>' + esc(t('plan.title')) + '</h2>' +
+      '  <p>' + esc(t('plan.intro')) + '</p>' +
+      '  <div class="goal-options" id="daily-goals">' +
+      [50, 100, 150].map(function (g2) {
+        return '<button type="button" class="' + (goal === g2 ? 'active' : '') + '" data-daily-goal="' + g2 + '" aria-pressed="' + (goal === g2 ? 'true' : 'false') + '">' + esc(t('plan.goalOption', { n: g2 / 10 })) + '</button>';
+      }).join('') +
+      '  </div>' +
+      '</div>' +
+      '<div class="plan-cards">' +
+      (pk ? planCard('#/flashcards/' + pk.id, '🧠', t('flash.title'), pk.title + ' · ' + t('plan.flashText')) : '') +
+      (g ? planCard('#/gramatica/' + g.id, '📘', t('plan.grammarTitle'), g.title + ' · ' + t('plan.grammarText')) : '') +
+      (st ? planCard('#/historien/' + st.id, '📖', t('plan.storyTitle'), t('story.chapter', { n: st.num }) + ' · ' + st.title) : '') +
+      '</div></section>';
+  }
+
+  function bindDailyPlan() {
+    var box = document.getElementById('daily-goals');
+    if (!box) return;
+    box.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-daily-goal]');
+      if (!b) return;
+      ensureDaily();
+      state.daily.goal = Number(b.getAttribute('data-daily-goal')) || 100;
+      save();
+      box.querySelectorAll('[data-daily-goal]').forEach(function (x) {
+        x.classList.toggle('active', x === b);
+        x.setAttribute('aria-pressed', x === b ? 'true' : 'false');
+      });
+      var xp = state.daily.xp;
+      var goal = state.daily.goal;
+      var pct = Math.min(100, Math.round((xp / goal) * 100));
+      var ring = document.getElementById('daily-ring');
+      if (ring) {
+        ring.style.setProperty('--pct', String(pct));
+        ring.classList.toggle('done', xp >= goal);
+        ring.setAttribute('aria-valuemax', String(goal));
+        ring.setAttribute('aria-valuenow', String(xp));
+      }
+      var xpEl = document.getElementById('daily-xp');
+      var goalEl = document.getElementById('daily-goal');
+      if (xpEl) xpEl.textContent = xp;
+      if (goalEl) goalEl.textContent = '/ ' + goal + ' XP';
+    });
+  }
+
   function renderHome() {
     var done = completedCount();
     var total = LESSONS.length;
@@ -4113,6 +4208,7 @@
       '    <a class="hero-card-link" href="#/flashcards">' + esc(t('flash.studyPack')) + ' →</a>' +
       '  </aside>' +
       '</section>' +
+      dailyPlanHTML() +
 
       '<div class="practice-strip">' +
       '  <a class="practice-chip" href="#/nivel"><b>🎯 ' + esc(t('home.testChip')) + '</b><span>' + esc(t('home.testChipSub')) + '</span></a>' +
@@ -4224,6 +4320,7 @@
       '<div class="actions" style="margin-top:1rem"><a class="btn ghost" href="#/coloquial">' +
       esc(tp('home.seeExpressions', COURSE.colloquial.length)) + '</a></div>';
 
+    bindDailyPlan();
     refreshInstallUI();
   }
 
@@ -4571,7 +4668,7 @@
             total: res.total,
             at: Date.now()
           };
-          state.xp += res.correct * 10;
+          addXp(res.correct * 10);
           markDay();
           BODY.exercises.forEach(function (_, i) {
             var sig = 'body#' + i;
@@ -4893,7 +4990,7 @@
         onExit: renderLevelTest,
         onDone: function (res) {
           markDay();
-          state.xp += res.correct * 5;
+          addXp(res.correct * 5);
           save();
           refreshHud();
 
@@ -5078,7 +5175,7 @@
       onExit: function () { renderTrainer(mode); },
       onDone: function (res) {
         markDay();
-        state.xp += res.correct * 5;
+        addXp(res.correct * 5);
         save();
         refreshHud();
         var box = mount.querySelector('.result');
@@ -5198,7 +5295,7 @@
             total: res.total,
             at: Date.now()
           };
-          state.xp += res.correct * 10;
+          addXp(res.correct * 10);
           markDay();
 
           var failedIds = res.failed.map(function (it) { return d.exercises.indexOf(it); });
@@ -5394,7 +5491,7 @@
             total: res.total,
             at: Date.now()
           };
-          state.xp += res.correct * 10;
+          addXp(res.correct * 10);
           markDay();
 
           var failedIds = res.failed.map(function (it) { return lesson.exercises.indexOf(it); });
@@ -5619,7 +5716,7 @@
             else srsFail(e.sig);
           });
           markDay();
-          state.xp += res.correct * 5;
+          addXp(res.correct * 5);
           save();
           refreshHud();
           var b = box.querySelector('.result');
@@ -6105,7 +6202,7 @@
         writing: sum.writing,
         speaking: sum.speaking
       };
-      state.xp += xp;
+      addXp(xp);
       markDay();
       save();
       refreshHud();
