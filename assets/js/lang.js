@@ -15,7 +15,7 @@
   var UI = {
     es: {
       'meta.title': 'Norsk Kjekt — curso de noruego gratis A0–C2',
-      'meta.description': 'Curso de noruego bokmål A0–C2 gratis: 357 ejercicios, A0 desde cero, gramática A0–B2, 900 palabras, 100 verbos, Robinson Crusoe adaptado, 7 conversaciones y simulacros. Sin registro.',
+      'meta.description': 'Curso de noruego bokmål A0–C2 gratis: 357 ejercicios, A0 desde cero, gramática A0–B2, 900 palabras, 200 verbos, Robinson Crusoe adaptado, 7 conversaciones y simulacros. Sin registro.',
       'meta.ogDescription': '15 lecciones de bokmål (A1–C2), 357 ejercicios, 7 conversaciones con audio, 4 grupos de WhatsApp, 6 packs de humor, 30 expresiones de la calle y 4 simulacros de examen. Sin registro y sin build.',
       'meta.ogAlt': 'Norsk Kjekt: portal de noruego con ejercicios interactivos',
       'skip': 'Saltar al contenido',
@@ -270,7 +270,7 @@
       'grammar.all': 'Todos los temas',
       'grammar.end': 'Fin de A0–B2',
       'verbos.eyebrow': 'Verbos · A1–B2',
-      'verbos.title': '100 verbos esenciales',
+      'verbos.title': '200 verbos esenciales',
       'verbos.intro': 'Los verbos más útiles para el día a día, con presente, pasado, perfecto, imperativo y una frase de ejemplo. En noruego la misma forma sirve para todas las personas.',
       'verbos.search': 'Buscar verbo...',
       'verbos.all': 'Todos',
@@ -883,7 +883,7 @@
 
     en: {
       'meta.title': 'Norsk Kjekt — free Norwegian course A0–C2',
-      'meta.description': 'Free Norwegian bokmål course A0–C2: 352 exercises, A0 from scratch, grammar A0–B2, 900 words, 100 verbs, an adapted Robinson Crusoe, 7 conversations and mock exams. No sign-up.',
+      'meta.description': 'Free Norwegian bokmål course A0–C2: 357 exercises, A0 from scratch, grammar A0–B2, 900 words, 200 verbs, an adapted Robinson Crusoe, 7 conversations and mock exams. No sign-up.',
       'meta.ogDescription': '15 bokmål lessons (A1–C2), 357 interactive exercises, 7 conversations with audio, 4 WhatsApp groups, 6 humour packs, 30 street expressions and 4 mock exams. No sign-up, no build.',
       'meta.ogAlt': 'Norsk Kjekt: a Norwegian portal with interactive exercises',
       'skip': 'Skip to content',
@@ -1138,7 +1138,7 @@
       'grammar.all': 'All topics',
       'grammar.end': 'End of A0–B2',
       'verbos.eyebrow': 'Verbs · A1–B2',
-      'verbos.title': '100 essential verbs',
+      'verbos.title': '200 essential verbs',
       'verbos.intro': 'The most useful everyday verbs, with present, past, perfect, imperative and an example sentence. In Norwegian the same form works for all persons.',
       'verbos.search': 'Search verbs...',
       'verbos.all': 'All',
@@ -1752,8 +1752,8 @@
 
     fa: {
       'meta.title': "Norsk Kjekt — دورهٔ رایگان نروژی A0–C2",
-      'meta.description': "دورهٔ رایگان نروژی بوکمول A0–C2: ۲۷۲ تمرین، A0 از صفر، ۸۰۰ واژه، داستان با صدا، ۷ گفت‌وگو و آزمون آزمایشی. بدون ثبت‌نام.",
-      'meta.ogDescription': "۱۵ درس بوکمول (A1–C2)، ۲۳۹ تمرین تعاملی، ۶ گفت‌وگو با صدا، ۴ گروه واتساپ، ۶ بسته طنز، ۳۰ اصطلاح خیابانی و ۴ آزمون آزمایشی. بدون ثبت‌نام و بدون build.",
+      'meta.description': "دورهٔ رایگان نروژی بوکمول A0–C2: ۳۵۷ تمرین، A0 از صفر، دستور زبان A0–B2، ۹۰۰ واژه، ۲۰۰ فعل، رابینسون کروزوئه بازنویسی‌شده، ۷ گفت‌وگو و آزمون آزمایشی. بدون ثبت‌نام.",
+      'meta.ogDescription': "۱۵ درس بوکمول (A1–C2)، ۳۵۷ تمرین تعاملی، ۷ گفت‌وگو با صدا، ۴ گروه واتساپ، ۶ بسته طنز، ۳۰ اصطلاح خیابانی و ۴ آزمون آزمایشی. بدون ثبت‌نام و بدون build.",
       'meta.ogAlt': "Norsk Kjekt: پرتال نروژی با تمرین‌های تعاملی",
       'skip': "پرش به محتوا",
       'nav.primary': "اصلی",
@@ -2001,7 +2001,7 @@
       'grammar.all': "همهٔ موضوع‌ها",
       'grammar.end': "پایان A0–B2",
       'verbos.eyebrow': "فعل‌ها · A1–B2",
-      'verbos.title': "۱۰۰ فعل ضروری",
+      'verbos.title': "۲۰۰ فعل ضروری",
       'verbos.intro': "پرکاربردترین فعل‌های روزمره با زمان حال، گذشته، کامل، امری و یک جملهٔ مثال. در نروژی یک شکل برای همهٔ شخص‌ها به کار می‌رود.",
       'verbos.search': "جست‌وجوی فعل...",
       'verbos.all': "همه",

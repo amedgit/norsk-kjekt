@@ -3,7 +3,7 @@
 **Publicado:** <https://norskkjekt.com/>
 
 Portal para practicar noruego **bokmål** (A1–C2): textos cortos, ejercicios
-interactivos, una sección A0, una referencia de gramática A0–B2, 100 verbos
+interactivos, una sección A0, una referencia de gramática A0–B2, 200 verbos
 esenciales, una historia serializada en seis capítulos, Robinson Crusoe
 adaptado, siete conversaciones cotidianas con audio, cuatro grupos de WhatsApp noruego, seis packs de humor,
 tablas de palabras y verbos, una sección de noruego coloquial y **cuatro
@@ -81,7 +81,7 @@ cacheada.
 | Samtaler | 7 conversaciones cotidianas (A2–B1: portal, cafetería, restaurante, tienda, trabajo, médico y teléfono) con 66 réplicas, audio por línea, traducciones plegables, vocabulario, frases y 35 ejercicios |
 | A0 | Sección `#/a0` para empezar desde cero: alfabeto, vocales, consonantes, pronunciación, primeras frases y 8 ejercicios |
 | Gramática | Referencia `#/gramatica` A0–B2: 30 temas con reglas, ejemplos con audio, errores típicos y 60 ejercicios |
-| Verbos | 100 verbos esenciales con presente, pasado, perfecto, imperativo, ejemplo, audio y progreso |
+| Verbos | 200 verbos esenciales con presente, pasado, perfecto, imperativo, ejemplo, audio y progreso |
 | Robinson | «Robinson Crusoe»: adaptación propia del clásico de 1719, tres capítulos abiertos con escenas 3D, ilustraciones, audio, vocabulario, gramática y 5 ejercicios cada uno |
 | Juegos | **Hukommelse**: juego de memoria con parejas de palabras y traducciones, tres niveles, audio, contador de movimientos y tiempo |
 | Historia | «Lucía i Oslo»: 6 capítulos piloto (A2–B1) de la serie de 12, con 7 párrafos cada uno, audio por párrafo y del capítulo completo, traducción plegable, 15 palabras, gramática y 5 ejercicios por capítulo |
@@ -97,7 +97,7 @@ cacheada.
 | Progreso | racha, XP, mapa de calor de 12 semanas, 8 logros, repaso espaciado (1/3/7/15/30 días) y exportación/importación del progreso en JSON |
 | Extras | temas claro/oscuro/sepia, teclado noruego æ ø å en los ejercicios de escritura y PWA offline |
 | Velocidad | selector 0,5×–1,3× en la cabecera; empieza en 0,85×, se aplica al audio y se recuerda |
-| Audio | 2955 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
+| Audio | 3527 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
 | App | PWA instalable (offline) con icono propio, pantalla completa y funcionamiento sin conexión; el APK está retirado temporalmente |
 
 ## Interfaz en español, inglés o persa
@@ -170,7 +170,7 @@ norsk/
     ├── img/lessons/*.svg ← una ilustración original por lección
     ├── img/dialogues/*.svg ← una ilustración por conversación
     ├── img/robinson/*.svg ← una ilustración por párrafo de Robinson
-    ├── audio/*.mp3      ← 2955 audios (≈31,7 MB), generados
+    ├── audio/*.mp3      ← 3527 audios (≈35,7 MB), generados
     ├── vendor/three.module.min.js ← Three.js r160 (MIT), solo para la escena 3D
     └── js/
         ├── data.js          ← TODO el contenido del curso, Samtaler y los 4 simulacros
@@ -328,7 +328,7 @@ actualiza el sitemap, enlázala desde `/guias/` y desde el pie de la app.
 
 ### Verbos esenciales
 
-La sección `#/verbos` reúne 100 verbos de uso diario en 10 temas. En noruego no
+La sección `#/verbos` reúne 200 verbos de uso diario en 10 temas. En noruego no
 hay conjugación por persona, así que cada verbo muestra sus formas clave:
 
 - infinitivo, presente, pasado, perfecto e imperativo;
