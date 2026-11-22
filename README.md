@@ -83,7 +83,7 @@ cacheada.
 | Gramática | Referencia `#/gramatica` A0–B2: 30 temas con reglas, ejemplos con audio, errores típicos y 60 ejercicios |
 | Verbos | 200 verbos esenciales con presente, pasado, perfecto, imperativo, ejemplo, audio y progreso |
 | Robinson | «Robinson Crusoe»: adaptación propia del clásico de 1719, tres capítulos abiertos con escenas 3D, ilustraciones, audio, vocabulario, gramática y 5 ejercicios cada uno |
-| Juegos | **Hukommelse**: juego de memoria con parejas de palabras y traducciones, tres niveles, audio, contador de movimientos y tiempo |
+| Juegos | **Hukommelse**: parejas de palabras y traducciones, tres niveles, audio y tiempos. **Crucigrama**: vocabulario noruego generado, pistas, comprobación, pista y nuevo puzzle |
 | Historia | «Lucía i Oslo»: 6 capítulos piloto (A2–B1) de la serie de 12, con 7 párrafos cada uno, audio por párrafo y del capítulo completo, traducción plegable, 15 palabras, gramática y 5 ejercicios por capítulo |
 | Kjerneord | Núcleo de 1000 palabras y frases en 10 paquetes de 100; los paquetes 1 a 9 (900 palabras: supervivencia, vida diaria, personas y planes, salud y cuerpo, trabajo y trámites, ciudad y viajes, conectores y matices, opiniones y debate, cultura y sociedad) ya están disponibles con audio, filtros y test |
 | Meldinger | 4 grupos de WhatsApp (A2–B1: vecinos, familia, amigos y trabajo) con 48 mensajes en formato chat, audio por mensaje, traducción, glosario de abreviaturas y truco cultural |
@@ -295,16 +295,23 @@ y `exercises` (los mismos tipos que las lecciones). La ruta de cada diálogo es
 - Al añadir o cambiar textos, ejecuta `tools/generate-audio.mjs` para generar
   los MP3 y el manifiesto, y `tools/check-i18n.mjs` para comprobar EN y FA.
 
-### Juegos (Hukommelse)
+### Juegos (Hukommelse y Crucigrama)
 
-`#/juegos` es el índice de juegos. La primera entrega es **Hukommelse**, un
-juego de memoria para relacionar palabras noruegas con su traducción.
+`#/juegos` es el índice de juegos. **Hukommelse** es un juego de memoria para
+relacionar palabras noruegas con su traducción.
 
 - Tres niveles: fácil (6 parejas), medio (8) y difícil (10).
 - Audio de la palabra noruega al girar la carta.
 - Movimientos, tiempo, parejas encontradas y mejor marca.
 - Estadísticas por nivel en `state.games.hukommelse`.
-- Sin prisa: no hay límite de tiempo, solo un contador.
+
+**Crucigrama** (`#/juegos/kryssord`) genera un tablero de hasta 10 palabras a partir
+del vocabulario del curso.
+
+- Pistas en el idioma de la interfaz y respuestas en bokmål.
+- Comprobar, revelar una letra, borrar y generar un crucigrama nuevo.
+- Navegación con teclado y avance automático al escribir.
+- Al completarlo suma XP y cuenta en `state.games.kryssord.solved`.
 - Funciona offline y en móvil.
 
 ### Guías SEO estáticas

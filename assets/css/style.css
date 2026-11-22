@@ -1376,6 +1376,59 @@ html[dir="rtl"] .exam-usertext {
 .game-card-stats { display: flex; gap: .8rem; color: var(--muted); font-size: .75rem; margin: .2rem 0 .5rem; }
 .game-card .btn { margin-top: auto; }
 
+.cw-layout {
+  display: grid; gap: 1rem; align-items: start;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 340px);
+}
+.cw-board-card { display: flex; flex-direction: column; align-items: center; gap: .7rem; }
+.cw-board {
+  display: grid; grid-template-columns: repeat(var(--n), 1fr);
+  width: 100%; max-width: 560px; aspect-ratio: 1;
+  gap: 2px; padding: 2px; background: var(--line);
+  border: 2px solid var(--line); border-radius: 10px; overflow: hidden;
+  direction: ltr;
+}
+.cw-cell { position: relative; min-width: 0; aspect-ratio: 1; background: var(--card); box-shadow: inset 0 0 0 1px var(--muted); }
+.cw-cell.block { background: var(--ink); }
+.cw-cell input {
+  width: 100%; height: 100%; padding: 0; border: 0; outline: 0;
+  background: transparent; color: var(--ink); text-align: center;
+  font: inherit; font-weight: 800; text-transform: uppercase;
+  font-size: clamp(.62rem, 3.2vw, .95rem); caret-color: var(--red);
+}
+.cw-cell .cw-num {
+  position: absolute; top: 1px; left: 2px; z-index: 1;
+  font-size: clamp(.5rem, 2.2vw, .65rem); line-height: 1;
+  font-weight: 800; color: var(--ink-soft); pointer-events: none;
+}
+.cw-cell.in-word { background: var(--blue-soft); }
+.cw-cell.active { background: var(--amber-soft); box-shadow: inset 0 0 0 2px var(--amber); }
+.cw-cell.ok input { color: var(--green); }
+.cw-cell.bad input { color: var(--red); }
+.cw-cell.hinted input { color: var(--blue); }
+.cw-actions { display: flex; flex-wrap: wrap; gap: .45rem; justify-content: center; }
+.cw-msg { min-height: 1.4rem; margin: 0; text-align: center; font-size: .84rem; color: var(--muted); }
+.cw-clues { display: flex; flex-direction: column; gap: 1rem; }
+.cw-clue-group h2 { font-size: .95rem; margin: 0 0 .3rem; }
+.cw-clue-list { display: flex; flex-direction: column; gap: .15rem; }
+.cw-clue {
+  display: flex; align-items: baseline; gap: .4rem; width: 100%;
+  border: 0; border-radius: 8px; padding: .3rem .4rem;
+  background: transparent; color: var(--ink-soft);
+  font: inherit; font-size: .82rem; text-align: start; cursor: pointer;
+}
+.cw-clue:hover, .cw-clue.active { background: var(--blue-soft); color: var(--ink); }
+.cw-clue.done { opacity: .55; text-decoration: line-through; }
+.cw-clue b { flex: 0 0 auto; min-width: 1.15rem; color: var(--muted); }
+.cw-clue span { flex: 1; }
+.cw-clue small { flex: 0 0 auto; color: var(--muted); font-size: .7rem; }
+html[data-theme="dark"] .cw-cell.block { background: #080e15; }
+html[data-theme="sepia"] .cw-cell.block { background: #3b2b1a; }
+@media (max-width: 800px) {
+  .cw-layout { grid-template-columns: 1fr; }
+  .cw-board { max-width: 100%; }
+}
+
 .game-hero {
   display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem;
   flex-wrap: wrap; margin-bottom: 1rem;
