@@ -82,6 +82,7 @@ cacheada.
 | A0 | Sección `#/a0` para empezar desde cero: alfabeto, vocales, consonantes, pronunciación, primeras frases y 8 ejercicios |
 | Gramática | Referencia `#/gramatica` A0–B2: 30 temas con reglas, ejemplos con audio, errores típicos y 60 ejercicios |
 | Verbos | 200 verbos esenciales con presente, pasado, perfecto, imperativo, ejemplo, audio y progreso |
+| Flashcards | Mazos de vocabulario por tema con audio, dos direcciones, repaso espaciado (1/3/7/15/30 días) y progreso |
 | Robinson | «Robinson Crusoe»: adaptación propia del clásico de 1719, tres capítulos abiertos con escenas 3D, ilustraciones, audio, vocabulario, gramática y 5 ejercicios cada uno |
 | Juegos | **Hukommelse**: parejas de palabras y traducciones, tres niveles, audio y tiempos. **Crucigrama**: vocabulario noruego generado, pistas, comprobación, pista y nuevo puzzle |
 | Historia | «Lucía i Oslo»: 6 capítulos piloto (A2–B1) de la serie de 12, con 7 párrafos cada uno, audio por párrafo y del capítulo completo, traducción plegable, 15 palabras, gramática y 5 ejercicios por capítulo |
@@ -332,6 +333,21 @@ Cada una tiene su propio `title`, meta description, canonical, Open Graph,
 JSON-LD (`Article`, `BreadcrumbList` y `FAQPage`) y enlaces a la app. El
 `sitemap.xml` incluye la portada y todas las guías. Al añadir una guía nueva,
 actualiza el sitemap, enlázala desde `/guias/` y desde el pie de la app.
+
+### Flashcards
+
+La sección `#/flashcards` convierte los 9 paquetes de Kjerneord en mazos de
+repaso espaciado:
+
+- 20 tarjetas por sesión: primero las que tocan y después las nuevas;
+- dirección **NO → ES** o **ES → NO**;
+- audio, traducción y formas;
+- botones **Otra vez**, **Bien** y **La sabía**;
+- intervalos de 1, 3, 7, 15 y 30 días en `state.srs`;
+- las palabras dominadas se marcan en `state.core.known`;
+- sesiones de 20 tarjetas, resumen final y funcionamiento offline.
+
+La ruta `#/flashcards/<id>` abre un mazo; `#/flashcards` es el índice.
 
 ### Verbos esenciales
 

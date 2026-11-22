@@ -17,6 +17,7 @@
   var wordle = null;
   var memoryGame = null;
   var crosswordGame = null;
+  var flashSession = null;
   var I18N = window.I18N;
   var t = I18N.t;
   var tp = I18N.tp;
@@ -2028,6 +2029,212 @@
   }
 
   /* =======================================================
+     Flashcards: vocabulario con repaso espaciado
+     ======================================================= */
+
+  function flashPacks() {
+    return (CORE.packs || []).filter(function (p) {
+      return p && !p.soon && p.words && p.words.length;
+    });
+  }
+
+  function flashSig(packId, wordId) {
+    return 'flash:' + packId + ':' + wordId;
+  }
+
+  function flashDueCount(pack) {
+    var today = todayKey();
+    return pack.words.filter(function (w) {
+      var e = state.srs[flashSig(pack.id, w.id)];
+      return !e || e.due <= today;
+    }).length;
+  }
+
+  function flashPackCard(pack) {
+    var known = coreKnownCount(pack);
+    var due = flashDueCount(pack);
+    var pct = pack.words.length ? Math.round((known / pack.words.length) * 100) : 0;
+    return '<a class="flash-deck-card" href="#/flashcards/' + pack.id + '">' +
+      '<div class="flash-deck-top"><span class="flash-deck-emoji">' + (pack.emoji || '🗂️') + '</span>' +
+      '<span class="chip ' + (due ? '' : 'done') + '">' + esc(due ? t('flash.due', { n: due }) : t('flash.noDue')) + '</span></div>' +
+      '<h3>' + esc(pack.title) + '</h3>' +
+      '<p>' + esc(pack.subtitle || '') + '</p>' +
+      '<div class="flash-deck-meter"><span class="meter"><i style="width:' + pct + '%"></i></span>' +
+      '<small>' + esc(t('flash.knownProgress', { done: known, total: pack.words.length })) + '</small></div>' +
+      '<span class="chip">' + esc(t('flash.study')) + ' →</span></a>';
+  }
+
+  function renderFlashcards() {
+    var packs = flashPacks();
+    var total = packs.reduce(function (n, p) { return n + p.words.length; }, 0);
+    var known = packs.reduce(function (n, p) { return n + coreKnownCount(p); }, 0);
+    app.innerHTML =
+      '<div class="crumbs"><a href="#/">' + esc(t('crumb.home')) + '</a> <span>›</span> <span>' + esc(t('flash.title')) + '</span></div>' +
+      '<section class="colo-intro flash-intro">' +
+      '  <span class="eyebrow">' + esc(t('flash.eyebrow')) + '</span>' +
+      '  <h1>' + esc(t('flash.title')) + '</h1>' +
+      '  <p>' + esc(t('flash.intro')) + '</p>' +
+      '  <p class="flash-overall">' + esc(t('flash.overall', { done: known, total: total })) + '</p>' +
+      '</section>' +
+      '<h2 class="section-title">' + esc(t('flash.packsTitle')) + ' <span>' + esc(t('flash.packsMeta', { n: packs.length, total: total })) + '</span></h2>' +
+      '<div class="flash-deck-grid">' + packs.map(flashPackCard).join('') + '</div>' +
+      '<section class="card story-note"><div class="tip">🧠 <b>' + esc(t('flash.noteTitle')) + ':</b> ' + esc(t('flash.note')) + '</div></section>';
+  }
+
+  function flashInit(packId) {
+    var pack = corePack(packId);
+    if (!pack || !pack.words || !pack.words.length) return null;
+    var today = todayKey();
+    var due = [];
+    var fresh = [];
+    pack.words.forEach(function (w) {
+      var e = state.srs[flashSig(pack.id, w.id)];
+      if (!e) fresh.push(w);
+      else if (e.due <= today) due.push(w);
+    });
+    var queue = shuffle(due).concat(shuffle(fresh)).slice(0, 20);
+    return {
+      pack: pack,
+      queue: queue,
+      seen: {},
+      total: queue.length,
+      again: 0,
+      good: 0,
+      known: 0,
+      revealed: false,
+      dir: 'no',
+      done: !queue.length,
+      empty: !queue.length,
+      current: null
+    };
+  }
+
+  function flashSummaryHTML() {
+    var s = flashSession;
+    var done = Object.keys(s.seen).length;
+    var text = s.empty
+      ? t('flash.allDone')
+      : t('flash.summaryText', { n: done, known: s.known, good: s.good, again: s.again });
+    return '<div class="flash-summary">' +
+      '<span class="flash-summary-emoji">' + (s.empty ? '🌱' : '🎉') + '</span>' +
+      '<h2>' + esc(s.empty ? t('flash.noDue') : t('flash.summaryTitle')) + '</h2>' +
+      '<p>' + esc(text) + '</p>' +
+      '<div class="actions">' +
+      (s.empty ? '' : '<button class="btn primary" type="button" id="flash-more">' + esc(t('flash.nextSession')) + '</button>') +
+      '<a class="btn ghost" href="#/flashcards">' + esc(t('flash.back')) + '</a>' +
+      '</div></div>';
+  }
+
+  function flashPaint() {
+    var stage = document.getElementById('flash-stage');
+    if (!stage || !flashSession) return;
+    var s = flashSession;
+    if (s.done || !s.queue.length) {
+      stage.innerHTML = flashSummaryHTML();
+      var more = document.getElementById('flash-more');
+      if (more) more.addEventListener('click', function () { renderFlashcardsPack(s.pack.id); });
+      return;
+    }
+    var w = s.queue[0];
+    var seenCount = Object.keys(s.seen).length;
+    var pct = s.total ? Math.round((seenCount / s.total) * 100) : 0;
+    var front = s.dir === 'no' ? w.no : w.es;
+    var back = s.dir === 'no' ? w.es : w.no;
+    var frontLabel = s.dir === 'no' ? t('flash.frontNo') : t('flash.frontEs');
+    var backLabel = s.dir === 'no' ? t('flash.frontEs') : t('flash.frontNo');
+    var audioFront = s.dir === 'no' ? say(w.no) : '';
+    var audioBack = s.dir === 'no' ? '' : say(w.no);
+    var forms = w.forms ? '<p class="flash-forms"><b>' + esc(t('flash.forms')) + ':</b> ' + esc(w.forms) + '</p>' : '';
+    stage.innerHTML =
+      '<div class="flash-toolbar">' +
+      '  <span class="flash-progress">' + esc(t('flash.progress', { done: seenCount, total: s.total })) + '</span>' +
+      '  <div class="game-mode" id="flash-directions">' +
+      '    <button type="button" data-flash-dir="no" class="' + (s.dir === 'no' ? 'active' : '') + '">' + esc(t('flash.noToEs')) + '</button>' +
+      '    <button type="button" data-flash-dir="es" class="' + (s.dir === 'es' ? 'active' : '') + '">' + esc(t('flash.esToNo')) + '</button>' +
+      '  </div></div>' +
+      '<div class="meter flash-meter"><i style="width:' + pct + '%"></i></div>' +
+      '<div class="flash-card' + (s.revealed ? ' revealed' : '') + '">' +
+      '  <span class="flash-label">' + esc(s.revealed ? backLabel : frontLabel) + '</span>' +
+      '  <div class="flash-word" dir="' + (s.dir === 'no' || s.revealed ? 'ltr' : 'auto') + '">' + esc(s.revealed ? back : front) + '</div>' +
+      '  <div class="flash-word-audio">' + (s.revealed ? audioBack : audioFront) + '</div>' +
+      (s.revealed ? forms : '') +
+      '  ' + (s.revealed ? '' : '<button class="btn primary" type="button" id="flash-reveal">' + esc(t('flash.show')) + '</button>') +
+      '</div>' +
+      (s.revealed ? '<div class="flash-actions" id="flash-actions">' +
+        '<button class="btn ghost flash-again" type="button" data-flash-rate="again">' + esc(t('flash.again')) + '</button>' +
+        '<button class="btn primary flash-good" type="button" data-flash-rate="good">' + esc(t('flash.good')) + '</button>' +
+        '<button class="btn ghost flash-known" type="button" data-flash-rate="known">' + esc(t('flash.known')) + '</button>' +
+        '</div>' : '') +
+      '<p class="flash-hint">' + esc(t('flash.sessionHint')) + '</p>';
+
+    var reveal = document.getElementById('flash-reveal');
+    if (reveal) reveal.addEventListener('click', function () {
+      s.revealed = true;
+      flashPaint();
+    });
+    document.querySelectorAll('[data-flash-rate]').forEach(function (btn) {
+      btn.addEventListener('click', function () { flashAnswer(btn.getAttribute('data-flash-rate')); });
+    });
+    document.querySelectorAll('[data-flash-dir]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        s.dir = btn.getAttribute('data-flash-dir');
+        s.revealed = false;
+        flashPaint();
+      });
+    });
+  }
+
+  function flashAnswer(mode) {
+    if (!flashSession || !flashSession.queue.length) return;
+    var s = flashSession;
+    var w = s.queue[0];
+    var sig = flashSig(s.pack.id, w.id);
+    var e = state.srs[sig] || { step: 0, due: todayKey() };
+    if (mode === 'again') {
+      e.step = 0;
+      e.due = addDays(1);
+      s.again++;
+    } else if (mode === 'known') {
+      e.step = SRS_DAYS.length - 1;
+      e.due = addDays(30);
+      state.core.known[w.id] = true;
+      s.known++;
+      state.xp += 5;
+    } else {
+      var days = SRS_DAYS[Math.min(e.step, SRS_DAYS.length - 1)];
+      e.step = Math.min(e.step + 1, SRS_DAYS.length - 1);
+      e.due = addDays(days);
+      s.good++;
+      state.xp += 5;
+      if (e.step >= 3) state.core.known[w.id] = true;
+    }
+    state.srs[sig] = e;
+    s.seen[w.id] = true;
+    s.queue.shift();
+    s.revealed = false;
+    markDay();
+    save();
+    refreshHud();
+    if (!s.queue.length) s.done = true;
+    flashPaint();
+  }
+
+  function renderFlashcardsPack(packId) {
+    var pack = corePack(packId);
+    if (!pack || !pack.words || !pack.words.length) { renderFlashcards(); return; }
+    flashSession = flashInit(pack.id);
+    app.innerHTML =
+      '<div class="crumbs"><a href="#/flashcards">' + esc(t('flash.title')) + '</a> <span>›</span> <span>' + esc(pack.title) + '</span></div>' +
+      '<section class="colo-intro flash-intro">' +
+      '  <span class="eyebrow">' + esc(t('flash.sessionEyebrow', { pack: pack.title })) + '</span>' +
+      '  <h1>' + esc(pack.title) + '</h1>' +
+      '  <p>' + esc(t('flash.sessionIntro')) + '</p>' +
+      '</section>' +
+      '<section class="card flash-stage" id="flash-stage"></section>';
+    flashPaint();
+  }
+
+  /* =======================================================
      Gramática: referencia A0–A2
      ======================================================= */
 
@@ -3715,7 +3922,8 @@
       (best ? '<span class="chip plain">' + esc(t('core.best', { best: best.best, total: best.total })) + '</span>' : '') + '</div>' +
       '  <div class="lessons-progress"><span id="core-known">' + esc(t('core.learned', { n: known, total: pack.words.length })) + '</span>' +
       '    <span class="meter"><i id="core-meter" style="width:' + Math.round((known / pack.words.length) * 100) + '%"></i></span></div>' +
-      '  <div class="fun-banner-actions lessons-actions"><a class="btn ghost" href="#/kjerneord">' + esc(t('core.back')) + '</a></div>' +
+      '  <div class="fun-banner-actions lessons-actions"><a class="btn ghost" href="#/kjerneord">' + esc(t('core.back')) + '</a>' +
+      '    <a class="btn primary" href="#/flashcards/' + pack.id + '">' + esc(t('flash.studyPack')) + '</a></div>' +
       '</section>' +
 
       '<section class="card"><div class="core-toolbar">' +
@@ -6028,6 +6236,7 @@
       : name === 'kjerneord' ? 'core'
         : name === 'gramatica' ? 'grammar'
         : name === 'verbos' ? 'verbos'
+        : name === 'flashcards' ? 'flashcards'
         : name === 'historien' ? 'stories'
         : name === 'robinson' ? 'robinson'
         : name === 'a0' ? 'a0'
@@ -6050,7 +6259,7 @@
     }
     var moreToggle = document.querySelector('.nav-more-toggle');
     if (moreToggle) {
-      moreToggle.classList.toggle('active', ['a0', 'body', 'fun', 'exam', 'colloquial', 'review', 'games', 'verbos', 'robinson'].indexOf(active) > -1);
+      moreToggle.classList.toggle('active', ['a0', 'body', 'fun', 'exam', 'colloquial', 'review', 'games', 'verbos', 'flashcards', 'robinson'].indexOf(active) > -1);
     }
     var navMoreMenu = document.querySelector('.nav-more-menu');
     if (navMoreMenu) {
@@ -6099,6 +6308,9 @@
       if (arg === 'alle') renderVerbosAll();
       else if (arg) renderVerbPack(arg);
       else renderVerbos();
+    } else if (name === 'flashcards') {
+      if (arg) renderFlashcardsPack(arg);
+      else renderFlashcards();
     } else if (name === 'a0') {
       renderA0();
     } else if (name === 'historien') {
