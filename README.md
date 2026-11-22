@@ -76,8 +76,9 @@ cacheada.
 - **Mi progreso** (`#/progreso`): racha, XP, mapa de calor de 12 semanas, ocho
   logros y copia de seguridad. También se llega tocando la racha o el XP de la
   cabecera.
-- **Tres temas** —claro, oscuro y sepia— con el botón 🌙/📜/☀️; sigue el tema
-  del sistema y recuerda tu elección.
+- **Tres temas** —claro, oscuro y sepia— con el botón 🌙/📜/☀️; **sepia es el
+  tema por defecto** en la app y las guías, y tu elección se recuerda en el
+  dispositivo.
 - **Teclado æ ø å** flotante al escribir en cualquier ejercicio.
 - **Exportar/importar**: descarga un JSON con todo el estado y vuelve a cargarlo
   en otro móvil o tras borrar el navegador.

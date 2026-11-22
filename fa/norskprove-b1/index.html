@@ -3,6 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    try {
+      var st = localStorage.getItem('norsk-kjekt-theme');
+      var mode = (st === 'dark' || st === 'sepia' || st === 'light') ? st : 'sepia';
+      if (mode === 'dark' || mode === 'sepia') document.documentElement.setAttribute('data-theme', mode);
+    } catch (e) {
+      document.documentElement.setAttribute('data-theme', 'sepia');
+    }
+  </script>
   <title>آزمون Norskprøve سطح B1: چیست و چگونه آماده شویم | Norsk Kjekt</title>
   <meta name="description" content="آزمون نروژی (Norskprøve) در چهار بخش مستقل سطح‌های A1 تا B2 را می‌سنجد: خواندن، شنیدن، نوشتن و گفتار. ساختار واقعی، زمان‌بندی و روش آماده‌شدن.">
   <link rel="canonical" href="https://norskkjekt.com/fa/norskprove-b1/">

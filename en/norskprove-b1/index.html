@@ -3,6 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    try {
+      var st = localStorage.getItem('norsk-kjekt-theme');
+      var mode = (st === 'dark' || st === 'sepia' || st === 'light') ? st : 'sepia';
+      if (mode === 'dark' || mode === 'sepia') document.documentElement.setAttribute('data-theme', mode);
+    } catch (e) {
+      document.documentElement.setAttribute('data-theme', 'sepia');
+    }
+  </script>
   <title>Norskprøve B1: what it is, levels and how to prepare | Norsk Kjekt</title>
   <meta name="description" content="Norskprøve tests A1–B2 in four separate parts: reading, listening, writing and speaking. Real structure, timings, levels and how to prepare.">
   <link rel="canonical" href="https://norskkjekt.com/en/norskprove-b1/">

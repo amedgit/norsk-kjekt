@@ -5337,7 +5337,7 @@
     try { stored = localStorage.getItem('norsk-kjekt-theme'); } catch (e) { /* modo privado */ }
     var mode = (stored === 'dark' || stored === 'sepia' || stored === 'light')
       ? stored
-      : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      : 'sepia';
     applyTheme(mode);
     var btn = document.getElementById('theme-toggle');
     if (btn) {
