@@ -63,7 +63,7 @@
   var KEY = 'norsk-kjekt-v1';
 
   function defaults() {
-    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, body: {}, core: { known: {}, packs: {} }, stories: { chapters: {} }, robinson: { chapters: {} }, a0: { best: 0, total: 0, at: 0 }, grammar: { topics: {} }, verbos: { known: {}, best: { best: 0, total: 0, at: 0 }, packs: {} }, games: { dagensOrd: { date: '', guesses: [], status: 'playing', played: 0, wins: 0, streak: 0, best: 0, lastWin: '', distribution: [0, 0, 0, 0, 0, 0] }, hukommelse: { easy: { played: 0, bestMoves: 0, bestTime: 0 }, medium: { played: 0, bestMoves: 0, bestTime: 0 }, hard: { played: 0, bestMoves: 0, bestTime: 0 } }, kryssord: { solved: 0 } }, daily: { date: '', xp: 0, goal: 100 }, xp: 0, days: {}, review: [], srs: {}, version: 1 };
+    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, body: {}, core: { known: {}, packs: {} }, stories: { chapters: {} }, robinson: { chapters: {} }, a0: { best: 0, total: 0, at: 0 }, grammar: { topics: {} }, verbos: { known: {}, best: { best: 0, total: 0, at: 0 }, packs: {} }, games: { dagensOrd: { date: '', guesses: [], status: 'playing', played: 0, wins: 0, streak: 0, best: 0, lastWin: '', distribution: [0, 0, 0, 0, 0, 0] }, hukommelse: { easy: { played: 0, bestMoves: 0, bestTime: 0 }, medium: { played: 0, bestMoves: 0, bestTime: 0 }, hard: { played: 0, bestMoves: 0, bestTime: 0 } }, kryssord: { solved: 0 } }, daily: { date: '', xp: 0, goal: 100 }, weekly: { week: '', xp: 0, cards: 0, claimed: {} }, xp: 0, days: {}, review: [], srs: {}, version: 1 };
   }
 
   var state = (function load() {
@@ -211,6 +211,7 @@
         exams: raw.exams && typeof raw.exams === 'object' ? raw.exams : {},
         xp: Number(raw.xp) || 0,
         daily: raw.daily && typeof raw.daily === 'object' ? raw.daily : d.daily,
+        weekly: raw.weekly && typeof raw.weekly === 'object' ? raw.weekly : d.weekly,
         days: raw.days && typeof raw.days === 'object' ? raw.days : d.days,
         review: Array.isArray(raw.review) ? raw.review.filter(function (s) { return typeof s === 'string'; }) : d.review,
         version: 1
@@ -221,6 +222,7 @@
   })();
 
   ensureDaily();
+  ensureWeekly();
 
   function save() {
     try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* modo privado */ }
@@ -247,7 +249,34 @@
     }
   }
 
+  function weekKey(d) {
+    var x = d ? new Date(d) : new Date();
+    var offset = (x.getDay() + 6) % 7;
+    x.setHours(0, 0, 0, 0);
+    x.setDate(x.getDate() - offset);
+    return todayKey(x);
+  }
+
+  function ensureWeekly() {
+    var week = weekKey();
+    if (!state.weekly || state.weekly.week !== week) {
+      state.weekly = { week: week, xp: 0, cards: 0, claimed: {} };
+    } else {
+      state.weekly.xp = Number(state.weekly.xp) || 0;
+      state.weekly.cards = Number(state.weekly.cards) || 0;
+      state.weekly.claimed = state.weekly.claimed && typeof state.weekly.claimed === 'object' ? state.weekly.claimed : {};
+    }
+  }
+
   function addXp(n) {
+    ensureDaily();
+    ensureWeekly();
+    state.xp += Number(n) || 0;
+    state.daily.xp += Number(n) || 0;
+    state.weekly.xp += Number(n) || 0;
+  }
+
+  function grantBonusXp(n) {
     ensureDaily();
     state.xp += Number(n) || 0;
     state.daily.xp += Number(n) || 0;
@@ -2209,6 +2238,8 @@
     var w = s.queue[0];
     var sig = flashSig(s.pack.id, w.id);
     var e = state.srs[sig] || { step: 0, due: todayKey() };
+    ensureWeekly();
+    state.weekly.cards += 1;
     if (mode === 'again') {
       e.step = 0;
       e.due = addDays(1);
@@ -4132,6 +4163,24 @@
       '</div></section>';
   }
 
+  function paintDailyRing() {
+    ensureDaily();
+    var xp = state.daily.xp;
+    var goal = state.daily.goal;
+    var pct = Math.min(100, Math.round((xp / goal) * 100));
+    var ring = document.getElementById('daily-ring');
+    if (ring) {
+      ring.style.setProperty('--pct', String(pct));
+      ring.classList.toggle('done', xp >= goal);
+      ring.setAttribute('aria-valuemax', String(goal));
+      ring.setAttribute('aria-valuenow', String(xp));
+    }
+    var xpEl = document.getElementById('daily-xp');
+    var goalEl = document.getElementById('daily-goal');
+    if (xpEl) xpEl.textContent = xp;
+    if (goalEl) goalEl.textContent = '/ ' + goal + ' XP';
+  }
+
   function bindDailyPlan() {
     var box = document.getElementById('daily-goals');
     if (!box) return;
@@ -4145,20 +4194,103 @@
         x.classList.toggle('active', x === b);
         x.setAttribute('aria-pressed', x === b ? 'true' : 'false');
       });
-      var xp = state.daily.xp;
-      var goal = state.daily.goal;
-      var pct = Math.min(100, Math.round((xp / goal) * 100));
-      var ring = document.getElementById('daily-ring');
-      if (ring) {
-        ring.style.setProperty('--pct', String(pct));
-        ring.classList.toggle('done', xp >= goal);
-        ring.setAttribute('aria-valuemax', String(goal));
-        ring.setAttribute('aria-valuenow', String(xp));
+      paintDailyRing();
+    });
+  }
+
+  function weekDaysPracticed() {
+    var start = weekKey();
+    var end = todayKey();
+    return Object.keys(state.days).filter(function (k) {
+      return k >= start && k <= end;
+    }).length;
+  }
+
+  function weeklyMissionList() {
+    ensureWeekly();
+    return [
+      {
+        id: 'days', icon: '🔥', target: 3, reward: 40,
+        value: Math.min(3, weekDaysPracticed()),
+        title: t('missions.daysTitle'), sub: t('missions.daysSub'),
+        progressKey: 'missions.progress'
+      },
+      {
+        id: 'cards', icon: '🧠', target: 20, reward: 40,
+        value: Math.min(20, state.weekly.cards),
+        title: t('missions.cardsTitle'), sub: t('missions.cardsSub'),
+        progressKey: 'missions.progress'
+      },
+      {
+        id: 'xp', icon: '⚡', target: 300, reward: 40,
+        value: Math.min(300, state.weekly.xp),
+        title: t('missions.xpTitle'), sub: t('missions.xpSub'),
+        progressKey: 'missions.progressXp'
       }
-      var xpEl = document.getElementById('daily-xp');
-      var goalEl = document.getElementById('daily-goal');
-      if (xpEl) xpEl.textContent = xp;
-      if (goalEl) goalEl.textContent = '/ ' + goal + ' XP';
+    ];
+  }
+
+  function weeklyMissionCard(m) {
+    var complete = m.value >= m.target;
+    var claimed = !!state.weekly.claimed[m.id];
+    var pct = Math.min(100, Math.round((m.value / m.target) * 100));
+    return '<article class="mission-card' + (complete ? ' complete' : '') + (claimed ? ' claimed' : '') + '">' +
+      '<div class="mission-top">' +
+      '  <span class="mission-icon" aria-hidden="true">' + m.icon + '</span>' +
+      '  <span class="mission-title"><b>' + esc(m.title) + '</b><small>' + esc(m.sub) + '</small></span>' +
+      '  <span class="mission-reward">+' + m.reward + ' XP</span>' +
+      '</div>' +
+      '<div class="mission-bar" role="progressbar" aria-valuemin="0" aria-valuemax="' + m.target + '" aria-valuenow="' + m.value + '" aria-label="' + esc(m.title) + '"><i style="width:' + pct + '%"></i></div>' +
+      '<div class="mission-foot">' +
+      '  <span class="mission-progress">' + esc(t(m.progressKey, { value: m.value, target: m.target })) + '</span>' +
+      (claimed ? '<span class="mission-status done">✓ ' + esc(t('missions.claimed')) + '</span>' :
+        complete ? '<button type="button" class="mission-claim" data-claim-mission="' + m.id + '">' + esc(t('missions.claim', { n: m.reward })) + '</button>' :
+          '<span class="mission-status">' + esc(t('missions.pending')) + '</span>') +
+      '</div></article>';
+  }
+
+  function weeklyMissionsHTML() {
+    var list = weeklyMissionList();
+    var done = list.filter(function (m) { return m.value >= m.target; }).length;
+    return '<section class="card weekly-missions" id="weekly-missions">' +
+      '<div class="weekly-missions-head">' +
+      '  <div>' +
+      '    <span class="eyebrow">' + esc(t('missions.eyebrow')) + '</span>' +
+      '    <h2>' + esc(t('missions.title')) + '</h2>' +
+      '    <p>' + esc(t('missions.intro')) + '</p>' +
+      '  </div>' +
+      '  <span class="missions-count' + (done === list.length ? ' all' : '') + '">' + esc(t('missions.summary', { done: done, total: list.length })) + '</span>' +
+      '</div>' +
+      '<div class="missions-grid">' + list.map(weeklyMissionCard).join('') + '</div>' +
+      '</section>';
+  }
+
+  function claimWeeklyMission(id) {
+    ensureWeekly();
+    var mission = weeklyMissionList().find(function (m) { return m.id === id; });
+    if (!mission || mission.value < mission.target || state.weekly.claimed[id]) return null;
+    state.weekly.claimed[id] = true;
+    grantBonusXp(mission.reward);
+    save();
+    refreshHud();
+    paintDailyRing();
+    return mission;
+  }
+
+  function bindWeeklyMissions() {
+    var section = document.getElementById('weekly-missions');
+    if (!section) return;
+    section.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-claim-mission]');
+      if (!btn) return;
+      var mission = claimWeeklyMission(btn.getAttribute('data-claim-mission'));
+      if (!mission) return;
+      var card = btn.closest('.mission-card');
+      var status = document.createElement('span');
+      status.className = 'mission-status done';
+      status.textContent = '✓ ' + t('missions.claimed');
+      btn.replaceWith(status);
+      if (card) card.classList.add('claimed');
     });
   }
 
@@ -4209,6 +4341,7 @@
       '  </aside>' +
       '</section>' +
       dailyPlanHTML() +
+      weeklyMissionsHTML() +
 
       '<div class="practice-strip">' +
       '  <a class="practice-chip" href="#/nivel"><b>🎯 ' + esc(t('home.testChip')) + '</b><span>' + esc(t('home.testChipSub')) + '</span></a>' +
@@ -4321,6 +4454,7 @@
       esc(tp('home.seeExpressions', COURSE.colloquial.length)) + '</a></div>';
 
     bindDailyPlan();
+    bindWeeklyMissions();
     refreshInstallUI();
   }
 

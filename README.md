@@ -64,6 +64,9 @@ cacheada.
 - **Plan de hoy** (portada): tres actividades cortas —flashcards, gramática e
   historia— que cambian cada día, más un objetivo de 5, 10 o 15 minutos y un
   anillo de XP que se llena con cualquier práctica.
+- **Misiones semanales** (portada): practicar 3 días, repasar 20 tarjetas y
+  ganar 300 XP. Cada misión completada entrega 40 XP y el tablero se renueva
+  cada lunes, sin ligas ni presión.
 - **Repaso espaciado** (`#/repaso`): los fallos vuelven a los 1, 3, 7, 15 y 30
   días; si aciertas, se alejan; si fallas, vuelven al día siguiente.
 - **Mi progreso** (`#/progreso`): racha, XP, mapa de calor de 12 semanas, ocho
@@ -98,7 +101,7 @@ cacheada.
 | Simulacro | 4 exámenes completos (A1, A2, B1 y B2) estilo Norskprøven: lesing, lytting, skriving y muntlig, con cronómetro, informe por destreza y respuestas modelo |
 | Idioma | selector **ES / EN / فا** en la cabecera: traduce interfaz, explicaciones y tablas; el bokmål se queda intacto y el progreso se conserva. En persa la página cambia a dirección RTL |
 | Analítica | Cloudflare Web Analytics (sin cookies) y Google Analytics 4 con Consent Mode, banner de consentimiento y página de privacidad |
-| Progreso | plan y objetivo diario, racha, XP, mapa de calor de 12 semanas, 8 logros, repaso espaciado (1/3/7/15/30 días) y exportación/importación del progreso en JSON |
+| Progreso | plan y objetivo diario, misiones semanales, racha, XP, mapa de calor de 12 semanas, 8 logros, repaso espaciado (1/3/7/15/30 días) y exportación/importación del progreso en JSON |
 | Extras | temas claro/oscuro/sepia, teclado noruego æ ø å en los ejercicios de escritura y PWA offline |
 | Velocidad | selector 0,5×–1,3× en la cabecera; empieza en 0,85×, se aplica al audio y se recuerda |
 | Audio | 3527 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
