@@ -136,6 +136,20 @@ españoles por su traducción y deja intactas las cadenas que detecta como
 noruego. En FA la página pasa a `dir="rtl"` (derecha→izquierda), con fuente
 persa; el bokmål de las frases se sigue leyendo de izquierda a derecha.
 
+### Enlaces con idioma fijado
+
+Para compartir el curso ya abierto en un idioma, añade `?lang=` a la URL:
+
+- **Persa:** `https://norskkjekt.com/?lang=fa`
+- **Inglés:** `https://norskkjekt.com/?lang=en`
+- **Español:** `https://norskkjekt.com/?lang=es`
+
+El parámetro se aplica antes de cargar la interfaz, se guarda en
+`localStorage` y se puede combinar con cualquier ruta:
+`https://norskkjekt.com/?lang=fa#/pronunciacion`. Si después cambias de idioma
+con el selector, el parámetro `lang` de la URL se actualiza para que el enlace
+siga siendo correcto.
+
 ### Añadir otro idioma
 
 1. Crea `assets/js/content-xx.js` con `window.XX_STRINGS` (mapa español → idioma).

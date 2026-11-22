@@ -6,11 +6,29 @@
 
   var KEY = 'norsk-kjekt-lang';
   var LANGS = { es: 'ltr', en: 'ltr', fa: 'rtl' };
-  var lang = 'es';
-  try {
-    var saved = localStorage.getItem(KEY);
-    if (saved && LANGS[saved]) lang = saved;
-  } catch (e) { /* modo privado */ }
+
+  function urlLang() {
+    var raw = '';
+    try {
+      raw = new URLSearchParams(window.location.search).get('lang') || '';
+    } catch (e) {
+      var m = String(window.location.search || '').match(/[?&]lang=([^&]+)/);
+      raw = m ? decodeURIComponent(m[1]) : '';
+    }
+    raw = raw.toLowerCase();
+    return LANGS[raw] ? raw : '';
+  }
+
+  var fromUrl = urlLang();
+  var lang = fromUrl || 'es';
+  if (!fromUrl) {
+    try {
+      var saved = localStorage.getItem(KEY);
+      if (saved && LANGS[saved]) lang = saved;
+    } catch (e) { /* modo privado */ }
+  } else {
+    try { localStorage.setItem(KEY, lang); } catch (e) { /* modo privado */ }
+  }
 
   var UI = {
     es: {
@@ -3389,6 +3407,11 @@
     if (!LANGS[next]) return;
     if (next === lang) return;
     try { localStorage.setItem(KEY, next); } catch (e) { /* modo privado */ }
+    try {
+      var url = new URL(window.location.href);
+      url.searchParams.set('lang', next);
+      window.history.replaceState(null, '', url.toString());
+    } catch (e) { /* modo privado o URL no disponible */ }
     location.reload();
   }
 
