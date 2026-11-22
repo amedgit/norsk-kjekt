@@ -4310,7 +4310,96 @@ window.COURSE = {
           }
         ]
       },
-      { id: '6', num: 6, level: 'B1', emoji: '👨‍👩‍👧', title: 'Familien kommer', soon: true },
+      {
+        id: '6',
+        num: 6,
+        level: 'B1',
+        emoji: '👨‍👩‍👧',
+        title: 'Familien kommer',
+        subtitle: 'La primera visita de su familia',
+        intro: 'La familia de Lucía llega a Oslo por primera vez. Una semana de reencuentros, paseos, una pequeña discusión y una despedida en el aeropuerto.',
+        place: 'Gardermoen · Grünerløkka · Oslo',
+        places: ['Gardermoen', 'Grünerløkka', 'Vigelandsparken', 'Operaen'],
+        paragraphs: [
+          { no: 'Det er en fredag i mai. Lucía står på Gardermoen og venter på flyet fra Spania. Moren, faren og lillebroren Pablo kommer for å besøke henne for første gang. Lucía har skrevet navnene deres på et stort ark. Hun er glad, men også litt nervøs.', es: 'Es un viernes de mayo. Lucía está en Gardermoen esperando el vuelo desde España. Su madre, su padre y su hermano pequeño Pablo vienen a visitarla por primera vez. Lucía ha escrito sus nombres en una hoja grande. Está contenta, pero también un poco nerviosa.' },
+          { no: 'Leiligheten hennes er liten. Om kvelden må familien sove på sofaen og på en madrass i stua. Moren rydder og lager mat, selv om Lucía sier at hun ikke trenger det. Faren spør om jobben, lønnen og fremtiden. Lucía svarer, men hun føler at hun må forsvare livet sitt.', es: 'Su piso es pequeño. Por la noche, la familia tiene que dormir en el sofá y en un colchón en el salón. Su madre ordena y cocina, aunque Lucía dice que no hace falta. Su padre pregunta por el trabajo, el sueldo y el futuro. Lucía responde, pero siente que tiene que defender su vida.' },
+          { no: 'På lørdag viser Lucía dem Grünerløkka. De går langs Akerselva og drikker kaffe på kafeen der hun jobber. Sjefen hennes sier at Lucía er flink, og faren blir stolt. Moren ser på folkene i gatene og sier at byen er vakker, men kald. Pablo vil bare ta bilder.', es: 'El sábado Lucía les enseña Grünerløkka. Pasean junto al Akerselva y toman café en la cafetería donde ella trabaja. Su jefe dice que Lucía es buena, y su padre se siente orgulloso. Su madre mira a la gente de la calle y dice que la ciudad es bonita, pero fría. Pablo solo quiere hacer fotos.' },
+          { no: 'De besøker Vigelandsparken og operaen. Pablo elsker byen og sier at han vil studere i Oslo. Moren smiler, men Lucía ser at hun er bekymret. Om kvelden lager de middag sammen, og Lucía oppdager at hun har savnet å høre spanjolene snakke i samme rom.', es: 'Visitan el parque Vigeland y la ópera. Pablo adora la ciudad y dice que quiere estudiar en Oslo. Su madre sonríe, pero Lucía ve que está preocupada. Por la noche cocinan juntos, y Lucía descubre que echaba de menos oír a los españoles hablar en la misma habitación.' },
+          { no: 'En kveld krangler Lucía og moren. Moren sier at Lucía jobber for mye og er for alene. Lucía sier at hun har venner og et liv her. De gråter begge to, og etterpå snakker de lenge. Lucía forstår at moren ikke vil kontrollere henne, men at hun er redd for at datteren skal være ulykkelig.', es: 'Una noche Lucía y su madre discuten. Su madre dice que Lucía trabaja demasiado y está demasiado sola. Lucía dice que tiene amigos y una vida aquí. Las dos lloran, y después hablan mucho. Lucía entiende que su madre no quiere controlarla, sino que tiene miedo de que su hija sea infeliz.' },
+          { no: 'Den siste kvelden inviterer Lucía til middag. Mari og Ingrid kommer, og familien møter vennene hennes. De snakker spansk, norsk og litt engelsk. Faren prøver å si «takk for maten», og alle ler. Moren klemmer Mari og sier at hun er glad for at Lucía ikke er alene.', es: 'La última noche Lucía invita a cenar. Vienen Mari e Ingrid, y su familia conoce a sus amigos. Hablan español, noruego y un poco de inglés. Su padre intenta decir «takk for maten», y todos ríen. Su madre abraza a Mari y dice que se alegra de que Lucía no esté sola.' },
+          { no: 'På flyplassen tar de farvel. Moren gråter, faren klemmer henne lenge, og Pablo lover å komme tilbake. Lucía vinker til dem helt til de forsvinner. Hun føler seg trist, men også sterk. Hun vet at hun har valgt dette livet, og at hun kan reise hjem når hun vil. Om sommeren skal hun besøke Spania.', es: 'En el aeropuerto se despiden. Su madre llora, su padre la abraza largo rato y Pablo promete volver. Lucía los saluda hasta que desaparecen. Se siente triste, pero también fuerte. Sabe que ha elegido esta vida y que puede volver a casa cuando quiera. En verano visitará España.' }
+        ],
+        vocab: [
+          { no: 'familiebesøk', es: 'visita familiar', forms: 'et familiebesøk, familiebesøk' },
+          { no: 'flyplass', es: 'aeropuerto', forms: 'en flyplass, flyplasser' },
+          { no: 'gjest', es: 'invitado, huésped', forms: 'en gjest, gjester' },
+          { no: 'sofa', es: 'sofá', forms: 'en sofa, sofaer' },
+          { no: 'rydde', es: 'ordenar', forms: 'rydder · ryddet · har ryddet' },
+          { no: 'krangle', es: 'discutir, pelearse', forms: 'krangler · kranglet · har kranglet' },
+          { no: 'forstå', es: 'entender', forms: 'forstår · forsto · har forstått' },
+          { no: 'vise', es: 'mostrar', forms: 'viser · viste · har vist' },
+          { no: 'oppdage', es: 'descubrir', forms: 'oppdager · oppdaget · har oppdaget' },
+          { no: 'sammen', es: 'juntos', chunk: true },
+          { no: 'tåre', es: 'lágrima', forms: 'en tåre, tårer' },
+          { no: 'klem', es: 'abrazo', forms: 'en klem, klemmer' },
+          { no: 'avskjed', es: 'despedida', forms: 'en avskjed, avskjeder' },
+          { no: 'trygg', es: 'seguro, tranquilo', forms: 'trygg · trygt · trygge' },
+          { no: 'hjemlengsel', es: 'nostalgia, morriña', forms: 'en hjemlengsel' }
+        ],
+        grammar: {
+          title: 'Fremtid: skal, vil og kommer til å',
+          es: 'Para hablar del futuro se usa sobre todo «skal» para planes y decisiones: Jeg skal besøke familien. «Kommer til å» expresa una predicción: Det kommer til å bli en fin uke. «Vil» expresa voluntad o intención: Jeg vil vise dem Oslo. En noruego no existe una forma de futuro única; el presente también puede usarse con expresiones de tiempo: I morgen reiser jeg.',
+          examples: [
+            { no: 'Familien min skal besøke meg i mai.', es: 'Mi familia va a visitarme en mayo.' },
+            { no: 'Det kommer til å bli en fin uke.', es: 'Va a ser una buena semana.' },
+            { no: 'Jeg vil vise dem Oslo.', es: 'Quiero mostrarles Oslo.' }
+          ]
+        },
+        exercises: [
+          {
+            type: 'mcq',
+            prompt: '¿Por qué viene la familia de Lucía?',
+            options: ['Para visitarla en Oslo', 'Para trabajar en la cafetería', 'Para mudarse a España', 'Para estudiar noruego'],
+            answer: 0,
+            audio: 'Familien hennes kommer på besøk.',
+            explain: 'La familia viene a visitar a Lucía por primera vez.'
+          },
+          {
+            type: 'gap',
+            prompt: 'Completa con el futuro:',
+            sentence: 'Familien min ___ besøke meg i mai.',
+            answers: ['skal'],
+            bank: ['skal', 'skulle', 'har'],
+            es: 'Mi familia va a visitarme en mayo.',
+            explain: '«Skal» + infinitivo expresa un plan de futuro.'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase:',
+            words: ['Jeg', 'vil', 'vise', 'dem', 'Oslo.'],
+            es: 'Quiero mostrarles Oslo.',
+            explain: '«Å ville» expresa voluntad; el verbo principal va en infinitivo.'
+          },
+          {
+            type: 'listen',
+            audio: 'Det kommer til å bli en fin uke.',
+            es: 'Va a ser una buena semana.',
+            explain: '«Kommer til å bli» se usa para hacer una predicción.'
+          },
+          {
+            type: 'match',
+            prompt: 'Empareja el vocabulario del capítulo:',
+            pairs: [
+              { a: 'flyplass', b: 'aeropuerto' },
+              { a: 'gjest', b: 'invitado' },
+              { a: 'krangle', b: 'discutir' },
+              { a: 'klem', b: 'abrazo' },
+              { a: 'avskjed', b: 'despedida' }
+            ],
+            explain: 'Cinco palabras clave del sexto capítulo.'
+          }
+        ]
+      },
       { id: '7', num: 7, level: 'B1', emoji: '📦', title: 'Flyttedag', soon: true },
       { id: '8', num: 8, level: 'B1', emoji: '⚡', title: 'Konflikt på jobben', soon: true },
       { id: '9', num: 9, level: 'B2', emoji: '☀️', title: 'Sommer i Oslo', soon: true },
