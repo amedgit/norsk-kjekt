@@ -77,12 +77,12 @@ cacheada.
 | Parte | Contenido |
 |---|---|
 | Lecciones | 15 lecciones A1–C2 con página propia (`#/lecciones`): buscador, filtros por nivel, progreso y acceso directo a cada lección |
-| Práctica | 347 ejercicios en 10 formatos, test de nivel de 18 preguntas y entrenador de números, hora y preposiciones |
+| Práctica | 352 ejercicios en 10 formatos, test de nivel de 18 preguntas y entrenador de números, hora y preposiciones |
 | Samtaler | 7 conversaciones cotidianas (A2–B1: portal, cafetería, restaurante, tienda, trabajo, médico y teléfono) con 66 réplicas, audio por línea, traducciones plegables, vocabulario, frases y 35 ejercicios |
 | A0 | Sección `#/a0` para empezar desde cero: alfabeto, vocales, consonantes, pronunciación, primeras frases y 8 ejercicios |
 | Gramática | Referencia `#/gramatica` A0–B2: 30 temas con reglas, ejemplos con audio, errores típicos y 60 ejercicios |
 | Verbos | 100 verbos esenciales con presente, pasado, perfecto, imperativo, ejemplo, audio y progreso |
-| Robinson | «Robinson Crusoe»: adaptación propia del clásico de 1719, dos capítulos abiertos con escenas 3D, ilustraciones, audio, vocabulario, gramática y 5 ejercicios cada uno |
+| Robinson | «Robinson Crusoe»: adaptación propia del clásico de 1719, tres capítulos abiertos con escenas 3D, ilustraciones, audio, vocabulario, gramática y 5 ejercicios cada uno |
 | Juegos | **Hukommelse**: juego de memoria con parejas de palabras y traducciones, tres niveles, audio, contador de movimientos y tiempo |
 | Historia | «Lucía i Oslo»: 5 capítulos piloto (A2–B1) de la serie de 12, con 7 párrafos cada uno, audio por párrafo y del capítulo completo, traducción plegable, 15 palabras, gramática y 5 ejercicios por capítulo |
 | Kjerneord | Núcleo de 1000 palabras y frases en 10 paquetes de 100; los paquetes 1 a 9 (900 palabras: supervivencia, vida diaria, personas y planes, salud y cuerpo, trabajo y trámites, ciudad y viajes, conectores y matices, opiniones y debate, cultura y sociedad) ya están disponibles con audio, filtros y test |
@@ -97,7 +97,7 @@ cacheada.
 | Progreso | racha, XP, mapa de calor de 12 semanas, 8 logros, repaso espaciado (1/3/7/15/30 días) y exportación/importación del progreso en JSON |
 | Extras | temas claro/oscuro/sepia, teclado noruego æ ø å en los ejercicios de escritura y PWA offline |
 | Velocidad | selector 0,5×–1,3× en la cabecera; empieza en 0,85×, se aplica al audio y se recuerda |
-| Audio | 2911 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
+| Audio | 2935 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
 | App | PWA instalable (offline) con icono propio, pantalla completa y funcionamiento sin conexión; el APK está retirado temporalmente |
 
 ## Interfaz en español, inglés o persa
@@ -107,7 +107,7 @@ El selector **ES / EN / فا** de la cabecera cambia todo lo que no es noruego:
 - textos de la interfaz, botones, filtros, avisos y resultados;
 - explicaciones, objetivos, trucos y notas culturales;
 - traducciones de textos, vocabulario, frases y diálogos;
-- prompts, opciones, pistas y explicaciones de los 347 ejercicios;
+- prompts, opciones, pistas y explicaciones de los 352 ejercicios;
 - instrucciones, explicaciones y rúbricas de autoevaluación del simulacro;
 - las tablas de palabras y verbos (la columna de significados).
 
@@ -162,7 +162,7 @@ norsk/
 │   ├── generate-audio.mjs       ← sintetiza los MP3 y el manifiesto
 │   ├── generate-lesson-art.mjs  ← dibuja las 15 ilustraciones SVG de las lecciones
 │   ├── generate-dialogue-art.mjs ← dibuja las 6 ilustraciones de Samtaler
-│   ├── generate-robinson-art.mjs ← dibuja las 16 ilustraciones de Robinson
+│   ├── generate-robinson-art.mjs ← dibuja las 24 ilustraciones de Robinson
 │   └── check-i18n.mjs           ← comprueba que todo el contenido tiene traducción EN y FA
 └── assets/
     ├── css/style.css
@@ -170,7 +170,7 @@ norsk/
     ├── img/lessons/*.svg ← una ilustración original por lección
     ├── img/dialogues/*.svg ← una ilustración por conversación
     ├── img/robinson/*.svg ← una ilustración por párrafo de Robinson
-    ├── audio/*.mp3      ← 2911 audios (≈30,4 MB), generados
+    ├── audio/*.mp3      ← 2935 audios (≈31,0 MB), generados
     ├── vendor/three.module.min.js ← Three.js r160 (MIT), solo para la escena 3D
     └── js/
         ├── data.js          ← TODO el contenido del curso, Samtaler y los 4 simulacros
@@ -344,10 +344,10 @@ La sección `#/robinson` abre una adaptación propia y simplificada de la novela
 de Daniel Defoe (1719). No reproduce traducciones modernas: el texto se escribe
 de nuevo en bokmål A2–B1, con una nota de derechos y contexto.
 
-- Capítulo 1, **Drømmen om havet**, y capítulo 2, **Fanget i Salé**, con 8 párrafos y una ilustración por párrafo.
-- Escena 3D de York y escena 3D nocturna del Atlántico, con cinco palabras clicables cada una.
+- Capítulos 1–3: **Drømmen om havet**, **Fanget i Salé** y **Plantasjen i Brasil**, con 8 párrafos y una ilustración por párrafo.
+- Escenas 3D de York, del Atlántico nocturno y de la plantación brasileña, con cinco palabras clicables cada una.
 - 15 palabras, gramática y 5 ejercicios por capítulo.
-- 12 capítulos planificados; quedan 10 por abrir.
+- 12 capítulos planificados; quedan 9 por abrir.
 - Si WebGL falla, se muestra un fallback HTML con el mismo vocabulario.
 
 Las ilustraciones se generan con `tools/generate-robinson-art.mjs` en

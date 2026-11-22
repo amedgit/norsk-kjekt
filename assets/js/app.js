@@ -2652,9 +2652,13 @@
     return GRAMMAR.topics.reduce(function (n, t) { return n + t.exercises.length; }, 0);
   }
 
+  function robinsonExerciseCount() {
+    return ROBINSON.chapters.reduce(function (n, ch) { return n + (ch.soon ? 0 : ch.exercises.length); }, 0);
+  }
+
   function totalExerciseCount() {
     return LESSONS.reduce(function (n, l) { return n + l.exercises.length; }, 0) +
-      funExerciseCount() + dialogueExerciseCount() + storyExerciseCount() + (A0 ? A0.exercises.length : 0) + grammarExerciseCount() + (BODY.exercises ? BODY.exercises.length : 0);
+      funExerciseCount() + dialogueExerciseCount() + storyExerciseCount() + robinsonExerciseCount() + (A0 ? A0.exercises.length : 0) + grammarExerciseCount() + (BODY.exercises ? BODY.exercises.length : 0);
   }
 
   function allFunExercises() {

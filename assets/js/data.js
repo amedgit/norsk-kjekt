@@ -4528,7 +4528,109 @@ window.COURSE = {
           }
         ]
       },
-      { id: '3', num: 3, level: 'B1', emoji: '🌱', title: 'Plantasjen i Brasil', soon: true },
+      {
+        id: '3',
+        num: 3,
+        level: 'B1',
+        emoji: '🌱',
+        title: 'Plantasjen i Brasil',
+        subtitle: 'Trabajo, prosperidad y una decisión peligrosa',
+        intro: 'Robinson empieza de nuevo en Brasil. Trabaja la tierra, aprende portugués y se hace rico. Pero el dinero lo lleva a aceptar un viaje peligroso.',
+        place: 'Brasil · Bahia · Atlanterhavet (1657–1659)',
+        places: ['Brasil', 'Bahia', 'Atlanterhavet'],
+        paragraphs: [
+          { no: 'I 1657 kom jeg til Brasil med kapteinen. Landet var grønt og varmt, og jeg fikk et lite stykke jord ved kysten. Jeg visste ikke mye om jordbruk, men jeg var ung og sterk. Jeg begynte å bygge et lite hus av tre og leire.', es: 'En 1657 llegué a Brasil con el capitán. El país era verde y cálido, y conseguí un pequeño terreno junto a la costa. No sabía mucho de agricultura, pero era joven y fuerte. Empecé a construir una pequeña casa de madera y barro.', image: 'assets/img/robinson/ch3-01-brasil.svg', imageAlt: 'Robinson llega a la costa verde de Brasil con el capitán portugués.' },
+          { no: 'De første årene var harde. Jeg ryddet skog, plantet tobakk og lærte portugisisk. Om kvelden var jeg så sliten at jeg sovnet ved bordet. Men hver måned ble avlingen litt større.', es: 'Los primeros años fueron duros. Despejé bosque, planté tabaco y aprendí portugués. Por la noche estaba tan cansado que me dormía en la mesa. Pero cada mes la cosecha era un poco más grande.', image: 'assets/img/robinson/ch3-02-rydde.svg', imageAlt: 'Robinson despeja el terreno y construye su primera casa en Brasil.' },
+          { no: 'Naboen min, en portugisisk plantasjeeier, hjalp meg. Han lærte meg å dyrke sukkerrør og å selge varene i byen. Etter fire år hadde jeg en større gård og flere arbeidere. Noen av dem var slaver. Det var vanlig i Brasil den gangen, men jeg visste at det var galt.', es: 'Mi vecino, un terrateniente portugués, me ayudó. Me enseñó a cultivar caña de azúcar y a vender los productos en la ciudad. Después de cuatro años tenía una finca más grande y varios trabajadores. Algunos de ellos eran esclavos. Era habitual en Brasil en aquella época, pero yo sabía que estaba mal.', image: 'assets/img/robinson/ch3-03-sukkerrør.svg', imageAlt: 'El vecino portugués enseña a Robinson a cultivar caña de azúcar.' },
+          { no: 'Jeg ble rikere enn jeg hadde drømt om. Jeg kjøpte flere dyr, en hest og fine klær. Men jeg tenkte fortsatt på havet. Hver gang jeg så et skip, kjente jeg et stikk i brystet.', es: 'Me hice más rico de lo que había soñado. Compré más animales, un caballo y ropa fina. Pero seguía pensando en el mar. Cada vez que veía un barco, sentía un pinchazo en el pecho.', image: 'assets/img/robinson/ch3-04-rik.svg', imageAlt: 'Robinson observa su plantación próspera con caballos y campos.' },
+          { no: 'En dag kom en kaptein til plantasjen. Han skulle til Guinea og trengte en partner. Han sa at vi kunne kjøpe varer og arbeidere der og selge dem i Brasil. Jeg visste at handelen var farlig og urettferdig, men jeg så på pengene og sa ja.', es: 'Un día llegó un capitán a la plantación. Iba a Guinea y necesitaba un socio. Dijo que podíamos comprar mercancías y trabajadores allí y venderlos en Brasil. Sabía que el comercio era peligroso e injusto, pero miré el dinero y dije que sí.', image: 'assets/img/robinson/ch3-05-tilbud.svg', imageAlt: 'El capitán le ofrece a Robinson un negocio peligroso en la plantación.' },
+          { no: 'Jeg skrev et brev til vennen min og ordnet alt på gården. Jeg pakket klær, verktøy og mat. Så reiste jeg til havnen med kapteinen. Skipet lå klart med last og mannskap.', es: 'Escribí una carta a mi amigo y lo dejé todo arreglado en la finca. Hice las maletas con ropa, herramientas y comida. Luego fui al puerto con el capitán. El barco estaba listo con carga y tripulación.', image: 'assets/img/robinson/ch3-06-avreise.svg', imageAlt: 'Robinson se despide en el puerto antes de embarcar hacia Guinea.' },
+          { no: 'Vi seilte fra Brasil i 1659. Været var fint den første uken. Men jeg følte meg urolig. Jeg husket faren min og ordene hans om havet. Kanskje hadde han rett.', es: 'Zarpamos de Brasil en 1659. El tiempo fue bueno la primera semana. Pero me sentía inquieto. Recordé a mi padre y sus palabras sobre el mar. Quizá tenía razón.', image: 'assets/img/robinson/ch3-07-rolig-sjo.svg', imageAlt: 'El barco de Robinson navega desde Brasil con el mar en calma.' },
+          { no: 'En morgen ble himmelen mørk. Vinden ble sterk, og bølgene vokste. Kapteinen ropte at vi måtte ta ned seilene. Jeg holdt meg fast i rekken og så mot horisonten. Da kom stormen.', es: 'Una mañana el cielo se oscureció. El viento se hizo fuerte y las olas crecieron. El capitán gritó que teníamos que bajar las velas. Me agarré a la barandilla y miré hacia el horizonte. Entonces llegó la tormenta.', image: 'assets/img/robinson/ch3-08-storm.svg', imageAlt: 'Se acerca una gran tormenta al barco de Robinson.' }
+        ],
+        vocab: [
+          { no: 'plantasje', es: 'plantación', forms: 'en plantasje, plantasjer' },
+          { no: 'jord', es: 'tierra', forms: 'en jord' },
+          { no: 'dyrke', es: 'cultivar', forms: 'dyrker · dyrket · har dyrket' },
+          { no: 'tobakk', es: 'tabaco', forms: 'en tobakk' },
+          { no: 'sukkerrør', es: 'caña de azúcar', forms: 'et sukkerrør, sukkerrør' },
+          { no: 'arbeider', es: 'trabajador', forms: 'en arbeider, arbeidere' },
+          { no: 'nabo', es: 'vecino', forms: 'en nabo, naboer' },
+          { no: 'avtale', es: 'acuerdo', forms: 'en avtale, avtaler' },
+          { no: 'tilbud', es: 'oferta', forms: 'et tilbud, tilbud' },
+          { no: 'penger', es: 'dinero', forms: 'penger' },
+          { no: 'gjeld', es: 'deuda', forms: 'en gjeld' },
+          { no: 'avling', es: 'cosecha', forms: 'en avling, avlinger' },
+          { no: 'vekst', es: 'crecimiento', forms: 'en vekst' },
+          { no: 'skip', es: 'barco', forms: 'et skip, skip' },
+          { no: 'fare', es: 'peligro', forms: 'en fare, farer' }
+        ],
+        grammar: {
+          title: 'Perfektum: har + participio',
+          es: 'El perfecto se forma con har + participio: jeg har bodd, han har dyrket, vi har reist. Sirve para hablar de experiencias y de algo que empezó en el pasado y sigue: Jeg har bodd i Brasil i fire år. Con «siden» se indica el punto de inicio: siden 1658. Participios irregulares frecuentes: vært, hatt, gjort, fått, tatt, sett, gitt, funnet, kommet, gått, stått, holdt.',
+          examples: [
+            { no: 'Jeg har bodd i Brasil i fire år.', es: 'He vivido en Brasil cuatro años.' },
+            { no: 'Vi har dyrket tobakk siden 1658.', es: 'Hemos cultivado tabaco desde 1658.' },
+            { no: 'Han har blitt en rik mann.', es: 'Se ha convertido en un hombre rico.' }
+          ]
+        },
+        scene: {
+          id: 'plantation',
+          title: 'Plantasjen, 1659',
+          intro: 'Explora la plantación de Robinson en Brasil antes de su último viaje.',
+          hotspots: [
+            { id: 'plantasjen', no: 'plantasjen', es: 'la plantación', spot: 'plantation' },
+            { id: 'tobakken', no: 'tobakken', es: 'el tabaco', spot: 'tobacco' },
+            { id: 'huset', no: 'huset', es: 'la casa', spot: 'house' },
+            { id: 'skipet', no: 'skipet', es: 'el barco', spot: 'ship' },
+            { id: 'sjoen', no: 'sjøen', es: 'el mar', spot: 'sea' }
+          ]
+        },
+        exercises: [
+          {
+            type: 'mcq',
+            prompt: '¿Qué cultiva primero Robinson en Brasil?',
+            options: ['Tabaco', 'Caña de azúcar', 'Café', 'Maíz'],
+            answer: 0,
+            audio: 'Jeg plantet tobakk.',
+            explain: 'El texto dice que plantó tobakk først, antes de aprender a cultivar sukkerrør.'
+          },
+          {
+            type: 'gap',
+            prompt: 'Completa con el perfecto:',
+            sentence: 'Jeg har ___ i Brasil i fire år.',
+            answers: ['bodd'],
+            bank: ['bodd', 'bor', 'bo'],
+            es: 'He vivido en Brasil cuatro años.',
+            explain: 'El perfecto de «å bo» es «har bodd».'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase:',
+            words: ['Han', 'har', 'dyrket', 'tobakk', 'siden', '1658.'],
+            es: 'Ha cultivado tabaco desde 1658.',
+            explain: '«Har dyrket» es perfecto; «siden» marca el inicio.'
+          },
+          {
+            type: 'listen',
+            audio: 'Jeg har bodd i Brasil i fire år.',
+            es: 'He vivido en Brasil cuatro años.',
+            explain: '«I fire år» indica la duración; «har bodd» es el perfecto de «bo».'
+          },
+          {
+            type: 'match',
+            prompt: 'Empareja el vocabulario del capítulo:',
+            pairs: [
+              { a: 'jord', b: 'tierra' },
+              { a: 'dyrke', b: 'cultivar' },
+              { a: 'avling', b: 'cosecha' },
+              { a: 'gjeld', b: 'deuda' },
+              { a: 'fare', b: 'peligro' }
+            ],
+            explain: 'Cinco palabras clave del tercer capítulo.'
+          }
+        ]
+      },
       { id: '4', num: 4, level: 'B1', emoji: '🌊', title: 'Skipet og stormen', soon: true },
       { id: '5', num: 5, level: 'B1', emoji: '🏝️', title: 'Alene på øya', soon: true },
       { id: '6', num: 6, level: 'B1', emoji: '🪓', title: 'Det første året', soon: true },

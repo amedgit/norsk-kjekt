@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" role="img" aria-labelledby="title">
+  <title id="title">Se acerca una gran tormenta al barco de Robinson</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#355166"/>
+      <stop offset="1" stop-color="#0b1c2b"/>
+    </linearGradient>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2f7f9d"/>
+      <stop offset="1" stop-color="#1d5c74"/>
+    </linearGradient>
+    <clipPath id="round"><rect width="600" height="400" rx="30"/></clipPath>
+  </defs>
+  <g clip-path="url(#round)">
+    <rect width="600" height="400" fill="url(#bg)"/>
+
+  <circle cx="90" cy="64" r="62" fill="#1a3245" opacity=".9"/>
+  <circle cx="190" cy="58" r="72" fill="#1a3245" opacity=".9"/>
+  <circle cx="300" cy="70" r="58" fill="#1a3245" opacity=".85"/>
+  <circle cx="520" cy="60" r="72" fill="#1a3245" opacity=".9"/>
+  <path d="M118 80 L84 150 L120 146 L92 226 L166 128 L124 136 L158 80 Z" fill="#e0a43a" opacity=".95"/>
+  <g stroke="#dceefb" stroke-width="2" opacity=".25"><path d="M18 94 l-8 30"/><path d="M54 110 l-8 30"/><path d="M90 126 l-8 30"/><path d="M126 94 l-8 30"/><path d="M162 110 l-8 30"/><path d="M198 126 l-8 30"/><path d="M234 94 l-8 30"/><path d="M270 110 l-8 30"/><path d="M306 126 l-8 30"/><path d="M342 94 l-8 30"/><path d="M378 110 l-8 30"/><path d="M414 126 l-8 30"/><path d="M450 94 l-8 30"/><path d="M486 110 l-8 30"/><path d="M522 126 l-8 30"/><path d="M558 94 l-8 30"/></g>
+  <path d="M0 292 q44 -54 90 -6 q42 -50 90 0 q48 -56 96 -4 q44 -48 92 0 q46 -54 94 -6 q38 -44 78 0 q42 -46 82 0 v122 H0 Z" fill="#1d5c74"/>
+  <path d="M0 328 q44 -42 90 -4 q42 -40 90 0 q48 -44 96 -4 q44 -38 92 0 q46 -42 94 -4 q38 -36 78 0 q42 -38 82 0 v80 H0 Z" fill="#2f7f9d" opacity=".95"/>
+  <path d="M0 362 q54 -32 108 0 t108 0 t108 0 t108 0 t108 0 t108 0 v38 H0 Z" fill="#0b1c2b" opacity=".8"/>
+  <g transform="translate(330 324) scale(1.08) rotate(-13)">
+    <path d="M-95 0 L95 0 L72 38 L-72 38 Z" fill="#6b3f22"/>
+    <path d="M-95 0 L95 0 L82 10 L-82 10 Z" fill="#8a5a33"/>
+    <rect x="-88" y="-14" width="176" height="14" rx="4" fill="#8a5a33"/>
+    <rect x="-6" y="-142" width="8" height="142" fill="#0e2a47"/>
+    <rect x="-62" y="-122" width="5" height="96" fill="#0e2a47"/>
+    <path d="M2 -128 L2 -18 L62 -18 L48 -46 L58 -62 L40 -78 L52 -96 L30 -110 Z" fill="#f7f2e9"/><path d="M-4 -118 L-4 -30 L-54 -30 Z" fill="#eadfc9"/>
+    <path d="M-56 -122 L-56 -34 L-92 -34" fill="none" stroke="#0e2a47" stroke-width="4"/>
+    <path d="M4 -142 L42 -134 L4 -124 Z" fill="#c8102e"/>
+    <path d="M6 -140 Q50 -78 80 -10" fill="none" stroke="#0e2a47" stroke-width="2" opacity=".5"/>
+    <path d="M-6 -140 Q-48 -78 -84 -12" fill="none" stroke="#0e2a47" stroke-width="2" opacity=".5"/>
+  </g>
+  <path d="M430 188 q10 -10 20 0 q10 -10 20 0" fill="none" stroke="#dceefb" stroke-width="2.4000000000000004" stroke-linecap="round" opacity=".65"/>
+
+  </g>
+</svg>

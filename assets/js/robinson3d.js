@@ -38,6 +38,22 @@ const SEA_OFFSETS = {
   coast: [0, -8]
 };
 
+const PLANTATION_ANCHORS = {
+  house: [-5, 3.4, -3],
+  plantation: [3.5, 2.6, 2.8],
+  tobacco: [6.2, 3.4, 3.6],
+  ship: [6.2, 2.6, -13.5],
+  sea: [-40, 0.5, -12]
+};
+
+const PLANTATION_OFFSETS = {
+  house: [14, -10],
+  plantation: [0, 4],
+  tobacco: [16, 0],
+  ship: [0, 0],
+  sea: [-20, 0]
+};
+
 const SCENES = {
   york: {
     anchors: SPOT_ANCHORS,
@@ -56,6 +72,15 @@ const SCENES = {
     camera: [8.4, 5.2, 13.2],
     lookAt: [0, 1.7, -2.2],
     build: buildSea
+  },
+  plantation: {
+    anchors: PLANTATION_ANCHORS,
+    offsets: PLANTATION_OFFSETS,
+    background: 0xbfe3f0,
+    fog: [38, 85],
+    camera: [10, 6.5, 14],
+    lookAt: [0, 2, -3],
+    build: buildPlantation
   }
 };
 
@@ -366,6 +391,127 @@ function buildSea(world) {
   return { sea, seaBase, boat, moon, stars, robinson, xury, reflection };
 }
 
+
+function buildPlantation(world) {
+  const seaGeo = new THREE.PlaneGeometry(90, 90, 34, 34);
+  seaGeo.rotateX(-Math.PI / 2);
+  const sea = new THREE.Mesh(seaGeo, mat(0x2a7591, { roughness: 0.5, metalness: 0.12 }));
+  sea.position.y = -0.05;
+  world.add(sea);
+  const seaBase = Float32Array.from(seaGeo.attributes.position.array);
+
+  addBox(world, 34, 1.2, 20, 0x4f754a, 0, 0.2, -1);
+  addBox(world, 31, 0.2, 17, 0x6f9158, 0, 0.76, -1);
+  addBox(world, 2.4, 0.12, 11, 0xb08a5a, -1.45, 0.88, 2.2);
+
+  // Casa principal
+  const house = new THREE.Group();
+  addBox(house, 4.4, 2.5, 3.3, 0xefe2c4, 0, 1.9, 0);
+  const roof = new THREE.Mesh(new THREE.ConeGeometry(3.45, 1.7, 4), mat(0xa94f39));
+  roof.position.set(0, 4.0, 0);
+  roof.rotation.y = Math.PI / 4;
+  house.add(roof);
+  addBox(house, 0.66, 1.2, 0.14, 0x4c3322, 0, 1.35, 1.7);
+  addBox(house, 0.8, 0.8, 0.12, 0x6f9fb5, -1.25, 2.2, 1.7);
+  addBox(house, 0.8, 0.8, 0.12, 0x6f9fb5, 1.25, 2.2, 1.7);
+  addBox(house, 0.45, 1.1, 0.45, 0x8c7a63, 1.35, 4.15, -0.7);
+  // Porche
+  addBox(house, 5.2, 0.16, 1.1, 0x8a5a33, 0, 1.0, 2.15);
+  [-2.2, 2.2].forEach((x) => {
+    addBox(house, 0.14, 1.5, 0.14, 0x5d3d24, x, 0.78, 2.55);
+  });
+  house.position.set(-5.5, 0.7, -3.2);
+  world.add(house);
+
+  // Hileras de tabaco
+  for (let r = 0; r < 4; r++) {
+    const x = 3.1 + r * 1.65;
+    addBox(world, 1.0, 0.1, 6.2, 0x6b4a2f, x, 0.87, 4.1);
+    for (let i = 0; i < 6; i++) {
+      const z = 1.4 + i * 1.0;
+      const plant = new THREE.Mesh(new THREE.ConeGeometry(0.3, 0.75, 5), mat(0x4f8b4b));
+      plant.position.set(x, 1.24, z);
+      world.add(plant);
+      const leaf = new THREE.Mesh(new THREE.SphereGeometry(0.34, 6, 5), mat(0x5a9b52));
+      leaf.scale.set(1.25, 0.55, 1.25);
+      leaf.position.set(x, 1.0, z);
+      world.add(leaf);
+    }
+  }
+
+  // Palmas
+  function palmAt(x, z, h) {
+    const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.17, h, 6), mat(0x6b4a2f));
+    trunk.position.set(x, 0.75 + h / 2, z);
+    world.add(trunk);
+    for (let i = 0; i < 5; i++) {
+      const leaf = new THREE.Mesh(new THREE.ConeGeometry(0.55, 2.0, 4), mat(0x3f7d4b));
+      const a = (i / 5) * Math.PI * 2;
+      leaf.position.set(x + Math.cos(a) * 0.65, 0.75 + h + 0.15, z + Math.sin(a) * 0.65);
+      leaf.rotation.z = Math.cos(a) * 0.8;
+      leaf.rotation.x = Math.sin(a) * 0.8;
+      world.add(leaf);
+    }
+  }
+  palmAt(-10.5, 2.8, 2.6);
+  palmAt(10.5, 3.5, 2.2);
+  palmAt(-9.5, -9, 3.0);
+  palmAt(9.8, -9.5, 2.4);
+
+  // Cerca delante
+  for (let i = 0; i < 7; i++) {
+    addBox(world, 0.12, 0.95, 0.12, 0x6b4a2f, -7.5 + i * 2.3, 1.25, 8.2);
+  }
+  addBox(world, 14.2, 0.1, 0.1, 0x8a5a33, 0.4, 1.35, 8.2);
+  addBox(world, 14.2, 0.1, 0.1, 0x8a5a33, 0.4, 1.0, 8.2);
+
+  // Barco en el mar
+  const ship = new THREE.Group();
+  addBox(ship, 3.2, 0.8, 1.3, 0x6b3f22, 0, 0.65, 0);
+  const bow = new THREE.Mesh(new THREE.ConeGeometry(0.6, 1.2, 4), mat(0x6b3f22));
+  bow.rotation.z = -Math.PI / 2;
+  bow.rotation.y = Math.PI / 4;
+  bow.position.set(2.0, 0.68, 0);
+  ship.add(bow);
+  addBox(ship, 3.35, 0.12, 1.4, 0x8a5a33, 0, 1.08, 0);
+  const mast = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.07, 3.0, 6), mat(0x4a2f1b));
+  mast.position.set(0.2, 2.6, 0);
+  ship.add(mast);
+  const sail = new THREE.Mesh(
+    new THREE.PlaneGeometry(2.0, 1.8),
+    new THREE.MeshStandardMaterial({ color: 0xf2ead8, roughness: 0.95, side: THREE.DoubleSide })
+  );
+  sail.position.set(0.2, 2.45, 0.02);
+  ship.add(sail);
+  const flag = new THREE.Mesh(
+    new THREE.PlaneGeometry(0.55, 0.3),
+    new THREE.MeshStandardMaterial({ color: 0xb3202f, roughness: 0.9, side: THREE.DoubleSide })
+  );
+  flag.position.set(0.55, 4.12, 0);
+  ship.add(flag);
+  ship.position.set(6.2, 0.2, -13.5);
+  ship.rotation.y = -0.5;
+  ship.scale.setScalar(1.2);
+  world.add(ship);
+
+  // Sol y algunas nubes
+  const sunMesh = new THREE.Mesh(
+    new THREE.SphereGeometry(1.4, 16, 12),
+    new THREE.MeshBasicMaterial({ color: 0xffe3a3, fog: false })
+  );
+  sunMesh.position.set(16, 10, -24);
+  world.add(sunMesh);
+  const cloudMat = new THREE.MeshBasicMaterial({ color: 0xfdfaf0, fog: false });
+  [[-12, 9, -20, 1.5], [-4, 10, -22, 1.2], [7, 9.5, -21, 1.1]].forEach((c) => {
+    const cloud = new THREE.Mesh(new THREE.SphereGeometry(c[3], 10, 8), cloudMat);
+    cloud.scale.set(1.8, 0.55, 1);
+    cloud.position.set(c[0], c[1], c[2]);
+    world.add(cloud);
+  });
+
+  return { sea, seaBase, ship };
+}
+
 export function mount(stage, options) {
   const opts = options || {};
   const hotspots = Array.isArray(opts.hotspots) ? opts.hotspots : [];
@@ -411,6 +557,12 @@ export function mount(stage, options) {
     moonLight.position.set(-10, 14, -8);
     scene.add(moonLight);
     scene.add(new THREE.AmbientLight(0x8fb0c0, 0.26));
+  } else if (opts.sceneId === 'plantation') {
+    scene.add(new THREE.HemisphereLight(0xdff1ff, 0x3d4a30, 1.35));
+    const sunLight = new THREE.DirectionalLight(0xfff0cc, 2.0);
+    sunLight.position.set(12, 16, 8);
+    scene.add(sunLight);
+    scene.add(new THREE.AmbientLight(0xffffff, 0.22));
   } else {
     scene.add(new THREE.HemisphereLight(0xd8ecff, 0x3d4a30, 1.5));
     const sun = new THREE.DirectionalLight(0xfff1cf, 2.1);

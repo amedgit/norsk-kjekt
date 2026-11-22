@@ -242,6 +242,34 @@ function plants(x, y, rows, cols) {
   return out.join('');
 }
 
+
+function cane(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <path d="M-14 0 q-6 -34 0 -64" fill="none" stroke="${C.green}" stroke-width="4"/>
+    <path d="M-4 0 q2 -40 0 -76" fill="none" stroke="${C.green}" stroke-width="4"/>
+    <path d="M7 0 q6 -36 2 -70" fill="none" stroke="${C.green}" stroke-width="4"/>
+    <path d="M-16 -54 q-22 -12 -28 -2 q18 2 28 8" fill="${C.green}" opacity=".85"/>
+    <path d="M-4 -66 q-20 -14 -26 -4 q18 4 26 10" fill="${C.green}"/>
+    <path d="M9 -60 q22 -12 28 -2 q-18 2 -28 8" fill="${C.green}" opacity=".85"/>
+    <path d="M0 -76 q-4 -20 4 -30 q8 14 0 30" fill="${C.green}" opacity=".8"/>
+  </g>`;
+}
+
+function horse(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})" fill="${C.brown2}">
+    <ellipse cx="0" cy="-42" rx="38" ry="18"/>
+    <path d="M22 -48 q15 -10 19 -32 l15 4 q-2 28 -19 38 Z"/>
+    <circle cx="44" cy="-82" r="10"/>
+    <path d="M47 -90 l4 -10 l7 10 Z" fill="${C.brown}"/>
+    <rect x="-27" y="-28" width="8" height="32" rx="3"/>
+    <rect x="-9" y="-28" width="8" height="32" rx="3"/>
+    <rect x="10" y="-28" width="8" height="32" rx="3"/>
+    <rect x="25" y="-28" width="8" height="32" rx="3"/>
+    <path d="M-38 -46 q-20 -10 -24 -28 q16 8 28 22" fill="${C.brown}"/>
+    <circle cx="46" cy="-84" r="1.8" fill="${C.ink}"/>
+  </g>`;
+}
+
 /* ---------------------------------------------------------------- 1 */
 const family = svg('La familia de Robinson delante de su casa en York', ['#dceefb', '#f7f2e9'], `
   ${sun(520, 66, .85)}
@@ -562,6 +590,153 @@ const brazil = svg('Robinson llega a una costa verde de Brasil con su plantació
   ${gull(330, 118, .85)}
 `);
 
+
+/* ---------------------------------------------------------------- 17 */
+const ch3arrival = svg('Robinson llega a la costa verde de Brasil', ['#dceefb', '#f7f2e9'], `
+  ${sun(512, 62, .85)}
+  ${cloud(82, 74, .7)}
+  <rect x="0" y="210" width="600" height="190" fill="url(#sea)"/>
+  ${waves(228, C.white, .28)}
+  <path d="M0 258 q140 -34 280 -8 t240 -4 t80 8 v146 H0 Z" fill="${C.green}" opacity=".75"/>
+  <path d="M0 330 q140 -22 280 -2 t240 -6 t80 6 v72 H0 Z" fill="${C.mint}"/>
+  ${palm(58, 340, 1)}
+  ${ship(142, 300, .88)}
+  ${house(258, 198, 112, 76, C.cream, C.red)}
+  ${person(382, 342, .92, { shirt: C.blue, hair: C.hair2 })}
+  ${person(452, 344, .96, { shirt: C.navy, pants: C.navy, hair: C.grey })}
+  <rect x="392" y="318" width="28" height="30" rx="5" fill="${C.brown2}"/>
+  ${palm(548, 336, .9)}
+  ${gull(330, 112, .85)}
+`);
+
+/* ---------------------------------------------------------------- 18 */
+const clearing = svg('Robinson despeja el terreno y construye su primera casa', ['#dceefb', '#f7f2e9'], `
+  ${sun(508, 62, .85)}
+  ${cloud(82, 74, .7)}
+  <path d="M0 300 q150 -24 300 0 t300 0 v100 H0 Z" fill="${C.mint}"/>
+  <path d="M0 344 q180 -24 380 0 t220 0 v56 H0 Z" fill="${C.brown}" opacity=".35"/>
+  ${tree(64, 340, 1.1)}
+  ${tree(150, 344, .9)}
+  <rect x="520" y="300" width="16" height="44" rx="5" fill="${C.brown}"/>
+  <rect x="508" y="294" width="40" height="12" rx="4" fill="${C.brown2}"/>
+  <rect x="430" y="252" width="10" height="96" rx="4" fill="${C.brown2}"/>
+  <rect x="520" y="252" width="10" height="96" rx="4" fill="${C.brown2}"/>
+  <path d="M424 258 L480 226 L536 258" fill="none" stroke="${C.brown}" stroke-width="10" stroke-linecap="round"/>
+  ${person(318, 342, .98, { shirt: C.blue, hair: C.hair2 })}
+  <path d="M332 286 l-38 -34" stroke="${C.brown2}" stroke-width="6" stroke-linecap="round"/>
+  <path d="M292 250 l-14 -10 l-4 18 l18 -8 Z" fill="${C.grey}"/>
+  <path d="M300 336 q16 -6 26 2" fill="none" stroke="${C.brown}" stroke-width="5" opacity=".5"/>
+  ${gull(470, 108, .8)}
+`);
+
+/* ---------------------------------------------------------------- 19 */
+const sugar = svg('El vecino portugués enseña a Robinson a cultivar caña de azúcar', ['#e9f6ee', '#f7f2e9'], `
+  ${sun(512, 62, .9)}
+  ${cloud(82, 74, .65)}
+  <rect x="0" y="232" width="600" height="168" fill="${C.mint}"/>
+  <rect x="0" y="306" width="600" height="94" fill="${C.sand}"/>
+  <path d="M0 330 q150 -18 300 0 t300 0 v70 H0 Z" fill="${C.green}" opacity=".45"/>
+  ${house(398, 190, 148, 96, C.cream, C.red)}
+  ${cane(78, 340, 1.05)}
+  ${cane(122, 344, .95)}
+  ${cane(166, 340, 1.1)}
+  ${cane(210, 344, .9)}
+  ${person(320, 344, .95, { shirt: C.blue, hair: C.hair2 })}
+  ${person(400, 344, 1, { shirt: C.amber, pants: C.navy, hair: C.grey, flip: true })}
+  <rect x="430" y="300" width="34" height="38" rx="6" fill="${C.brown2}"/>
+  ${palm(558, 340, .75)}
+  ${gull(300, 108, .8)}
+`);
+
+/* ---------------------------------------------------------------- 20 */
+const rich = svg('Robinson observa su plantación próspera con caballos y campos', ['#f6e7c8', '#f7f2e9'], `
+  ${sun(512, 60, 1)}
+  ${cloud(80, 74, .7)}
+  <path d="M0 286 q150 -28 300 -4 t300 0 v118 H0 Z" fill="${C.green}" opacity=".55"/>
+  <path d="M0 330 q180 -20 380 2 t220 -4 v72 H0 Z" fill="${C.mint}"/>
+  <rect x="0" y="352" width="600" height="48" fill="${C.sand}" opacity=".7"/>
+  ${house(372, 176, 176, 112, C.cream, C.red)}
+  <rect x="410" y="296" width="94" height="12" rx="4" fill="${C.brown2}"/>
+  ${cane(56, 344, .85)}
+  ${cane(96, 348, .75)}
+  ${horse(182, 350, 1.05)}
+  ${person(300, 350, .82, { shirt: C.amber, skin: C.skin3, hair: C.hair })}
+  ${person(340, 352, .78, { shirt: C.green, skin: C.skin2, hair: C.hair2, flip: true })}
+  ${person(470, 350, .9, { shirt: C.blue, hair: C.hair2 })}
+  ${gull(300, 112, .8)}
+`);
+
+/* ---------------------------------------------------------------- 21 */
+const offer = svg('El capitán le ofrece a Robinson un negocio peligroso', ['#fdf3e7', '#efdfca'], `
+  ${sun(512, 60, .85)}
+  ${cloud(82, 72, .65)}
+  <rect x="0" y="248" width="600" height="152" fill="${C.sand}"/>
+  ${house(360, 156, 196, 112, C.cream, C.red)}
+  <rect x="236" y="272" width="230" height="16" rx="6" fill="${C.brown2}"/>
+  <rect x="252" y="288" width="13" height="70" rx="4" fill="${C.brown}"/>
+  <rect x="446" y="288" width="13" height="70" rx="4" fill="${C.brown}"/>
+  <g transform="translate(305 252) rotate(-5)">
+    <rect x="0" y="0" width="52" height="34" rx="3" fill="${C.cream}" stroke="${C.ink}" stroke-opacity=".2"/>
+    <path d="M8 8 h36 M8 15 h28 M8 22 h32" stroke="${C.blue}" stroke-width="2" opacity=".45"/>
+  </g>
+  <circle cx="390" cy="256" r="7" fill="${C.amber}"/>
+  <circle cx="404" cy="258" r="7" fill="${C.amber}"/>
+  <circle cx="397" cy="246" r="7" fill="${C.amber}"/>
+  ${person(236, 352, .92, { shirt: C.blue, hair: C.hair2 })}
+  ${person(448, 352, 1, { shirt: C.navy, pants: C.navy, hair: C.grey, point: true, flip: true })}
+  ${palm(560, 340, .7)}
+  ${gull(300, 110, .8)}
+`);
+
+/* ---------------------------------------------------------------- 22 */
+const departure = svg('Robinson se despide en el puerto antes de embarcar', ['#dceefb', '#f7f2e9'], `
+  ${sun(512, 62, .85)}
+  ${cloud(80, 74, .7)}
+  <rect x="0" y="208" width="600" height="192" fill="url(#sea)"/>
+  ${waves(226, C.white, .26)}
+  <rect x="0" y="280" width="284" height="120" fill="${C.sand}"/>
+  <rect x="0" y="272" width="284" height="14" fill="${C.brown2}"/>
+  <rect x="36" y="288" width="14" height="86" rx="4" fill="${C.brown}"/>
+  <rect x="146" y="288" width="14" height="86" rx="4" fill="${C.brown}"/>
+  <rect x="248" y="288" width="14" height="86" rx="4" fill="${C.brown}"/>
+  ${ship(440, 306, .95)}
+  ${house(24, 152, 108, 94, C.cream, C.red)}
+  ${house(142, 184, 86, 62, C.sand, C.amber)}
+  ${person(176, 342, .95, { shirt: C.blue, hair: C.hair2 })}
+  ${person(262, 342, .92, { shirt: C.green, hair: C.hair, wave: true, flip: true })}
+  <rect x="136" y="308" width="30" height="38" rx="5" fill="${C.brown2}"/>
+  <path d="M136 316 q15 -8 30 0" fill="none" stroke="${C.ink}" stroke-width="3" opacity=".25"/>
+  ${gull(330, 106, .8)}
+`);
+
+/* ---------------------------------------------------------------- 23 */
+const ch3calm = svg('El barco de Robinson navega desde Brasil con el mar en calma', ['#b9dff4', '#eaf6fb'], `
+  ${sun(504, 72, 1.05)}
+  ${cloud(82, 70, .9)}
+  <rect x="0" y="218" width="600" height="182" fill="url(#sea)"/>
+  ${waves(232, C.white, .32)}
+  ${waves(264, C.white, .22)}
+  ${waves(298, C.white, .16)}
+  ${ship(300, 312, 1.02)}
+  ${person(374, 246, .38, { shirt: C.blue, hair: C.hair2 })}
+  ${gull(150, 120, .9)}
+  ${gull(430, 118, .8)}
+`);
+
+/* ---------------------------------------------------------------- 24 */
+const ch3storm = svg('Se acerca una gran tormenta al barco de Robinson', ['#355166', '#0b1c2b'], `
+  <circle cx="90" cy="64" r="62" fill="${C.storm}" opacity=".9"/>
+  <circle cx="190" cy="58" r="72" fill="${C.storm}" opacity=".9"/>
+  <circle cx="300" cy="70" r="58" fill="${C.storm}" opacity=".85"/>
+  <circle cx="520" cy="60" r="72" fill="${C.storm}" opacity=".9"/>
+  <path d="M118 80 L84 150 L120 146 L92 226 L166 128 L124 136 L158 80 Z" fill="${C.amber}" opacity=".95"/>
+  <g stroke="${C.sky}" stroke-width="2" opacity=".25">${Array.from({ length: 16 }, (_, i) => `<path d="M${18 + i * 36} ${94 + (i % 3) * 16} l-8 30"/>`).join('')}</g>
+  <path d="M0 292 q44 -54 90 -6 q42 -50 90 0 q48 -56 96 -4 q44 -48 92 0 q46 -54 94 -6 q38 -44 78 0 q42 -46 82 0 v122 H0 Z" fill="${C.seaDeep}"/>
+  <path d="M0 328 q44 -42 90 -4 q42 -40 90 0 q48 -44 96 -4 q44 -38 92 0 q46 -42 94 -4 q38 -36 78 0 q42 -38 82 0 v80 H0 Z" fill="${C.sea}" opacity=".95"/>
+  <path d="M0 362 q54 -32 108 0 t108 0 t108 0 t108 0 t108 0 t108 0 v38 H0 Z" fill="${C.storm2}" opacity=".8"/>
+  ${ship(330, 324, 1.08, { tilt: -13, torn: true })}
+  ${gull(430, 188, .8, C.sky)}
+`);
 const files = [
   ['01-familie.svg', family],
   ['02-drommen.svg', dream],
@@ -578,7 +753,15 @@ const files = [
   ['ch2-05-kysten.svg', coast],
   ['ch2-06-skipet.svg', portuguese],
   ['ch2-07-kaptein.svg', captain],
-  ['ch2-08-brasil.svg', brazil]
+  ['ch2-08-brasil.svg', brazil],
+  ['ch3-01-brasil.svg', ch3arrival],
+  ['ch3-02-rydde.svg', clearing],
+  ['ch3-03-sukkerrør.svg', sugar],
+  ['ch3-04-rik.svg', rich],
+  ['ch3-05-tilbud.svg', offer],
+  ['ch3-06-avreise.svg', departure],
+  ['ch3-07-rolig-sjo.svg', ch3calm],
+  ['ch3-08-storm.svg', ch3storm]
 ];
 
 for (const [name, content] of files) {
