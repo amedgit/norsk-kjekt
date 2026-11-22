@@ -138,17 +138,22 @@ persa; el bokmål de las frases se sigue leyendo de izquierda a derecha.
 
 ### Enlaces con idioma fijado
 
-Para compartir el curso ya abierto en un idioma, añade `?lang=` a la URL:
+La forma más corta de compartir el curso en un idioma es usar su entrada:
 
-- **Persa:** `https://norskkjekt.com/?lang=fa`
-- **Inglés:** `https://norskkjekt.com/?lang=en`
-- **Español:** `https://norskkjekt.com/?lang=es`
+- **Persa:** `https://norskkjekt.com/fa/`
+- **Inglés:** `https://norskkjekt.com/en/`
+- **Español:** `https://norskkjekt.com/es/`
 
-El parámetro se aplica antes de cargar la interfaz, se guarda en
-`localStorage` y se puede combinar con cualquier ruta:
-`https://norskkjekt.com/?lang=fa#/pronunciacion`. Si después cambias de idioma
-con el selector, el parámetro `lang` de la URL se actualiza para que el enlace
-siga siendo correcto.
+También se puede enlazar una sección concreta:
+`https://norskkjekt.com/fa/#/pronunciacion` o
+`https://norskkjekt.com/fa/#/lecciones`.
+
+Esas entradas son páginas de redirección `noindex` que conservan el `hash` y
+los parámetros de campaña. El destino interno sigue siendo
+`https://norskkjekt.com/?lang=fa`, que también funciona directamente. El
+idioma se guarda en `localStorage` antes de cargar la interfaz. Si después
+cambias con el selector, el parámetro `lang` de la URL se actualiza para que
+el enlace siga siendo correcto.
 
 ### Añadir otro idioma
 
