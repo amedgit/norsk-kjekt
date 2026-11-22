@@ -55,7 +55,7 @@ Al cambiar JS o CSS, sube la versión de `index.html` (`?v=AAAAMMDD`) y
 descargan el código nuevo en la siguiente visita, sin quedarse con la copia
 cacheada.
 
-## Práctica, progreso y modo oscuro
+## Práctica, progreso y temas
 
 - **Test de nivel** (`#/nivel`): 18 preguntas de A1 a C2 y una recomendación de
   por dónde empezar.
@@ -66,8 +66,8 @@ cacheada.
 - **Mi progreso** (`#/progreso`): racha, XP, mapa de calor de 12 semanas, ocho
   logros y copia de seguridad. También se llega tocando la racha o el XP de la
   cabecera.
-- **Modo oscuro** con el botón 🌙/☀️; sigue el tema del sistema y recuerda tu
-  elección.
+- **Tres temas** —claro, oscuro y sepia— con el botón 🌙/📜/☀️; sigue el tema
+  del sistema y recuerda tu elección.
 - **Teclado æ ø å** flotante al escribir en cualquier ejercicio.
 - **Exportar/importar**: descarga un JSON con todo el estado y vuelve a cargarlo
   en otro móvil o tras borrar el navegador.
@@ -95,7 +95,7 @@ cacheada.
 | Idioma | selector **ES / EN / فا** en la cabecera: traduce interfaz, explicaciones y tablas; el bokmål se queda intacto y el progreso se conserva. En persa la página cambia a dirección RTL |
 | Analítica | Cloudflare Web Analytics (sin cookies) y Google Analytics 4 con Consent Mode, banner de consentimiento y página de privacidad |
 | Progreso | racha, XP, mapa de calor de 12 semanas, 8 logros, repaso espaciado (1/3/7/15/30 días) y exportación/importación del progreso en JSON |
-| Extras | modo oscuro, teclado noruego æ ø å en los ejercicios de escritura y PWA offline |
+| Extras | temas claro/oscuro/sepia, teclado noruego æ ø å en los ejercicios de escritura y PWA offline |
 | Velocidad | selector 0,5×–1,3× en la cabecera; empieza en 0,85×, se aplica al audio y se recuerda |
 | Audio | 2911 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
 | App | PWA instalable (offline) con icono propio, pantalla completa y funcionamiento sin conexión; el APK está retirado temporalmente |

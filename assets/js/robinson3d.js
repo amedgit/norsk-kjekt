@@ -289,21 +289,15 @@ function buildSea(world) {
     size: 0.16,
     transparent: true,
     opacity: 0.8,
-    depthWrite: false
+    depthWrite: false,
+    fog: false
   }));
   world.add(stars);
 
   // Luna
-  const moon = new THREE.Mesh(new THREE.SphereGeometry(1.55, 20, 16), new THREE.MeshBasicMaterial({ color: 0xf2ead8 }));
+  const moon = new THREE.Mesh(new THREE.SphereGeometry(1.55, 20, 16), new THREE.MeshBasicMaterial({ color: 0xf2ead8, fog: false }));
   moon.position.set(-9, 8.5, -17);
   world.add(moon);
-  const glow = new THREE.Mesh(
-    new THREE.SphereGeometry(2.7, 20, 16),
-    new THREE.MeshBasicMaterial({ color: 0xf2ead8, transparent: true, opacity: 0.16, blending: THREE.AdditiveBlending, depthWrite: false })
-  );
-  glow.position.copy(moon.position);
-  world.add(glow);
-
   // Bote de la fuga
   const boat = new THREE.Group();
   addBox(boat, 3.1, 0.72, 1.15, 0x6b3f22, 0, 0.55, 0);
@@ -369,7 +363,7 @@ function buildSea(world) {
 
   world.add(boat);
 
-  return { sea, seaBase, boat, moon, glow, stars, robinson, xury, reflection };
+  return { sea, seaBase, boat, moon, stars, robinson, xury, reflection };
 }
 
 export function mount(stage, options) {

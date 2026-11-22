@@ -3790,30 +3790,35 @@
   /* ---------------- Tema, teclado y progreso ---------------- */
 
 
-  function applyTheme(dark) {
+  function applyTheme(mode) {
     var root = document.documentElement;
-    if (dark) root.setAttribute('data-theme', 'dark');
+    if (mode === 'dark' || mode === 'sepia') root.setAttribute('data-theme', mode);
     else root.removeAttribute('data-theme');
     var btn = document.getElementById('theme-toggle');
     if (btn) {
-      btn.textContent = dark ? '☀️' : '🌙';
-      btn.title = t(dark ? 'theme.toLight' : 'theme.toDark');
+      var icon = mode === 'dark' ? '📜' : mode === 'sepia' ? '☀️' : '🌙';
+      var nextKey = mode === 'dark' ? 'theme.toSepia' : mode === 'sepia' ? 'theme.toLight' : 'theme.toDark';
+      btn.textContent = icon;
+      btn.title = t(nextKey);
       btn.setAttribute('aria-label', btn.title);
     }
     var meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', dark ? '#0e141d' : '#ba0c2f');
+    if (meta) meta.setAttribute('content', mode === 'dark' ? '#0e141d' : mode === 'sepia' ? '#efe4cf' : '#ba0c2f');
   }
 
   function initTheme() {
     var stored = null;
     try { stored = localStorage.getItem('norsk-kjekt-theme'); } catch (e) { /* modo privado */ }
-    var dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
-    applyTheme(dark);
+    var mode = (stored === 'dark' || stored === 'sepia' || stored === 'light')
+      ? stored
+      : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    applyTheme(mode);
     var btn = document.getElementById('theme-toggle');
     if (btn) {
       btn.addEventListener('click', function () {
-        var next = document.documentElement.getAttribute('data-theme') !== 'dark';
-        try { localStorage.setItem('norsk-kjekt-theme', next ? 'dark' : 'light'); } catch (e) { /* modo privado */ }
+        var current = document.documentElement.getAttribute('data-theme') || 'light';
+        var next = current === 'light' ? 'dark' : current === 'dark' ? 'sepia' : 'light';
+        try { localStorage.setItem('norsk-kjekt-theme', next); } catch (e) { /* modo privado */ }
         applyTheme(next);
       });
     }
