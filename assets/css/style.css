@@ -1256,6 +1256,32 @@ html[dir="rtl"] .exam-usertext {
 
 .verbos-intro { background: linear-gradient(135deg, #1e3f4a, #2e6b73); }
 .verbos-count { color: rgba(255, 255, 255, .82); font-size: .84rem; margin-top: .6rem; }
+.verb-pack-grid {
+  display: grid; gap: .8rem; margin-bottom: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+.verb-pack-card {
+  display: flex; flex-direction: column; gap: .3rem;
+  padding: 1rem 1.1rem; text-decoration: none; color: var(--ink);
+  background: var(--card); border: 1px solid var(--line);
+  border-top: 3px solid #2e6b73; border-radius: var(--radius);
+  box-shadow: 0 1px 2px rgba(16, 28, 51, .04);
+  transition: transform .15s, box-shadow .15s;
+}
+.verb-pack-card:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(16, 28, 51, .08); }
+.verb-pack-top { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+.verb-pack-emoji { font-size: 1.5rem; line-height: 1; }
+.verb-pack-card h3 { font-size: 1.02rem; margin: .15rem 0 0; }
+.verb-pack-ex { color: var(--muted); font-size: .78rem; line-height: 1.45; min-height: 2.4em; }
+.verb-pack-meter { display: flex; align-items: center; gap: .55rem; margin-top: auto; padding-top: .35rem; }
+.verb-pack-meter .meter { flex: 1; height: 7px; background: var(--bg); }
+.verb-pack-meter .meter > i { background: var(--green); }
+.verb-pack-meter small { color: var(--muted); font-size: .72rem; font-weight: 700; white-space: nowrap; }
+.verb-pack-foot { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .15rem; }
+.verbos-actions { margin-top: 1rem; }
+@media (max-width: 700px) {
+  .verb-pack-grid { grid-template-columns: 1fr; }
+}
 .verbos-toolbar { display: flex; flex-direction: column; gap: .6rem; margin: 1rem 0 .8rem; }
 .verbos-test {
   display: flex; align-items: center; justify-content: space-between; gap: 1rem;

@@ -328,15 +328,21 @@ actualiza el sitemap, enlázala desde `/guias/` y desde el pie de la app.
 
 ### Verbos esenciales
 
-La sección `#/verbos` reúne 200 verbos de uso diario en 10 temas. En noruego no
-hay conjugación por persona, así que cada verbo muestra sus formas clave:
+La sección `#/verbos` reúne 200 verbos de uso diario organizados en **10 paquetes
+de 20 verbos**, uno por tema. En noruego no hay conjugación por persona, así que
+cada verbo muestra sus formas clave:
 
+- `#/verbos` — índice de paquetes con progreso y test global;
+- `#/verbos/<tema>` — 20 verbos del tema y test del paquete;
+- `#/verbos/alle` — buscador, filtros por tema y lista completa;
 - infinitivo, presente, pasado, perfecto e imperativo;
 - ejemplo con audio y traducción;
 - nivel, tema y marca de regular o irregular;
-- buscador, filtros por tema, botón **«La sé»** y test de 10 verbos.
+- botón **«La sé»** y test de 10 preguntas.
 
-El progreso vive en `state.verbos.known`. El acceso está en el menú **Más**.
+El progreso de vocabulario vive en `state.verbos.known`; el mejor resultado de
+cada paquete en `state.verbos.packs` y el global en `state.verbos.best`. El
+acceso está en el menú **Más**.
 
 ### Robinson Crusoe
 

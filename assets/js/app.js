@@ -61,7 +61,7 @@
   var KEY = 'norsk-kjekt-v1';
 
   function defaults() {
-    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, body: {}, core: { known: {}, packs: {} }, stories: { chapters: {} }, robinson: { chapters: {} }, a0: { best: 0, total: 0, at: 0 }, grammar: { topics: {} }, verbos: { known: {}, best: { best: 0, total: 0, at: 0 } }, games: { dagensOrd: { date: '', guesses: [], status: 'playing', played: 0, wins: 0, streak: 0, best: 0, lastWin: '', distribution: [0, 0, 0, 0, 0, 0] }, hukommelse: { easy: { played: 0, bestMoves: 0, bestTime: 0 }, medium: { played: 0, bestMoves: 0, bestTime: 0 }, hard: { played: 0, bestMoves: 0, bestTime: 0 } } }, xp: 0, days: {}, review: [], srs: {}, version: 1 };
+    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, body: {}, core: { known: {}, packs: {} }, stories: { chapters: {} }, robinson: { chapters: {} }, a0: { best: 0, total: 0, at: 0 }, grammar: { topics: {} }, verbos: { known: {}, best: { best: 0, total: 0, at: 0 }, packs: {} }, games: { dagensOrd: { date: '', guesses: [], status: 'playing', played: 0, wins: 0, streak: 0, best: 0, lastWin: '', distribution: [0, 0, 0, 0, 0, 0] }, hukommelse: { easy: { played: 0, bestMoves: 0, bestTime: 0 }, medium: { played: 0, bestMoves: 0, bestTime: 0 }, hard: { played: 0, bestMoves: 0, bestTime: 0 } } }, xp: 0, days: {}, review: [], srs: {}, version: 1 };
   }
 
   var state = (function load() {
@@ -79,7 +79,7 @@
       var robinson = { chapters: {} };
       var a0 = { best: 0, total: 0, at: 0 };
       var grammar = { topics: {} };
-      var verbos = { known: {}, best: { best: 0, total: 0, at: 0 } };
+      var verbos = { known: {}, best: { best: 0, total: 0, at: 0 }, packs: {} };
       var games = { dagensOrd: { date: '', guesses: [], status: 'playing', played: 0, wins: 0, streak: 0, best: 0, lastWin: '', distribution: [0, 0, 0, 0, 0, 0] }, hukommelse: { easy: { played: 0, bestMoves: 0, bestTime: 0 }, medium: { played: 0, bestMoves: 0, bestTime: 0 }, hard: { played: 0, bestMoves: 0, bestTime: 0 } } };
       Object.keys(raw.lessons || {}).forEach(function (id) {
         var v = raw.lessons[id];
@@ -149,6 +149,12 @@
             at: Number(raw.verbos.best.at) || 0
           };
         }
+        Object.keys(raw.verbos.packs || {}).forEach(function (id) {
+          var v = raw.verbos.packs[id];
+          if (v && typeof v === 'object') {
+            verbos.packs[id] = { best: Number(v.best) || 0, total: Number(v.total) || 0, at: Number(v.at) || 0 };
+          }
+        });
       }
       if (raw.games && raw.games.dagensOrd && typeof raw.games.dagensOrd === 'object') {
         var gd = raw.games.dagensOrd;
@@ -1735,18 +1741,42 @@
 
   var verbosQuery = '';
   var verbosTheme = 'all';
+  var verbosScope = 'all';
+
+  var VERB_THEME_EMOJI = {
+    basic: '🔑',
+    modal: '🧩',
+    movement: '🚶',
+    communication: '💬',
+    daily: '🏠',
+    work: '💼',
+    feelings: '❤️',
+    thought: '💭',
+    change: '🔄',
+    body: '🫀'
+  };
+
+  function verbsForScope(scope) {
+    return scope === 'all'
+      ? VERBOS.items
+      : VERBOS.items.filter(function (v) { return v.theme === scope; });
+  }
+
+  function verbKnownCount(list) {
+    return list.filter(function (v) { return state.verbos.known[v.id]; }).length;
+  }
 
   function verbosList() {
     var q = verbosQuery.trim().toLowerCase();
-    return VERBOS.items.filter(function (v) {
-      if (verbosTheme !== 'all' && v.theme !== verbosTheme) return false;
+    return verbsForScope(verbosScope).filter(function (v) {
+      if (verbosScope === 'all' && verbosTheme !== 'all' && v.theme !== verbosTheme) return false;
       if (!q) return true;
       return (v.inf + ' ' + v.es).toLowerCase().indexOf(q) > -1;
     });
   }
 
-  function verbosListHTML() {
-    var list = verbosList();
+  function verbosListHTML(items) {
+    var list = items || verbosList();
     if (!list.length) return '<p class="muted">' + esc(t('verbos.noResults')) + '</p>';
     return list.map(function (v) {
       var known = state.verbos.known[v.id];
@@ -1773,8 +1803,8 @@
     }).join('');
   }
 
-  function verbQuiz() {
-    var pool = shuffle(VERBOS.items).slice(0, 10);
+  function verbQuiz(scope) {
+    var pool = shuffle(verbsForScope(scope || 'all')).slice(0, 10);
     return pool.map(function (v, i) {
       if (i % 2 === 0) {
         var seen = {};
@@ -1818,22 +1848,31 @@
     var mount = document.getElementById('verbos-list');
     if (mount) mount.innerHTML = verbosListHTML();
     var count = document.getElementById('verbos-count');
-    if (count) count.textContent = t('verbos.learned', {
-      done: Object.keys(state.verbos.known).length,
-      total: VERBOS.items.length
-    });
+    if (count) {
+      var base = verbsForScope(verbosScope);
+      var known = verbKnownCount(base);
+      count.textContent = t(verbosScope === 'all' ? 'verbos.learned' : 'verbos.packProgress', {
+        done: known,
+        total: base.length
+      });
+      var meter = document.getElementById('verbos-meter');
+      if (meter) meter.style.width = (base.length ? Math.round((known / base.length) * 100) : 0) + '%';
+    }
   }
 
-  function startVerbTest(mount) {
-    var best = state.verbos.best;
-    runExercises(mount, verbQuiz(), {
-      label: t('verbos.testLabel'),
+  function startVerbTest(mount, scope) {
+    var all = scope === 'all';
+    var previous = all ? state.verbos.best : (state.verbos.packs[scope] || { best: 0, total: 0, at: 0 });
+    runExercises(mount, verbQuiz(scope), {
+      label: t('verbos.testLabel') + (all ? '' : ' · ' + t('verbos.theme.' + scope)),
       onDone: function (res) {
-        state.verbos.best = {
-          best: Math.max(best ? best.best : 0, res.correct),
+        var result = {
+          best: Math.max(previous ? previous.best : 0, res.correct),
           total: res.total,
           at: Date.now()
         };
+        if (all) state.verbos.best = result;
+        else state.verbos.packs[scope] = result;
         state.xp += res.correct * 10;
         markDay();
         save();
@@ -1846,29 +1885,114 @@
           again.type = 'button';
           again.className = 'btn ghost';
           again.textContent = t('verbos.testAgain');
-          again.addEventListener('click', function () { startVerbTest(mount); });
+          again.addEventListener('click', function () { startVerbTest(mount, scope); });
           box.appendChild(again);
         }
       }
     });
   }
 
+  function verbPackCard(theme) {
+    var list = verbsForScope(theme);
+    var known = verbKnownCount(list);
+    var pct = list.length ? Math.round((known / list.length) * 100) : 0;
+    var best = state.verbos.packs[theme];
+    return '<a class="verb-pack-card" href="#/verbos/' + theme + '">' +
+      '<div class="verb-pack-top"><span class="verb-pack-emoji">' + (VERB_THEME_EMOJI[theme] || '📚') + '</span>' +
+      '<span class="chip plain">' + esc(t('verbos.packCount', { n: list.length })) + '</span></div>' +
+      '<h3>' + esc(t('verbos.theme.' + theme)) + '</h3>' +
+      '<p class="verb-pack-ex">' + list.slice(0, 3).map(function (v) { return v.inf; }).join(' · ') + '</p>' +
+      '<div class="verb-pack-meter"><span class="meter"><i style="width:' + pct + '%"></i></span>' +
+      '<small>' + known + '/' + list.length + '</small></div>' +
+      '<div class="verb-pack-foot">' +
+      (best ? '<span class="chip done">✓ ' + best.best + '/' + best.total + '</span>' : '<span class="chip">' + esc(t('verbos.packOpen')) + '</span>') +
+      '</div></a>';
+  }
+
+  function verbosTestSection(scope) {
+    var best = scope === 'all' ? state.verbos.best : state.verbos.packs[scope];
+    var title = scope === 'all' ? t('verbos.testTitle') : t('verbos.packTestTitle');
+    var text = scope === 'all' ? t('verbos.testText') : t('verbos.packTestText');
+    var start = scope === 'all' ? t('verbos.testStart') : t('verbos.packTestStart');
+    var bestKey = scope === 'all' ? 'verbos.testBest' : 'verbos.packBest';
+    return '<section class="card verbos-test">' +
+      '<div><h2>' + esc(title) + '</h2><p class="muted">' + esc(text) + '</p></div>' +
+      '<div id="verbos-test-mount">' +
+      '<div class="actions"><button class="btn primary" id="start-verb-test" type="button">' + esc(start) + '</button>' +
+      (best && best.total ? '<span class="ex-hint">' + esc(t(bestKey, { best: best.best, total: best.total })) + '</span>' : '') +
+      '</div></div></section>';
+  }
+
+  function bindVerbosTest(scope) {
+    var mount = document.getElementById('verbos-test-mount');
+    var btn = document.getElementById('start-verb-test');
+    if (btn) btn.addEventListener('click', function () { startVerbTest(mount, scope); });
+  }
+
   function renderVerbos() {
-    verbosQuery = '';
-    verbosTheme = 'all';
+    var known = verbKnownCount(VERBOS.items);
+    var per = VERBOS.themes.length ? Math.round(VERBOS.items.length / VERBOS.themes.length) : 0;
     app.innerHTML =
       '<div class="crumbs"><a href="#/">' + esc(t('crumb.home')) + '</a> <span>›</span> <span>' + esc(t('verbos.title')) + '</span></div>' +
       '<section class="colo-intro verbos-intro">' +
       '  <span class="eyebrow">' + esc(t('verbos.eyebrow')) + '</span>' +
       '  <h1>' + esc(t('verbos.title')) + '</h1>' +
       '  <p>' + esc(t('verbos.intro')) + '</p>' +
+      '  <p class="verbos-count">' + esc(t('verbos.learned', { done: known, total: VERBOS.items.length })) + '</p>' +
+      '</section>' +
+      '<h2 class="section-title">' + esc(t('verbos.packsTitle')) + ' <span>' + esc(t('verbos.packsMeta', { n: VERBOS.themes.length, per: per })) + '</span></h2>' +
+      '<div class="verb-pack-grid">' + VERBOS.themes.map(verbPackCard).join('') + '</div>' +
+      verbosTestSection('all') +
+      '<div class="actions verbos-actions"><a class="btn ghost" href="#/verbos/alle">' + esc(t('verbos.allLink')) + '</a></div>';
+
+    bindVerbosTest('all');
+  }
+
+  function renderVerbPack(theme) {
+    var list = verbsForScope(theme);
+    if (!list.length) { renderVerbos(); return; }
+    verbosScope = theme;
+    verbosTheme = 'all';
+    verbosQuery = '';
+    var known = verbKnownCount(list);
+    var pct = Math.round((known / list.length) * 100);
+    app.innerHTML =
+      '<div class="crumbs"><a href="#/verbos">' + esc(t('verbos.title')) + '</a> <span>›</span> <span>' + esc(t('verbos.theme.' + theme)) + '</span></div>' +
+      '<section class="colo-intro verbos-intro verb-pack-intro">' +
+      '  <span class="eyebrow">' + esc(t('verbos.packEyebrow')) + '</span>' +
+      '  <h1>' + esc(t('verbos.theme.' + theme)) + '</h1>' +
+      '  <p>' + esc(t('verbos.packIntro', { n: list.length })) + '</p>' +
+      '  <div class="story-progress"><span id="verbos-count">' + esc(t('verbos.packProgress', { done: known, total: list.length })) + '</span>' +
+      '    <span class="meter"><i id="verbos-meter" style="width:' + pct + '%"></i></span></div>' +
+      '  <div class="fun-banner-actions story-actions">' +
+      '    <a class="btn ghost" href="#/verbos">' + esc(t('verbos.packsLink')) + '</a>' +
+      '    <a class="btn ghost" href="#/verbos/alle">' + esc(t('verbos.allLink')) + '</a>' +
+      '  </div>' +
+      '</section>' +
+      verbosTestSection(theme) +
+      '<div id="verbos-list" class="verbos-list"></div>';
+
+    paintVerbos();
+    bindVerbosTest(theme);
+  }
+
+  function renderVerbosAll() {
+    verbosScope = 'all';
+    verbosTheme = 'all';
+    verbosQuery = '';
+    var known = verbKnownCount(VERBOS.items);
+    app.innerHTML =
+      '<div class="crumbs"><a href="#/verbos">' + esc(t('verbos.title')) + '</a> <span>›</span> <span>' + esc(t('verbos.allTitle')) + '</span></div>' +
+      '<section class="colo-intro verbos-intro">' +
+      '  <span class="eyebrow">' + esc(t('verbos.eyebrow')) + '</span>' +
+      '  <h1>' + esc(t('verbos.allTitle')) + '</h1>' +
+      '  <p>' + esc(t('verbos.allIntro')) + '</p>' +
       '  <p class="verbos-count" id="verbos-count"></p>' +
+      '  <div class="fun-banner-actions story-actions">' +
+      '    <a class="btn ghost" href="#/verbos">' + esc(t('verbos.packsLink')) + '</a>' +
+      '  </div>' +
       '</section>' +
-      '<section class="card verbos-test">' +
-      '  <div><h2>' + esc(t('verbos.testTitle')) + '</h2>' +
-      '    <p class="muted">' + esc(t('verbos.testText')) + '</p></div>' +
-      '  <div id="verbos-test-mount"></div>' +
-      '</section>' +
+      verbosTestSection('all') +
       '<div class="verbos-toolbar">' +
       '  <input id="verbos-q" type="search" placeholder="' + esc(t('verbos.search')) + '" aria-label="' + esc(t('verbos.search')) + '">' +
       '  <div class="fchips" id="verbos-themes">' +
@@ -1881,17 +2005,7 @@
       '<div id="verbos-list" class="verbos-list"></div>';
 
     paintVerbos();
-
-    var testMount = document.getElementById('verbos-test-mount');
-    var best = state.verbos.best;
-    testMount.innerHTML =
-      '<div class="actions"><button class="btn primary" id="start-verb-test">' + esc(t('verbos.testStart')) + '</button>' +
-      (best && best.total ? '<span class="ex-hint">' + esc(t('verbos.testBest', { best: best.best, total: best.total })) + '</span>' : '') +
-      '</div>';
-
-    document.getElementById('start-verb-test').addEventListener('click', function () {
-      startVerbTest(testMount);
-    });
+    bindVerbosTest('all');
 
     var input = document.getElementById('verbos-q');
     input.addEventListener('input', function () {
@@ -5516,7 +5630,9 @@
       if (arg) renderGrammarTopic(grammarTopic(arg));
       else renderGrammar();
     } else if (name === 'verbos') {
-      renderVerbos();
+      if (arg === 'alle') renderVerbosAll();
+      else if (arg) renderVerbPack(arg);
+      else renderVerbos();
     } else if (name === 'a0') {
       renderA0();
     } else if (name === 'historien') {
