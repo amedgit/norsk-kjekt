@@ -5462,6 +5462,13 @@
     pronPaintList();
   }
 
+  function practiceCard(href, icon, title, sub) {
+    return '<a class="practice-chip" href="' + href + '">' +
+      '<span class="practice-icon" aria-hidden="true">' + icon + '</span>' +
+      '<span class="practice-copy"><b>' + esc(title) + '</b><small>' + esc(sub) + '</small></span>' +
+      '<span class="practice-arrow" aria-hidden="true">→</span></a>';
+  }
+
   function renderHome() {
     var done = completedCount();
     var total = LESSONS.length;
@@ -5512,15 +5519,16 @@
       weeklyMissionsHTML() +
       sprintHomeBanner() +
 
+      '<h2 class="section-title">' + esc(t('home.exploreTitle')) + ' <span>' + esc(t('home.exploreSub')) + '</span></h2>' +
       '<div class="practice-strip">' +
-      '  <a class="practice-chip" href="#/nivel"><b>🎯 ' + esc(t('home.testChip')) + '</b><span>' + esc(t('home.testChipSub')) + '</span></a>' +
-      '  <a class="practice-chip" href="#/trener"><b>🏋️ ' + esc(t('home.trainerChip')) + '</b><span>' + esc(t('home.trainerChipSub')) + '</span></a>' +
-      '  <a class="practice-chip" href="#/progreso"><b>📊 ' + esc(t('home.progressChip')) + '</b><span>' + esc(t('home.progressChipSub')) + '</span></a>' +
-      '  <a class="practice-chip" href="#/kroppen"><b>🧍 ' + esc(t('home.bodyChip')) + '</b><span>' + esc(t('home.bodyChipSub')) + '</span></a>' +
-      '  <a class="practice-chip" href="#/pronunciacion"><b>🎙️ ' + esc(t('home.pronChip')) + '</b><span>' + esc(t('home.pronChipSub')) + '</span></a>' +
-      '  <a class="practice-chip" href="#/kjerneord"><b>📚 ' + esc(t('home.coreChip')) + '</b><span>' + esc(t('home.coreChipSub')) + '</span></a>' +
-      '  <a class="practice-chip" href="#/historien"><b>📖 ' + esc(t('home.storyChip')) + '</b><span>' + esc(t('home.storyChipSub')) + '</span></a>' +
-      '  <a class="practice-chip" href="#/juegos"><b>🎮 ' + esc(t('home.gamesChip')) + '</b><span>' + esc(t('home.gamesChipSub')) + '</span></a>' +
+      practiceCard('#/nivel', '🎯', t('home.testChip'), t('home.testChipSub')) +
+      practiceCard('#/trener', '🏋️', t('home.trainerChip'), t('home.trainerChipSub')) +
+      practiceCard('#/progreso', '📊', t('home.progressChip'), t('home.progressChipSub')) +
+      practiceCard('#/kroppen', '🧍', t('home.bodyChip'), t('home.bodyChipSub')) +
+      practiceCard('#/pronunciacion', '🎙️', t('home.pronChip'), t('home.pronChipSub')) +
+      practiceCard('#/kjerneord', '📚', t('home.coreChip'), t('home.coreChipSub')) +
+      practiceCard('#/historien', '📖', t('home.storyChip'), t('home.storyChipSub')) +
+      practiceCard('#/juegos', '🎮', t('home.gamesChip'), t('home.gamesChipSub')) +
       '</div>' +
 
       '<section class="a0-banner">' +
