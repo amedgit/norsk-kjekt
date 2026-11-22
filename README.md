@@ -67,6 +67,10 @@ cacheada.
 - **Misiones semanales** (portada): practicar 3 días, repasar 20 tarjetas y
   ganar 300 XP. Cada misión completada entrega 40 XP y el tablero se renueva
   cada lunes, sin ligas ni presión.
+- **Pronunciación** (`#/pronunciacion`): 27 frases A0–C2 con audio, micrófono
+  del navegador (Web Speech API), puntuación por palabras y +15 XP la primera
+  vez que superas una frase. Si el navegador no reconoce noruego o no hay
+  micrófono, la página sigue funcionando como listening y repetición.
 - **Repaso espaciado** (`#/repaso`): los fallos vuelven a los 1, 3, 7, 15 y 30
   días; si aciertas, se alejan; si fallas, vuelven al día siguiente.
 - **Mi progreso** (`#/progreso`): racha, XP, mapa de calor de 12 semanas, ocho
@@ -83,7 +87,7 @@ cacheada.
 | Parte | Contenido |
 |---|---|
 | Lecciones | 15 lecciones A1–C2 con página propia (`#/lecciones`): buscador, filtros por nivel, progreso y acceso directo a cada lección |
-| Práctica | 357 ejercicios en 10 formatos, test de nivel de 18 preguntas y entrenador de números, hora y preposiciones |
+| Práctica | 357 ejercicios en 10 formatos, test de nivel de 18 preguntas, entrenador de números, hora y preposiciones y práctica de pronunciación con micrófono |
 | Samtaler | 7 conversaciones cotidianas (A2–B1: portal, cafetería, restaurante, tienda, trabajo, médico y teléfono) con 66 réplicas, audio por línea, traducciones plegables, vocabulario, frases y 35 ejercicios |
 | A0 | Sección `#/a0` para empezar desde cero: alfabeto, vocales, consonantes, pronunciación, primeras frases y 8 ejercicios |
 | Gramática | Referencia `#/gramatica` A0–B2: 30 temas con reglas, ejemplos con audio, errores típicos y 60 ejercicios |
@@ -101,7 +105,7 @@ cacheada.
 | Simulacro | 4 exámenes completos (A1, A2, B1 y B2) estilo Norskprøven: lesing, lytting, skriving y muntlig, con cronómetro, informe por destreza y respuestas modelo |
 | Idioma | selector **ES / EN / فا** en la cabecera: traduce interfaz, explicaciones y tablas; el bokmål se queda intacto y el progreso se conserva. En persa la página cambia a dirección RTL |
 | Analítica | Cloudflare Web Analytics (sin cookies) y Google Analytics 4 con Consent Mode, banner de consentimiento y página de privacidad |
-| Progreso | plan y objetivo diario, misiones semanales, racha, XP, mapa de calor de 12 semanas, 8 logros, repaso espaciado (1/3/7/15/30 días) y exportación/importación del progreso en JSON |
+| Progreso | plan y objetivo diario, misiones semanales, racha, XP, mapa de calor de 12 semanas, 8 logros, repaso espaciado (1/3/7/15/30 días), mejores notas de pronunciación y exportación/importación del progreso en JSON |
 | Extras | temas claro/oscuro/sepia, teclado noruego æ ø å en los ejercicios de escritura y PWA offline |
 | Velocidad | selector 0,5×–1,3× en la cabecera; empieza en 0,85×, se aplica al audio y se recuerda |
 | Audio | 3527 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
@@ -354,6 +358,24 @@ repaso espaciado:
 - sesiones de 20 tarjetas, resumen final y funcionamiento offline.
 
 La ruta `#/flashcards/<id>` abre un mazo; `#/flashcards` es el índice.
+
+### Pronunciación
+
+La ruta `#/pronunciacion` reúne 27 frases A0–C2 sacadas de A0 y de la primera
+frase de cada lección. Cada frase conserva su audio y su traducción, así que no
+hay contenido duplicado que mantener.
+
+El micrófono usa `SpeechRecognition` con `lang = 'nb-NO'`. Se piden hasta cinco
+alternativas, se normalizan mayúsculas y puntuación y se comparan las palabras
+con distancia de Levenshtein. La nota combina la cobertura de la frase con una
+penalización suave por palabras de más. A partir de 75 % la frase cuenta como
+superada y entrega **15 XP** una sola vez; el intento también marca el día para
+la racha y las misiones semanales.
+
+El progreso vive en `state.pron.best` (mejor porcentaje por frase) y
+`state.pron.rewarded` (si ya se entregó el XP). Si el navegador no tiene
+reconocimiento de voz, no hay micrófono o no entiende noruego, la página sigue
+mostrando el audio y la frase para practicar en voz alta.
 
 ### Verbos esenciales
 

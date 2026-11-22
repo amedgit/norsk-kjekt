@@ -63,7 +63,7 @@
   var KEY = 'norsk-kjekt-v1';
 
   function defaults() {
-    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, body: {}, core: { known: {}, packs: {} }, stories: { chapters: {} }, robinson: { chapters: {} }, a0: { best: 0, total: 0, at: 0 }, grammar: { topics: {} }, verbos: { known: {}, best: { best: 0, total: 0, at: 0 }, packs: {} }, games: { dagensOrd: { date: '', guesses: [], status: 'playing', played: 0, wins: 0, streak: 0, best: 0, lastWin: '', distribution: [0, 0, 0, 0, 0, 0] }, hukommelse: { easy: { played: 0, bestMoves: 0, bestTime: 0 }, medium: { played: 0, bestMoves: 0, bestTime: 0 }, hard: { played: 0, bestMoves: 0, bestTime: 0 } }, kryssord: { solved: 0 } }, daily: { date: '', xp: 0, goal: 100 }, weekly: { week: '', xp: 0, cards: 0, claimed: {} }, xp: 0, days: {}, review: [], srs: {}, version: 1 };
+    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, body: {}, core: { known: {}, packs: {} }, stories: { chapters: {} }, robinson: { chapters: {} }, a0: { best: 0, total: 0, at: 0 }, grammar: { topics: {} }, verbos: { known: {}, best: { best: 0, total: 0, at: 0 }, packs: {} }, games: { dagensOrd: { date: '', guesses: [], status: 'playing', played: 0, wins: 0, streak: 0, best: 0, lastWin: '', distribution: [0, 0, 0, 0, 0, 0] }, hukommelse: { easy: { played: 0, bestMoves: 0, bestTime: 0 }, medium: { played: 0, bestMoves: 0, bestTime: 0 }, hard: { played: 0, bestMoves: 0, bestTime: 0 } }, kryssord: { solved: 0 } }, daily: { date: '', xp: 0, goal: 100 }, weekly: { week: '', xp: 0, cards: 0, claimed: {} }, pron: { best: {}, rewarded: {} }, xp: 0, days: {}, review: [], srs: {}, version: 1 };
   }
 
   var state = (function load() {
@@ -212,6 +212,7 @@
         xp: Number(raw.xp) || 0,
         daily: raw.daily && typeof raw.daily === 'object' ? raw.daily : d.daily,
         weekly: raw.weekly && typeof raw.weekly === 'object' ? raw.weekly : d.weekly,
+        pron: raw.pron && typeof raw.pron === 'object' ? raw.pron : d.pron,
         days: raw.days && typeof raw.days === 'object' ? raw.days : d.days,
         review: Array.isArray(raw.review) ? raw.review.filter(function (s) { return typeof s === 'string'; }) : d.review,
         version: 1
@@ -223,6 +224,7 @@
 
   ensureDaily();
   ensureWeekly();
+  ensurePron();
 
   function save() {
     try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* modo privado */ }
@@ -266,6 +268,12 @@
       state.weekly.cards = Number(state.weekly.cards) || 0;
       state.weekly.claimed = state.weekly.claimed && typeof state.weekly.claimed === 'object' ? state.weekly.claimed : {};
     }
+  }
+
+  function ensurePron() {
+    state.pron = state.pron && typeof state.pron === 'object' ? state.pron : { best: {}, rewarded: {} };
+    state.pron.best = state.pron.best && typeof state.pron.best === 'object' ? state.pron.best : {};
+    state.pron.rewarded = state.pron.rewarded && typeof state.pron.rewarded === 'object' ? state.pron.rewarded : {};
   }
 
   function addXp(n) {
@@ -4294,6 +4302,492 @@
     });
   }
 
+  /* =======================================================
+     Pronunciación con micrófono
+     ======================================================= */
+
+  var PRON_XP = 15;
+  var PRON_PASS = 75;
+  var pronUi = null;
+  var pronRecognition = null;
+  var pronPhraseCache = null;
+
+  function pronNorm(s) {
+    return String(s || '')
+      .toLowerCase()
+      .replace(/[.,!?;:«»"“”'’()\-–—]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function pronPhrases() {
+    if (pronPhraseCache) return pronPhraseCache;
+    var out = [];
+    var seen = {};
+    function addPhrase(no, es, level, topic, id) {
+      if (!no || !es) return false;
+      var key = pronNorm(no);
+      if (!key || seen[key]) return false;
+      seen[key] = true;
+      out.push({ id: id, no: no, es: es, level: level, topic: topic });
+      return true;
+    }
+    if (A0 && A0.phrases) {
+      A0.phrases.forEach(function (p, i) {
+        addPhrase(p.no, p.es, 'A0', t('pron.basics'), 'a0-' + i);
+      });
+    }
+    LESSONS.forEach(function (l) {
+      var added = 0;
+      (l.phrases || []).forEach(function (p, i) {
+        if (added) return;
+        if (addPhrase(p.no, p.es, l.level, l.title, l.id + '-p' + i)) added = 1;
+      });
+    });
+    pronPhraseCache = out;
+    return out;
+  }
+
+  function pronLevels() {
+    var order = ['A0', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+    var levels = [];
+    pronPhrases().forEach(function (p) {
+      if (levels.indexOf(p.level) === -1) levels.push(p.level);
+    });
+    return levels.sort(function (a, b) {
+      var ia = order.indexOf(a);
+      var ib = order.indexOf(b);
+      return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
+    });
+  }
+
+  function pronFiltered() {
+    var all = pronPhrases();
+    if (!pronUi || pronUi.level === 'all') return all;
+    return all.filter(function (p) { return p.level === pronUi.level; });
+  }
+
+  function pronFind(id) {
+    return pronPhrases().find(function (p) { return p.id === id; }) || null;
+  }
+
+  function pronSpeechSupported() {
+    return !!(window.SpeechRecognition || window.webkitSpeechRecognition);
+  }
+
+  function pronLev(a, b) {
+    var m = a.length;
+    var n = b.length;
+    if (!m) return n;
+    if (!n) return m;
+    var prev = [];
+    for (var j = 0; j <= n; j++) prev[j] = j;
+    for (var i = 1; i <= m; i++) {
+      var cur = [i];
+      for (var k = 1; k <= n; k++) {
+        cur[k] = Math.min(
+          prev[k] + 1,
+          cur[k - 1] + 1,
+          prev[k - 1] + (a.charAt(i - 1) === b.charAt(k - 1) ? 0 : 1)
+        );
+      }
+      prev = cur;
+    }
+    return prev[n];
+  }
+
+  function pronWordSim(a, b) {
+    if (a === b) return 1;
+    var max = Math.max(a.length, b.length) || 1;
+    return 1 - pronLev(a, b) / max;
+  }
+
+  function pronCompare(target, said) {
+    var tw = pronNorm(target).split(' ').filter(Boolean);
+    var sw = pronNorm(said).split(' ').filter(Boolean);
+    if (!tw.length || !sw.length) return { score: 0, missing: tw, extra: sw, matched: 0, text: said };
+    var used = {};
+    var missing = [];
+    var matched = 0;
+    tw.forEach(function (word) {
+      var best = -1;
+      var bestSim = 0;
+      sw.forEach(function (w, i) {
+        if (used[i]) return;
+        var sim = pronWordSim(word, w);
+        if (sim > bestSim) { bestSim = sim; best = i; }
+      });
+      if (best > -1 && bestSim >= 0.72) {
+        used[best] = true;
+        matched++;
+      } else {
+        missing.push(word);
+      }
+    });
+    var recall = matched / tw.length;
+    var extra = sw.filter(function (_, i) { return !used[i]; });
+    var precision = sw.length ? (sw.length - extra.length) / sw.length : 0;
+    var score = Math.round((recall * 0.82 + Math.min(1, precision) * 0.18) * 100);
+    if (pronNorm(target) === pronNorm(said)) score = 100;
+    return { score: score, missing: missing, extra: extra, matched: matched, text: said };
+  }
+
+  function pronPaintLevels() {
+    document.querySelectorAll('[data-pron-level]').forEach(function (b) {
+      var on = b.getAttribute('data-pron-level') === (pronUi ? pronUi.level : 'all');
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  }
+
+  function pronPaintStage() {
+    var stage = document.getElementById('pron-stage');
+    if (!stage) return;
+    var phrase = pronFind(pronUi && pronUi.id);
+    if (!phrase) { stage.innerHTML = '<p class="muted">' + esc(t('pron.listEmpty')) + '</p>'; return; }
+    var list = pronFiltered();
+    var index = list.indexOf(phrase);
+    var best = Number(state.pron.best[phrase.id]) || 0;
+    var rewarded = !!state.pron.rewarded[phrase.id];
+    var listening = !!pronUi.listening;
+    var supported = pronSpeechSupported();
+    var result = pronUi.result;
+    var error = pronUi.error;
+
+    var mic = supported ? '<div class="pron-mic-area">' +
+      '<button type="button" class="pron-mic' + (listening ? ' listening' : '') + '" data-pron-action="listen"' +
+      (listening ? ' disabled aria-pressed="true"' : ' aria-pressed="false"') + '>' +
+      '<span class="pron-mic-icon" aria-hidden="true">' + (listening ? '🎧' : '🎙️') + '</span>' +
+      '<span>' + esc(listening ? t('pron.micListening') : t('pron.micStart')) + '</span>' +
+      '</button>' +
+      '<p class="pron-hint" aria-live="polite">' + esc(listening ? t('pron.listeningHint') : t('pron.micHint')) + '</p>' +
+      '</div>' : '<div class="pron-unsupported">' + esc(t('pron.unsupported')) + '</div>';
+
+    var resultHTML = '';
+    if (error) {
+      resultHTML = '<p class="pron-error" role="alert">' + esc(error) + '</p>';
+    } else if (result) {
+      var score = result.score;
+      var cls = score >= 80 ? 'high' : score >= 50 ? 'mid' : 'low';
+      var feedback = score >= 90 ? t('pron.feedbackGreat')
+        : score >= 75 ? t('pron.feedbackGood')
+          : score >= 50 ? t('pron.feedbackClose')
+            : t('pron.feedbackAgain');
+      resultHTML = '<div class="pron-result" role="status" aria-live="polite">' +
+        '<div class="pron-score ' + cls + '" role="img" aria-label="' + esc(t('pron.score')) + ' ' + score + '%" style="--score:' + score + '">' +
+        '  <span><b>' + score + '%</b><small>' + esc(t('pron.score')) + '</small></span>' +
+        '</div>' +
+        '<div class="pron-result-copy">' +
+        '  <p class="pron-feedback">' + esc(feedback) + '</p>' +
+        '  <p class="pron-heard">' + esc(t('pron.heard')) + ' <b dir="ltr" lang="nb">' + esc(result.text) + '</b></p>' +
+        (result.missing.length ? '<div class="pron-missing"><span>' + esc(t('pron.missing')) + '</span>' +
+          result.missing.map(function (w) { return '<b dir="ltr" lang="nb">' + esc(w) + '</b>'; }).join('') + '</div>' : '') +
+        (pronUi.rewardedNow ? '<span class="pron-xp">+' + PRON_XP + ' XP</span>' : '') +
+        '</div>' +
+        '</div>' +
+        '<div class="pron-actions">' +
+        '<button type="button" class="btn ghost" data-pron-action="again">' + esc(t('pron.again')) + '</button>' +
+        '<button type="button" class="btn primary" data-pron-action="next">' + esc(t('pron.next')) + '</button>' +
+        '</div>';
+    }
+
+    stage.innerHTML =
+      '<div class="pron-stage-head">' +
+      '  <span class="pron-level">' + esc(phrase.level) + '</span>' +
+      '  <span class="pron-topic">' + esc(phrase.topic) + '</span>' +
+      '  <span class="pron-counter">' + (index + 1) + ' / ' + list.length + '</span>' +
+      '</div>' +
+      '<div class="pron-phrase-row">' +
+      '  <p class="pron-phrase" lang="nb" dir="ltr">' + esc(phrase.no) + '</p>' +
+      say(phrase.no) +
+      '</div>' +
+      '<p class="pron-es">' + esc(phrase.es) + '</p>' +
+      '<div class="pron-meta">' +
+      (best ? '<span class="chip">' + esc(t('pron.best', { n: best })) + '</span>' : '') +
+      (rewarded ? '<span class="chip done">✓ ' + esc(t('pron.rewarded')) + '</span>' : '') +
+      '</div>' +
+      mic + resultHTML;
+  }
+
+  function pronPaintStats() {
+    var practicedEl = document.getElementById('pron-practiced');
+    var passedEl = document.getElementById('pron-passed');
+    if (!practicedEl && !passedEl) return;
+    var all = pronPhrases();
+    var practiced = all.filter(function (p) { return (Number(state.pron.best[p.id]) || 0) > 0; }).length;
+    var passed = all.filter(function (p) { return !!state.pron.rewarded[p.id]; }).length;
+    if (practicedEl) practicedEl.textContent = practiced;
+    if (passedEl) passedEl.textContent = passed;
+  }
+
+  function pronPaintList() {
+    var box = document.getElementById('pron-list');
+    if (!box) return;
+    var list = pronFiltered();
+    var top = box.scrollTop;
+    if (!list.length) {
+      box.innerHTML = '<p class="pron-empty">' + esc(t('pron.listEmpty')) + '</p>';
+      return;
+    }
+    box.innerHTML = list.map(function (p) {
+      var best = Number(state.pron.best[p.id]) || 0;
+      var passed = !!state.pron.rewarded[p.id];
+      return '<button type="button" class="pron-item' + (pronUi.id === p.id ? ' active' : '') + '" data-pron-id="' + esc(p.id) + '">' +
+        '<span class="pron-item-level">' + esc(p.level) + '</span>' +
+        '<span class="pron-item-main"><b dir="ltr" lang="nb">' + esc(p.no) + '</b><small>' + esc(p.es) + '</small></span>' +
+        '<span class="pron-item-score' + (passed ? ' passed' : '') + '">' + (best ? best + '%' : '—') + '</span>' +
+        '</button>';
+    }).join('');
+    box.scrollTop = top;
+  }
+
+  function pronClearResult() {
+    if (!pronUi) return;
+    pronUi.result = null;
+    pronUi.error = '';
+    pronUi.listening = false;
+    pronUi.rewardedNow = false;
+  }
+
+  function pronSelect(id) {
+    if (!pronFind(id)) return;
+    pronUi.id = id;
+    pronClearResult();
+    pronPaintStage();
+    pronPaintList();
+    if (window.matchMedia('(max-width: 780px)').matches) {
+      var stage = document.getElementById('pron-stage');
+      if (stage) stage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function pronNext() {
+    var list = pronFiltered();
+    if (!list.length) return;
+    var pos = list.findIndex(function (p) { return p.id === pronUi.id; });
+    pronSelect(list[(pos + 1) % list.length].id);
+  }
+
+  function pronSetLevel(level) {
+    pronUi.level = level;
+    var list = pronFiltered();
+    if (!list.length || !list.some(function (p) { return p.id === pronUi.id; })) {
+      if (list.length) pronUi.id = list[0].id;
+    }
+    pronClearResult();
+    pronPaintLevels();
+    pronPaintStage();
+    pronPaintList();
+  }
+
+  function pronError(code) {
+    if (!pronUi) return;
+    pronRecognition = null;
+    pronUi.listening = false;
+    pronUi.result = null;
+    var keys = {
+      'not-allowed': 'pron.errorDenied',
+      'service-not-allowed': 'pron.errorDenied',
+      'audio-capture': 'pron.errorNoMic',
+      'network': 'pron.errorNetwork',
+      'language-not-supported': 'pron.errorLang',
+      'no-speech': 'pron.errorNoSpeech'
+    };
+    pronUi.error = t(keys[code] || 'pron.errorGeneric');
+    pronPaintStage();
+  }
+
+  function pronRecognized(best) {
+    if (!pronUi) return;
+    pronRecognition = null;
+    pronUi.listening = false;
+    var phrase = pronFind(pronUi.id);
+    if (!phrase || !best || !String(best.text || '').trim()) { pronError('no-speech'); return; }
+    pronUi.result = best;
+    pronUi.error = '';
+    pronUi.rewardedNow = false;
+    var id = phrase.id;
+    var prev = Number(state.pron.best[id]) || 0;
+    if (best.score > prev) state.pron.best[id] = best.score;
+    if (best.score >= PRON_PASS && !state.pron.rewarded[id]) {
+      state.pron.rewarded[id] = true;
+      pronUi.rewardedNow = true;
+      addXp(PRON_XP);
+    }
+    markDay();
+    save();
+    refreshHud();
+    pronPaintStats();
+    pronPaintStage();
+    pronPaintList();
+  }
+
+  function pronListen() {
+    if (!pronUi || pronUi.listening) return;
+    if (!pronSpeechSupported()) {
+      pronUi.error = t('pron.unsupported');
+      pronPaintStage();
+      return;
+    }
+    var phrase = pronFind(pronUi.id);
+    if (!phrase) return;
+    if (window.TTS) window.TTS.stop();
+    pronUi.error = '';
+    pronUi.result = null;
+    pronUi.rewardedNow = false;
+    pronUi.listening = true;
+    pronPaintStage();
+
+    var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    var rec = new SR();
+    pronRecognition = rec;
+    rec.lang = 'nb-NO';
+    rec.interimResults = false;
+    rec.continuous = false;
+    rec.maxAlternatives = 5;
+    var settled = false;
+
+    rec.onresult = function (ev) {
+      if (settled) return;
+      settled = true;
+      var alts = ev.results && ev.results[0];
+      var best = null;
+      if (alts) {
+        for (var i = 0; i < alts.length; i++) {
+          var text = alts[i].transcript || '';
+          var cmp = pronCompare(phrase.no, text);
+          cmp.text = text;
+          if (!best || cmp.score > best.score) best = cmp;
+        }
+      }
+      pronRecognized(best);
+    };
+    rec.onerror = function (ev) {
+      if (settled) return;
+      settled = true;
+      if (ev && ev.error === 'aborted') return;
+      pronError(ev && ev.error);
+    };
+    rec.onend = function () {
+      if (pronRecognition === rec) pronRecognition = null;
+      if (!pronUi || !pronUi.listening) return;
+      pronUi.listening = false;
+      if (!pronUi.result && !pronUi.error) pronUi.error = t('pron.errorNoSpeech');
+      pronPaintStage();
+    };
+    try {
+      rec.start();
+    } catch (e) {
+      pronRecognition = null;
+      pronError('generic');
+    }
+  }
+
+  function pronStopRecognition() {
+    if (pronRecognition) {
+      var rec = pronRecognition;
+      pronRecognition = null;
+      rec.onresult = null;
+      rec.onerror = null;
+      rec.onend = null;
+      try { rec.abort(); } catch (e) { /* ya terminado */ }
+    }
+    if (pronUi) pronUi.listening = false;
+  }
+
+  function bindPronunciation() {
+    var stage = document.getElementById('pron-stage');
+    if (stage) {
+      stage.addEventListener('click', function (e) {
+        var b = e.target.closest('[data-pron-action]');
+        if (!b) return;
+        var action = b.getAttribute('data-pron-action');
+        if (action === 'listen') pronListen();
+        else if (action === 'again') { pronClearResult(); pronPaintStage(); }
+        else if (action === 'next') pronNext();
+      });
+    }
+    var levels = document.getElementById('pron-levels');
+    if (levels) {
+      levels.addEventListener('click', function (e) {
+        var b = e.target.closest('[data-pron-level]');
+        if (b) pronSetLevel(b.getAttribute('data-pron-level'));
+      });
+    }
+    var list = document.getElementById('pron-list');
+    if (list) {
+      list.addEventListener('click', function (e) {
+        var b = e.target.closest('[data-pron-id]');
+        if (b) pronSelect(b.getAttribute('data-pron-id'));
+      });
+    }
+  }
+
+  function renderPronunciation() {
+    ensurePron();
+    if (!pronUi) pronUi = { id: '', level: 'all', result: null, error: '', listening: false, rewardedNow: false };
+    var levelList = pronLevels();
+    var list = pronFiltered();
+    var current = pronFind(pronUi.id);
+    if (!current || (pronUi.level !== 'all' && current.level !== pronUi.level)) {
+      pronUi.id = list.length ? list[0].id : '';
+      pronClearResult();
+    }
+    var levels = levelList.map(function (lv) {
+      return '<button type="button" data-pron-level="' + esc(lv) + '" aria-pressed="false">' + esc(lv) + '</button>';
+    }).join('');
+    var all = pronPhrases();
+    var practiced = all.filter(function (p) { return (Number(state.pron.best[p.id]) || 0) > 0; }).length;
+    var passed = all.filter(function (p) { return !!state.pron.rewarded[p.id]; }).length;
+
+    app.innerHTML =
+      '<div class="crumbs"><a href="#/">' + esc(t('crumb.home')) + '</a> <span>›</span> <span>' + esc(t('pron.eyebrow')) + '</span></div>' +
+      '<section class="colo-intro pron-intro">' +
+      '  <span class="eyebrow">' + esc(t('pron.eyebrow')) + '</span>' +
+      '  <h1>' + esc(t('pron.title')) + '</h1>' +
+      '  <p>' + esc(t('pron.intro')) + '</p>' +
+      '  <div class="pron-badges">' +
+      '    <span>🎙️ ' + esc(t('pron.badgeMic')) + '</span>' +
+      '    <span>🇳🇴 nb-NO</span>' +
+      '    <span>+' + PRON_XP + ' XP</span>' +
+      '  </div>' +
+      '</section>' +
+      '<div class="pron-layout">' +
+      '  <section class="card pron-stage" id="pron-stage"></section>' +
+      '  <aside class="pron-side">' +
+      '    <section class="card pron-stats">' +
+      '      <h3>' + esc(t('pron.statsTitle')) + '</h3>' +
+      '      <div class="pron-stats-grid">' +
+      '        <div class="pron-stat"><b id="pron-practiced">' + practiced + '</b><small>' + esc(t('pron.statsPracticed')) + '</small></div>' +
+      '        <div class="pron-stat"><b id="pron-passed">' + passed + '</b><small>' + esc(t('pron.statsPassed')) + '</small></div>' +
+      '      </div>' +
+      '    </section>' +
+      '    <section class="card pron-tips">' +
+      '      <h3>' + esc(t('pron.tipsTitle')) + '</h3>' +
+      '      <ul>' +
+      '        <li>' + esc(t('pron.tip1')) + '</li>' +
+      '        <li>' + esc(t('pron.tip2')) + '</li>' +
+      '        <li>' + esc(t('pron.tip3')) + '</li>' +
+      '      </ul>' +
+      '    </section>' +
+      '  </aside>' +
+      '</div>' +
+      '<section class="card pron-browser">' +
+      '  <div class="pron-browser-head">' +
+      '    <div><h2>' + esc(t('pron.listTitle')) + '</h2><p>' + esc(t('pron.listIntro')) + '</p></div>' +
+      '    <div class="pron-levels" id="pron-levels">' +
+      '      <button type="button" data-pron-level="all" aria-pressed="false">' + esc(t('pron.levelAll')) + '</button>' + levels +
+      '    </div>' +
+      '  </div>' +
+      '  <div class="pron-list" id="pron-list"></div>' +
+      '</section>';
+
+    bindPronunciation();
+    pronPaintLevels();
+    pronPaintStage();
+    pronPaintList();
+  }
+
   function renderHome() {
     var done = completedCount();
     var total = LESSONS.length;
@@ -4348,6 +4842,7 @@
       '  <a class="practice-chip" href="#/trener"><b>🏋️ ' + esc(t('home.trainerChip')) + '</b><span>' + esc(t('home.trainerChipSub')) + '</span></a>' +
       '  <a class="practice-chip" href="#/progreso"><b>📊 ' + esc(t('home.progressChip')) + '</b><span>' + esc(t('home.progressChipSub')) + '</span></a>' +
       '  <a class="practice-chip" href="#/kroppen"><b>🧍 ' + esc(t('home.bodyChip')) + '</b><span>' + esc(t('home.bodyChipSub')) + '</span></a>' +
+      '  <a class="practice-chip" href="#/pronunciacion"><b>🎙️ ' + esc(t('home.pronChip')) + '</b><span>' + esc(t('home.pronChipSub')) + '</span></a>' +
       '  <a class="practice-chip" href="#/kjerneord"><b>📚 ' + esc(t('home.coreChip')) + '</b><span>' + esc(t('home.coreChipSub')) + '</span></a>' +
       '  <a class="practice-chip" href="#/historien"><b>📖 ' + esc(t('home.storyChip')) + '</b><span>' + esc(t('home.storyChipSub')) + '</span></a>' +
       '  <a class="practice-chip" href="#/juegos"><b>🎮 ' + esc(t('home.gamesChip')) + '</b><span>' + esc(t('home.gamesChipSub')) + '</span></a>' +
@@ -6466,6 +6961,7 @@
     var arg = parts[1] || '';
 
     if (window.TTS) window.TTS.stop();
+    pronStopRecognition();
     if (window.__robinson3d) { try { window.__robinson3d(); } catch (e) { /* ya destruido */ } window.__robinson3d = null; }
     if (wordle) wordle.active = false;
     if (memoryGame) { memoryStop(); memoryGame.active = false; }
@@ -6477,6 +6973,7 @@
         : name === 'gramatica' ? 'grammar'
         : name === 'verbos' ? 'verbos'
         : name === 'flashcards' ? 'flashcards'
+        : name === 'pronunciacion' ? 'pron'
         : name === 'historien' ? 'stories'
         : name === 'robinson' ? 'robinson'
         : name === 'a0' ? 'a0'
@@ -6499,7 +6996,7 @@
     }
     var moreToggle = document.querySelector('.nav-more-toggle');
     if (moreToggle) {
-      moreToggle.classList.toggle('active', ['a0', 'body', 'fun', 'exam', 'colloquial', 'review', 'games', 'verbos', 'flashcards', 'robinson'].indexOf(active) > -1);
+      moreToggle.classList.toggle('active', ['a0', 'body', 'fun', 'exam', 'colloquial', 'review', 'games', 'verbos', 'flashcards', 'pron', 'robinson'].indexOf(active) > -1);
     }
     var navMoreMenu = document.querySelector('.nav-more-menu');
     if (navMoreMenu) {
@@ -6551,6 +7048,8 @@
     } else if (name === 'flashcards') {
       if (arg) renderFlashcardsPack(arg);
       else renderFlashcards();
+    } else if (name === 'pronunciacion') {
+      renderPronunciation();
     } else if (name === 'a0') {
       renderA0();
     } else if (name === 'historien') {
