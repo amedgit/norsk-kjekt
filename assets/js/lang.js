@@ -32,10 +32,10 @@
 
   var UI = {
     es: {
-      'meta.title': 'Norsk Kjekt — curso de noruego gratis A0–C2',
-      'meta.description': 'Curso de noruego bokmål A0–C2 gratis: 357 ejercicios, A0 desde cero, gramática A0–B2, 900 palabras, 200 verbos, Robinson Crusoe adaptado, 7 conversaciones y simulacros. Sin registro.',
-      'meta.ogDescription': '15 lecciones de bokmål (A1–C2), 357 ejercicios, 7 conversaciones con audio, 4 grupos de WhatsApp, 6 packs de humor, 30 expresiones de la calle y 4 simulacros de examen. Sin registro y sin build.',
-      'meta.ogAlt': 'Norsk Kjekt: portal de noruego con ejercicios interactivos',
+      'meta.title': 'Norsk Kjekt — curso de noruego gratis para hispanohablantes A0–C2',
+      'meta.description': 'Curso de noruego bokmål para hispanohablantes en Noruega y España: 15 lecciones, 357 ejercicios, 900 palabras, 200 verbos, pronunciación y simulacros Norskprøve. Gratis y sin registro.',
+      'meta.ogDescription': '15 lecciones de bokmål para hispanohablantes en Noruega y España, 357 ejercicios, 900 palabras, 200 verbos, pronunciación y 4 simulacros de Norskprøve. Sin registro.',
+      'meta.ogAlt': 'Norsk Kjekt: curso de noruego para hispanohablantes',
       'skip': 'Saltar al contenido',
       'nav.primary': 'Principal',
       'crumb.home': 'Inicio',
@@ -1093,10 +1093,10 @@
     },
 
     en: {
-      'meta.title': 'Norsk Kjekt — free Norwegian course A0–C2',
-      'meta.description': 'Free Norwegian bokmål course A0–C2: 357 exercises, A0 from scratch, grammar A0–B2, 900 words, 200 verbs, an adapted Robinson Crusoe, 7 conversations and mock exams. No sign-up.',
-      'meta.ogDescription': '15 bokmål lessons (A1–C2), 357 interactive exercises, 7 conversations with audio, 4 WhatsApp groups, 6 humour packs, 30 street expressions and 4 mock exams. No sign-up, no build.',
-      'meta.ogAlt': 'Norsk Kjekt: a Norwegian portal with interactive exercises',
+      'meta.title': 'Norsk Kjekt — free Norwegian course for English speakers A0–C2',
+      'meta.description': 'Free Norwegian bokmål course for English speakers in Norway and abroad: 15 lessons, 357 exercises, 900 words, 200 verbs, pronunciation and Norskprøve mock exams. No sign-up.',
+      'meta.ogDescription': '15 bokmål lessons for English speakers in Norway and abroad, 357 exercises, 900 words, 200 verbs, pronunciation and 4 Norskprøve mock exams. No sign-up.',
+      'meta.ogAlt': 'Norsk Kjekt: a free Norwegian course for English speakers',
       'skip': 'Skip to content',
       'nav.primary': 'Main',
       'crumb.home': 'Home',
@@ -2155,10 +2155,10 @@
 ,
 
     fa: {
-      'meta.title': "Norsk Kjekt — دورهٔ رایگان نروژی A0–C2",
-      'meta.description': "دورهٔ رایگان نروژی بوکمول A0–C2: ۳۵۷ تمرین، A0 از صفر، دستور زبان A0–B2، ۹۰۰ واژه، ۲۰۰ فعل، رابینسون کروزوئه بازنویسی‌شده، ۷ گفت‌وگو و آزمون آزمایشی. بدون ثبت‌نام.",
-      'meta.ogDescription': "۱۵ درس بوکمول (A1–C2)، ۳۵۷ تمرین تعاملی، ۷ گفت‌وگو با صدا، ۴ گروه واتساپ، ۶ بسته طنز، ۳۰ اصطلاح خیابانی و ۴ آزمون آزمایشی. بدون ثبت‌نام و بدون build.",
-      'meta.ogAlt': "Norsk Kjekt: پرتال نروژی با تمرین‌های تعاملی",
+      'meta.title': "Norsk Kjekt — دورهٔ رایگان زبان نروژی برای فارسی‌زبانان A0–C2",
+      'meta.description': "دورهٔ رایگان نروژی بوکمال برای فارسی‌زبانان در نروژ و ایران: ۱۵ درس، ۳۵۷ تمرین، ۹۰۰ واژه، ۲۰۰ فعل، تمرین تلفظ و آزمون Norskprøve. بدون ثبت‌نام.",
+      'meta.ogDescription': "۱۵ درس بوکمول برای فارسی‌زبانان در نروژ و ایران، ۳۵۷ تمرین، ۹۰۰ واژه، ۲۰۰ فعل، تمرین تلفظ و ۴ آزمون Norskprøve. بدون ثبت‌نام.",
+      'meta.ogAlt': "Norsk Kjekt: دورهٔ رایگان زبان نروژی برای فارسی‌زبانان",
       'skip': "پرش به محتوا",
       'nav.primary': "اصلی",
       'crumb.home': "خانه",

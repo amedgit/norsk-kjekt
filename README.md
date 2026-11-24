@@ -136,24 +136,48 @@ españoles por su traducción y deja intactas las cadenas que detecta como
 noruego. En FA la página pasa a `dir="rtl"` (derecha→izquierda), con fuente
 persa; el bokmål de las frases se sigue leyendo de izquierda a derecha.
 
+### Páginas de entrada por idioma
+
+Además de las rutas con `?lang=`, hay tres portadas indexables pensadas para
+captar usuarios desde buscadores y redes:
+
+- `/en/` — landing en inglés para quienes viven en Noruega o aprenden desde
+  cualquier país.
+- `/fa/` — landing en persa para la comunidad iraní en Noruega y en Irán.
+- `/noruego-para-espanoles/` — landing en español para hispanohablantes en
+  Noruega y España.
+
+Cada una tiene título y descripción propios, `hreflang` (es/en/fa/x-default),
+Open Graph, datos estructurados de curso, FAQ y botones para compartir en
+WhatsApp, Telegram, X y email. El botón principal abre la app con el idioma ya
+seleccionado (`/?lang=en`, `/?lang=fa` o `/?lang=es`).
+
+El acceso directo a la app se puede fijar con el parámetro `?lang=`. La ruta
+`/es/` sigue siendo una redirección corta a la app en español. Al cambiar de
+idioma desde el selector, el parámetro `lang` de la URL se actualiza.
+
 ### Enlaces con idioma fijado
 
-La forma más corta de compartir el curso en un idioma es usar su entrada:
+Para compartir una portada indexable:
 
 - **Persa:** `https://norskkjekt.com/fa/`
 - **Inglés:** `https://norskkjekt.com/en/`
-- **Español:** `https://norskkjekt.com/es/`
+- **Español:** `https://norskkjekt.com/noruego-para-espanoles/`
+
+Para abrir directamente la app en un idioma:
+
+- **Persa:** `https://norskkjekt.com/?lang=fa`
+- **Inglés:** `https://norskkjekt.com/?lang=en`
+- **Español:** `https://norskkjekt.com/?lang=es`
 
 También se puede enlazar una sección concreta:
-`https://norskkjekt.com/fa/#/pronunciacion` o
-`https://norskkjekt.com/fa/#/lecciones`.
+`https://norskkjekt.com/?lang=fa#/pronunciacion` o
+`https://norskkjekt.com/?lang=fa#/lecciones`.
 
-Esas entradas son páginas de redirección `noindex` que conservan el `hash` y
-los parámetros de campaña. El destino interno sigue siendo
-`https://norskkjekt.com/?lang=fa`, que también funciona directamente. El
-idioma se guarda en `localStorage` antes de cargar la interfaz. Si después
-cambias con el selector, el parámetro `lang` de la URL se actualiza para que
-el enlace siga siendo correcto.
+El parámetro `lang` se aplica antes de cargar la interfaz y se guarda en
+`localStorage`. La ruta `/es/` redirige a la app en español y conserva `hash` y
+parámetros de campaña. Si después cambias con el selector, el parámetro `lang`
+de la URL se actualiza para que el enlace siga siendo correcto.
 
 ### Añadir otro idioma
 

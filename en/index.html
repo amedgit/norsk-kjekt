@@ -3,9 +3,6 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex,follow">
-  <title>Norsk Kjekt · English</title>
-  <link rel="canonical" href="https://norskkjekt.com/?lang=en">
   <script>
     try {
       var st = localStorage.getItem('norsk-kjekt-theme');
@@ -14,40 +11,186 @@
     } catch (e) {
       document.documentElement.setAttribute('data-theme', 'sepia');
     }
-    try {
-      var params = new URLSearchParams(location.search);
-      params.set('lang', 'en');
-      location.replace('/?' + params.toString() + location.hash);
-    } catch (e) {
-      location.replace('/?lang=en' + location.hash);
-    }
   </script>
-  <style>
-    html, body { height: 100%; }
-    body {
-      margin: 0; display: grid; place-items: center;
-      background: #efe4cf; color: #33261a;
-      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  <title>Learn Norwegian free — A0–C2 course with audio | Norsk Kjekt</title>
+  <meta name="description" content="Learn Norwegian bokmål for free: 15 lessons, 357 exercises, 900 key words, 200 verbs, pronunciation practice, Norskprøve mock exams and 3,500 audio clips. No sign-up.">
+  <link rel="canonical" href="https://norskkjekt.com/en/">
+  <link rel="alternate" hreflang="es" href="https://norskkjekt.com/">
+  <link rel="alternate" hreflang="en" href="https://norskkjekt.com/en/">
+  <link rel="alternate" hreflang="fa" href="https://norskkjekt.com/fa/">
+  <link rel="alternate" hreflang="x-default" href="https://norskkjekt.com/">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Norsk Kjekt">
+  <meta property="og:url" content="https://norskkjekt.com/en/">
+  <meta property="og:title" content="Learn Norwegian free — A0–C2 course with audio">
+  <meta property="og:description" content="15 lessons, 357 exercises, 900 key words, 200 verbs, pronunciation practice and Norskprøve mock exams. Free, with audio and no sign-up.">
+  <meta property="og:image" content="https://norskkjekt.com/assets/img/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Norsk Kjekt: free Norwegian course with audio and exercises">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="es_ES">
+  <meta property="og:locale:alternate" content="fa_IR">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Learn Norwegian free — A0–C2 course with audio">
+  <meta name="twitter:description" content="15 lessons, 357 exercises, 900 key words, 200 verbs, pronunciation practice and Norskprøve mock exams. Free, with audio and no sign-up.">
+  <meta name="twitter:image" content="https://norskkjekt.com/assets/img/og.png">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23ba0c2f'/><rect x='22' y='14' width='16' height='72' fill='white'/><rect x='14' y='42' width='72' height='16' fill='white'/><rect x='30' y='14' width='6' height='72' fill='%2300205b'/><rect x='14' y='48' width='72' height='6' fill='%2300205b'/></svg>">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20261125a">
+  <link rel="stylesheet" href="/assets/css/seo.css?v=20261125a">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Course",
+      "name": "Norsk Kjekt — free Norwegian course A0–C2",
+      "description": "Free Norwegian bokmål course with lessons, vocabulary, grammar, pronunciation, stories, games and Norskprøve mock exams.",
+      "provider": {
+        "@type": "Organization",
+        "name": "Norsk Kjekt",
+        "url": "https://norskkjekt.com/"
+      },
+      "inLanguage": "en",
+      "educationalLevel": ["A0", "A1", "A2", "B1", "B2", "C1", "C2"],
+      "isAccessibleForFree": true,
+      "url": "https://norskkjekt.com/en/"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type": "Question", "name": "Is Norsk Kjekt really free?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. There is no paywall, no account and no trial. The course is free and your progress stays in your browser."}},
+        {"@type": "Question", "name": "Do I need to create an account?", "acceptedAnswer": {"@type": "Answer", "text": "No. Open the site and start. Progress is saved locally on your device, and you can export or import it as a backup."}},
+        {"@type": "Question", "name": "Which Norwegian variant do you teach?", "acceptedAnswer": {"@type": "Answer", "text": "The course teaches bokmål, the written form most learners and most people in Norway use. The audio is based on an eastern Norwegian pronunciation."}},
+        {"@type": "Question", "name": "Can I prepare for Norskprøve?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. There are full A1, A2, B1 and B2 mock exams with reading, listening, writing and speaking sections, a timer and a report by skill."}},
+        {"@type": "Question", "name": "Does it work offline?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Norsk Kjekt is a PWA. Install it from your browser and the core lessons, audio and exercises keep working without a connection."}}
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Norsk Kjekt", "item": "https://norskkjekt.com/"},
+        {"@type": "ListItem", "position": 2, "name": "English", "item": "https://norskkjekt.com/en/"}
+      ]
     }
-    .box {
-      max-width: 28rem; margin: 1rem; padding: 1.5rem 1.7rem;
-      background: #fbf4e4; border: 1px solid #dfcca9; border-radius: 18px;
-      box-shadow: 0 10px 26px -14px rgba(70, 50, 30, .3);
-    }
-    h1 { margin: 0 0 .5rem; font-size: 1.25rem; }
-    p { margin: .35rem 0; line-height: 1.6; color: #57452f; font-size: .95rem; }
-    a { color: #a3342b; font-weight: 700; }
-    html[data-theme="dark"] body { background: #0d1420; color: #e9eff9; }
-    html[data-theme="dark"] .box { background: #151f2d; border-color: #273343; }
-    html[data-theme="dark"] p { color: #c3cedd; }
-    html[data-theme="dark"] a { color: #ef5a72; }
-  </style>
+  ]
+}
+  </script>
 </head>
-<body>
-  <main class="box">
-    <h1>Norsk Kjekt · English</h1>
-    <p>Opening the English version…</p>
-    <p><a href="/?lang=en">Continue in English</a></p>
+<body class="seo-page">
+  <header class="seo-top">
+    <a class="seo-brand" href="/?lang=en">Norsk <b>Kjekt</b></a>
+    <nav class="seo-nav" aria-label="Main sections">
+      <a href="/?lang=en">App</a>
+      <a href="/?lang=en#/lecciones">Lessons</a>
+      <a href="/?lang=en#/kjerneord">Vocabulary</a>
+      <a href="/?lang=en#/pronunciacion">Pronunciation</a>
+      <a href="/?lang=en#/juegos">Games</a>
+      <a href="/en/norskprove-b1/">Norskprøve</a>
+      <span class="lang-switch" aria-label="Language">
+        <a href="/">ES</a>
+        <a href="/en/" aria-current="page">EN</a>
+        <a href="/fa/" dir="rtl" lang="fa">فا</a>
+      </span>
+    </nav>
+  </header>
+
+  <main class="seo-main">
+    <article class="seo-article seo-landing">
+      <nav class="seo-breadcrumb" aria-label="Breadcrumb"><a href="/?lang=en">Norsk Kjekt</a> › <span>English</span></nav>
+      <p class="eyebrow">Free Norwegian course · A0–C2</p>
+      <h1>Learn Norwegian for free.<br>From zero to Norskprøve.</h1>
+      <p class="seo-lead">For English speakers living in Norway, planning to move or learning from anywhere. Real bokmål, native-style audio, short exercises and no sign-up.</p>
+      <div class="seo-cta">
+        <a class="btn primary" href="/?lang=en">Start learning free</a>
+        <a class="btn ghost" href="/?lang=en#/nivel">Test your level</a>
+        <a class="btn ghost" href="/en/norskprove-b1/">Norskprøve guide</a>
+      </div>
+      <div class="seo-stats">
+        <div class="seo-stat"><b>15</b><small>lessons</small></div>
+        <div class="seo-stat"><b>357</b><small>exercises</small></div>
+        <div class="seo-stat"><b>900</b><small>key words</small></div>
+        <div class="seo-stat"><b>3,500</b><small>audio clips</small></div>
+      </div>
+
+      <h2>Norwegian that people actually use</h2>
+      <p>Textbook Norwegian is not enough when you need to order lunch, talk to a landlord, understand a work email or make a doctor's appointment. Norsk Kjekt mixes structured lessons with the everyday phrases you hear in Oslo and across Norway.</p>
+      <p>Everything is in bokmål, with audio recorded in a clear eastern Norwegian pronunciation. The interface can be used in English, Spanish or Persian, while the Norwegian you learn stays the same.</p>
+
+      <h2>What you get</h2>
+      <div class="seo-feature-grid">
+        <div class="seo-feature"><b>15 structured lessons</b><span>From greetings and numbers to work, opinions and culture, with vocabulary, grammar, phrases and exercises.</span></div>
+        <div class="seo-feature"><b>900 key words with audio</b><span>Survival, daily life, people, health, work, travel, connectors and debate. Tap any word to hear it.</span></div>
+        <div class="seo-feature"><b>200 essential verbs</b><span>Present, past, perfect and imperative forms, example sentences and a test for every pack.</span></div>
+        <div class="seo-feature"><b>Pronunciation practice</b><span>Listen, repeat and let your browser compare your voice. Get a score and the words to work on.</span></div>
+        <div class="seo-feature"><b>Stories and dialogues</b><span>Follow Lucía in Oslo, read Robinson Crusoe in simplified bokmål, or practise real conversations.</span></div>
+        <div class="seo-feature"><b>Norskprøve mock exams</b><span>A1, A2, B1 and B2: reading, listening, writing and speaking, with a timer and a skill report.</span></div>
+      </div>
+
+      <h2>How to use it in 20 minutes a day</h2>
+      <ol>
+        <li><b>5 minutes of vocabulary.</b> Review your flashcards and keep the streak alive.</li>
+        <li><b>10 minutes of course.</b> Do one lesson, one grammar topic or one Norskprøve exercise.</li>
+        <li><b>5 minutes of listening or speaking.</b> Repeat a short dialogue or try the pronunciation game.</li>
+      </ol>
+      <p>If you only have two minutes, Norsk Sprint gives you ten quick questions, a combo and three stars. It is designed to make starting easy, not to punish you for missing a day.</p>
+
+      <h2>Preparing for Norskprøve</h2>
+      <p>The mock exams follow the real structure: reading, listening, writing and speaking. You get a timer, a result by skill and model answers for the writing and speaking tasks. Use the <a href="/en/norskprove-b1/">Norskprøve guide</a> to understand the levels and what each section asks of you.</p>
+
+      <h2>Free, private and offline</h2>
+      <p>There are no accounts, no paywall and no ads inside the lessons. Your progress, theme and language preference stay in your browser. You can export a JSON backup and import it on another device. Install the PWA to keep the core course available offline.</p>
+
+      <h2>Frequently asked questions</h2>
+      <section class="seo-faq">
+        <details><summary>Is Norsk Kjekt really free?</summary><p>Yes. There is no paywall, no account and no trial. The course is free and your progress stays in your browser.</p></details>
+        <details><summary>Do I need to create an account?</summary><p>No. Open the site and start. Progress is saved locally on your device, and you can export or import it as a backup.</p></details>
+        <details><summary>Which Norwegian variant do you teach?</summary><p>The course teaches bokmål, the written form most learners and most people in Norway use. The audio is based on an eastern Norwegian pronunciation.</p></details>
+        <details><summary>Can I prepare for Norskprøve?</summary><p>Yes. There are full A1, A2, B1 and B2 mock exams with reading, listening, writing and speaking sections, a timer and a report by skill.</p></details>
+        <details><summary>Does it work offline?</summary><p>Yes. Norsk Kjekt is a PWA. Install it from your browser and the core lessons, audio and exercises keep working without a connection.</p></details>
+      </section>
+
+      <div class="seo-share">
+        <span>Share with someone learning Norwegian:</span>
+        <a href="https://wa.me/?text=Learn%20Norwegian%20for%20free%20with%20Norsk%20Kjekt%3A%20https%3A%2F%2Fnorskkjekt.com%2Fen%2F" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://t.me/share/url?url=https%3A%2F%2Fnorskkjekt.com%2Fen%2F&text=Learn%20Norwegian%20for%20free" target="_blank" rel="noopener">Telegram</a>
+        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fnorskkjekt.com%2Fen%2F&text=Learn%20Norwegian%20for%20free%20with%20Norsk%20Kjekt" target="_blank" rel="noopener">X</a>
+        <a href="mailto:?subject=Learn%20Norwegian%20for%20free&body=https%3A%2F%2Fnorskkjekt.com%2Fen%2F">Email</a>
+      </div>
+    </article>
+
+    <aside class="seo-aside">
+      <div class="seo-card">
+        <h2>Start here</h2>
+        <a href="/?lang=en#/a0">A0 · From scratch</a>
+        <a href="/?lang=en#/lecciones">All 15 lessons</a>
+        <a href="/?lang=en#/kjerneord">900 key words</a>
+        <a href="/?lang=en#/pronunciacion">Pronunciation with microphone</a>
+        <a href="/?lang=en#/juegos/sprint">Norsk Sprint game</a>
+        <a href="/?lang=en#/eksamen">Norskprøve mock exams</a>
+      </div>
+      <div class="seo-card">
+        <h2>Popular</h2>
+        <a href="/en/norskprove-b1/">Norskprøve B1 guide</a>
+        <a href="/?lang=en#/flashcards">Flashcards</a>
+        <a href="/?lang=en#/verbos">200 Norwegian verbs</a>
+        <a href="/?lang=en#/historien">Lucía i Oslo story</a>
+        <a href="/?lang=en#/progreso">My progress</a>
+      </div>
+      <div class="seo-card">
+        <h2>Language</h2>
+        <a href="/">Español</a>
+        <a href="/en/" aria-current="page">English</a>
+        <a href="/fa/" dir="rtl" lang="fa">فارسی</a>
+      </div>
+    </aside>
   </main>
+
+  <footer class="seo-foot">
+    <p><b>Norsk Kjekt</b> · free Norwegian bokmål A0–C2. <a href="/?lang=en">Open the app</a> · <a href="/en/norskprove-b1/">Norskprøve</a> · <a href="/fa/" lang="fa">فارسی</a></p>
+  </footer>
+
+  <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "0452878452414d27a24f2a5281e050e9"}'></script>
 </body>
 </html>

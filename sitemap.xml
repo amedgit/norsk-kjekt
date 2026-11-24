@@ -2,13 +2,17 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://norskkjekt.com/</loc>
-    <lastmod>2026-11-22</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://norskkjekt.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://norskkjekt.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://norskkjekt.com/fa/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://norskkjekt.com/"/>
   </url>
   <url>
     <loc>https://norskkjekt.com/guias/</loc>
-    <lastmod>2026-11-08</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -89,5 +93,35 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://norskkjekt.com/en/norskprove-b1/"/>
     <xhtml:link rel="alternate" hreflang="fa" href="https://norskkjekt.com/fa/norskprove-b1/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://norskkjekt.com/norskprove-b1/"/>
+  </url>
+  <url>
+    <loc>https://norskkjekt.com/en/</loc>
+    <lastmod>2026-11-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://norskkjekt.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://norskkjekt.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://norskkjekt.com/fa/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://norskkjekt.com/"/>
+  </url>
+  <url>
+    <loc>https://norskkjekt.com/fa/</loc>
+    <lastmod>2026-11-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://norskkjekt.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://norskkjekt.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://norskkjekt.com/fa/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://norskkjekt.com/"/>
+  </url>
+  <url>
+    <loc>https://norskkjekt.com/noruego-para-espanoles/</loc>
+    <lastmod>2026-11-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://norskkjekt.com/noruego-para-espanoles/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://norskkjekt.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://norskkjekt.com/fa/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://norskkjekt.com/"/>
   </url>
 </urlset>

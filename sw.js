@@ -5,7 +5,7 @@
    - navegación: red primero, con la app cacheada como respaldo offline.
    Sube CACHE_VERSION en cada despliegue para renovar los caches. */
 
-const CACHE_VERSION = 'v76';
+const CACHE_VERSION = 'v77';
 const CORE = `norsk-kjekt-core-${CACHE_VERSION}`;
 const RUNTIME = `norsk-kjekt-runtime-${CACHE_VERSION}`;
 
@@ -15,6 +15,7 @@ const PRECACHE = [
   'fa/',
   'en/',
   'es/',
+  'noruego-para-espanoles/',
   'manifest.webmanifest',
   'assets/css/style.css',
   'assets/css/seo.css',
