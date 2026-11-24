@@ -38,6 +38,9 @@ jobs:
         with:
           path: _site
 
+      - name: Esperar a que el artefacto esté disponible
+        run: sleep 15
+
       - name: Desplegar
         id: deployment
         uses: actions/deploy-pages@v4
