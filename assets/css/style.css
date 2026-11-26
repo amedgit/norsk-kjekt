@@ -3392,3 +3392,179 @@ html[data-theme="dark"] .card {
   color: #fff; border-color: rgba(255, 255, 255, .6);
   background: rgba(255, 255, 255, .14);
 }
+
+/* ---------------- Kortmodus: tarjetas con swipe ---------------- */
+
+.kort-hero {
+  position: relative; overflow: hidden;
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem;
+  padding: clamp(1.4rem, 3.6vw, 2.2rem);
+  border-radius: 24px; color: #fff;
+  background:
+    radial-gradient(circle at 88% 8%, rgba(56, 214, 230, .22), transparent 35%),
+    radial-gradient(circle at 8% 100%, rgba(163, 52, 214, .18), transparent 38%),
+    linear-gradient(135deg, #101a3a, #18285c 55%, #202b62);
+  border: 1px solid rgba(141, 180, 255, .25);
+  box-shadow: 0 26px 60px -36px rgba(6, 20, 38, .8);
+}
+.kort-hero::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image: radial-gradient(rgba(255, 255, 255, .15) 1px, transparent 1px);
+  background-size: 24px 24px; opacity: .12;
+}
+.kort-hero > * { position: relative; z-index: 1; }
+.kort-hero-copy { max-width: 62ch; }
+.kort-hero .eyebrow { background: rgba(56, 214, 230, .12); color: #8fe7f2; border: 1px solid rgba(56, 214, 230, .25); }
+.kort-hero h1 { color: #fff; font-size: clamp(2rem, 4.6vw, 3rem); letter-spacing: -.045em; margin: .1rem 0 .4rem; }
+.kort-hero p { color: rgba(255, 255, 255, .72); font-size: .9rem; }
+.kort-badges { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .9rem; }
+.kort-badges span {
+  border: 1px solid rgba(255, 255, 255, .18); background: rgba(255, 255, 255, .06);
+  border-radius: 999px; padding: .28rem .6rem; font-size: .72rem; font-weight: 650;
+}
+.kort-hero-side { align-self: flex-start; }
+.kort-hero-side .sprint-sound { color: #fff; }
+
+.kort-banner {
+  display: flex; align-items: center; gap: .7rem;
+  margin: 1rem 0 .2rem; padding: .8rem .9rem;
+  border: 1px solid rgba(56, 214, 230, .35); border-radius: 16px;
+  background:
+    radial-gradient(circle at 92% 0%, rgba(56, 214, 230, .14), transparent 36%),
+    linear-gradient(135deg, var(--card), var(--bg));
+  text-decoration: none; color: var(--ink);
+  transition: transform .15s, border-color .15s, box-shadow .15s;
+}
+.kort-banner:hover { transform: translateY(-2px); border-color: #38d6e6; box-shadow: 0 12px 26px -20px rgba(16, 28, 51, .4); }
+.kort-banner-emoji {
+  display: grid; place-items: center; width: 2.7rem; height: 2.7rem; flex: 0 0 auto;
+  border-radius: 12px; background: rgba(56, 214, 230, .13); font-size: 1.35rem;
+}
+.kort-banner-copy { display: flex; flex-direction: column; min-width: 0; }
+.kort-banner-copy b { font-size: .9rem; }
+.kort-banner-copy small { color: var(--muted); font-size: .74rem; }
+.kort-banner .btn { margin-inline-start: auto; flex: 0 0 auto; }
+
+.kort-board {
+  position: relative; overflow: hidden;
+  margin-top: 1rem; padding: clamp(1rem, 3.4vw, 1.6rem);
+  border-radius: 24px; color: #fff;
+  background:
+    radial-gradient(circle at 84% 0%, rgba(56, 214, 230, .16), transparent 36%),
+    radial-gradient(circle at 6% 100%, rgba(163, 52, 214, .12), transparent 38%),
+    linear-gradient(160deg, #0a1a2b, #102a45);
+  border: 1px solid rgba(56, 214, 230, .22);
+  box-shadow: 0 30px 70px -40px rgba(6, 20, 38, .9);
+}
+.kort-hud { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; margin-bottom: .55rem; }
+.kort-progress { color: rgba(255, 255, 255, .65); font-size: .72rem; font-weight: 750; }
+.kort-pack { margin-inline-start: auto; color: #8fe7f2; font-size: .7rem; font-weight: 700; }
+.kort-progressbar { height: 7px; border-radius: 99px; background: rgba(255, 255, 255, .13); overflow: hidden; margin-bottom: 1rem; }
+.kort-progressbar > i { display: block; height: 100%; border-radius: 99px; background: linear-gradient(90deg, #7c5cff, #38d6e6); transition: width .35s ease; }
+.kort-stack { position: relative; height: clamp(300px, 48vw, 400px); perspective: 1400px; max-width: 620px; margin: 0 auto; }
+.kort-ghost {
+  position: absolute; inset: 0; border-radius: 22px;
+  background: rgba(255, 255, 255, .045); border: 1px solid rgba(255, 255, 255, .11);
+  transform-origin: center bottom;
+}
+.kort-ghost.ghost-1 { transform: translateY(10px) scale(.97); opacity: .7; }
+.kort-ghost.ghost-2 { transform: translateY(20px) scale(.94) rotate(1.5deg); opacity: .4; }
+.kort-card {
+  position: absolute; inset: 0; cursor: grab; touch-action: none;
+  transform-style: preserve-3d; will-change: transform;
+  transition: transform .28s cubic-bezier(.2, .8, .3, 1);
+}
+.kort-card.dragging { cursor: grabbing; transition: none; }
+.kort-card-inner {
+  position: absolute; inset: 0; transform-style: preserve-3d;
+  transition: transform .55s cubic-bezier(.2, .8, .25, 1);
+}
+.kort-card.flipped .kort-card-inner { transform: rotateY(180deg); }
+.kort-face {
+  position: absolute; inset: 0; backface-visibility: hidden;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: .5rem; padding: 1.5rem 1.2rem; text-align: center;
+  border-radius: 22px; border: 1px solid rgba(56, 214, 230, .28);
+  background:
+    radial-gradient(circle at 18% 0%, rgba(56, 214, 230, .16), transparent 44%),
+    linear-gradient(155deg, #0c223b, #163657);
+  box-shadow: 0 24px 50px -26px rgba(0, 0, 0, .65);
+}
+.kort-face.back {
+  transform: rotateY(180deg);
+  border-color: rgba(255, 209, 102, .34);
+  background:
+    radial-gradient(circle at 80% 0%, rgba(255, 209, 102, .13), transparent 42%),
+    linear-gradient(155deg, #142a46, #1d3355);
+}
+.kort-emoji { font-size: 2.8rem; line-height: 1; filter: drop-shadow(0 8px 16px rgba(0, 0, 0, .3)); }
+.kort-dir {
+  color: #8fe7f2; font-size: .68rem; font-weight: 800;
+  letter-spacing: .09em; text-transform: uppercase;
+}
+.kort-word {
+  margin: 0; color: #fff; font-size: clamp(2rem, 7vw, 3.8rem);
+  font-weight: 850; letter-spacing: -.045em; line-height: 1.05; max-width: 100%; overflow-wrap: break-word;
+}
+.kort-word.es { font-size: clamp(1.5rem, 5vw, 2.6rem); letter-spacing: -.02em; }
+.kort-hint { color: rgba(255, 255, 255, .5); font-size: .7rem; margin-top: .35rem; }
+.kort-forms { color: rgba(255, 255, 255, .68); font-size: .78rem; margin: 0; }
+.kort-forms b { color: #8fe7f2; }
+.kort-audio { margin-top: .15rem; }
+.kort-board .say { background: rgba(255, 255, 255, .09); border-color: rgba(255, 255, 255, .22); color: #fff; width: 2.4rem; height: 2.4rem; font-size: 1rem; }
+.kort-stamp {
+  position: absolute; top: 1.1rem; z-index: 3; pointer-events: none;
+  padding: .25rem .55rem; border-radius: 8px; border: 2px solid currentColor;
+  font-size: .78rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase;
+  opacity: 0; transition: opacity .1s;
+}
+.kort-stamp.stamp-again { left: 1.1rem; color: #ff9aa9; transform: rotate(-9deg); }
+.kort-stamp.stamp-known { right: 1.1rem; color: #7cf0d0; transform: rotate(9deg); }
+.kort-card.fly-left { transform: translateX(-120vw) rotate(-22deg); transition: transform .3s ease-in; }
+.kort-card.fly-right { transform: translateX(120vw) rotate(22deg); transition: transform .3s ease-in; }
+.kort-card.fly-up { transform: translateY(-120vh) rotate(5deg); transition: transform .3s ease-in; }
+.kort-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; max-width: 620px; margin: 1rem auto 0; }
+.kort-action {
+  display: flex; align-items: center; justify-content: center; gap: .35rem;
+  border: 1px solid rgba(255, 255, 255, .16); border-radius: 12px;
+  padding: .65rem .5rem; font: inherit; font-size: .8rem; font-weight: 800;
+  cursor: pointer; transition: transform .15s, background .15s, border-color .15s;
+}
+.kort-action:hover { transform: translateY(-1px); }
+.kort-action.again { color: #ffb3bd; background: rgba(225, 29, 63, .17); border-color: rgba(255, 77, 106, .36); }
+.kort-action.good { color: #ffe09a; background: rgba(255, 209, 102, .13); border-color: rgba(255, 209, 102, .32); }
+.kort-action.known { color: #7cf0d0; background: rgba(18, 133, 90, .18); border-color: rgba(56, 214, 230, .34); }
+.kort-swipe-hint { text-align: center; color: rgba(255, 255, 255, .46); font-size: .72rem; margin-top: .75rem; }
+
+.kort-summary, .kort-empty { text-align: center; padding: 1rem .2rem; max-width: 620px; margin: 0 auto; }
+.kort-summary-icon, .kort-empty-icon { font-size: 2.8rem; line-height: 1; margin-bottom: .4rem; }
+.kort-summary .eyebrow { background: rgba(56, 214, 230, .12); color: #8fe7f2; border: 1px solid rgba(56, 214, 230, .24); }
+.kort-summary h2, .kort-empty h2 { color: #fff; font-size: clamp(1.35rem, 3.4vw, 1.8rem); margin: .1rem 0 .35rem; }
+.kort-summary > p, .kort-empty p { color: rgba(255, 255, 255, .7); font-size: .88rem; }
+.kort-summary-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; margin: 1rem auto; max-width: 440px; }
+.kort-summary-stats div { background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .12); border-radius: 12px; padding: .5rem; }
+.kort-summary-stats b { display: block; color: #fff; font-size: 1.25rem; }
+.kort-summary-stats small { color: rgba(255, 255, 255, .55); font-size: .66rem; }
+.kort-summary-xp { color: #7cf0d0 !important; font-weight: 850; font-size: .95rem !important; }
+.kort-summary-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: .45rem; margin-top: .8rem; }
+.kort-board .btn.ghost { border-color: rgba(255, 255, 255, .22); color: #fff; background: rgba(255, 255, 255, .05); }
+.kort-board .btn.ghost:hover { background: rgba(255, 255, 255, .1); border-color: rgba(56, 214, 230, .5); }
+.kort-empty .kort-summary-actions { margin-top: .8rem; }
+
+@media (max-width: 640px) {
+  .kort-hero { align-items: flex-start; flex-direction: column; }
+  .kort-hero-side { align-self: flex-start; }
+  .kort-stack { height: 330px; }
+  .kort-face { padding: 1.1rem .9rem; }
+  .kort-action { font-size: .72rem; padding: .55rem .3rem; }
+  .kort-banner { flex-wrap: wrap; }
+  .kort-banner .btn { margin-inline-start: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .kort-card, .kort-card-inner, .kort-progressbar > i, .kort-action, .kort-banner { transition: none !important; animation: none !important; }
+  .kort-stamp { transition: none !important; }
+}
+.kort-back-front {
+  color: rgba(255, 255, 255, .58); font-size: clamp(1rem, 3.4vw, 1.35rem);
+  font-weight: 750; max-width: 100%; overflow-wrap: break-word;
+}

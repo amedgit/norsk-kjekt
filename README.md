@@ -93,7 +93,7 @@ cacheada.
 | A0 | Sección `#/a0` para empezar desde cero: alfabeto, vocales, consonantes, pronunciación, primeras frases y 8 ejercicios |
 | Gramática | Referencia `#/gramatica` A0–B2: 30 temas con reglas, ejemplos con audio, errores típicos y 60 ejercicios |
 | Verbos | 200 verbos esenciales con presente, pasado, perfecto, imperativo, ejemplo, audio y progreso |
-| Flashcards | Mazos de vocabulario por tema con audio, dos direcciones, repaso espaciado (1/3/7/15/30 días) y progreso |
+| Flashcards | Mazos de vocabulario por tema con audio, dos direcciones, repaso espaciado (1/3/7/15/30 días) y progreso. **Kortmodus** añade una baraja inteligente con swipe |
 | Robinson | «Robinson Crusoe»: adaptación propia del clásico de 1719, cuatro capítulos abiertos con escenas 3D, ilustraciones, audio, vocabulario, gramática y 5 ejercicios cada uno |
 | Juegos | **Norsk Sprint**: 9 niveles de 10 preguntas, combo, estrellas, reto diario, sonidos y confeti. **Hukommelse**: parejas de palabras y traducciones, tres niveles, audio y tiempos. **Crucigrama**: vocabulario noruego generado, pistas, comprobación, pista y nuevo puzzle |
 | Historia | «Lucía i Oslo»: 6 capítulos piloto (A2–B1) de la serie de 12, con 7 párrafos cada uno, audio por párrafo y del capítulo completo, traducción plegable, 15 palabras, gramática y 5 ejercicios por capítulo |
@@ -425,6 +425,23 @@ repaso espaciado:
 - sesiones de 20 tarjetas, resumen final y funcionamiento offline.
 
 La ruta `#/flashcards/<id>` abre un mazo; `#/flashcards` es el índice.
+
+### Kortmodus
+
+`#/kort` es una baraja inteligente que mezcla palabras de los nueve mazos. No
+sustituye a Flashcards: usa el mismo `state.srs` y las mismas claves
+`flash:<packId>:<wordId>`, pero cambia la interacción por tarjetas con swipe.
+
+- Prepara una ronda de hasta 20 tarjetas: primero las pendientes, después las
+  nuevas y, si hace falta, las que ya tocan más adelante.
+- Alterna noruego → español y español → noruego.
+- Toca la tarjeta para girarla; desliza a la derecha si la sabes, a la izquierda
+  para repetirla o hacia arriba para revelar. También funcionan los botones y
+  las teclas `1` (otra vez), `2` (bien), `3` (la sabía) y espacio.
+- Cada acierto da 5 XP; completar una ronda de 10 o más suma 10 XP extra.
+- El resumen muestra aciertos, comodín y tarjetas para mañana.
+
+La entrada está en **Más → Kort** y en una tarjeta dentro de `#/flashcards`.
 
 ### Pronunciación
 

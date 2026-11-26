@@ -2145,6 +2145,11 @@
       '  <p>' + esc(t('flash.intro')) + '</p>' +
       '  <p class="flash-overall">' + esc(t('flash.overall', { done: known, total: total })) + '</p>' +
       '</section>' +
+      '<a class="kort-banner" href="#/kort">' +
+      '  <span class="kort-banner-emoji" aria-hidden="true">🃏</span>' +
+      '  <span class="kort-banner-copy"><b>' + esc(t('kort.title')) + '</b><small>' + esc(t('kort.banner')) + '</small></span>' +
+      '  <span class="btn primary small">' + esc(t('kort.open')) + ' →</span>' +
+      '</a>' +
       '<h2 class="section-title">' + esc(t('flash.packsTitle')) + ' <span>' + esc(t('flash.packsMeta', { n: packs.length, total: total })) + '</span></h2>' +
       '<div class="flash-deck-grid">' + packs.map(flashPackCard).join('') + '</div>' +
       '<section class="card story-note"><div class="tip">🧠 <b>' + esc(t('flash.noteTitle')) + ':</b> ' + esc(t('flash.note')) + '</div></section>';
@@ -2306,8 +2311,373 @@
   }
 
   /* =======================================================
+     Kortmodus: tarjetas con swipe y repaso inteligente
+     ======================================================= */
+
+  var kortSession = null;
+  var kortKeyHandler = null;
+  var KORT_EMOJI = {
+    greet: '👋', pron: '🔤', q: '❓', verb1: '🏃', verb2: '🏃', time: '⏰', place: '📍', food: '🍽️',
+    health: '🩺', link: '🔗', home: '🏠', objects: '🧰', kitchen: '🍳', shop: '🛒', transport: '🚌',
+    directions: '🧭', routine: '🔁', actions: '⚡', money: '💰', social: '💬', family: '👨‍👩‍👧',
+    people: '👥', feelings: '💛', plans: '🗓️', freetime: '🎉', future: '🔮', socialfood: '☕',
+    personality: '🌟', communication: '💬', celebration: '🎈', bodyparts: '🧍', organs: '🫀',
+    symptoms: '🤒', doctor: '👨‍⚕️', pharmacy: '💊', emergency: '🚨', habits: '🌿', mental: '🧠',
+    appointments: '📅', movement: '🏃'
+  };
+
+  function kortAll() {
+    var out = [];
+    flashPacks().forEach(function (pack) {
+      pack.words.forEach(function (w) {
+        out.push({ pack: pack, word: w, sig: flashSig(pack.id, w.id) });
+      });
+    });
+    return out;
+  }
+
+  function kortDueCount() {
+    return flashPacks().reduce(function (n, pack) { return n + flashDueCount(pack); }, 0);
+  }
+
+  function kortKnownTotal() {
+    return flashPacks().reduce(function (n, pack) { return n + coreKnownCount(pack); }, 0);
+  }
+
+  function kortBuild() {
+    var today = todayKey();
+    var due = [];
+    var fresh = [];
+    var later = [];
+    kortAll().forEach(function (c) {
+      var e = state.srs[c.sig];
+      if (!e) fresh.push(c);
+      else if (e.due <= today) due.push(c);
+      else later.push(c);
+    });
+    var picks = shuffle(due).slice(0, 20);
+    var free = false;
+    if (!picks.length && !fresh.length) {
+      free = true;
+      picks = shuffle(later).slice(0, 20);
+    } else {
+      picks = picks.concat(shuffle(fresh).slice(0, 20 - picks.length));
+    }
+    if (picks.length < 20) picks = picks.concat(shuffle(later).slice(0, 20 - picks.length));
+    var queue = picks.map(function (c, i) {
+      return Object.assign({}, c, { dir: i % 2 ? 'es' : 'no' });
+    });
+    return {
+      queue: queue,
+      total: queue.length,
+      index: 0,
+      known: 0,
+      good: 0,
+      again: 0,
+      xp: 0,
+      revealed: false,
+      locked: false,
+      free: free,
+      rewarded: false
+    };
+  }
+
+  function kortItem() {
+    if (!kortSession || kortSession.index >= kortSession.queue.length) return null;
+    return kortSession.queue[kortSession.index];
+  }
+
+  function kortDirectionLabel(item) {
+    return t(item.dir === 'no' ? 'kort.directionNo' : 'kort.directionEs');
+  }
+
+  function kortFront(item) {
+    return item.dir === 'no' ? item.word.no : item.word.es;
+  }
+
+  function kortBack(item) {
+    return item.dir === 'no' ? item.word.es : item.word.no;
+  }
+
+  function kortPaintStats() {
+    var dueEl = document.getElementById('kort-due-count');
+    var knownEl = document.getElementById('kort-known-count');
+    if (dueEl) dueEl.textContent = tp('kort.due', kortDueCount());
+    if (knownEl) knownEl.textContent = tp('kort.knownTotal', kortKnownTotal());
+  }
+
+  function kortStore(mode) {
+    var item = kortItem();
+    if (!item) return;
+    var e = state.srs[item.sig] || { step: 0, due: todayKey() };
+    if (mode === 'again') {
+      e.step = 0;
+      e.due = addDays(1);
+      kortSession.again += 1;
+    } else if (mode === 'known') {
+      e.step = SRS_DAYS.length - 1;
+      e.due = addDays(30);
+      state.core.known[item.word.id] = true;
+      kortSession.known += 1;
+      kortSession.xp += 5;
+      addXp(5);
+    } else {
+      var days = SRS_DAYS[Math.min(e.step, SRS_DAYS.length - 1)];
+      e.step = Math.min(e.step + 1, SRS_DAYS.length - 1);
+      e.due = addDays(days);
+      kortSession.good += 1;
+      kortSession.xp += 5;
+      addXp(5);
+      if (e.step >= 3) state.core.known[item.word.id] = true;
+    }
+    state.srs[item.sig] = e;
+    markDay();
+    save();
+    refreshHud();
+    kortPaintStats();
+  }
+
+  function kortFlip() {
+    if (!kortSession || kortSession.locked) return;
+    var card = document.getElementById('kort-card');
+    if (!card) return;
+    kortSession.revealed = !kortSession.revealed;
+    card.classList.toggle('flipped', kortSession.revealed);
+    sprintSfx('click');
+  }
+
+  function kortRate(mode) {
+    if (!kortSession || kortSession.locked || !kortItem()) return;
+    var card = document.getElementById('kort-card');
+    kortSession.locked = true;
+    kortStore(mode);
+    sprintSfx(mode === 'again' ? 'wrong' : 'correct', mode === 'again' ? 0 : 3);
+    if (card) card.classList.add(mode === 'known' ? 'fly-right' : mode === 'good' ? 'fly-up' : 'fly-left');
+    setTimeout(function () {
+      if (!kortSession) return;
+      kortSession.index += 1;
+      kortSession.revealed = false;
+      kortSession.locked = false;
+      paintKort();
+    }, 260);
+  }
+
+  function kortAgain() {
+    kortSession = kortBuild();
+    kortPaintStats();
+    paintKort();
+  }
+
+  function kortSummaryHTML() {
+    var s = kortSession;
+    if (!s.rewarded && s.total >= 10) {
+      s.rewarded = true;
+      s.xp += 10;
+      addXp(10);
+      save();
+      refreshHud();
+    }
+    if (!s.celebrated) {
+      s.celebrated = true;
+      sprintConfetti(true);
+      sprintSfx('finish');
+    }
+    return '<div class="kort-summary" role="status" aria-live="polite">' +
+      '<div class="kort-summary-icon" aria-hidden="true">🎉</div>' +
+      '<span class="eyebrow">' + esc(t('kort.eyebrow')) + '</span>' +
+      '<h2>' + esc(t('kort.summaryTitle')) + '</h2>' +
+      '<p>' + esc(t('kort.summaryText', { n: s.total, known: s.known, good: s.good, again: s.again })) + '</p>' +
+      '<div class="kort-summary-stats">' +
+      '  <div><b>' + s.known + '</b><small>' + esc(t('kort.known')) + '</small></div>' +
+      '  <div><b>' + s.good + '</b><small>' + esc(t('kort.good')) + '</small></div>' +
+      '  <div><b>' + s.again + '</b><small>' + esc(t('kort.again')) + '</small></div>' +
+      '</div>' +
+      '<p class="kort-summary-xp">+' + s.xp + ' XP</p>' +
+      '<div class="kort-summary-actions">' +
+      '  <button type="button" class="btn primary" data-kort-again>' + esc(t('kort.newRound')) + '</button>' +
+      '  <a class="btn ghost" href="#/flashcards">' + esc(t('kort.back')) + '</a>' +
+      '</div></div>';
+  }
+
+  function kortEmptyHTML() {
+    return '<div class="kort-empty"><div class="kort-empty-icon">✅</div><h2>' + esc(t('kort.emptyTitle')) + '</h2>' +
+      '<p>' + esc(t('kort.emptyText')) + '</p>' +
+      '<div class="kort-summary-actions"><button type="button" class="btn primary" data-kort-again>' + esc(t('kort.free')) + '</button>' +
+      '<a class="btn ghost" href="#/flashcards">' + esc(t('kort.back')) + '</a></div></div>';
+  }
+
+  function paintKort() {
+    var stage = document.getElementById('kort-stage');
+    if (!stage || !kortSession) return;
+    if (!kortSession.total) { stage.innerHTML = kortEmptyHTML(); return; }
+    if (kortSession.index >= kortSession.queue.length) { stage.innerHTML = kortSummaryHTML(); return; }
+    var item = kortItem();
+    if (!item) return;
+    var w = item.word;
+    var emoji = KORT_EMOJI[w.cat] || '🗂️';
+    var pct = Math.round((kortSession.index / kortSession.total) * 100);
+    var front = kortFront(item);
+    var back = kortBack(item);
+    var frontNo = item.dir === 'no';
+    var forms = w.forms ? '<p class="kort-forms"><b>' + esc(t('flash.forms')) + ':</b> ' + esc(w.forms) + '</p>' : '';
+    stage.innerHTML =
+      '<div class="kort-hud">' +
+      '  <span class="kort-progress">' + esc(t('kort.progress', { done: kortSession.index, total: kortSession.total })) + '</span>' +
+      '  <span class="kort-pack">' + esc(item.pack.title) + '</span>' +
+      '</div>' +
+      '<div class="kort-progressbar"><i style="width:' + pct + '%"></i></div>' +
+      '<div class="kort-stack" id="kort-stack">' +
+      '  <div class="kort-ghost ghost-2"></div><div class="kort-ghost ghost-1"></div>' +
+      '  <div class="kort-card' + (kortSession.revealed ? ' flipped' : '') + '" id="kort-card">' +
+      '    <div class="kort-card-inner">' +
+      '      <div class="kort-face front">' +
+      '        <span class="kort-emoji" aria-hidden="true">' + emoji + '</span>' +
+      '        <span class="kort-dir">' + esc(kortDirectionLabel(item)) + '</span>' +
+      '        <p class="kort-word' + (frontNo ? '' : ' es') + '"' + (frontNo ? ' lang="nb" dir="ltr"' : ' dir="auto"') + '>' + esc(front) + '</p>' +
+      (frontNo ? '<div class="kort-audio">' + say(w.no) + '</div>' : '') +
+      '        <span class="kort-hint">' + esc(t('kort.tap')) + '</span>' +
+      '      </div>' +
+      '      <div class="kort-face back">' +
+      '        <span class="kort-emoji" aria-hidden="true">' + emoji + '</span>' +
+      '        <span class="kort-back-front"' + (frontNo ? ' lang="nb" dir="ltr"' : ' dir="auto"') + '>' + esc(front) + '</span>' +
+      '        <p class="kort-word' + (frontNo ? ' es' : '') + '"' + (frontNo ? ' dir="auto"' : ' lang="nb" dir="ltr"') + '>' + esc(back) + '</p>' +
+      forms +
+      (!frontNo ? '<div class="kort-audio">' + say(w.no) + '</div>' : '') +
+      '        <span class="kort-hint">' + esc(t('kort.swipe')) + '</span>' +
+      '      </div>' +
+      '    </div>' +
+      '    <span class="kort-stamp stamp-again">' + esc(t('kort.again')) + '</span>' +
+      '    <span class="kort-stamp stamp-known">' + esc(t('kort.known')) + '</span>' +
+      '  </div>' +
+      '</div>' +
+      '<div class="kort-actions">' +
+      '  <button type="button" class="kort-action again" data-kort-rate="again">✕ <span>' + esc(t('kort.again')) + '</span></button>' +
+      '  <button type="button" class="kort-action good" data-kort-rate="good">↻ <span>' + esc(t('kort.good')) + '</span></button>' +
+      '  <button type="button" class="kort-action known" data-kort-rate="known">✓ <span>' + esc(t('kort.known')) + '</span></button>' +
+      '</div>' +
+      '<p class="kort-swipe-hint">' + esc(t('kort.swipe')) + '</p>';
+    bindKortCard();
+  }
+
+  function bindKortCard() {
+    var card = document.getElementById('kort-card');
+    if (!card) return;
+    var startX = 0;
+    var startY = 0;
+    var dragging = false;
+    var moved = false;
+    var stampAgain = card.querySelector('.stamp-again');
+    var stampKnown = card.querySelector('.stamp-known');
+    card.addEventListener('pointerdown', function (e) {
+      if (!kortSession || kortSession.locked) return;
+      if (e.target.closest('[data-say], button, a')) return;
+      dragging = true;
+      moved = false;
+      startX = e.clientX;
+      startY = e.clientY;
+      card.classList.add('dragging');
+      try { card.setPointerCapture(e.pointerId); } catch (err) { /* ignorar */ }
+    });
+    card.addEventListener('pointermove', function (e) {
+      if (!dragging) return;
+      var dx = e.clientX - startX;
+      var dy = e.clientY - startY;
+      if (Math.abs(dx) > 5 || Math.abs(dy) > 5) moved = true;
+      card.style.transform = 'translate(' + dx + 'px,' + (dy * 0.28) + 'px) rotate(' + (dx / 22) + 'deg)';
+      if (stampAgain) stampAgain.style.opacity = Math.max(0, Math.min(1, -dx / 110));
+      if (stampKnown) stampKnown.style.opacity = Math.max(0, Math.min(1, dx / 110));
+    });
+    card.addEventListener('pointerup', function (e) {
+      if (!dragging) return;
+      dragging = false;
+      card.classList.remove('dragging');
+      var dx = e.clientX - startX;
+      var dy = e.clientY - startY;
+      card.style.transform = '';
+      if (stampAgain) stampAgain.style.opacity = '';
+      if (stampKnown) stampKnown.style.opacity = '';
+      if (dx > 90) kortRate('known');
+      else if (dx < -90) kortRate('again');
+      else if (dy < -70) { card.dataset.skipClick = '1'; kortFlip(); }
+      else if (moved) card.dataset.skipClick = '1';
+    });
+    card.addEventListener('pointercancel', function () {
+      dragging = false;
+      card.classList.remove('dragging');
+      card.style.transform = '';
+      if (stampAgain) stampAgain.style.opacity = '';
+      if (stampKnown) stampKnown.style.opacity = '';
+    });
+  }
+
+  function shortKortKey(e) {
+    if (!kortSession || kortSession.locked) return;
+    if (e.key === ' ') { e.preventDefault(); kortFlip(); }
+    else if (e.key === '1') { e.preventDefault(); kortRate('again'); }
+    else if (e.key === '2') { e.preventDefault(); kortRate('good'); }
+    else if (e.key === '3') { e.preventDefault(); kortRate('known'); }
+  }
+
+  function bindKortKeys() {
+    if (kortKeyHandler) document.removeEventListener('keydown', kortKeyHandler);
+    kortKeyHandler = shortKortKey;
+    document.addEventListener('keydown', kortKeyHandler);
+  }
+
+  function kortStop() {
+    kortSession = null;
+    if (kortKeyHandler) {
+      document.removeEventListener('keydown', kortKeyHandler);
+      kortKeyHandler = null;
+    }
+  }
+
+  function renderKort() {
+    var due = kortDueCount();
+    var known = kortKnownTotal();
+    var total = flashPacks().reduce(function (n, p) { return n + p.words.length; }, 0);
+    kortSession = kortBuild();
+    app.innerHTML =
+      '<div class="crumbs"><a href="#/">' + esc(t('crumb.home')) + '</a> <span>›</span> <a href="#/flashcards">' + esc(t('flash.title')) + '</a> <span>›</span> <span>' + esc(t('kort.title')) + '</span></div>' +
+      '<section class="kort-hero">' +
+      '  <div class="kort-hero-copy">' +
+      '    <span class="eyebrow">' + esc(t('kort.eyebrow')) + '</span>' +
+      '    <h1>' + esc(t('kort.title')) + '</h1>' +
+      '    <p>' + esc(t('kort.intro')) + '</p>' +
+      '    <div class="kort-badges">' +
+      '      <span>🗂️ ' + esc(t('kort.smart')) + '</span>' +
+      '      <span id="kort-due-count">⏰ ' + esc(tp('kort.due', due)) + '</span>' +
+      '      <span id="kort-known-count">✓ ' + esc(tp('kort.knownTotal', known)) + '</span>' +
+      '    </div>' +
+      '  </div>' +
+      '  <div class="kort-hero-side">' + sprintSoundHTML() + '</div>' +
+      '</section>' +
+      '<section class="kort-board">' +
+      '  <div id="kort-stage"></div>' +
+      '  <div class="sprint-confetti" id="sprint-confetti" aria-hidden="true"></div>' +
+      '</section>';
+    var stage = document.getElementById('kort-stage');
+    if (stage) {
+      stage.addEventListener('click', function (e) {
+        if (e.target.closest('[data-say]')) return;
+        var rate = e.target.closest('[data-kort-rate]');
+        if (rate) { kortRate(rate.getAttribute('data-kort-rate')); return; }
+        if (e.target.closest('[data-kort-again]')) { kortAgain(); return; }
+        var cardEl = e.target.closest('#kort-card');
+        if (cardEl) {
+          if (cardEl.dataset.skipClick) { delete cardEl.dataset.skipClick; return; }
+          kortFlip();
+        }
+      });
+    }
+    bindKortKeys();
+    paintKort();
+  }
+
+  /* =======================================================
      Gramática: referencia A0–A2
      ======================================================= */
+
 
   function grammarTopic(id) {
     return GRAMMAR.topics.find(function (t) { return t.id === id; }) || null;
@@ -7646,6 +8016,7 @@
     if (window.TTS) window.TTS.stop();
     pronStopRecognition();
     sprintStop();
+    kortStop();
     if (window.__robinson3d) { try { window.__robinson3d(); } catch (e) { /* ya destruido */ } window.__robinson3d = null; }
     if (wordle) wordle.active = false;
     if (memoryGame) { memoryStop(); memoryGame.active = false; }
@@ -7658,6 +8029,7 @@
         : name === 'verbos' ? 'verbos'
         : name === 'flashcards' ? 'flashcards'
         : name === 'pronunciacion' ? 'pron'
+        : name === 'kort' ? 'kort'
         : name === 'historien' ? 'stories'
         : name === 'robinson' ? 'robinson'
         : name === 'a0' ? 'a0'
@@ -7680,7 +8052,7 @@
     }
     var moreToggle = document.querySelector('.nav-more-toggle');
     if (moreToggle) {
-      moreToggle.classList.toggle('active', ['a0', 'body', 'fun', 'exam', 'colloquial', 'review', 'games', 'verbos', 'flashcards', 'pron', 'robinson'].indexOf(active) > -1);
+      moreToggle.classList.toggle('active', ['a0', 'body', 'fun', 'exam', 'colloquial', 'review', 'games', 'verbos', 'flashcards', 'pron', 'kort', 'robinson'].indexOf(active) > -1);
     }
     var navMoreMenu = document.querySelector('.nav-more-menu');
     if (navMoreMenu) {
@@ -7736,6 +8108,8 @@
     } else if (name === 'flashcards') {
       if (arg) renderFlashcardsPack(arg);
       else renderFlashcards();
+    } else if (name === 'kort') {
+      renderKort();
     } else if (name === 'pronunciacion') {
       renderPronunciation();
     } else if (name === 'a0') {
