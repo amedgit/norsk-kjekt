@@ -94,7 +94,7 @@ cacheada.
 | Gramática | Referencia `#/gramatica` A0–B2: 30 temas con reglas, ejemplos con audio, errores típicos y 60 ejercicios |
 | Verbos | 200 verbos esenciales con presente, pasado, perfecto, imperativo, ejemplo, audio y progreso |
 | Flashcards | Mazos de vocabulario por tema con audio, dos direcciones, repaso espaciado (1/3/7/15/30 días) y progreso |
-| Robinson | «Robinson Crusoe»: adaptación propia del clásico de 1719, tres capítulos abiertos con escenas 3D, ilustraciones, audio, vocabulario, gramática y 5 ejercicios cada uno |
+| Robinson | «Robinson Crusoe»: adaptación propia del clásico de 1719, cuatro capítulos abiertos con escenas 3D, ilustraciones, audio, vocabulario, gramática y 5 ejercicios cada uno |
 | Juegos | **Norsk Sprint**: 9 niveles de 10 preguntas, combo, estrellas, reto diario, sonidos y confeti. **Hukommelse**: parejas de palabras y traducciones, tres niveles, audio y tiempos. **Crucigrama**: vocabulario noruego generado, pistas, comprobación, pista y nuevo puzzle |
 | Historia | «Lucía i Oslo»: 6 capítulos piloto (A2–B1) de la serie de 12, con 7 párrafos cada uno, audio por párrafo y del capítulo completo, traducción plegable, 15 palabras, gramática y 5 ejercicios por capítulo |
 | Kjerneord | Núcleo de 1000 palabras y frases en 10 paquetes de 100; los paquetes 1 a 9 (900 palabras: supervivencia, vida diaria, personas y planes, salud y cuerpo, trabajo y trámites, ciudad y viajes, conectores y matices, opiniones y debate, cultura y sociedad) ya están disponibles con audio, filtros y test |
@@ -109,7 +109,7 @@ cacheada.
 | Progreso | plan y objetivo diario, misiones semanales, racha, XP, mapa de calor de 12 semanas, 8 logros, repaso espaciado (1/3/7/15/30 días), mejores notas de pronunciación y exportación/importación del progreso en JSON |
 | Extras | temas claro/oscuro/sepia, teclado noruego æ ø å en los ejercicios de escritura y PWA offline |
 | Velocidad | selector 0,5×–1,3× en la cabecera; empieza en 0,85×, se aplica al audio y se recuerda |
-| Audio | 3527 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
+| Audio | 3553 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
 | App | PWA instalable (offline) con icono propio, pantalla completa y funcionamiento sin conexión; el APK está retirado temporalmente |
 
 ## Interfaz en español, inglés o persa
@@ -225,7 +225,7 @@ norsk/
     ├── img/lessons/*.svg ← una ilustración original por lección
     ├── img/dialogues/*.svg ← una ilustración por conversación
     ├── img/robinson/*.svg ← una ilustración por párrafo de Robinson
-    ├── audio/*.mp3      ← 3527 audios (≈35,7 MB), generados
+    ├── audio/*.mp3      ← 3553 audios (≈36,5 MB), generados
     ├── vendor/three.module.min.js ← Three.js r160 (MIT), solo para la escena 3D
     └── js/
         ├── data.js          ← TODO el contenido del curso, Samtaler y los 4 simulacros
@@ -468,10 +468,10 @@ La sección `#/robinson` abre una adaptación propia y simplificada de la novela
 de Daniel Defoe (1719). No reproduce traducciones modernas: el texto se escribe
 de nuevo en bokmål A2–B1, con una nota de derechos y contexto.
 
-- Capítulos 1–3: **Drømmen om havet**, **Fanget i Salé** y **Plantasjen i Brasil**, con 8 párrafos y una ilustración por párrafo.
+- Capítulos 1–4: **Drømmen om havet**, **Fanget i Salé**, **Plantasjen i Brasil** y **Skipet og stormen**, con 8 párrafos y una ilustración por párrafo.
 - Escenas 3D de York, del Atlántico nocturno y de la plantación brasileña, con cinco palabras clicables cada una.
 - 15 palabras, gramática y 5 ejercicios por capítulo.
-- 12 capítulos planificados; quedan 9 por abrir.
+- 12 capítulos planificados; quedan 8 por abrir.
 - Si WebGL falla, se muestra un fallback HTML con el mismo vocabulario.
 
 Las ilustraciones se generan con `tools/generate-robinson-art.mjs` en

@@ -4720,7 +4720,109 @@ window.COURSE = {
           }
         ]
       },
-      { id: '4', num: 4, level: 'B1', emoji: '🌊', title: 'Skipet og stormen', soon: true },
+      {
+        id: '4',
+        num: 4,
+        level: 'B1',
+        emoji: '🌊',
+        title: 'Skipet og stormen',
+        subtitle: 'El naufragio y la llegada a una isla desconocida',
+        intro: 'En 1659 Robinson sale de Brasil con una carga valiosa. Una tormenta destruye el barco, la tripulación intenta llegar a la costa y Robinson acaba solo en una playa.',
+        place: 'Atlanterhavet · una isla desconocida (1659)',
+        places: ['Brasil', 'Atlanterhavet', 'La isla desconocida'],
+        paragraphs: [
+          { no: 'I 1659 forlot jeg Brasil med en kaptein og fjorten menn. Skipet var lastet med sukker, tobakk og varer som vi skulle bytte i Guinea. Været var godt, og havet lå blankt. Likevel var jeg urolig. Jeg husket faren min og ordene hans om havet. Jeg sto på dekk og så Brasil forsvinne bak horisonten.', es: 'En 1659 salí de Brasil con un capitán y catorce hombres. El barco llevaba una carga de azúcar, tabaco y mercancías que íbamos a intercambiar en Guinea. El tiempo era bueno y el mar estaba en calma. Aun así, yo estaba inquieto. Recordé a mi padre y sus palabras sobre el mar. Estaba en cubierta viendo cómo Brasil desaparecía en el horizonte.', image: 'assets/img/robinson/ch3-06-avreise.svg', imageAlt: 'Robinson y el capitán en el puerto antes de zarpar de Brasil.' },
+          { no: 'Den første uken gikk alt bra. Vi hadde god vind og så noen delfiner ved skipet. Om kvelden spiste vi sammen på dekk. Men på den åttende dagen ble himmelen mørk. Vinden kom fra vest, og kapteinen ba mannskapet ta ned seilene. Vi forsto at en storm var på vei.', es: 'La primera semana todo fue bien. Tuvimos buen viento y vimos algunos delfines junto al barco. Por la noche comíamos juntos en cubierta. Pero al octavo día el cielo se oscureció. El viento soplaba del oeste y el capitán ordenó a la tripulación bajar las velas. Entendimos que se acercaba una tormenta.', image: 'assets/img/robinson/ch3-07-rolig-sjo.svg', imageAlt: 'El barco navega con el mar en calma antes de la tormenta.' },
+          { no: 'Stormen kom om natten. Bølgene var høye som hus, og skipet rullet fra side til side. Masten knakk, og vann kom inn i lasterommet. Mannskapet pumpet vann hele natten. Jeg holdt meg fast i rekken og ba til Gud. Jeg lovte at jeg skulle reise hjem hvis jeg overlevde.', es: 'La tormenta llegó de noche. Las olas eran altas como casas y el barco se balanceaba de un lado a otro. El mástil se rompió y entró agua en la bodega. La tripulación bombeó agua toda la noche. Me agarré a la barandilla y recé a Dios. Prometí que volvería a casa si sobrevivía.', image: 'assets/img/robinson/ch1-07-stormen.svg', imageAlt: 'La tormenta golpea el barco y rompe el mástil.' },
+          { no: 'Om morgenen ble stormen sterkere. En ny bølge slo over dekk og tok med seg to menn. Skipet var ødelagt, og vi drev mot vest. Kapteinen visste ikke hvor vi var. Plutselig ropte en matros: «Land!» Vi så en mørk stripe foran oss. Det var en øy.', es: 'Por la mañana la tormenta se hizo más fuerte. Una nueva ola barrió la cubierta y se llevó a dos hombres. El barco estaba destrozado y navegábamos a la deriva hacia el oeste. El capitán no sabía dónde estábamos. De repente, un marinero gritó: «¡Tierra!» Vimos una franja oscura frente a nosotros. Era una isla.', image: 'assets/img/robinson/ch2-05-kysten.svg', imageAlt: 'Una costa desconocida aparece al fondo entre la tormenta.' },
+          { no: 'Skipet gikk på grunn før vi nådde land. En stor bølge løftet det og slapp det ned igjen. Vi fikk satt ut livbåten. Tolv menn hoppet oppi, og vi rodde mot stranden. Jeg så skipet bak oss. Det lå skjevt i vannet og slo mot grunnene.', es: 'El barco encalló antes de que llegáramos a tierra. Una gran ola lo levantó y lo volvió a soltar. Conseguimos bajar el bote salvavidas. Doce hombres subieron a bordo y remamos hacia la playa. Miré el barco detrás de nosotros. Estaba inclinado en el agua y golpeaba contra los bajíos.', image: 'assets/img/robinson/ch2-04-flukt.svg', imageAlt: 'La tripulación escapa en un pequeño bote hacia la costa.' },
+          { no: 'Like før vi kom til land, kom en enorm bølge. Livbåten kantret, og alle havnet i vannet. Jeg fikk vann i munnen og kjente at jeg ble dratt ned. Jeg sparket og kjempet. Til slutt fikk jeg tak i en stein og klatret opp på land.', es: 'Justo antes de llegar a tierra, llegó una ola enorme. El bote salvavidas volcó y todos cayeron al agua. Me entró agua en la boca y sentí que me arrastraba hacia abajo. Pataleé y luché. Al final conseguí agarrarme a una piedra y subí a tierra.', image: 'assets/img/robinson/ch1-07-stormen.svg', imageAlt: 'Una ola enorme vuelca el bote cerca de la costa.' },
+          { no: 'Jeg sov under et tre den natten. Da solen kom, var jeg alene på en strand. Jeg ropte navnene til mennene, men ingen svarte. Jeg gikk langs stranden og fant ferskvann i en liten bekk. Jeg drakk og takket Gud for at jeg levde.', es: 'Dormí bajo un árbol aquella noche. Cuando salió el sol, estaba solo en una playa. Grité los nombres de los hombres, pero nadie respondió. Caminé por la playa y encontré agua dulce en un pequeño arroyo. Bebí y le di gracias a Dios por estar vivo.', image: 'assets/img/robinson/ch2-05-kysten.svg', imageAlt: 'Robinson camina solo por una playa desconocida al amanecer.' },
+          { no: 'Fra en høyde så jeg skipet vårt. Det lå fast på noen svarte steiner, langt fra land. Ingen beveget seg om bord. Jeg hadde en kniv, en pipe og litt tobakk, men ingen mat og ingen venner. Jeg var alene på en ukjent øy. Men jeg var i live, og jeg bestemte meg for å overleve.', es: 'Desde una colina vi nuestro barco. Estaba atrapado entre unas rocas negras, lejos de la costa. Nadie se movía a bordo. Tenía un cuchillo, una pipa y un poco de tabaco, pero no tenía comida ni amigos. Estaba solo en una isla desconocida. Pero estaba vivo, y decidí sobrevivir.', image: 'assets/img/robinson/ch2-06-skipet.svg', imageAlt: 'El barco abandonado permanece atrapado entre las rocas.' }
+        ],
+        vocab: [
+          { no: 'skipbrudd', es: 'naufragio', forms: 'et skipbrudd, skipbrudd' },
+          { no: 'mannskap', es: 'tripulación', forms: 'et mannskap, mannskaper' },
+          { no: 'last', es: 'carga', forms: 'en last, laster' },
+          { no: 'seil', es: 'vela', forms: 'et seil, seil' },
+          { no: 'ødelagt', es: 'destrozado, dañado' },
+          { no: 'lekk', es: 'fuga de agua', forms: 'en lekk' },
+          { no: 'pumpe', es: 'bombear', forms: 'pumper · pumpet · har pumpet' },
+          { no: 'livbåt', es: 'bote salvavidas', forms: 'en livbåt, livbåter' },
+          { no: 'kantre', es: 'volcar', forms: 'kantrer · kantret · har kantret' },
+          { no: 'drukne', es: 'ahogarse', forms: 'drukner · druknet · har druknet' },
+          { no: 'klamre seg', es: 'aferrarse', forms: 'klamrer seg · klamret seg · har klamret seg' },
+          { no: 'strand', es: 'playa', forms: 'en strand, strender' },
+          { no: 'ferskvann', es: 'agua dulce', forms: 'et ferskvann' },
+          { no: 'forsyninger', es: 'suministros', forms: 'forsyninger' },
+          { no: 'håp', es: 'esperanza', forms: 'et håp' }
+        ],
+        grammar: {
+          title: 'Da, når og mens',
+          es: '«Da» presenta un hecho único del pasado: Da stormen kom, var vi på dekk. «Når» se usa para algo habitual o futuro: Når det regner, blir havet mørkt. «Mens» indica dos acciones al mismo tiempo: Mens bølgene slo, holdt vi oss fast. «Etter at» significa «después de que»: Etter at skipet gikk på grunn, tok vi livbåten. Si la subordinada va primero, la oración principal empieza por el verbo: Da stormen kom, var vi på dekk.',
+          examples: [
+            { no: 'Da stormen kom, var vi på dekk.', es: 'Cuando llegó la tormenta, estábamos en cubierta.' },
+            { no: 'Mens bølgene slo, holdt vi oss fast.', es: 'Mientras las olas golpeaban, nos agarrábamos fuerte.' },
+            { no: 'Etter at skipet gikk på grunn, tok vi livbåten.', es: 'Después de que el barco encallara, cogimos el bote salvavidas.' }
+          ]
+        },
+        scene: {
+          id: 'sea',
+          title: 'Livbåten, 1659',
+          intro: 'Explora la noche del naufragio: el bote, los remos, el mar y la costa.',
+          hotspots: [
+            { id: 'bat', no: 'livbåten', es: 'el bote salvavidas', spot: 'boat' },
+            { id: 'arene', no: 'årene', es: 'los remos', spot: 'oars' },
+            { id: 'sjoen', no: 'sjøen', es: 'el mar', spot: 'sea' },
+            { id: 'manen', no: 'månen', es: 'la luna', spot: 'moon' },
+            { id: 'kysten', no: 'kysten', es: 'la costa', spot: 'coast' }
+          ]
+        },
+        exercises: [
+          {
+            type: 'mcq',
+            prompt: '¿Qué ocurrió primero?',
+            options: ['Un marinero vio tierra', 'El barco encalló', 'Llegó la tormenta', 'Robinson llegó a la playa'],
+            answer: 2,
+            audio: 'Da stormen kom, var vi på dekk.',
+            explain: 'Primero llegó la tormenta; después el barco encalló y la tripulación bajó al bote.'
+          },
+          {
+            type: 'gap',
+            prompt: 'Completa la frase:',
+            sentence: 'Da stormen ___, var vi på dekk.',
+            answers: ['kom'],
+            bank: ['kom', 'kommer', 'kommet'],
+            es: 'Cuando llegó la tormenta, estábamos en cubierta.',
+            explain: '«Da» pide pretérito: «kom» es el pasado de «å komme».'
+          },
+          {
+            type: 'order',
+            prompt: 'Ordena la frase:',
+            words: ['Etter', 'at', 'skipet', 'gikk', 'på', 'grunn,', 'tok', 'vi', 'livbåten.'],
+            es: 'Después de que el barco encallara, cogimos el bote salvavidas.',
+            explain: '«Etter at» introduce una subordinada; la principal empieza por el verbo «tok».'
+          },
+          {
+            type: 'listen',
+            audio: 'Jeg var alene, men jeg var i live.',
+            es: 'Estaba solo, pero estaba vivo.',
+            explain: '«Å være i live» = estar vivo. «Alene» = solo.'
+          },
+          {
+            type: 'match',
+            prompt: 'Empareja el vocabulario del capítulo:',
+            pairs: [
+              { a: 'skipbrudd', b: 'naufragio' },
+              { a: 'mannskap', b: 'tripulación' },
+              { a: 'lekk', b: 'fuga de agua' },
+              { a: 'livbåt', b: 'bote salvavidas' },
+              { a: 'strand', b: 'playa' }
+            ],
+            explain: 'Cinco palabras clave del cuarto capítulo.'
+          }
+        ]
+      },
       { id: '5', num: 5, level: 'B1', emoji: '🏝️', title: 'Alene på øya', soon: true },
       { id: '6', num: 6, level: 'B1', emoji: '🪓', title: 'Det første året', soon: true },
       { id: '7', num: 7, level: 'B1', emoji: '🛖', title: 'Huset ved havet', soon: true },
