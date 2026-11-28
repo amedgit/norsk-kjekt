@@ -90,6 +90,7 @@ cacheada.
 | Lecciones | 15 lecciones A1–C2 con página propia (`#/lecciones`): buscador, filtros por nivel, progreso y acceso directo a cada lección |
 | Práctica | 357 ejercicios en 10 formatos, test de nivel de 18 preguntas, entrenador de números, hora y preposiciones y práctica de pronunciación con micrófono |
 | Samtaler | 7 conversaciones cotidianas (A2–B1: portal, cafetería, restaurante, tienda, trabajo, médico y teléfono) con 66 réplicas, audio por línea, traducciones plegables, vocabulario, frases y 35 ejercicios |
+| Snakk | Conversación guiada por voz en una cafetería: la camarera habla en noruego, el usuario responde por micrófono o texto, con ramas, pistas, traducción, audio y puntuación |
 | A0 | Sección `#/a0` para empezar desde cero: alfabeto, vocales, consonantes, pronunciación, primeras frases y 8 ejercicios |
 | Gramática | Referencia `#/gramatica` A0–B2: 30 temas con reglas, ejemplos con audio, errores típicos y 60 ejercicios |
 | Verbos | 200 verbos esenciales con presente, pasado, perfecto, imperativo, ejemplo, audio y progreso |
@@ -109,7 +110,7 @@ cacheada.
 | Progreso | plan y objetivo diario, misiones semanales, racha, XP, mapa de calor de 12 semanas, 8 logros, repaso espaciado (1/3/7/15/30 días), mejores notas de pronunciación y exportación/importación del progreso en JSON |
 | Extras | temas claro/oscuro/sepia, teclado noruego æ ø å en los ejercicios de escritura y PWA offline |
 | Velocidad | selector 0,5×–1,3× en la cabecera; empieza en 0,85×, se aplica al audio y se recuerda |
-| Audio | 3553 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
+| Audio | 3569 frases pregrabadas con voz neuronal bokmål (`nb_NO`, Piper) en MP3; si falta una frase, cae a la voz del navegador |
 | App | PWA instalable (offline) con icono propio, pantalla completa y funcionamiento sin conexión; el APK está retirado temporalmente |
 
 ## Interfaz en español, inglés o persa
@@ -225,7 +226,7 @@ norsk/
     ├── img/lessons/*.svg ← una ilustración original por lección
     ├── img/dialogues/*.svg ← una ilustración por conversación
     ├── img/robinson/*.svg ← una ilustración por párrafo de Robinson
-    ├── audio/*.mp3      ← 3553 audios (≈36,5 MB), generados
+    ├── audio/*.mp3      ← 3569 audios (≈36,7 MB), generados
     ├── vendor/three.module.min.js ← Three.js r160 (MIT), solo para la escena 3D
     └── js/
         ├── data.js          ← TODO el contenido del curso, Samtaler y los 4 simulacros
@@ -476,6 +477,26 @@ El progreso vive en `state.pron.best` (mejor porcentaje por frase) y
 `state.pron.rewarded` (si ya se entregó el XP). Si el navegador no tiene
 reconocimiento de voz, no hay micrófono o no entiende noruego, la página sigue
 mostrando el audio y la frase para practicar en voz alta.
+
+### Snakk (conversación guiada)
+
+`#/snakk` es el piloto de conversación por voz. La ruta `#/snakk/kafe` abre la
+escena **På kaféen**: la camarera habla en noruego y el usuario responde por
+micrófono o por escrito.
+
+- Árbol de diálogo con ramas para café, té o agua, leche, tamaño, comida y pago.
+- Cada intervención de la camarera trae audio, repetición y traducción opcional.
+- Si la respuesta no encaja, se muestra una pista y se puede seguir sin perder
+  el hilo.
+- El reconocimiento usa `SpeechRecognition` con `nb-NO`; si no está disponible,
+  la interfaz pasa automáticamente al modo texto.
+- Al terminar se calculan puntos, estrellas y XP; el mejor resultado se guarda
+  en `state.snakk.best`.
+- La escena se define en `COURSE.snakk` (`data.js`) y sus audios se generan con
+  el mismo manifiesto que el resto del curso.
+
+Es una conversación guiada, no una IA de propósito general: responde dentro del
+árbol escrito y no inventa contenido nuevo.
 
 ### Verbos esenciales
 

@@ -14,6 +14,7 @@
   var GRAMMAR = COURSE.grammar || { topics: [] };
   var VERBOS = COURSE.verbos || { themes: [], items: [] };
   var GAMES = COURSE.games || { dagensOrd: { valid: [] } };
+  var SNAKK = COURSE.snakk || { scenarios: [] };
   var wordle = null;
   var memoryGame = null;
   var crosswordGame = null;
@@ -63,7 +64,7 @@
   var KEY = 'norsk-kjekt-v1';
 
   function defaults() {
-    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, body: {}, core: { known: {}, packs: {} }, stories: { chapters: {} }, robinson: { chapters: {} }, a0: { best: 0, total: 0, at: 0 }, grammar: { topics: {} }, verbos: { known: {}, best: { best: 0, total: 0, at: 0 }, packs: {} }, games: { dagensOrd: { date: '', guesses: [], status: 'playing', played: 0, wins: 0, streak: 0, best: 0, lastWin: '', distribution: [0, 0, 0, 0, 0, 0] }, hukommelse: { easy: { played: 0, bestMoves: 0, bestTime: 0 }, medium: { played: 0, bestMoves: 0, bestTime: 0 }, hard: { played: 0, bestMoves: 0, bestTime: 0 } }, kryssord: { solved: 0 } }, daily: { date: '', xp: 0, goal: 100 }, weekly: { week: '', xp: 0, cards: 0, claimed: {} }, pron: { best: {}, rewarded: {} }, sprint: { stars: {}, best: {}, played: 0, daily: { date: '', best: 0, done: false } }, kort: { custom: [] }, xp: 0, days: {}, review: [], srs: {}, version: 1 };
+    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, body: {}, core: { known: {}, packs: {} }, stories: { chapters: {} }, robinson: { chapters: {} }, a0: { best: 0, total: 0, at: 0 }, grammar: { topics: {} }, verbos: { known: {}, best: { best: 0, total: 0, at: 0 }, packs: {} }, games: { dagensOrd: { date: '', guesses: [], status: 'playing', played: 0, wins: 0, streak: 0, best: 0, lastWin: '', distribution: [0, 0, 0, 0, 0, 0] }, hukommelse: { easy: { played: 0, bestMoves: 0, bestTime: 0 }, medium: { played: 0, bestMoves: 0, bestTime: 0 }, hard: { played: 0, bestMoves: 0, bestTime: 0 } }, kryssord: { solved: 0 } }, daily: { date: '', xp: 0, goal: 100 }, weekly: { week: '', xp: 0, cards: 0, claimed: {} }, pron: { best: {}, rewarded: {} }, sprint: { stars: {}, best: {}, played: 0, daily: { date: '', best: 0, done: false } }, kort: { custom: [] }, snakk: { best: {}, played: 0 }, xp: 0, days: {}, review: [], srs: {}, version: 1 };
   }
 
   var state = (function load() {
@@ -215,6 +216,7 @@
         pron: raw.pron && typeof raw.pron === 'object' ? raw.pron : d.pron,
         sprint: raw.sprint && typeof raw.sprint === 'object' ? raw.sprint : d.sprint,
         kort: raw.kort && typeof raw.kort === 'object' ? raw.kort : d.kort,
+        snakk: raw.snakk && typeof raw.snakk === 'object' ? raw.snakk : d.snakk,
         days: raw.days && typeof raw.days === 'object' ? raw.days : d.days,
         review: Array.isArray(raw.review) ? raw.review.filter(function (s) { return typeof s === 'string'; }) : d.review,
         version: 1
@@ -229,6 +231,7 @@
   ensurePron();
   ensureSprint();
   ensureKort();
+  ensureSnakk();
 
   function save() {
     try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* modo privado */ }
@@ -304,6 +307,12 @@
         createdAt: Number(c.createdAt) || 0
       };
     }) : [];
+  }
+
+  function ensureSnakk() {
+    state.snakk = state.snakk && typeof state.snakk === 'object' ? state.snakk : { best: {}, played: 0 };
+    state.snakk.best = state.snakk.best && typeof state.snakk.best === 'object' ? state.snakk.best : {};
+    state.snakk.played = Number(state.snakk.played) || 0;
   }
 
   function addXp(n) {
@@ -2325,6 +2334,410 @@
       '</section>' +
       '<section class="card flash-stage" id="flash-stage"></section>';
     flashPaint();
+  }
+
+  /* =======================================================
+     Snakk: conversación guiada por voz
+     ======================================================= */
+
+  var snakkSession = null;
+  var snakkRecognition = null;
+
+  function snakkScenario(id) {
+    return (SNAKK.scenarios || []).find(function (sc) { return sc.id === id; }) || null;
+  }
+
+  function snakkScenarioText(sc, key) {
+    var lang = I18N.lang || 'es';
+    if (lang === 'en') return sc[key + 'En'] || sc[key] || '';
+    if (lang === 'fa') return sc[key + 'Fa'] || sc[key] || '';
+    return sc[key] || '';
+  }
+
+  function snakkNodeText(node, key) {
+    var lang = I18N.lang || 'es';
+    if (lang === 'en') return node[key + 'En'] || node[key] || '';
+    if (lang === 'fa') return node[key + 'Fa'] || node[key] || '';
+    return node[key] || '';
+  }
+
+  function snakkNodeNpc(node) {
+    var lang = I18N.lang || 'es';
+    if (lang === 'en') return node.en || node.es || '';
+    if (lang === 'fa') return node.fa || node.es || '';
+    return node.es || '';
+  }
+
+  function snakkCurrentNode() {
+    if (!snakkSession) return null;
+    return snakkSession.scenario.nodes[snakkSession.nodeId] || null;
+  }
+
+  function snakkStars(n) {
+    var out = '';
+    for (var i = 1; i <= 3; i++) out += i <= n ? '★' : '☆';
+    return out;
+  }
+
+  function snakkSpeakCurrent() {
+    var node = snakkCurrentNode();
+    if (node && node.npc && window.TTS) window.TTS.speak(node.npc);
+  }
+
+  function snakkFindRule(text, node) {
+    var norm = pronNorm(text);
+    if (!norm || !node || !node.accept) return null;
+    for (var i = 0; i < node.accept.length; i++) {
+      var rule = node.accept[i];
+      for (var j = 0; j < rule.keys.length; j++) {
+        if (norm.indexOf(pronNorm(rule.keys[j])) > -1) return rule;
+      }
+    }
+    return null;
+  }
+
+  function snakkComplete() {
+    var s = snakkSession;
+    var sc = s.scenario;
+    s.stars = s.mistakes <= 1 ? 3 : s.mistakes <= 3 ? 2 : 1;
+    var prev = state.snakk.best[sc.id];
+    state.snakk.best[sc.id] = {
+      score: Math.max(prev ? Number(prev.score) || 0 : 0, s.score),
+      stars: Math.max(prev ? Number(prev.stars) || 0 : 0, s.stars),
+      at: Date.now()
+    };
+    state.snakk.played += 1;
+    if (!s.awarded) {
+      s.awarded = true;
+      s.xp = 20;
+      addXp(20);
+    }
+    markDay();
+    save();
+    refreshHud();
+  }
+
+  function snakkSubmit(text) {
+    if (!snakkSession || snakkSession.completed) return;
+    text = String(text || '').trim();
+    if (!text) return;
+    var node = snakkCurrentNode();
+    if (!node || node.final) return;
+    var rule = snakkFindRule(text, node);
+    if (!rule) {
+      snakkSession.mistakes += 1;
+      snakkSession.error = t('snakk.notUnderstood');
+      snakkSession.showHint = true;
+      snakkSession.history.push({ role: 'user', text: text, bad: true });
+      snakkPaint();
+      return;
+    }
+    snakkSession.score += 10;
+    snakkSession.step += 1;
+    snakkSession.history.push({ role: 'npc', text: node.npc, translation: snakkNodeNpc(node) });
+    snakkSession.history.push({ role: 'user', text: text });
+    snakkSession.nodeId = rule.next;
+    snakkSession.error = '';
+    snakkSession.showHint = false;
+    snakkSession.showTranslation = false;
+    var next = snakkCurrentNode();
+    if (next && next.final) {
+      snakkSession.completed = true;
+      snakkComplete();
+      snakkPaint();
+      sprintConfetti(true);
+      sprintSfx('finish');
+    } else {
+      snakkPaint();
+      snakkSpeakCurrent();
+    }
+  }
+
+  function snakkError(code) {
+    if (!snakkSession) return;
+    snakkRecognition = null;
+    snakkSession.listening = false;
+    var keys = {
+      'not-allowed': 'snakk.micDenied',
+      'service-not-allowed': 'snakk.micDenied',
+      'no-speech': 'snakk.noSpeech',
+      'network': 'snakk.network',
+      'audio-capture': 'snakk.micDenied'
+    };
+    snakkSession.error = t(keys[code] || 'snakk.error');
+    snakkPaint();
+  }
+
+  function snakkListen() {
+    if (!snakkSession || snakkSession.listening || snakkSession.completed) return;
+    if (!pronSpeechSupported()) {
+      snakkSession.mode = 'text';
+      snakkSession.error = t('snakk.micUnsupported');
+      snakkPaint();
+      return;
+    }
+    if (window.TTS) window.TTS.stop();
+    snakkSession.listening = true;
+    snakkSession.error = '';
+    snakkPaint();
+    var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    var rec = new SR();
+    snakkRecognition = rec;
+    rec.lang = 'nb-NO';
+    rec.interimResults = false;
+    rec.continuous = false;
+    rec.maxAlternatives = 5;
+    var settled = false;
+    rec.onresult = function (ev) {
+      if (settled) return;
+      settled = true;
+      var alts = ev.results && ev.results[0];
+      var node = snakkCurrentNode();
+      var best = '';
+      if (alts) {
+        for (var i = 0; i < alts.length; i++) {
+          var text = alts[i].transcript || '';
+          if (snakkFindRule(text, node)) { best = text; break; }
+          if (!best) best = text;
+        }
+      }
+      snakkSession.listening = false;
+      snakkRecognition = null;
+      if (!best) { snakkError('no-speech'); return; }
+      snakkSubmit(best);
+    };
+    rec.onerror = function (ev) {
+      if (settled) return;
+      settled = true;
+      if (ev && ev.error === 'aborted') return;
+      snakkError(ev && ev.error);
+    };
+    rec.onend = function () {
+      if (snakkRecognition === rec) snakkRecognition = null;
+      if (!snakkSession || !snakkSession.listening) return;
+      snakkSession.listening = false;
+      if (!snakkSession.error) snakkSession.error = t('snakk.noSpeech');
+      snakkPaint();
+    };
+    try { rec.start(); } catch (e) { snakkError('generic'); }
+  }
+
+  function snakkStop() {
+    if (snakkRecognition) {
+      var rec = snakkRecognition;
+      snakkRecognition = null;
+      rec.onresult = null;
+      rec.onerror = null;
+      rec.onend = null;
+      try { rec.abort(); } catch (e) { /* terminado */ }
+    }
+    if (snakkSession) snakkSession.listening = false;
+    snakkSession = null;
+  }
+
+  function snakkHistoryHTML() {
+    var s = snakkSession;
+    return s.history.map(function (m) {
+      var isNpc = m.role === 'npc';
+      return '<div class="snakk-bubble ' + (isNpc ? 'npc' : 'user') + (m.bad ? ' bad' : '') + '">' +
+        '<span class="snakk-who">' + (isNpc ? '☕ ' + esc(t('snakk.barista')) : esc(t('snakk.you'))) + '</span>' +
+        '<div class="snakk-line">' + (isNpc ? say(m.text) : '') +
+        '<span' + (isNpc ? ' lang="nb" dir="ltr"' : ' dir="auto"') + '>' + esc(m.text) + '</span></div>' +
+        '</div>';
+    }).join('');
+  }
+
+  function snakkControlsHTML(node) {
+    var s = snakkSession;
+    var supported = pronSpeechSupported();
+    if (!supported && s.mode === 'mic') s.mode = 'text';
+    var mode = '<div class="snakk-modes" role="group" aria-label="' + esc(t('snakk.modeLabel')) + '">' +
+      (supported ? '<button type="button" class="' + (s.mode === 'mic' ? 'active' : '') + '" data-snakk-mode="mic">🎙️ ' + esc(t('snakk.mic')) + '</button>' : '') +
+      '<button type="button" class="' + (s.mode === 'text' ? 'active' : '') + '" data-snakk-mode="text">⌨️ ' + esc(t('snakk.text')) + '</button>' +
+      '</div>';
+    var panel;
+    if (s.mode === 'mic' && supported) {
+      panel = '<div class="snakk-mic-area">' +
+        '<button type="button" class="snakk-mic' + (s.listening ? ' listening' : '') + '" data-snakk-action="listen"' + (s.listening ? ' disabled' : '') + '>' +
+        '<span aria-hidden="true">' + (s.listening ? '🎧' : '🎙️') + '</span>' +
+        '<span>' + esc(s.listening ? t('snakk.listening') : t('snakk.startBtn')) + '</span></button>' +
+        '<p class="snakk-mic-hint">' + esc(t('snakk.startHint')) + '</p></div>';
+    } else {
+      panel = '<form class="snakk-form" id="snakk-form"><input id="snakk-input" type="text" lang="nb" dir="ltr" autocomplete="off" placeholder="' + esc(t('snakk.placeholder')) + '">' +
+        '<button type="submit" class="btn primary">' + esc(t('snakk.send')) + '</button></form>';
+    }
+    var hint = '';
+    if (s.showHint && node.hint) {
+      var hintTranslation = snakkNodeText(node, 'hint');
+      var showTranslation = hintTranslation && hintTranslation !== node.hint;
+      hint = '<div class="snakk-hint"><span class="snakk-hint-label">💡 ' + esc(t('snakk.hint')) + '</span>' +
+        '<div class="snakk-line">' + say(node.hint) + '<b lang="nb" dir="ltr">' + esc(node.hint) + '</b></div>' +
+        (showTranslation ? '<small>' + esc(hintTranslation) + '</small>' : '') + '</div>';
+    }
+    var translation = '';
+    if (s.showTranslation && node.npc) {
+      translation = '<p class="snakk-translation">' + esc(snakkNodeNpc(node)) + '</p>';
+    }
+    return '<div class="snakk-turn">' +
+      '<span class="snakk-turn-label">' + esc(t('snakk.yourTurn')) + '</span>' +
+      '<p class="snakk-prompt">' + esc(snakkNodeText(node, 'prompt')) + '</p>' +
+      mode + panel +
+      '<div class="snakk-tools">' +
+      '  <button type="button" class="snakk-tool" data-snakk-action="hint">💡 ' + esc(t('snakk.hint')) + '</button>' +
+      '  <button type="button" class="snakk-tool" data-snakk-action="translate">🌐 ' + esc(t('snakk.translation')) + '</button>' +
+      '  <button type="button" class="snakk-tool" data-snakk-action="replay">🔊 ' + esc(t('snakk.replay')) + '</button>' +
+      '</div>' +
+      (s.error ? '<p class="snakk-error" role="alert">' + esc(s.error) + '</p>' : '') +
+      hint + translation +
+      '</div>';
+  }
+
+  function snakkResultHTML() {
+    var s = snakkSession;
+    var node = snakkCurrentNode();
+    return '<div class="snakk-result" role="status" aria-live="polite">' +
+      '<div class="snakk-result-stars">' + snakkStars(s.stars) + '</div>' +
+      '<h2>' + esc(t('snakk.finishTitle')) + '</h2>' +
+      '<p>' + esc(t('snakk.finishText', { score: s.score, mistakes: s.mistakes })) + '</p>' +
+      '<div class="snakk-result-stats">' +
+      '  <div><b>' + s.score + '</b><small>' + esc(t('snakk.score')) + '</small></div>' +
+      '  <div><b>' + s.mistakes + '</b><small>' + esc(t('snakk.mistakes')) + '</small></div>' +
+      '  <div><b>+' + s.xp + '</b><small>XP</small></div>' +
+      '</div>' +
+      '<p class="snakk-stars-line">' + esc(t('snakk.stars', { n: s.stars })) + '</p>' +
+      '<div class="snakk-result-actions">' +
+      '  <button type="button" class="btn primary" data-snakk-action="again">' + esc(t('snakk.again')) + '</button>' +
+      '  <a class="btn ghost" href="#/snakk">' + esc(t('snakk.back')) + '</a>' +
+      '</div></div>';
+  }
+
+  function snakkPaint() {
+    var box = document.getElementById('snakk-chat');
+    if (!box || !snakkSession) return;
+    var s = snakkSession;
+    if (!s.started) {
+      box.innerHTML = '<div class="snakk-start">' +
+        '<div class="snakk-start-emoji">' + s.scenario.emoji + '</div>' +
+        '<span class="eyebrow">' + esc(t('snakk.eyebrow')) + '</span>' +
+        '<h2>' + esc(s.scenario.title) + '</h2>' +
+        '<p>' + esc(snakkScenarioText(s.scenario, 'intro')) + '</p>' +
+        '<div class="snakk-goals"><b>' + esc(t('snakk.goalsTitle')) + '</b><ul>' +
+        '<li>' + esc(t('snakk.goal1')) + '</li><li>' + esc(t('snakk.goal2')) + '</li><li>' + esc(t('snakk.goal3')) + '</li></ul></div>' +
+        '<button type="button" class="btn primary" data-snakk-action="start">' + esc(t('snakk.start')) + ' →</button>' +
+        '<p class="snakk-start-hint">' + esc(t('snakk.tips')) + '</p></div>';
+      return;
+    }
+    var node = snakkCurrentNode();
+    var pct = s.completed ? 100 : Math.min(100, Math.round((s.step / 6) * 100));
+    var stepLabel = Math.min(6, Math.max(1, s.step + 1));
+    var result = s.completed ? snakkResultHTML() : '';
+    var current = node ? '<div class="snakk-bubble npc current">' +
+      '<span class="snakk-who">☕ ' + esc(t('snakk.barista')) + '</span>' +
+      '<div class="snakk-line">' + say(node.npc) + '<span lang="nb" dir="ltr">' + esc(node.npc) + '</span></div>' +
+      '</div>' : '';
+    box.innerHTML = '<div class="snakk-chat-head"><span>' + esc(t('snakk.progress', { n: stepLabel })) + '</span>' +
+      '<span class="snakk-chat-level">' + esc(s.scenario.level) + '</span></div>' +
+      '<div class="snakk-progress"><i style="width:' + pct + '%"></i></div>' +
+      result +
+      '<div class="snakk-log" id="snakk-log">' + snakkHistoryHTML() + current + '</div>' +
+      (s.completed ? '' : snakkControlsHTML(node));
+    var log = document.getElementById('snakk-log');
+    if (log) log.scrollTop = log.scrollHeight;
+  }
+
+  function bindSnakk() {
+    var box = document.getElementById('snakk-chat');
+    if (!box) return;
+    box.addEventListener('click', function (e) {
+      var mode = e.target.closest('[data-snakk-mode]');
+      if (mode) {
+        snakkSession.mode = mode.getAttribute('data-snakk-mode');
+        snakkSession.error = '';
+        snakkPaint();
+        return;
+      }
+      var action = e.target.closest('[data-snakk-action]');
+      if (!action) return;
+      var a = action.getAttribute('data-snakk-action');
+      if (a === 'start') {
+        snakkSession.started = true;
+        snakkPaint();
+        snakkSpeakCurrent();
+      } else if (a === 'listen') {
+        snakkListen();
+      } else if (a === 'hint') {
+        snakkSession.showHint = !snakkSession.showHint;
+        snakkPaint();
+      } else if (a === 'translate') {
+        snakkSession.showTranslation = !snakkSession.showTranslation;
+        snakkPaint();
+      } else if (a === 'replay') {
+        snakkSpeakCurrent();
+      } else if (a === 'again') {
+        renderSnakkScenario(snakkSession.scenario.id);
+      }
+    });
+    box.addEventListener('submit', function (e) {
+      if (e.target.id !== 'snakk-form') return;
+      e.preventDefault();
+      var input = document.getElementById('snakk-input');
+      if (!input) return;
+      var text = input.value;
+      input.value = '';
+      snakkSubmit(text);
+    });
+  }
+
+  function renderSnakkScenario(id) {
+    var sc = snakkScenario(id);
+    if (!sc) { renderSnakkHub(); return; }
+    snakkSession = {
+      scenario: sc, nodeId: sc.start, history: [], score: 0, mistakes: 0, step: 0,
+      started: false, completed: false, listening: false, error: '', mode: pronSpeechSupported() ? 'mic' : 'text',
+      showHint: false, showTranslation: false, stars: 0, xp: 0, awarded: false
+    };
+    app.innerHTML =
+      '<div class="crumbs"><a href="#/">' + esc(t('crumb.home')) + '</a> <span>›</span> <a href="#/snakk">' + esc(t('snakk.title')) + '</a> <span>›</span> <span>' + esc(sc.title) + '</span></div>' +
+      '<section class="snakk-hero">' +
+      '  <div class="snakk-hero-copy"><span class="eyebrow">' + esc(t('snakk.eyebrow')) + '</span>' +
+      '  <h1>' + esc(sc.title) + '</h1><p>' + esc(snakkScenarioText(sc, 'subtitle')) + '</p>' +
+      '  <div class="snakk-badges"><span>📍 ' + esc(sc.place) + '</span><span>' + esc(sc.level) + '</span><span>🎙️ ' + esc(t('snakk.mic')) + ' / ⌨️ ' + esc(t('snakk.text')) + '</span></div></div>' +
+      '  <div class="snakk-hero-emoji" aria-hidden="true">' + sc.emoji + '</div>' +
+      '</section>' +
+      '<div class="snakk-layout"><section class="snakk-chat-card" id="snakk-chat"></section>' +
+      '<aside class="snakk-side"><div class="card snakk-side-card"><h3>' + esc(t('snakk.goalsTitle')) + '</h3><ul>' +
+      '<li>' + esc(t('snakk.goal1')) + '</li><li>' + esc(t('snakk.goal2')) + '</li><li>' + esc(t('snakk.goal3')) + '</li></ul></div>' +
+      '<div class="card snakk-side-card"><h3>' + esc(t('snakk.tipsTitle')) + '</h3><p>' + esc(t('snakk.tips')) + '</p></div></aside></div>' +
+      '<div class="sprint-confetti" id="sprint-confetti" aria-hidden="true"></div>';
+    bindSnakk();
+    snakkPaint();
+  }
+
+  function renderSnakkHub() {
+    ensureSnakk();
+    var scenarios = SNAKK.scenarios || [];
+    var played = state.snakk.played;
+    app.innerHTML =
+      '<div class="crumbs"><a href="#/">' + esc(t('crumb.home')) + '</a> <span>›</span> <span>' + esc(t('snakk.title')) + '</span></div>' +
+      '<section class="snakk-hub-hero"><div><span class="eyebrow">' + esc(t('snakk.eyebrow')) + '</span>' +
+      '<h1>' + esc(t('snakk.title')) + '</h1><p>' + esc(t('snakk.intro')) + '</p>' +
+      '<div class="snakk-badges"><span>🎙️ ' + esc(t('snakk.mic')) + '</span><span>⌨️ ' + esc(t('snakk.text')) + '</span><span>' + esc(t('snakk.played', { n: played })) + '</span></div></div>' +
+      '<div class="snakk-hub-emoji" aria-hidden="true">☕</div></section>' +
+      '<h2 class="section-title">' + esc(t('snakk.hubTitle')) + ' <span>' + esc(t('snakk.hubSub')) + '</span></h2>' +
+      '<div class="snakk-scenarios">' + scenarios.map(function (sc) {
+        var best = state.snakk.best[sc.id];
+        return '<a class="snakk-scenario" href="#/snakk/' + esc(sc.id) + '">' +
+          '<div class="snakk-scenario-top"><span class="snakk-scenario-emoji">' + sc.emoji + '</span><span class="chip done">' + esc(t('snakk.live')) + '</span></div>' +
+          '<h2>' + esc(sc.title) + '</h2><p>' + esc(snakkScenarioText(sc, 'subtitle')) + '</p>' +
+          '<div class="snakk-scenario-stats"><span>' + esc(sc.level) + '</span>' +
+          (best ? '<span>' + esc(t('snakk.best', { n: best.score })) + '</span><span class="snakk-stars">' + snakkStars(best.stars) + '</span>' : '') +
+          '</div><span class="btn primary">' + esc(t('snakk.start')) + '</span></a>';
+      }).join('') +
+      '<div class="snakk-scenario soon"><span class="snakk-scenario-emoji">🩺</span><h2>' + esc(t('snakk.soonDoctor')) + '</h2><p>' + esc(t('snakk.soon')) + '</p></div>' +
+      '<div class="snakk-scenario soon"><span class="snakk-scenario-emoji">🏠</span><h2>' + esc(t('snakk.soonLandlord')) + '</h2><p>' + esc(t('snakk.soon')) + '</p></div>' +
+      '<div class="snakk-scenario soon"><span class="snakk-scenario-emoji">💼</span><h2>' + esc(t('snakk.soonJob')) + '</h2><p>' + esc(t('snakk.soon')) + '</p></div>' +
+      '</div>' +
+      '<p class="snakk-more">' + esc(t('snakk.moreSoon')) + '</p>';
   }
 
   /* =======================================================
@@ -6136,6 +6549,7 @@
       '      <a href="#/historien">' + esc(t('nav.story')) + '</a>' +
       '      <a href="#/verbos">' + esc(t('nav.verbos')) + '</a>' +
       '      <a href="#/flashcards">' + esc(t('nav.flashcards')) + '</a>' +
+      '      <a href="#/snakk">' + esc(t('nav.snakk')) + '</a>' +
       '    </div>' +
       '    <p class="hero-trust">✓ ' + esc(t('home.heroTrust')) + '</p>' +
       '  </div>' +
@@ -7157,6 +7571,9 @@
       '    <span class="meter"><i style="width:' + pct + '%"></i></span>' +
       '  </div>' +
       '</section>' +
+      '<a class="snakk-banner" href="#/snakk"><span class="snakk-banner-emoji" aria-hidden="true">☕</span>' +
+      '<span class="snakk-banner-copy"><b>' + esc(t('snakk.bannerTitle')) + '</b><small>' + esc(t('snakk.bannerText')) + '</small></span>' +
+      '<span class="btn primary small">' + esc(t('snakk.start')) + ' →</span></a>' +
       dialogueLevelSection(t('dlg.a2Title'), t('dlg.a2Sub'), ['A2']) +
       dialogueLevelSection(t('dlg.b1Title'), t('dlg.b1Sub'), ['B1']);
   }
@@ -8284,6 +8701,7 @@
     pronStopRecognition();
     sprintStop();
     kortStop();
+    snakkStop();
     if (window.__robinson3d) { try { window.__robinson3d(); } catch (e) { /* ya destruido */ } window.__robinson3d = null; }
     if (wordle) wordle.active = false;
     if (memoryGame) { memoryStop(); memoryGame.active = false; }
@@ -8297,6 +8715,7 @@
         : name === 'flashcards' ? 'flashcards'
         : name === 'pronunciacion' ? 'pron'
         : name === 'kort' ? 'kort'
+        : name === 'snakk' ? 'snakk'
         : name === 'historien' ? 'stories'
         : name === 'robinson' ? 'robinson'
         : name === 'a0' ? 'a0'
@@ -8319,7 +8738,7 @@
     }
     var moreToggle = document.querySelector('.nav-more-toggle');
     if (moreToggle) {
-      moreToggle.classList.toggle('active', ['a0', 'body', 'fun', 'exam', 'colloquial', 'review', 'games', 'verbos', 'flashcards', 'pron', 'kort', 'robinson'].indexOf(active) > -1);
+      moreToggle.classList.toggle('active', ['a0', 'body', 'fun', 'exam', 'colloquial', 'review', 'games', 'verbos', 'flashcards', 'pron', 'kort', 'snakk', 'robinson'].indexOf(active) > -1);
     }
     var navMoreMenu = document.querySelector('.nav-more-menu');
     if (navMoreMenu) {
@@ -8378,6 +8797,9 @@
     } else if (name === 'kort') {
       if (arg === 'mis') renderKortCards();
       else renderKort();
+    } else if (name === 'snakk') {
+      if (arg) renderSnakkScenario(arg);
+      else renderSnakkHub();
     } else if (name === 'pronunciacion') {
       renderPronunciation();
     } else if (name === 'a0') {

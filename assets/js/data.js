@@ -4834,6 +4834,165 @@ window.COURSE = {
     ]
   },
 
+  snakk: {
+    scenarios: [
+      {
+        id: 'kafe',
+        emoji: '☕',
+        level: 'A1',
+        title: 'På kaféen',
+        subtitle: 'Pide un café y algo de comer',
+        subtitleEn: 'Order a coffee and something to eat',
+        subtitleFa: 'یک قهوه و چیزی برای خوردن سفارش بده',
+        intro: 'Entra en una cafetería de Oslo. La camarera te hablará en noruego y tú responderás con el micrófono o por escrito. Si no la entiendes, puedes pedir una pista o ver la traducción.',
+        introEn: 'Walk into an Oslo café. The barista speaks Norwegian and you answer with the microphone or by typing. If you do not understand, ask for a hint or show the translation.',
+        introFa: 'وارد کافه‌ای در اسلو شو. کارمند کافه به نروژی حرف می‌زند و تو با میکروفون یا نوشتن جواب می‌دهی. اگر نفهمیدی، راهنما یا ترجمه را ببین.',
+        place: 'Oslo',
+        start: 'greet',
+        nodes: {
+          greet: {
+            npc: 'Hei! Hva kan jeg hjelpe deg med?',
+            es: '¡Hola! ¿Qué puedo hacer por ti?',
+            en: 'Hi! What can I get you?',
+            fa: 'سلام! چه چیزی می‌توانم برایت بیاورم؟',
+            prompt: 'Pide un café, un té o agua.',
+            promptEn: 'Order a coffee, tea or water.',
+            promptFa: 'یک قهوه، چای یا آب سفارش بده.',
+            hint: 'Jeg vil gjerne ha en kaffe.',
+            hintEn: 'I would like a coffee.',
+            hintFa: 'یک قهوه می‌خواهم.',
+            accept: [
+              { keys: ['kaffe'], next: 'milk' },
+              { keys: ['te'], next: 'tea' },
+              { keys: ['vann'], next: 'water' }
+            ]
+          },
+          milk: {
+            npc: 'Vil du ha melk i kaffen?',
+            es: '¿Quieres leche en el café?',
+            en: 'Would you like milk in your coffee?',
+            fa: 'شیر در قهوه می‌خواهی؟',
+            prompt: 'Responde sí o no.',
+            promptEn: 'Answer yes or no.',
+            promptFa: 'بله یا نه جواب بده.',
+            hint: 'Ja, takk. / Nei, takk.',
+            hintEn: 'Yes, please. / No, thank you.',
+            hintFa: 'بله، لطفاً. / نه، ممنون.',
+            accept: [
+              { keys: ['nei', 'ikke', 'uten'], next: 'size' },
+              { keys: ['ja', 'gjerne'], next: 'size' }
+            ]
+          },
+          tea: {
+            npc: 'Vil du ha sitron eller melk i teen?',
+            es: '¿Quieres limón o leche en el té?',
+            en: 'Would you like lemon or milk in your tea?',
+            fa: 'در چای لیمو یا شیر می‌خواهی؟',
+            prompt: 'Elige limón o leche.',
+            promptEn: 'Choose lemon or milk.',
+            promptFa: 'لیمو یا شیر را انتخاب کن.',
+            hint: 'Bare te, takk. / Med melk, takk.',
+            hintEn: 'Just tea, please. / With milk, please.',
+            hintFa: 'فقط چای، لطفاً. / با شیر، لطفاً.',
+            accept: [
+              { keys: ['sitron'], next: 'size' },
+              { keys: ['melk'], next: 'size' },
+              { keys: ['nei', 'bare'], next: 'size' }
+            ]
+          },
+          water: {
+            npc: 'Vil du ha vann med gass?',
+            es: '¿Quieres agua con gas?',
+            en: 'Would you like sparkling water?',
+            fa: 'آب گازدار می‌خواهی؟',
+            prompt: 'Responde sí o no.',
+            promptEn: 'Answer yes or no.',
+            promptFa: 'بله یا نه جواب بده.',
+            hint: 'Ja, takk. / Nei, vanlig vann.',
+            hintEn: 'Yes, please. / No, still water.',
+            hintFa: 'بله، لطفاً. / نه، آب بدون گاز.',
+            accept: [
+              { keys: ['nei', 'ikke', 'uten'], next: 'food' },
+              { keys: ['ja', 'gass'], next: 'food' }
+            ]
+          },
+          size: {
+            npc: 'Stor eller liten?',
+            es: '¿Grande o pequeño?',
+            en: 'Large or small?',
+            fa: 'بزرگ یا کوچک؟',
+            prompt: 'Elige el tamaño.',
+            promptEn: 'Choose the size.',
+            promptFa: 'اندازه را انتخاب کن.',
+            hint: 'Stor, takk. / Liten, takk.',
+            hintEn: 'Large, please. / Small, please.',
+            hintFa: 'بزرگ، لطفاً. / کوچک، لطفاً.',
+            accept: [
+              { keys: ['stor'], next: 'food' },
+              { keys: ['liten'], next: 'food' }
+            ]
+          },
+          food: {
+            npc: 'Vil du ha noe å spise?',
+            es: '¿Quieres algo de comer?',
+            en: 'Would you like something to eat?',
+            fa: 'چیزی برای خوردن می‌خواهی؟',
+            prompt: 'Responde sí o no.',
+            promptEn: 'Answer yes or no.',
+            promptFa: 'بله یا نه جواب بده.',
+            hint: 'Ja, gjerne. / Nei, takk.',
+            hintEn: 'Yes, please. / No, thank you.',
+            hintFa: 'بله، لطفاً. / نه، ممنون.',
+            accept: [
+              { keys: ['nei', 'ikke', 'bare'], next: 'pay' },
+              { keys: ['ja', 'gjerne', 'kanelsnurr', 'skillingsboller', 'bolle'], next: 'foodChoice' }
+            ]
+          },
+          foodChoice: {
+            npc: 'Vi har kanelsnurr og skillingsboller. Hva vil du ha?',
+            es: 'Tenemos rollos de canela y bollos. ¿Qué quieres?',
+            en: 'We have cinnamon rolls and sweet buns. What would you like?',
+            fa: 'ما رول دارچینی و نان شیرین داریم. چه می‌خواهی؟',
+            prompt: 'Elige un dulce.',
+            promptEn: 'Choose a pastry.',
+            promptFa: 'یک شیرینی انتخاب کن.',
+            hint: 'En kanelsnurr, takk. / En skillingsbolle, takk.',
+            hintEn: 'A cinnamon roll, please. / A sweet bun, please.',
+            hintFa: 'یک رول دارچینی، لطفاً. / یک نان شیرین، لطفاً.',
+            accept: [
+              { keys: ['kanelsnurr'], next: 'pay' },
+              { keys: ['skillingsboller', 'bolle'], next: 'pay' },
+              { keys: ['nei', 'ingenting'], next: 'pay' }
+            ]
+          },
+          pay: {
+            npc: 'Det blir 78 kroner. Betaler du med kort eller kontant?',
+            es: 'Son 78 coronas. ¿Pagas con tarjeta o en efectivo?',
+            en: 'That will be 78 kroner. Would you like to pay by card or cash?',
+            fa: '۷۸ کرون می‌شود. با کارت پرداخت می‌کنی یا نقدی؟',
+            prompt: 'Elige cómo pagar.',
+            promptEn: 'Choose how to pay.',
+            promptFa: 'روش پرداخت را انتخاب کن.',
+            hint: 'Med kort, takk. / Kontant, takk.',
+            hintEn: 'By card, please. / Cash, please.',
+            hintFa: 'با کارت، لطفاً. / نقدی، لطفاً.',
+            accept: [
+              { keys: ['kort'], next: 'finish' },
+              { keys: ['kontant'], next: 'finish' }
+            ]
+          },
+          finish: {
+            npc: 'Takk skal du ha! Ha en fin dag.',
+            es: '¡Gracias! Que tengas un buen día.',
+            en: 'Thank you! Have a nice day.',
+            fa: 'ممنون! روز خوبی داشته باشی.',
+            final: true
+          }
+        }
+      }
+    ]
+  },
+
   /* -------------------------------------------------------------------- */
   games: {
     dagensOrd: {

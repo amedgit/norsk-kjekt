@@ -212,6 +212,16 @@ if (COURSE.stories) {
   }
 }
 
+/* Snakk: conversaciones guiadas por voz */
+if (COURSE.snakk) {
+  for (const sc of COURSE.snakk.scenarios || []) {
+    for (const node of Object.values(sc.nodes || {})) {
+      if (node.npc) texts.add(node.npc);
+      if (node.hint) texts.add(node.hint);
+    }
+  }
+}
+
 /* Robinson Crusoe: capítulos, vocabulario, gramática, escena y ejercicios */
 if (COURSE.robinson) {
   for (const ch of COURSE.robinson.chapters) {
