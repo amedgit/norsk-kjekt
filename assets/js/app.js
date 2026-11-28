@@ -2391,13 +2391,48 @@
     if (node && node.npc && window.TTS) window.TTS.speak(node.npc);
   }
 
+  var SNAKK_SYNONYMS = {
+    kaffe: ['latte', 'espresso', 'americano', 'cappuccino', 'en kaffe'],
+    te: ['iste', 'tekopp', 'en te'],
+    vann: ['vannflaske', 'drikkevann', 'et glass vann'],
+    ja: ['jada', 'jepp', 'gjerne', 'ok', 'greit', 'det vil jeg', 'sikkert'],
+    nei: ['neida', 'ikke', 'uten', 'takk'],
+    stor: ['større', 'stor kopp'],
+    liten: ['lille', 'medium', 'liten kopp'],
+    bolle: ['boller', 'skillingsbolle', 'kake', 'smørbrød', 'sandwich'],
+    kanelsnurr: ['kanelbolle', 'kanelsnurrer'],
+    kort: ['bankkort', 'vipps', 'apple pay', 'kredittkort'],
+    kontant: ['cash', 'kontanter'],
+    hals: ['hode', 'mage', 'rygg', 'kvalm', 'svimmel', 'hoste', 'forkjølelse'],
+    dag: ['dager', 'uke', 'uker', 'måned', 'måneder', 'lenge', 'siden', 'i går'],
+    leilighet: ['leiligheten', 'leiligheta'],
+    dyrt: ['dyr', 'for dyrt'],
+    spørsmål: ['husdyr', 'strøm', 'kjøkken', 'bad', 'parkering', 'når', 'flytte'],
+    neste: ['om en uke', 'om to uker', 'snart', 'i morgen', 'mandag'],
+    år: ['måned', 'måneder', 'års', 'erfaring'],
+    kunder: ['kunde', 'service', 'mennesker'],
+    god: ['flink', 'bra', 'sterk'],
+    heter: ['jeg er', 'navnet mitt er'],
+    erfaring: ['jobbet', 'erfaren', 'utdannet']
+  };
+
+  function snakkKeyMatches(norm, key) {
+    var base = pronNorm(key);
+    if (norm.indexOf(base) > -1) return true;
+    var synonyms = SNAKK_SYNONYMS[key] || [];
+    for (var i = 0; i < synonyms.length; i++) {
+      if (norm.indexOf(pronNorm(synonyms[i])) > -1) return true;
+    }
+    return false;
+  }
+
   function snakkFindRule(text, node) {
     var norm = pronNorm(text);
     if (!norm || !node || !node.accept) return null;
     for (var i = 0; i < node.accept.length; i++) {
       var rule = node.accept[i];
       for (var j = 0; j < rule.keys.length; j++) {
-        if (norm.indexOf(pronNorm(rule.keys[j])) > -1) return rule;
+        if (snakkKeyMatches(norm, rule.keys[j])) return rule;
       }
     }
     return null;

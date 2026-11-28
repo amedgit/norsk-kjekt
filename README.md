@@ -491,8 +491,10 @@ mostrando el audio y la frase para practicar en voz alta.
 
 Cada intervención del personaje trae audio, repetición y traducción opcional. Si
 la respuesta no encaja, se muestra una pista y se puede seguir sin perder el
-hilo. El reconocimiento usa `SpeechRecognition` con `nb-NO`; si no está
-disponible, la interfaz pasa automáticamente al modo texto. Al terminar se
+hilo. El motor acepta variantes y sinónimos habituales (`latte`/`espresso`,
+`jada`/`neida`, `vipps`/`kort`, `medium`, etc.), así que no hace falta repetir
+la frase exacta. El reconocimiento usa `SpeechRecognition` con `nb-NO`; si no
+está disponible, la interfaz pasa automáticamente al modo texto. Al terminar se
 calculan puntos, estrellas y XP; el mejor resultado de cada escenario se guarda
 en `state.snakk.best`.
 
