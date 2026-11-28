@@ -2354,6 +2354,13 @@
     return sc[key] || '';
   }
 
+  function snakkRole(sc) {
+    var lang = I18N.lang || 'es';
+    if (lang === 'en') return sc.roleEn || sc.role || t('snakk.barista');
+    if (lang === 'fa') return sc.roleFa || sc.role || t('snakk.barista');
+    return sc.role || t('snakk.barista');
+  }
+
   function snakkNodeText(node, key) {
     var lang = I18N.lang || 'es';
     if (lang === 'en') return node[key + 'En'] || node[key] || '';
@@ -2540,7 +2547,7 @@
     return s.history.map(function (m) {
       var isNpc = m.role === 'npc';
       return '<div class="snakk-bubble ' + (isNpc ? 'npc' : 'user') + (m.bad ? ' bad' : '') + '">' +
-        '<span class="snakk-who">' + (isNpc ? '☕ ' + esc(t('snakk.barista')) : esc(t('snakk.you'))) + '</span>' +
+        '<span class="snakk-who">' + (isNpc ? esc(snakkSession.scenario.emoji) + ' ' + esc(snakkRole(snakkSession.scenario)) : esc(t('snakk.you'))) + '</span>' +
         '<div class="snakk-line">' + (isNpc ? say(m.text) : '') +
         '<span' + (isNpc ? ' lang="nb" dir="ltr"' : ' dir="auto"') + '>' + esc(m.text) + '</span></div>' +
         '</div>';
@@ -2632,7 +2639,7 @@
     var stepLabel = Math.min(6, Math.max(1, s.step + 1));
     var result = s.completed ? snakkResultHTML() : '';
     var current = node ? '<div class="snakk-bubble npc current">' +
-      '<span class="snakk-who">☕ ' + esc(t('snakk.barista')) + '</span>' +
+      '<span class="snakk-who">' + esc(s.scenario.emoji) + ' ' + esc(snakkRole(s.scenario)) + '</span>' +
       '<div class="snakk-line">' + say(node.npc) + '<span lang="nb" dir="ltr">' + esc(node.npc) + '</span></div>' +
       '</div>' : '';
     box.innerHTML = '<div class="snakk-chat-head"><span>' + esc(t('snakk.progress', { n: stepLabel })) + '</span>' +
@@ -2733,9 +2740,6 @@
           (best ? '<span>' + esc(t('snakk.best', { n: best.score })) + '</span><span class="snakk-stars">' + snakkStars(best.stars) + '</span>' : '') +
           '</div><span class="btn primary">' + esc(t('snakk.start')) + '</span></a>';
       }).join('') +
-      '<div class="snakk-scenario soon"><span class="snakk-scenario-emoji">🩺</span><h2>' + esc(t('snakk.soonDoctor')) + '</h2><p>' + esc(t('snakk.soon')) + '</p></div>' +
-      '<div class="snakk-scenario soon"><span class="snakk-scenario-emoji">🏠</span><h2>' + esc(t('snakk.soonLandlord')) + '</h2><p>' + esc(t('snakk.soon')) + '</p></div>' +
-      '<div class="snakk-scenario soon"><span class="snakk-scenario-emoji">💼</span><h2>' + esc(t('snakk.soonJob')) + '</h2><p>' + esc(t('snakk.soon')) + '</p></div>' +
       '</div>' +
       '<p class="snakk-more">' + esc(t('snakk.moreSoon')) + '</p>';
   }

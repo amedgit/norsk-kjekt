@@ -4848,6 +4848,9 @@ window.COURSE = {
         introEn: 'Walk into an Oslo café. The barista speaks Norwegian and you answer with the microphone or by typing. If you do not understand, ask for a hint or show the translation.',
         introFa: 'وارد کافه‌ای در اسلو شو. کارمند کافه به نروژی حرف می‌زند و تو با میکروفون یا نوشتن جواب می‌دهی. اگر نفهمیدی، راهنما یا ترجمه را ببین.',
         place: 'Oslo',
+        role: 'Camarera',
+        roleEn: 'Barista',
+        roleFa: 'باریستا',
         start: 'greet',
         nodes: {
           greet: {
@@ -4986,6 +4989,271 @@ window.COURSE = {
             es: '¡Gracias! Que tengas un buen día.',
             en: 'Thank you! Have a nice day.',
             fa: 'ممنون! روز خوبی داشته باشی.',
+            final: true
+          }
+        }
+      },
+      {
+        id: 'lege',
+        emoji: '🩺',
+        level: 'A2',
+        title: 'Hos legen',
+        subtitle: 'Explica qué te pasa en la consulta',
+        subtitleEn: 'Explain what is wrong at the doctor’s',
+        subtitleFa: 'در مطب توضیح بده چه مشکلی داری',
+        intro: 'Estás en la consulta de un médico en Oslo. Cuéntale qué te pasa, responde a sus preguntas y pide una baja si la necesitas.',
+        introEn: 'You are at a doctor’s office in Oslo. Explain what is wrong, answer the questions and ask for a sick note if you need one.',
+        introFa: 'در مطب پزشکی در اسلو هستی. بگو چه مشکلی داری، به پرسش‌ها جواب بده و اگر لازم داری گواهی بیماری بخواه.',
+        place: 'Oslo',
+        role: 'Médico',
+        roleEn: 'Doctor',
+        roleFa: 'دکتر',
+        start: 'greet',
+        nodes: {
+          greet: {
+            npc: 'Hei! Hva kan jeg hjelpe deg med?',
+            es: '¡Hola! ¿Qué puedo hacer por ti?',
+            en: 'Hello! What can I help you with?',
+            fa: 'سلام! چه کمکی می‌توانم بکنم؟',
+            prompt: 'Di qué te pasa.',
+            promptEn: 'Say what is wrong.',
+            promptFa: 'بگو چه مشکلی داری.',
+            hint: 'Jeg har vondt i halsen.',
+            hintEn: 'I have a sore throat.',
+            hintFa: 'گلویم درد می‌کند.',
+            accept: [{ keys: ['hals', 'vondt', 'hoste', 'forkjølet', 'feber'], next: 'fever' }]
+          },
+          fever: {
+            npc: 'Har du feber?',
+            es: '¿Tienes fiebre?',
+            en: 'Do you have a fever?',
+            fa: 'تب داری؟',
+            prompt: 'Responde sí o no.',
+            promptEn: 'Answer yes or no.',
+            promptFa: 'بله یا نه جواب بده.',
+            hint: 'Ja, jeg har feber. / Nei, ikke nå.',
+            hintEn: 'Yes, I have a fever. / No, not now.',
+            hintFa: 'بله، تب دارم. / نه، الان نه.',
+            accept: [
+              { keys: ['nei', 'ikke'], next: 'duration' },
+              { keys: ['ja', 'feber'], next: 'duration' }
+            ]
+          },
+          duration: {
+            npc: 'Hvor lenge har du hatt det?',
+            es: '¿Cuánto tiempo llevas así?',
+            en: 'How long have you had it?',
+            fa: 'چند وقت است که این‌طوری هستی؟',
+            prompt: 'Di cuánto tiempo llevas así.',
+            promptEn: 'Say how long you have had it.',
+            promptFa: 'بگو چند وقت است که این مشکل را داری.',
+            hint: 'Jeg har hatt det i to dager.',
+            hintEn: 'I have had it for two days.',
+            hintFa: 'دو روز است که این‌طوری هستم.',
+            accept: [{ keys: ['dag', 'dager', 'uke', 'uker', 'går', 'lenge', 'to', 'tre'], next: 'advice' }]
+          },
+          advice: {
+            npc: 'Du bør drikke mye vann og hvile. Trenger du en sykmelding?',
+            es: 'Deberías beber mucha agua y descansar. ¿Necesitas una baja médica?',
+            en: 'You should drink plenty of water and rest. Do you need a sick note?',
+            fa: 'باید آب زیاد بنوشی و استراحت کنی. گواهی بیماری لازم داری؟',
+            prompt: 'Responde si necesitas baja médica.',
+            promptEn: 'Answer whether you need a sick note.',
+            promptFa: 'جواب بده که گواهی بیماری لازم داری یا نه.',
+            hint: 'Ja, jeg trenger en sykmelding. / Nei, takk.',
+            hintEn: 'Yes, I need a sick note. / No, thank you.',
+            hintFa: 'بله، گواهی بیماری لازم دارم. / نه، ممنون.',
+            accept: [
+              { keys: ['nei', 'ikke'], next: 'finish' },
+              { keys: ['ja', 'sykmelding', 'trenger'], next: 'finish' }
+            ]
+          },
+          finish: {
+            npc: 'Greit. God bedring!',
+            es: 'Bien. ¡Que te mejores!',
+            en: 'Okay. Get well soon!',
+            fa: 'باشه. زود خوب شو!',
+            final: true
+          }
+        }
+      },
+      {
+        id: 'utleier',
+        emoji: '🔑',
+        level: 'A2',
+        title: 'Hos utleieren',
+        subtitle: 'Pregunta por el alquiler y el contrato',
+        subtitleEn: 'Ask about the rent and the contract',
+        subtitleFa: 'دربارهٔ اجاره و قرارداد بپرس',
+        intro: 'Has quedado para ver un piso en Oslo. Habla con el casero sobre el precio, el depósito y el contrato.',
+        introEn: 'You are viewing a flat in Oslo. Talk to the landlord about the rent, the deposit and the contract.',
+        introFa: 'برای دیدن آپارتمانی در اسلو قرار گذاشته‌ای. با صاحب‌خانه دربارهٔ اجاره، ودیعه و قرارداد حرف بزن.',
+        place: 'Oslo',
+        role: 'Casero',
+        roleEn: 'Landlord',
+        roleFa: 'صاحب‌خانه',
+        start: 'greet',
+        nodes: {
+          greet: {
+            npc: 'Hei! Du ville se på leiligheten?',
+            es: '¡Hola! ¿Querías ver el piso?',
+            en: 'Hi! You wanted to see the flat?',
+            fa: 'سلام! می‌خواستی آپارتمان را ببینی؟',
+            prompt: 'Confirma o pregunta por el alquiler.',
+            promptEn: 'Confirm or ask about the rent.',
+            promptFa: 'تأیید کن یا دربارهٔ اجاره بپرس.',
+            hint: 'Ja, jeg vil gjerne se leiligheten.',
+            hintEn: 'Yes, I would like to see the flat.',
+            hintFa: 'بله، دوست دارم آپارتمان را ببینم.',
+            accept: [{ keys: ['ja', 'leilighet', 'se'], next: 'rent' }]
+          },
+          rent: {
+            npc: 'Leien er 12 000 kroner i måneden. Er det greit?',
+            es: 'El alquiler son 12.000 coronas al mes. ¿Te parece bien?',
+            en: 'The rent is 12,000 kroner a month. Is that okay?',
+            fa: 'اجاره ماهی ۱۲٬۰۰۰ کرون است. خوب است؟',
+            prompt: 'Di si te parece bien o si es caro.',
+            promptEn: 'Say whether it is okay or too expensive.',
+            promptFa: 'بگو خوب است یا گران است.',
+            hint: 'Ja, det er greit. / Nei, det er litt dyrt.',
+            hintEn: 'Yes, that is fine. / No, it is a little expensive.',
+            hintFa: 'بله، خوب است. / نه، کمی گران است.',
+            accept: [
+              { keys: ['nei', 'dyrt', 'dyr'], next: 'negotiate' },
+              { keys: ['ja', 'greit', 'ok'], next: 'deposit' }
+            ]
+          },
+          negotiate: {
+            npc: 'Jeg kan gå ned til 11 000. Er det bedre?',
+            es: 'Puedo bajar a 11.000. ¿Está mejor?',
+            en: 'I can go down to 11,000. Is that better?',
+            fa: 'می‌توانم به ۱۱٬۰۰۰ برسانم. بهتر است؟',
+            prompt: 'Responde a la oferta.',
+            promptEn: 'Answer the offer.',
+            promptFa: 'به پیشنهاد جواب بده.',
+            hint: 'Ja, det er bedre.',
+            hintEn: 'Yes, that is better.',
+            hintFa: 'بله، بهتر است.',
+            accept: [
+              { keys: ['nei', 'ikke'], next: 'finish' },
+              { keys: ['ja', 'bedre', 'greit'], next: 'deposit' }
+            ]
+          },
+          deposit: {
+            npc: 'Depositumet er tre måneders leie. Har du spørsmål?',
+            es: 'El depósito son tres meses de alquiler. ¿Tienes preguntas?',
+            en: 'The deposit is three months’ rent. Do you have any questions?',
+            fa: 'ودیعه معادل سه ماه اجاره است. سؤالی داری؟',
+            prompt: 'Pregunta algo o di que está bien.',
+            promptEn: 'Ask something or say it is fine.',
+            promptFa: 'چیزی بپرس یا بگو خوب است.',
+            hint: 'Ja, når kan jeg flytte inn? / Nei, det er greit.',
+            hintEn: 'Yes, when can I move in? / No, that is fine.',
+            hintFa: 'بله، کِی می‌توانم اسباب‌کشی کنم؟ / نه، خوب است.',
+            accept: [
+              { keys: ['ja', 'spørsmål', 'når', 'flytte'], next: 'contract' },
+              { keys: ['nei', 'greit'], next: 'contract' }
+            ]
+          },
+          contract: {
+            npc: 'Vi kan skrive kontrakt fra neste måned. Passer det?',
+            es: 'Podemos firmar el contrato el mes que viene. ¿Te viene bien?',
+            en: 'We can sign the contract next month. Does that work?',
+            fa: 'می‌توانیم از ماه آینده قرارداد بنویسیم. مناسب است؟',
+            prompt: 'Responde si te viene bien.',
+            promptEn: 'Answer whether that works for you.',
+            promptFa: 'جواب بده که مناسب است یا نه.',
+            hint: 'Ja, det passer. / Nei, jeg trenger litt tid.',
+            hintEn: 'Yes, that works. / No, I need a little time.',
+            hintFa: 'بله، مناسب است. / نه، کمی وقت لازم دارم.',
+            accept: [
+              { keys: ['nei', 'tid'], next: 'finish' },
+              { keys: ['ja', 'passer'], next: 'finish' }
+            ]
+          },
+          finish: {
+            npc: 'Flott! Vi snakkes.',
+            es: '¡Genial! Hablamos.',
+            en: 'Great! Talk soon.',
+            fa: 'عالی! بعداً صحبت می‌کنیم.',
+            final: true
+          }
+        }
+      },
+      {
+        id: 'jobb',
+        emoji: '💼',
+        level: 'B1',
+        title: 'Jobbintervju',
+        subtitle: 'Una entrevista de trabajo sencilla',
+        subtitleEn: 'A simple job interview',
+        subtitleFa: 'یک مصاحبهٔ کاری ساده',
+        intro: 'Estás en una entrevista de trabajo en Noruega. Preséntate, habla de tu experiencia y di cuándo puedes empezar.',
+        introEn: 'You are at a job interview in Norway. Introduce yourself, talk about your experience and say when you can start.',
+        introFa: 'در یک مصاحبهٔ کاری در نروژ هستی. خودت را معرفی کن، از تجربه‌ات بگو و بگو کِی می‌توانی شروع کنی.',
+        place: 'Oslo',
+        role: 'Entrevistadora',
+        roleEn: 'Interviewer',
+        roleFa: 'مصاحبه‌کننده',
+        start: 'greet',
+        nodes: {
+          greet: {
+            npc: 'Velkommen! Kan du fortelle litt om deg selv?',
+            es: '¡Bienvenido! ¿Puedes contarme un poco sobre ti?',
+            en: 'Welcome! Can you tell me a little about yourself?',
+            fa: 'خوش آمدی! می‌توانی کمی دربارهٔ خودت بگویی؟',
+            prompt: 'Preséntate brevemente.',
+            promptEn: 'Introduce yourself briefly.',
+            promptFa: 'خودت را کوتاه معرفی کن.',
+            hint: 'Jeg heter Ana, og jeg har erfaring fra service.',
+            hintEn: 'My name is Ana, and I have experience in service.',
+            hintFa: 'نام من آنا است و در خدمات تجربه دارم.',
+            accept: [{ keys: ['heter', 'jeg er', 'erfaring', 'jobbet'], next: 'experience' }]
+          },
+          experience: {
+            npc: 'Hvor lang erfaring har du?',
+            es: '¿Cuánta experiencia tienes?',
+            en: 'How much experience do you have?',
+            fa: 'چقدر تجربه داری؟',
+            prompt: 'Di cuánta experiencia tienes.',
+            promptEn: 'Say how much experience you have.',
+            promptFa: 'بگو چقدر تجربه داری.',
+            hint: 'Jeg har tre års erfaring.',
+            hintEn: 'I have three years of experience.',
+            hintFa: 'سه سال تجربه دارم.',
+            accept: [{ keys: ['år', 'måned', 'erfaring', 'lenge'], next: 'strengths' }]
+          },
+          strengths: {
+            npc: 'Hva er du god til?',
+            es: '¿En qué eres bueno?',
+            en: 'What are you good at?',
+            fa: 'در چه کاری خوب هستی؟',
+            prompt: 'Di una fortaleza.',
+            promptEn: 'Name a strength.',
+            promptFa: 'یک نقطهٔ قوت بگو.',
+            hint: 'Jeg er god med kunder og liker å lære.',
+            hintEn: 'I am good with customers and I like to learn.',
+            hintFa: 'با مشتری‌ها خوب هستم و دوست دارم یاد بگیرم.',
+            accept: [{ keys: ['kunder', 'team', 'språk', 'organisert', 'service', 'lærer', 'god'], next: 'availability' }]
+          },
+          availability: {
+            npc: 'Når kan du begynne?',
+            es: '¿Cuándo puedes empezar?',
+            en: 'When can you start?',
+            fa: 'کِی می‌توانی شروع کنی؟',
+            prompt: 'Di cuándo puedes empezar.',
+            promptEn: 'Say when you can start.',
+            promptFa: 'بگو کِی می‌توانی شروع کنی.',
+            hint: 'Jeg kan begynne neste uke.',
+            hintEn: 'I can start next week.',
+            hintFa: 'می‌توانم هفتهٔ آینده شروع کنم.',
+            accept: [{ keys: ['neste', 'uke', 'i morgen', 'mandag', 'snart', 'nå'], next: 'finish' }]
+          },
+          finish: {
+            npc: 'Takk for praten. Vi tar kontakt.',
+            es: 'Gracias por la conversación. Nos pondremos en contacto.',
+            en: 'Thank you for talking with us. We will be in touch.',
+            fa: 'ممنون از گفت‌وگو. با تو تماس می‌گیریم.',
             final: true
           }
         }
