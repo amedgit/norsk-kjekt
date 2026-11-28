@@ -93,7 +93,7 @@ cacheada.
 | A0 | Sección `#/a0` para empezar desde cero: alfabeto, vocales, consonantes, pronunciación, primeras frases y 8 ejercicios |
 | Gramática | Referencia `#/gramatica` A0–B2: 30 temas con reglas, ejemplos con audio, errores típicos y 60 ejercicios |
 | Verbos | 200 verbos esenciales con presente, pasado, perfecto, imperativo, ejemplo, audio y progreso |
-| Flashcards | Mazos de vocabulario por tema con audio, dos direcciones, repaso espaciado (1/3/7/15/30 días) y progreso. **Kortmodus** añade una baraja inteligente con swipe |
+| Flashcards | Mazos de vocabulario por tema con audio, dos direcciones, repaso espaciado (1/3/7/15/30 días) y progreso. **Kortmodus** añade una baraja inteligente con swipe y tarjetas propias importables |
 | Robinson | «Robinson Crusoe»: adaptación propia del clásico de 1719, cuatro capítulos abiertos con escenas 3D, ilustraciones, audio, vocabulario, gramática y 5 ejercicios cada uno |
 | Juegos | **Norsk Sprint**: 9 niveles de 10 preguntas, combo, estrellas, reto diario, sonidos y confeti. **Hukommelse**: parejas de palabras y traducciones, tres niveles, audio y tiempos. **Crucigrama**: vocabulario noruego generado, pistas, comprobación, pista y nuevo puzzle |
 | Historia | «Lucía i Oslo»: 6 capítulos piloto (A2–B1) de la serie de 12, con 7 párrafos cada uno, audio por párrafo y del capítulo completo, traducción plegable, 15 palabras, gramática y 5 ejercicios por capítulo |
@@ -442,6 +442,22 @@ sustituye a Flashcards: usa el mismo `state.srs` y las mismas claves
 - El resumen muestra aciertos, comodín y tarjetas para mañana.
 
 La entrada está en **Más → Kort** y en una tarjeta dentro de `#/flashcards`.
+
+### Mis tarjetas
+
+`#/kort/mis` permite crear una baraja propia y alimentarla de dos formas:
+
+- **Añadir una tarjeta** con palabra o frase en noruego, significado y un ejemplo
+  opcional. Se guarda en `state.kort.custom` y usa una clave de repaso
+  `flash:custom:<id>` independiente.
+- **Importar desde un texto**: pega un texto en noruego, se buscan palabras en
+  el diccionario de Kjerneord y en el vocabulario de las lecciones, y se pueden
+  seleccionar las que quieras convertir en tarjetas. Las palabras desconocidas
+  se cuentan, pero no se inventan traducciones.
+
+Las tarjetas propias aparecen primero en la baraja de Kortmodus. El botón de
+borrar elimina también su entrada de repaso espaciado y su marca de conocida.
+El estado se exporta e importa con el resto del progreso.
 
 ### Pronunciación
 

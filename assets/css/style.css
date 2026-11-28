@@ -3568,3 +3568,89 @@ html[data-theme="dark"] .card {
   color: rgba(255, 255, 255, .58); font-size: clamp(1rem, 3.4vw, 1.35rem);
   font-weight: 750; max-width: 100%; overflow-wrap: break-word;
 }
+
+/* ---------------- Mis tarjetas ---------------- */
+
+.kort-hero .btn.ghost,
+.kort-custom-link {
+  color: #fff; border-color: rgba(255, 255, 255, .28);
+  background: rgba(255, 255, 255, .06);
+}
+.kort-hero .btn.ghost:hover,
+.kort-custom-link:hover { background: rgba(255, 255, 255, .14); border-color: rgba(56, 214, 230, .55); }
+.kort-custom-link { margin-top: .75rem; }
+.kort-hero-side { display: flex; flex-direction: column; align-items: flex-end; gap: .45rem; }
+
+.kort-custom-layout {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1rem; align-items: start; margin-top: 1rem;
+}
+.kort-form-card h2, .kort-import-card h2, .kort-custom-list-card h2 {
+  font-size: 1.05rem; margin-bottom: .65rem;
+}
+.kort-field { display: flex; flex-direction: column; gap: .25rem; margin-bottom: .6rem; }
+.kort-field span { color: var(--muted); font-size: .73rem; font-weight: 700; }
+.kort-field input, .kort-textarea {
+  width: 100%; border: 1px solid var(--line); border-radius: 10px;
+  background: var(--bg); color: var(--ink); font: inherit; font-size: .85rem;
+  padding: .5rem .6rem; outline: none;
+}
+.kort-field input:focus, .kort-textarea:focus { border-color: #38d6e6; box-shadow: 0 0 0 3px rgba(56, 214, 230, .12); }
+.kort-textarea { resize: vertical; min-height: 112px; margin-bottom: .55rem; }
+.kort-msg { min-height: 1.1rem; margin-top: .45rem; color: var(--green); font-size: .76rem; }
+.kort-muted { color: var(--muted); font-size: .8rem; margin-bottom: .55rem; }
+.kort-import-results { margin-top: .7rem; }
+.kort-import-summary { color: var(--ink-soft); font-size: .8rem; font-weight: 700; margin-bottom: .45rem; }
+.kort-import-list {
+  display: grid; grid-template-columns: 1fr 1fr; gap: .35rem;
+  max-height: 240px; overflow-y: auto; margin-bottom: .6rem;
+}
+.kort-import-item {
+  display: flex; align-items: flex-start; gap: .45rem;
+  border: 1px solid var(--line); background: var(--bg);
+  border-radius: 10px; padding: .4rem .5rem; cursor: pointer;
+}
+.kort-import-item input { margin-top: .2rem; accent-color: #0f9b8e; }
+.kort-import-item span { display: flex; flex-direction: column; min-width: 0; }
+.kort-import-item b { font-size: .78rem; }
+.kort-import-item small { color: var(--muted); font-size: .7rem; }
+.kort-unknown { color: var(--muted); font-size: .72rem; margin-bottom: .5rem; }
+.kort-notice { color: var(--green); font-size: .8rem; font-weight: 750; }
+.kort-custom-list-card { margin-top: 1rem; }
+.kort-custom-head { display: flex; align-items: center; justify-content: space-between; gap: .6rem; margin-bottom: .6rem; }
+.kort-custom-head h2 { margin: 0; }
+.kort-custom-head h2 span {
+  display: inline-flex; margin-inline-start: .35rem; padding: .08rem .42rem;
+  border-radius: 999px; background: var(--blue-soft); color: var(--blue);
+  font-size: .7rem; font-weight: 800;
+}
+.kort-custom-item {
+  display: flex; align-items: center; gap: .6rem;
+  padding: .6rem .45rem; border-bottom: 1px solid var(--line);
+}
+.kort-custom-item:last-child { border-bottom: 0; }
+.kort-custom-emoji { font-size: 1.15rem; }
+.kort-custom-main { display: flex; flex-direction: column; min-width: 0; flex: 1 1 auto; }
+.kort-custom-main b { font-size: .86rem; }
+.kort-custom-main span { color: var(--ink-soft); font-size: .8rem; }
+.kort-custom-main small { color: var(--muted); font-size: .72rem; }
+.kort-custom-actions { display: flex; align-items: center; gap: .3rem; flex: 0 0 auto; }
+.kort-custom-actions .say { width: 1.7rem; height: 1.7rem; font-size: .75rem; }
+.kort-delete {
+  border: 1px solid var(--line); background: transparent; color: var(--muted);
+  border-radius: 8px; width: 1.7rem; height: 1.7rem; cursor: pointer;
+  font: inherit; font-size: .72rem; line-height: 1;
+}
+.kort-delete:hover { color: var(--red); border-color: var(--red); background: var(--red-soft); }
+.kort-empty-list { color: var(--muted); font-size: .85rem; padding: .5rem 0; }
+.kort-custom-list-card .btn { margin-top: .6rem; }
+
+@media (max-width: 800px) {
+  .kort-custom-layout { grid-template-columns: 1fr; }
+}
+@media (max-width: 520px) {
+  .kort-import-list { grid-template-columns: 1fr; }
+  .kort-hero-side { align-items: flex-start; }
+}
+.kort-example { color: rgba(255, 255, 255, .58); font-size: .78rem; font-style: italic; margin: .1rem 0 0; max-width: 90%; }
+.kort-example { color: rgba(255, 255, 255, .58); font-size: .78rem; font-style: italic; margin: .1rem 0 0; max-width: 90%; }

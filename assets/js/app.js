@@ -63,7 +63,7 @@
   var KEY = 'norsk-kjekt-v1';
 
   function defaults() {
-    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, body: {}, core: { known: {}, packs: {} }, stories: { chapters: {} }, robinson: { chapters: {} }, a0: { best: 0, total: 0, at: 0 }, grammar: { topics: {} }, verbos: { known: {}, best: { best: 0, total: 0, at: 0 }, packs: {} }, games: { dagensOrd: { date: '', guesses: [], status: 'playing', played: 0, wins: 0, streak: 0, best: 0, lastWin: '', distribution: [0, 0, 0, 0, 0, 0] }, hukommelse: { easy: { played: 0, bestMoves: 0, bestTime: 0 }, medium: { played: 0, bestMoves: 0, bestTime: 0 }, hard: { played: 0, bestMoves: 0, bestTime: 0 } }, kryssord: { solved: 0 } }, daily: { date: '', xp: 0, goal: 100 }, weekly: { week: '', xp: 0, cards: 0, claimed: {} }, pron: { best: {}, rewarded: {} }, sprint: { stars: {}, best: {}, played: 0, daily: { date: '', best: 0, done: false } }, xp: 0, days: {}, review: [], srs: {}, version: 1 };
+    return { lessons: {}, fun: {}, exams: {}, dialogues: {}, body: {}, core: { known: {}, packs: {} }, stories: { chapters: {} }, robinson: { chapters: {} }, a0: { best: 0, total: 0, at: 0 }, grammar: { topics: {} }, verbos: { known: {}, best: { best: 0, total: 0, at: 0 }, packs: {} }, games: { dagensOrd: { date: '', guesses: [], status: 'playing', played: 0, wins: 0, streak: 0, best: 0, lastWin: '', distribution: [0, 0, 0, 0, 0, 0] }, hukommelse: { easy: { played: 0, bestMoves: 0, bestTime: 0 }, medium: { played: 0, bestMoves: 0, bestTime: 0 }, hard: { played: 0, bestMoves: 0, bestTime: 0 } }, kryssord: { solved: 0 } }, daily: { date: '', xp: 0, goal: 100 }, weekly: { week: '', xp: 0, cards: 0, claimed: {} }, pron: { best: {}, rewarded: {} }, sprint: { stars: {}, best: {}, played: 0, daily: { date: '', best: 0, done: false } }, kort: { custom: [] }, xp: 0, days: {}, review: [], srs: {}, version: 1 };
   }
 
   var state = (function load() {
@@ -214,6 +214,7 @@
         weekly: raw.weekly && typeof raw.weekly === 'object' ? raw.weekly : d.weekly,
         pron: raw.pron && typeof raw.pron === 'object' ? raw.pron : d.pron,
         sprint: raw.sprint && typeof raw.sprint === 'object' ? raw.sprint : d.sprint,
+        kort: raw.kort && typeof raw.kort === 'object' ? raw.kort : d.kort,
         days: raw.days && typeof raw.days === 'object' ? raw.days : d.days,
         review: Array.isArray(raw.review) ? raw.review.filter(function (s) { return typeof s === 'string'; }) : d.review,
         version: 1
@@ -227,6 +228,7 @@
   ensureWeekly();
   ensurePron();
   ensureSprint();
+  ensureKort();
 
   function save() {
     try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* modo privado */ }
@@ -287,6 +289,21 @@
     if (!state.sprint.daily || state.sprint.daily.date !== today) {
       state.sprint.daily = { date: today, best: 0, done: false };
     }
+  }
+
+  function ensureKort() {
+    state.kort = state.kort && typeof state.kort === 'object' ? state.kort : { custom: [] };
+    state.kort.custom = Array.isArray(state.kort.custom) ? state.kort.custom.filter(function (c) {
+      return c && typeof c === 'object' && c.id && c.no && c.es;
+    }).map(function (c) {
+      return {
+        id: String(c.id),
+        no: String(c.no),
+        es: String(c.es),
+        example: typeof c.example === 'string' ? c.example : '',
+        createdAt: Number(c.createdAt) || 0
+      };
+    }) : [];
   }
 
   function addXp(n) {
@@ -2326,22 +2343,36 @@
     appointments: '📅', movement: '🏃'
   };
 
+  function kortCustomPack() {
+    return { id: 'custom', title: t('kort.customTitle'), words: state.kort.custom || [] };
+  }
+
   function kortAll() {
     var out = [];
+    var customPack = kortCustomPack();
+    customPack.words.forEach(function (w) {
+      out.push({ pack: customPack, word: w, sig: flashSig('custom', w.id), custom: true });
+    });
     flashPacks().forEach(function (pack) {
       pack.words.forEach(function (w) {
-        out.push({ pack: pack, word: w, sig: flashSig(pack.id, w.id) });
+        out.push({ pack: pack, word: w, sig: flashSig(pack.id, w.id), custom: false });
       });
     });
     return out;
   }
 
   function kortDueCount() {
-    return flashPacks().reduce(function (n, pack) { return n + flashDueCount(pack); }, 0);
+    var today = todayKey();
+    var custom = state.kort.custom.filter(function (w) {
+      var e = state.srs[flashSig('custom', w.id)];
+      return !e || e.due <= today;
+    }).length;
+    return custom + flashPacks().reduce(function (n, pack) { return n + flashDueCount(pack); }, 0);
   }
 
   function kortKnownTotal() {
-    return flashPacks().reduce(function (n, pack) { return n + coreKnownCount(pack); }, 0);
+    var custom = state.kort.custom.filter(function (w) { return !!state.core.known[w.id]; }).length;
+    return custom + flashPacks().reduce(function (n, pack) { return n + coreKnownCount(pack); }, 0);
   }
 
   function kortBuild() {
@@ -2355,15 +2386,21 @@
       else if (e.due <= today) due.push(c);
       else later.push(c);
     });
-    var picks = shuffle(due).slice(0, 20);
+    function customFirst(arr) {
+      return arr.filter(function (c) { return c.custom; });
+    }
+    function coreOnly(arr) {
+      return arr.filter(function (c) { return !c.custom; });
+    }
+    var picks = shuffle(customFirst(due)).concat(shuffle(coreOnly(due))).slice(0, 20);
     var free = false;
     if (!picks.length && !fresh.length) {
       free = true;
-      picks = shuffle(later).slice(0, 20);
+      picks = shuffle(customFirst(later)).concat(shuffle(coreOnly(later))).slice(0, 20);
     } else {
-      picks = picks.concat(shuffle(fresh).slice(0, 20 - picks.length));
+      picks = picks.concat(shuffle(customFirst(fresh)).concat(shuffle(coreOnly(fresh))).slice(0, 20 - picks.length));
     }
-    if (picks.length < 20) picks = picks.concat(shuffle(later).slice(0, 20 - picks.length));
+    if (picks.length < 20) picks = picks.concat(shuffle(customFirst(later)).concat(shuffle(coreOnly(later))).slice(0, 20 - picks.length));
     var queue = picks.map(function (c, i) {
       return Object.assign({}, c, { dir: i % 2 ? 'es' : 'no' });
     });
@@ -2514,12 +2551,13 @@
     var item = kortItem();
     if (!item) return;
     var w = item.word;
-    var emoji = KORT_EMOJI[w.cat] || '🗂️';
+    var emoji = item.custom ? '🃏' : (KORT_EMOJI[w.cat] || '🗂️');
     var pct = Math.round((kortSession.index / kortSession.total) * 100);
     var front = kortFront(item);
     var back = kortBack(item);
     var frontNo = item.dir === 'no';
     var forms = w.forms ? '<p class="kort-forms"><b>' + esc(t('flash.forms')) + ':</b> ' + esc(w.forms) + '</p>' : '';
+    var example = w.example ? '<p class="kort-example" lang="nb" dir="ltr">' + esc(w.example) + '</p>' : '';
     stage.innerHTML =
       '<div class="kort-hud">' +
       '  <span class="kort-progress">' + esc(t('kort.progress', { done: kortSession.index, total: kortSession.total })) + '</span>' +
@@ -2541,7 +2579,7 @@
       '        <span class="kort-emoji" aria-hidden="true">' + emoji + '</span>' +
       '        <span class="kort-back-front"' + (frontNo ? ' lang="nb" dir="ltr"' : ' dir="auto"') + '>' + esc(front) + '</span>' +
       '        <p class="kort-word' + (frontNo ? ' es' : '') + '"' + (frontNo ? ' dir="auto"' : ' lang="nb" dir="ltr"') + '>' + esc(back) + '</p>' +
-      forms +
+      forms + example +
       (!frontNo ? '<div class="kort-audio">' + say(w.no) + '</div>' : '') +
       '        <span class="kort-hint">' + esc(t('kort.swipe')) + '</span>' +
       '      </div>' +
@@ -2649,6 +2687,7 @@
       '      <span id="kort-due-count">⏰ ' + esc(tp('kort.due', due)) + '</span>' +
       '      <span id="kort-known-count">✓ ' + esc(tp('kort.knownTotal', known)) + '</span>' +
       '    </div>' +
+      '    <a class="btn ghost small kort-custom-link" href="#/kort/mis">🃏 ' + esc(t('kort.customLink')) + ' →</a>' +
       '  </div>' +
       '  <div class="kort-hero-side">' + sprintSoundHTML() + '</div>' +
       '</section>' +
@@ -2672,6 +2711,234 @@
     }
     bindKortKeys();
     paintKort();
+  }
+
+  /* =======================================================
+     Mis tarjetas: tarjetas propias e importación de texto
+     ======================================================= */
+
+  var kortImportMatches = [];
+  var kortImportUnknown = 0;
+
+  function kortCardId() {
+    return 'c-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 6);
+  }
+
+  function kortAddCustom(no, es, example) {
+    no = String(no || '').trim();
+    es = String(es || '').trim();
+    example = String(example || '').trim();
+    if (!no || !es) return { error: t('kort.customMissing') };
+    if (no.length > 120 || es.length > 160 || example.length > 240) return { error: t('kort.customTooLong') };
+    var key = pronNorm(no) + '|' + pronNorm(es);
+    var exists = state.kort.custom.some(function (c) {
+      return pronNorm(c.no) + '|' + pronNorm(c.es) === key;
+    });
+    if (exists) return { error: t('kort.customDuplicate') };
+    state.kort.custom.unshift({
+      id: kortCardId(), no: no, es: es, example: example, createdAt: Date.now()
+    });
+    save();
+    return { ok: true };
+  }
+
+  function kortRemoveCustom(id) {
+    state.kort.custom = state.kort.custom.filter(function (c) { return c.id !== id; });
+    delete state.srs[flashSig('custom', id)];
+    delete state.core.known[id];
+    save();
+  }
+
+  function kortCustomListHTML() {
+    if (!state.kort.custom.length) {
+      return '<p class="kort-empty-list">' + esc(t('kort.customEmpty')) + '</p>';
+    }
+    return state.kort.custom.map(function (c) {
+      return '<div class="kort-custom-item">' +
+        '<span class="kort-custom-emoji" aria-hidden="true">🃏</span>' +
+        '<div class="kort-custom-main"><b lang="nb" dir="ltr">' + esc(c.no) + '</b>' +
+        '<span dir="auto">' + esc(c.es) + '</span>' +
+        (c.example ? '<small lang="nb" dir="ltr">' + esc(c.example) + '</small>' : '') +
+        '</div>' +
+        '<div class="kort-custom-actions">' + say(c.no) +
+        '<button type="button" class="kort-delete" data-kort-delete="' + esc(c.id) + '" aria-label="' + esc(t('kort.customDelete')) + '">✕</button></div>' +
+        '</div>';
+    }).join('');
+  }
+
+  function kortCustomCount() {
+    return state.kort.custom.length;
+  }
+
+  function kortUpdateCounts() {
+    var n = kortCustomCount();
+    var total = document.getElementById('kort-custom-total');
+    var badge = document.getElementById('kort-custom-count');
+    if (total) total.textContent = tp('kort.customCount', n);
+    if (badge) badge.textContent = String(n);
+  }
+
+  function kortDictionary() {
+    var dict = {};
+    var seen = {};
+    function add(word) {
+      if (!word || !word.no || !word.es) return;
+      var key = pronNorm(word.no);
+      if (!key || seen[key]) return;
+      seen[key] = true;
+      dict[key] = { no: String(word.no), es: String(word.es) };
+    }
+    (CORE.packs || []).forEach(function (pack) {
+      (pack.words || []).forEach(add);
+    });
+    LESSONS.forEach(function (lesson) {
+      (lesson.vocab || []).forEach(add);
+    });
+    return dict;
+  }
+
+  function kortScanImport(text) {
+    var dict = kortDictionary();
+    var tokens = String(text || '').toLowerCase().match(/[a-zæøåäöüéèêç]+/g) || [];
+    var seen = {};
+    var matches = [];
+    var unknown = 0;
+    tokens.forEach(function (token) {
+      if (seen[token]) return;
+      seen[token] = true;
+      if (dict[token]) {
+        var already = state.kort.custom.some(function (c) { return pronNorm(c.no) === token; });
+        if (!already) matches.push(dict[token]);
+      } else {
+        unknown += 1;
+      }
+    });
+    kortImportMatches = matches.slice(0, 40);
+    kortImportUnknown = unknown;
+    return kortImportMatches;
+  }
+
+  function kortImportResultsHTML() {
+    if (!kortImportMatches.length) {
+      return '<p class="kort-empty-list">' + esc(t('kort.importNone')) + '</p>' +
+        (kortImportUnknown ? '<p class="kort-unknown">' + esc(t('kort.importUnknown', { n: kortImportUnknown })) + '</p>' : '');
+    }
+    return '<p class="kort-import-summary">' + esc(t('kort.importFound', { n: kortImportMatches.length })) + '</p>' +
+      '<div class="kort-import-list">' + kortImportMatches.map(function (m, i) {
+        return '<label class="kort-import-item"><input type="checkbox" data-import-i="' + i + '" checked>' +
+          '<span><b lang="nb" dir="ltr">' + esc(m.no) + '</b><small>' + esc(m.es) + '</small></span></label>';
+      }).join('') + '</div>' +
+      (kortImportUnknown ? '<p class="kort-unknown">' + esc(t('kort.importUnknown', { n: kortImportUnknown })) + '</p>' : '') +
+      '<button type="button" class="btn primary" data-import-add>' + esc(t('kort.importAdd')) + '</button>';
+  }
+
+  function bindKortCustom() {
+    var form = document.getElementById('kort-form');
+    if (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var no = document.getElementById('kort-no').value;
+        var es = document.getElementById('kort-es').value;
+        var ex = document.getElementById('kort-example').value;
+        var res = kortAddCustom(no, es, ex);
+        var msg = document.getElementById('kort-form-msg');
+        if (res.error) {
+          if (msg) msg.textContent = res.error;
+          return;
+        }
+        form.reset();
+        if (msg) msg.textContent = t('kort.customAdded');
+        var list = document.getElementById('kort-custom-list');
+        if (list) list.innerHTML = kortCustomListHTML();
+        kortUpdateCounts();
+      });
+    }
+    var scan = document.getElementById('kort-scan');
+    if (scan) {
+      scan.addEventListener('click', function () {
+        var area = document.getElementById('kort-import-text');
+        var results = document.getElementById('kort-import-results');
+        if (!area || !results) return;
+        kortScanImport(area.value);
+        results.hidden = false;
+        results.innerHTML = kortImportResultsHTML();
+        sprintSfx('click');
+      });
+    }
+    var list = document.getElementById('kort-custom-list');
+    if (list) {
+      list.addEventListener('click', function (e) {
+        var btn = e.target.closest('[data-kort-delete]');
+        if (!btn) return;
+        kortRemoveCustom(btn.getAttribute('data-kort-delete'));
+        list.innerHTML = kortCustomListHTML();
+        kortUpdateCounts();
+      });
+    }
+    var results = document.getElementById('kort-import-results');
+    if (results) {
+      results.addEventListener('click', function (e) {
+        if (!e.target.closest('[data-import-add]')) return;
+        var checked = results.querySelectorAll('input[data-import-i]:checked');
+        var added = 0;
+        checked.forEach(function (cb) {
+          var m = kortImportMatches[Number(cb.getAttribute('data-import-i'))];
+          if (!m) return;
+          var res = kortAddCustom(m.no, m.es, '');
+          if (res.ok) added += 1;
+        });
+        results.innerHTML = '<p class="kort-notice">' + esc(t('kort.importAdded', { n: added })) + '</p>';
+        var listEl = document.getElementById('kort-custom-list');
+        if (listEl) listEl.innerHTML = kortCustomListHTML();
+        kortUpdateCounts();
+        sprintSfx(added ? 'correct' : 'click');
+      });
+    }
+  }
+
+  function renderKortCards() {
+    ensureKort();
+    kortImportMatches = [];
+    kortImportUnknown = 0;
+    app.innerHTML =
+      '<div class="crumbs"><a href="#/">' + esc(t('crumb.home')) + '</a> <span>›</span> <a href="#/kort">' + esc(t('kort.title')) + '</a> <span>›</span> <span>' + esc(t('kort.customTitle')) + '</span></div>' +
+      '<section class="kort-hero kort-custom-hero">' +
+      '  <div class="kort-hero-copy">' +
+      '    <span class="eyebrow">' + esc(t('kort.eyebrow')) + '</span>' +
+      '    <h1>' + esc(t('kort.customTitle')) + '</h1>' +
+      '    <p>' + esc(t('kort.customIntro')) + '</p>' +
+      '    <div class="kort-badges">' +
+      '      <span>🃏 <span id="kort-custom-total">' + esc(tp('kort.customCount', kortCustomCount())) + '</span></span>' +
+      '      <span>💡 ' + esc(t('kort.customReviewHint')) + '</span>' +
+      '    </div>' +
+      '  </div>' +
+      '  <div class="kort-hero-side">' + sprintSoundHTML() + '<a class="btn ghost small" href="#/kort">' + esc(t('kort.reviewCustom')) + ' →</a></div>' +
+      '</section>' +
+      '<div class="kort-custom-layout">' +
+      '  <section class="card kort-form-card">' +
+      '    <h2>' + esc(t('kort.customAddTitle')) + '</h2>' +
+      '    <form id="kort-form">' +
+      '      <label class="kort-field"><span>' + esc(t('kort.customNo')) + '</span><input id="kort-no" type="text" maxlength="120" required autocomplete="off"></label>' +
+      '      <label class="kort-field"><span>' + esc(t('kort.customEs')) + '</span><input id="kort-es" type="text" maxlength="160" required autocomplete="off"></label>' +
+      '      <label class="kort-field"><span>' + esc(t('kort.customExample')) + '</span><input id="kort-example" type="text" maxlength="240" autocomplete="off"></label>' +
+      '      <button type="submit" class="btn primary">' + esc(t('kort.customSave')) + '</button>' +
+      '      <p class="kort-msg" id="kort-form-msg" aria-live="polite"></p>' +
+      '    </form>' +
+      '  </section>' +
+      '  <section class="card kort-import-card">' +
+      '    <h2>' + esc(t('kort.importTitle')) + '</h2>' +
+      '    <p class="kort-muted">' + esc(t('kort.importIntro')) + '</p>' +
+      '    <textarea id="kort-import-text" class="kort-textarea" rows="6" placeholder="' + esc(t('kort.importPlaceholder')) + '"></textarea>' +
+      '    <button type="button" class="btn ghost" id="kort-scan">' + esc(t('kort.importScan')) + '</button>' +
+      '    <div id="kort-import-results" class="kort-import-results" hidden></div>' +
+      '  </section>' +
+      '</div>' +
+      '<section class="card kort-custom-list-card">' +
+      '  <div class="kort-custom-head"><h2>' + esc(t('kort.customTitle')) + ' <span id="kort-custom-count">' + kortCustomCount() + '</span></h2>' +
+      '  <a class="btn ghost small" href="#/kort">' + esc(t('kort.reviewCustom')) + '</a></div>' +
+      '  <div id="kort-custom-list">' + kortCustomListHTML() + '</div>' +
+      '</section>';
+    bindKortCustom();
   }
 
   /* =======================================================
@@ -8109,7 +8376,8 @@
       if (arg) renderFlashcardsPack(arg);
       else renderFlashcards();
     } else if (name === 'kort') {
-      renderKort();
+      if (arg === 'mis') renderKortCards();
+      else renderKort();
     } else if (name === 'pronunciacion') {
       renderPronunciation();
     } else if (name === 'a0') {
